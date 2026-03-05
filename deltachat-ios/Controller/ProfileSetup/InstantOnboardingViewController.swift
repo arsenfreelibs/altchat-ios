@@ -322,6 +322,20 @@ extension InstantOnboardingViewController: QrCodeReaderDelegate {
     func handleQrCode(_ qrCode: String) {
         // update with new code
         let parsedQrCode = dcContext.checkQR(qrCode: qrCode)
+        
+        // For "Add Second Device" we need DC_QR_BACKUP2 type
+        if parsedQrCode.state == DC_QR_BACKUP2 || parsedQrCode.state == DC_QR_BACKUP_TOO_NEW {
+            // This is the correct QR code for second device
+            // Pass to AppCoordinator for handling
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { 
+                return 
+            }
+            dismissQRReader()
+            appDelegate.appCoordinator.handleQRCode(qrCode)
+            return
+        }
+        
+        // For regular account setup
         if parsedQrCode.state == DC_QR_LOGIN || parsedQrCode.state == DC_QR_ACCOUNT,
            let host = parsedQrCode.text1,
            let url = URL(string: "https://\(host)") {

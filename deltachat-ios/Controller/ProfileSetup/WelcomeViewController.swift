@@ -234,11 +234,31 @@ extension WelcomeViewController: QrCodeReaderDelegate {
         } else if lot.state == DC_QR_BACKUP_TOO_NEW {
             qrErrorAlert(title: String.localized("multidevice_receiver_needs_update"))
         } else {
-            qrErrorAlert(title: String.localized("qraccount_qr_code_cannot_be_used"), message: dcContext.lastErrorString)
+            // WORKAROUND: Support DCBACKUP4 format from newer Delta Chat versions
+            // TODO: Update deltachat-core-rust to natively support DCBACKUP4
+            if qrCode.uppercased().starts(with: "DCBACKUP4:") || qrCode.uppercased().starts(with: "DCBACKUP3:") {
+                confirmSetupNewDevice(qrCode: qrCode)
+            } else {
+                qrErrorAlert(title: String.localized("qraccount_qr_code_cannot_be_used"), message: dcContext.lastErrorString)
+            }
         }
     }
 
     private func confirmSetupNewDevice(qrCode: String) {
+        // Close QR scanner through navigation
+        if let qrCodeReader = self.qrCodeReader {
+            self.qrCodeReader = nil
+            self.navigationController?.popViewController(animated: false)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.showConfirmationAlert(qrCode: qrCode)
+            }
+        } else {
+            self.showConfirmationAlert(qrCode: qrCode)
+        }
+    }
+
+    private func showConfirmationAlert(qrCode: String) {
         triggerLocalNetworkPrivacyAlert()
         let alert = UIAlertController(title: String.localized("multidevice_receiver_title"),
                                       message: String.localized("multidevice_receiver_scanning_ask"),
