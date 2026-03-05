@@ -175,7 +175,7 @@ class NotificationService: UNNotificationServiceExtension {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
 
-        // For Delta Chat, it is just fine to do nothing - assume eg. bad network or mail servers not reachable,
+        // For alt.chat, it is just fine to do nothing - assume eg. bad network or mail servers not reachable,
         // then a "You have new messages" is the best that can be done.
         UserDefaults.pushToDebugArray("ERR4_TIME")
         UserDefaults.setNseFetchingDone()

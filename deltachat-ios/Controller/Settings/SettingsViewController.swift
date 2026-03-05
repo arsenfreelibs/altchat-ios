@@ -126,7 +126,7 @@ internal final class SettingsViewController: UITableViewController {
     }()
 
     private lazy var sections: [SectionConfigs] = {
-        var appNameAndVersion = "Delta Chat"
+        var appNameAndVersion = "alt.chat"
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             appNameAndVersion += " v" + appVersion
         }

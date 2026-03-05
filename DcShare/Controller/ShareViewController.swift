@@ -81,7 +81,7 @@ enum ShareError: Error, LocalizedError {
     
     var errorDescription: String? {
         switch self {
-        case .couldNotOpenMainApp: "Failed to open Delta Chat from share extension"
+        case .couldNotOpenMainApp: "Failed to open alt.chat from share extension"
         }
     }
 }

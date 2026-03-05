@@ -1,7 +1,7 @@
-NSCameraUsageDescription = "Delta Chat, fotoğraflar ve videolar çekmek ve göndermek için ve QR kodlarını taramak için kameranızı kullanır.";
-NSLocationAlwaysAndWhenInUseUsageDescription = "Konum paylaşımını etkinleştirdiğiniz zaman aralığında konumunuzu paylaşmak için Delta Chat\'e izin gerekir.";
-NSLocationWhenInUseUsageDescription = "Konum paylaşımını etkinleştirdiğiniz zaman aralığında konumunuzu paylaşmak için Delta Chat\'e izin gerekir.";
-NSMicrophoneUsageDescription = "Delta Chat, sesli iletiler ve sesli videolar kaydetmek ve göndermek için mikrofonunuzu kullanır.";
-NSPhotoLibraryUsageDescription = "Delta Chat, kitaplığınızdan hangi fotoğrafların gönderileceğini seçmenize izin verir.";
-NSPhotoLibraryAddUsageDescription = "Delta Chat, görselleri fotoğraf kitaplığınıza kaydetmek istiyor.";
-NSFaceIDUsageDescription = "Delta Chat; yerel profilinizi korumak, yedek oluşturmak ve ikinci aygıt ayarlaması için Face ID\'yi kullanabilir.";
+NSCameraUsageDescription = "alt.chat, fotoğraflar ve videolar çekmek ve göndermek için ve QR kodlarını taramak için kameranızı kullanır.";
+NSLocationAlwaysAndWhenInUseUsageDescription = "Konum paylaşımını etkinleştirdiğiniz zaman aralığında konumunuzu paylaşmak için alt.chat\'e izin gerekir.";
+NSLocationWhenInUseUsageDescription = "Konum paylaşımını etkinleştirdiğiniz zaman aralığında konumunuzu paylaşmak için alt.chat\'e izin gerekir.";
+NSMicrophoneUsageDescription = "alt.chat, sesli iletiler ve sesli videolar kaydetmek ve göndermek için mikrofonunuzu kullanır.";
+NSPhotoLibraryUsageDescription = "alt.chat, kitaplığınızdan hangi fotoğrafların gönderileceğini seçmenize izin verir.";
+NSPhotoLibraryAddUsageDescription = "alt.chat, görselleri fotoğraf kitaplığınıza kaydetmek istiyor.";
+NSFaceIDUsageDescription = "alt.chat; yerel profilinizi korumak, yedek oluşturmak ve ikinci aygıt ayarlaması için Face ID\'yi kullanabilir.";

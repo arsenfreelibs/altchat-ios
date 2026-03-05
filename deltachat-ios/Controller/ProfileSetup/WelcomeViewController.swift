@@ -234,7 +234,7 @@ extension WelcomeViewController: QrCodeReaderDelegate {
         } else if lot.state == DC_QR_BACKUP_TOO_NEW {
             qrErrorAlert(title: String.localized("multidevice_receiver_needs_update"))
         } else {
-            // WORKAROUND: Support DCBACKUP4 format from newer Delta Chat versions
+            // WORKAROUND: Support DCBACKUP4 format from newer alt.chat versions
             // TODO: Update deltachat-core-rust to natively support DCBACKUP4
             if qrCode.uppercased().starts(with: "DCBACKUP4:") || qrCode.uppercased().starts(with: "DCBACKUP3:") {
                 confirmSetupNewDevice(qrCode: qrCode)

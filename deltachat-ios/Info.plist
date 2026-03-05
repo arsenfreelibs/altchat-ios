@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Delta Chat</string>
+	<string>alt.chat</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -63,19 +63,19 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Delta Chat uses your camera to take and send photos and videos and to scan QR codes.</string>
+	<string>alt.chat uses your camera to take and send photos and videos and to scan QR codes.</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Delta Chat uses Face ID to protect your local profile, backup creation and second device setup.</string>
+	<string>alt.chat uses Face ID to protect your local profile, backup creation and second device setup.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Delta Chat needs the location permission in order to share your location for the timespan you have enabled location sharing.</string>
+	<string>alt.chat needs the location permission in order to share your location for the timespan you have enabled location sharing.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Delta Chat needs the location permission in order to share your location for the timespan you have enabled location sharing.</string>
+	<string>alt.chat needs the location permission in order to share your location for the timespan you have enabled location sharing.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Delta Chat uses your microphone to record and send voice messages and videos with sound.</string>
+	<string>alt.chat uses your microphone to record and send voice messages and videos with sound.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Delta Chat wants to save images to your photo library.</string>
+	<string>alt.chat wants to save images to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Delta Chat will let you choose which photos from your library to send.</string>
+	<string>alt.chat will let you choose which photos from your library to send.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>INSendMessageIntent</string>

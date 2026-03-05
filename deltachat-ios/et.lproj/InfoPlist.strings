@@ -1,7 +1,7 @@
-NSCameraUsageDescription = "Delta Chat kasutab sinu nutiseadme kaamerat pildistamiseks, videote salvestamiseks ja QR-koodide skaneerimiseks.";
-NSLocationAlwaysAndWhenInUseUsageDescription = "Delta Chat vajab õigust sinu asukoha jagamiseks nii kaua, kui sul see teenus on sisse lülitatud.";
-NSLocationWhenInUseUsageDescription = "Delta Chat vajab õigust sinu asukoha jagamiseks nii kaua, kui sul see teenus on sisse lülitatud.";
-NSMicrophoneUsageDescription = "Delta Chat kasutab sinu nutiseadme mikrofoni häälsõnumite ja videote heliriba salvestamiseks.";
-NSPhotoLibraryUsageDescription = "Delta Chat võimaldab sul valida fotosid teistele edastamiseks.";
-NSPhotoLibraryAddUsageDescription = "Delta Chat soovib pilte salvestada sinu fotode kogusse.";
-NSFaceIDUsageDescription = "Delta Chat võib kasutada Face ID teenust sinu kohaliku profiili kaitsmiseks, varukoopia tegemiseks ja täiendavate seadmete seadistamiseks.";
+NSCameraUsageDescription = "alt.chat kasutab sinu nutiseadme kaamerat pildistamiseks, videote salvestamiseks ja QR-koodide skaneerimiseks.";
+NSLocationAlwaysAndWhenInUseUsageDescription = "alt.chat vajab õigust sinu asukoha jagamiseks nii kaua, kui sul see teenus on sisse lülitatud.";
+NSLocationWhenInUseUsageDescription = "alt.chat vajab õigust sinu asukoha jagamiseks nii kaua, kui sul see teenus on sisse lülitatud.";
+NSMicrophoneUsageDescription = "alt.chat kasutab sinu nutiseadme mikrofoni häälsõnumite ja videote heliriba salvestamiseks.";
+NSPhotoLibraryUsageDescription = "alt.chat võimaldab sul valida fotosid teistele edastamiseks.";
+NSPhotoLibraryAddUsageDescription = "alt.chat soovib pilte salvestada sinu fotode kogusse.";
+NSFaceIDUsageDescription = "alt.chat võib kasutada Face ID teenust sinu kohaliku profiili kaitsmiseks, varukoopia tegemiseks ja täiendavate seadmete seadistamiseks.";

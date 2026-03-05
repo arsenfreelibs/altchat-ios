@@ -22,7 +22,7 @@ internal final class AdvancedViewController: UITableViewController {
     private var dcContext: DcContext
     internal let dcAccounts: DcAccounts
 
-    private let externalPathDescr = "File Sharing/Delta Chat"
+    private let externalPathDescr = "File Sharing/alt.chat"
 
     // MARK: - cells
     private lazy var showEmailsCell: UITableViewCell = {

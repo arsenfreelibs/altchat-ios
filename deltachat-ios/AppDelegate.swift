@@ -217,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-    // `open` is called when an url should be opened by Delta Chat.
+    // `open` is called when an url should be opened by alt.chat.
     // we currently use that for handing openpgp4fpr.
     //
     // before `open` gets called, `didFinishLaunchingWithOptions` is called.

@@ -209,7 +209,7 @@ internal final class ChatsAndMediaViewController: UITableViewController {
 
                 let alert = UIAlertController(
                     title: String.localized("backup_successful"),
-                    message: String.localizedStringWithFormat(String.localized("backup_successful_explain_ios"), "\(String.localized("Files")) ➔ Delta Chat"),
+                    message: String.localizedStringWithFormat(String.localized("backup_successful_explain_ios"), "\(String.localized("Files")) ➔ alt.chat"),
                     preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: String.localized("ok"), style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)

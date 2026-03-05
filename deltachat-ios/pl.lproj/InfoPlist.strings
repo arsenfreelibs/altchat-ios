@@ -1,7 +1,7 @@
-NSCameraUsageDescription = "Delta Chat używa aparatu do robienia i wysyłania zdjęć i filmów oraz do skanowania kodów QR.";
-NSLocationAlwaysAndWhenInUseUsageDescription = "Delta Chat potrzebuje pozwolenia na lokalizację, aby udostępniać twoją lokalizację w okresie, w którym włączono udostępnianie lokalizacji.";
-NSLocationWhenInUseUsageDescription = "Delta Chat potrzebuje pozwolenia na lokalizację, aby udostępniać twoją lokalizację w okresie, w którym włączono udostępnianie lokalizacji.";
+NSCameraUsageDescription = "alt.chat używa aparatu do robienia i wysyłania zdjęć i filmów oraz do skanowania kodów QR.";
+NSLocationAlwaysAndWhenInUseUsageDescription = "alt.chat potrzebuje pozwolenia na lokalizację, aby udostępniać twoją lokalizację w okresie, w którym włączono udostępnianie lokalizacji.";
+NSLocationWhenInUseUsageDescription = "alt.chat potrzebuje pozwolenia na lokalizację, aby udostępniać twoją lokalizację w okresie, w którym włączono udostępnianie lokalizacji.";
 NSMicrophoneUsageDescription = "Zezwolenie na dostęp do mikrofonu pozwala nagrywać dźwięk.";
 NSPhotoLibraryUsageDescription = "Zezwolenie na dostęp do biblioteki zdjęć umożliwia przesyłanie z niej zdjęć.";
-NSPhotoLibraryAddUsageDescription = "Delta Chat chce zapisać obrazy w twojej bibliotece zdjęć.";
-NSFaceIDUsageDescription = "Delta Chat może używać Face ID do ochrony twojego lokalnego profilu, tworzenia kopii zapasowych i konfiguracji drugiego urządzenia.";
+NSPhotoLibraryAddUsageDescription = "alt.chat chce zapisać obrazy w twojej bibliotece zdjęć.";
+NSFaceIDUsageDescription = "alt.chat może używać Face ID do ochrony twojego lokalnego profilu, tworzenia kopii zapasowych i konfiguracji drugiego urządzenia.";
