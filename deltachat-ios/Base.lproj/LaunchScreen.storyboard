@@ -20,7 +20,7 @@
                                 <rect key="frame" x="603" y="432" width="160" height="160"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="wCk-Dv-KnS" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="YK9-3w-Ioq"/>
                             <constraint firstItem="wCk-Dv-KnS" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="wFW-aB-zir"/>
