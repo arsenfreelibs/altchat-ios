@@ -56,6 +56,18 @@ class QrPageController: UIPageViewController {
         )
 
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+
+        if presentingViewController != nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .close,
+                target: self,
+                action: #selector(closeButtonPressed)
+            )
+        }
+    }
+
+    @objc private func closeButtonPressed() {
+        dismiss(animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {

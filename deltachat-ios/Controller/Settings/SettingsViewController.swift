@@ -168,6 +168,12 @@ internal final class SettingsViewController: UITableViewController {
         super.viewDidLoad()
         title = String.localized("menu_settings")
         tableView.rowHeight = UITableView.automaticDimension
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "qrcode"),
+            style: .plain,
+            target: self,
+            action: #selector(qrButtonPressed)
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -316,5 +322,12 @@ internal final class SettingsViewController: UITableViewController {
 
         let invitationText = String.localized(stringID: "invite_friends_text", parameter: inviteLink)
         Utils.share(text: invitationText, parentViewController: self, sourceView: inviteFriendsCell)
+    }
+
+    @objc private func qrButtonPressed() {
+        let qrPageController = QrPageController(dcAccounts: dcAccounts)
+        let nav = UINavigationController(rootViewController: qrPageController)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
     }
 }
