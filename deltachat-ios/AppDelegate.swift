@@ -64,6 +64,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         DarwinNotificationCenter.current.addObserver(self, selector: #selector(Self.appRunningQuestion), for: .appRunningQuestion)
         callManager = CallManager.shared
         UserDefaults.standard.populateDefaultEmojis()
+        UserDefaults.standard.register(defaults: [
+            "broadcast_lists": true,
+            "pref_calls_enabled": true,
+            "location_streaming": true
+        ])
         UserDefaults.setMainIoRunning()
         UNUserNotificationCenter.current().delegate = self
 
