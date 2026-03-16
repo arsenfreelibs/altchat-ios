@@ -15,6 +15,12 @@ class ChatListViewController: UITableViewController {
 
     private weak var timer: Timer?
 
+    private lazy var filterBar: FilterBarView = {
+        let bar = FilterBarView()
+        bar.delegate = self
+        return bar
+    }()
+
     private lazy var titleView: UILabel = {
         let view = UILabel()
         let navTapGesture = UITapGestureRecognizer(target: self, action: #selector(onNavigationTitleTapped))
@@ -260,6 +266,25 @@ class ChatListViewController: UITableViewController {
     private func setupSubviews() {
         emptyStateLabel.addCenteredTo(parentView: view)
         updateNextScreensBackButton()
+
+        if !isArchive {
+            setupFilterBar()
+        }
+    }
+
+    private func setupFilterBar() {
+        filterBar.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: FilterBarView.height)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard !isArchive, tableView.tableHeaderView != nil else { return }
+        // Keep header view width in sync with table width.
+        let targetFrame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: FilterBarView.height)
+        if filterBar.frame != targetFrame {
+            filterBar.frame = targetFrame
+            tableView.tableHeaderView = filterBar  // re-assign to trigger UITableView relayout
+        }
     }
 
     private func updateNextScreensBackButton(accountId: Int? = nil, chatId: Int? = nil) {
@@ -600,6 +625,26 @@ class ChatListViewController: UITableViewController {
             }
             deleteAction.backgroundColor = UIColor.systemRed
             deleteAction.image = UIImage(systemName: "trash")
+
+            let customFilters = UserDefaults.standard.loadCustomFilters()
+            if !customFilters.isEmpty {
+                let isInFilter = !UserDefaults.standard.filterIds(for: chatId).isEmpty
+                let filterTitle = isInFilter ? "Remove Filter" : "Filter"
+                let filterAction = UIContextualAction(style: .normal, title: filterTitle) { [weak self] _, _, completionHandler in
+                    guard let self else { completionHandler(false); return }
+                    if isInFilter {
+                        UserDefaults.standard.removeChatFromFilter(chatId)
+                        self.viewModel?.refreshData()
+                    } else {
+                        self.showFilterPicker(for: chatId)
+                    }
+                    completionHandler(true)
+                }
+                filterAction.backgroundColor = UIColor.systemPurple
+                filterAction.image = UIImage(systemName: isInFilter ? "folder.badge.minus" : "folder.badge.plus")
+                return UISwipeActionsConfiguration(actions: [archiveAction, filterAction, muteAction, deleteAction])
+            }
+
             return UISwipeActionsConfiguration(actions: [archiveAction, muteAction, deleteAction])
         }
     }
@@ -616,7 +661,8 @@ class ChatListViewController: UITableViewController {
             return true
         } else {
             guard let chatList = viewModel.chatList else { return false }
-            return chatList.getChatId(index: indexPath.row) != DC_CHAT_ID_ARCHIVED_LINK
+            let realIndex = viewModel.chatListIndex(for: indexPath.row)
+            return chatList.getChatId(index: realIndex) != DC_CHAT_ID_ARCHIVED_LINK
         }
     }
 
@@ -795,14 +841,33 @@ class ChatListViewController: UITableViewController {
         } else if Thread.isMainThread {
             tableView.reloadData()
             handleEmptyStateLabel()
+            refreshFilterBar()
         } else {
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 self.tableView.reloadData()
                 self.handleEmptyStateLabel()
+                self.refreshFilterBar()
             }
         }
         updateMarkReadButton()
+    }
+
+    private func refreshFilterBar() {
+        guard !isArchive, let viewModel else { return }
+        let filters = UserDefaults.standard.loadCustomFilters()
+        let systemCounts = viewModel.systemFilterBadgeCounts()
+        filterBar.configure(
+            filters: filters,
+            activeFilter: viewModel.activeFilter,
+            badgeCounts: viewModel.filterBadgeCounts(),
+            allUnreadCount: systemCounts.allUnread,
+            unreadChatsCount: systemCounts.unreadChats
+        )
+        if tableView.tableHeaderView == nil {
+            filterBar.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: FilterBarView.height)
+            tableView.tableHeaderView = filterBar
+        }
     }
     
     func updateMarkReadButton() {
@@ -1001,8 +1066,9 @@ extension ChatListViewController: UISearchBarDelegate {
 extension ChatListViewController: ContactCellDelegate {
     func onLongTap(at indexPath: IndexPath) {
         if canMultiSelect() && !tableView.isEditing {
-            guard let chatList = viewModel?.chatList else { return }
-            if chatList.getChatId(index: indexPath.row) != Int(DC_CHAT_ID_ARCHIVED_LINK) {
+            guard let viewModel, let chatList = viewModel.chatList else { return }
+            let realIndex = viewModel.chatListIndex(for: indexPath.row)
+            if chatList.getChatId(index: realIndex) != Int(DC_CHAT_ID_ARCHIVED_LINK) {
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 setLongTapEditing(true, initialIndexPath: indexPath)
             }
@@ -1085,5 +1151,114 @@ extension ChatListViewController: ChatListEditingBarDelegate {
         }
 
         return UIMenu(children: actions)
+    }
+}
+
+// MARK: - Filter management
+
+extension ChatListViewController {
+
+    /// Presents a filter-picker action sheet so the user can assign chatId to a filter.
+    func showFilterPicker(for chatId: Int) {
+        let filters = UserDefaults.standard.loadCustomFilters()
+        guard !filters.isEmpty else { return }
+
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .safeActionSheet)
+        for filter in filters {
+            alert.addAction(UIAlertAction(title: filter.name, style: .default) { [weak self] _ in
+                UserDefaults.standard.assignChat(chatId, toFilter: filter.id)
+                self?.viewModel?.refreshData()
+            })
+        }
+        alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
+        present(alert, animated: true)
+    }
+
+    private func promptCreateFilter() {
+        let filters = UserDefaults.standard.loadCustomFilters()
+        guard filters.count < UserDefaults.maxCustomFilters else {
+            let alert = UIAlertController(title: nil, message: "Maximum \(UserDefaults.maxCustomFilters) filters allowed.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: String.localized("ok"), style: .default))
+            present(alert, animated: true)
+            return
+        }
+
+        let alert = UIAlertController(title: "New Filter", message: nil, preferredStyle: .alert)
+        alert.addTextField { tf in
+            tf.placeholder = "Filter name"
+            tf.autocapitalizationType = .sentences
+        }
+        alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: String.localized("ok"), style: .default) { [weak self, weak alert] _ in
+            guard let name = alert?.textFields?.first?.text, !name.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+            var updated = UserDefaults.standard.loadCustomFilters()
+            updated.append(ChatFilter(name: name.trimmingCharacters(in: .whitespaces)))
+            UserDefaults.standard.saveCustomFilters(updated)
+            self?.viewModel?.refreshData()
+        })
+        present(alert, animated: true)
+    }
+
+    private func promptManageFilter(_ filter: ChatFilter, sourceView: UIView) {
+        let alert = UIAlertController(title: filter.name, message: nil, preferredStyle: .safeActionSheet)
+        alert.addAction(UIAlertAction(title: "Rename", style: .default) { [weak self] _ in
+            self?.promptRenameFilter(filter)
+        })
+        alert.addAction(UIAlertAction(title: String.localized("delete"), style: .destructive) { [weak self] _ in
+            self?.deleteFilter(filter)
+        })
+        alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
+        present(alert, animated: true)
+    }
+
+    private func promptRenameFilter(_ filter: ChatFilter) {
+        let alert = UIAlertController(title: "Rename Filter", message: nil, preferredStyle: .alert)
+        alert.addTextField { tf in
+            tf.text = filter.name
+            tf.autocapitalizationType = .sentences
+        }
+        alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: String.localized("ok"), style: .default) { [weak self, weak alert] _ in
+            guard let name = alert?.textFields?.first?.text, !name.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+            var filters = UserDefaults.standard.loadCustomFilters()
+            if let idx = filters.firstIndex(where: { $0.id == filter.id }) {
+                filters[idx].name = name.trimmingCharacters(in: .whitespaces)
+                UserDefaults.standard.saveCustomFilters(filters)
+                self?.viewModel?.refreshData()
+            }
+        })
+        present(alert, animated: true)
+    }
+
+    private func deleteFilter(_ filter: ChatFilter) {
+        var filters = UserDefaults.standard.loadCustomFilters()
+        filters.removeAll { $0.id == filter.id }
+        UserDefaults.standard.saveCustomFilters(filters)
+        UserDefaults.standard.removeFilterAssignments(for: filter.id)
+        // If we were viewing this filter, reset to "All".
+        if viewModel?.activeFilter == .custom(filter.id) {
+            viewModel?.setActiveFilter(.system(.all))
+        } else {
+            viewModel?.refreshData()
+        }
+    }
+}
+
+// MARK: - FilterBarDelegate
+
+extension ChatListViewController: FilterBarDelegate {
+
+    func filterBar(_ filterBar: FilterBarView, didSelectFilter filter: ActiveFilter) {
+        viewModel?.setActiveFilter(filter)
+        // Scroll to absolute top so the search bar and filter bar remain visible.
+        tableView.setContentOffset(CGPoint(x: 0, y: -tableView.adjustedContentInset.top), animated: false)
+    }
+
+    func filterBarDidTapAdd(_ filterBar: FilterBarView) {
+        promptCreateFilter()
+    }
+
+    func filterBar(_ filterBar: FilterBarView, didLongPressFilter filter: ChatFilter, sourceView: UIView) {
+        promptManageFilter(filter, sourceView: sourceView)
     }
 }
