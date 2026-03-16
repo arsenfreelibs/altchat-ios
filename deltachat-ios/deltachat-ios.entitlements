@@ -6,7 +6,7 @@
 	<string>production</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:i.alt.chat</string>
+		<string>applinks:alt-chat.me</string>
 	</array>
 	<key>com.apple.developer.avfoundation.multitasking-camera-access</key>
 	<true/>
