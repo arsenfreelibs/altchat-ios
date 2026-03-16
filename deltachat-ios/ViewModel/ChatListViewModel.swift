@@ -44,6 +44,11 @@ class ChatListViewModel: NSObject {
     private var isChatListUpdatePending = false
     private(set) var isEditing = false
 
+    // MARK: - Filter support
+    private(set) var activeFilter: ActiveFilter = .system(.all)
+    // Indices into `chatList` that match the active filter (in non-search mode).
+    private var filteredChatIndices: [Int] = []
+
     init(dcContext: DcContext, isArchive: Bool) {
         self.isArchive = isArchive
         self.dcContext = dcContext
@@ -59,9 +64,72 @@ class ChatListViewModel: NSObject {
             gclFlags |= DC_GCL_FOR_FORWARDING
         }
         self.chatList = dcContext.getChatlist(flags: gclFlags, queryString: nil, queryId: 0)
+        computeFilteredChatIndices()
         if notifyListener {
             handleOnChatListUpdate()
         }
+    }
+
+    private func computeFilteredChatIndices() {
+        guard let list = chatList else {
+            filteredChatIndices = []
+            return
+        }
+        switch activeFilter {
+        case .system(.all):
+            filteredChatIndices = Array(0..<list.length)
+        case .system(.unread):
+            filteredChatIndices = (0..<list.length).filter { index in
+                let chatId = list.getChatId(index: index)
+                if chatId == DC_CHAT_ID_ARCHIVED_LINK { return true }
+                return dcContext.getUnreadMessages(chatId: chatId) > 0
+            }
+        case .custom(let filterId):
+            let chatIdSet = Set(UserDefaults.standard.chatIds(for: filterId))
+            filteredChatIndices = (0..<list.length).filter { index in
+                let chatId = list.getChatId(index: index)
+                if chatId == DC_CHAT_ID_ARCHIVED_LINK { return true }
+                return chatIdSet.contains(chatId)
+            }
+        }
+    }
+
+    func setActiveFilter(_ filter: ActiveFilter) {
+        activeFilter = filter
+        computeFilteredChatIndices()
+        handleOnChatListUpdate()
+    }
+
+    /// Unread counts keyed by custom filter UUID, for badge display in the filter bar.
+    func filterBadgeCounts() -> [UUID: Int] {
+        let filters = UserDefaults.standard.loadCustomFilters()
+        guard !filters.isEmpty else { return [:] }
+        let map = UserDefaults.standard.loadChatFilterMap()
+        var counts: [UUID: Int] = [:]
+        for filter in filters {
+            let chatIds = map.compactMap { chatId, filterIds -> Int? in
+                filterIds.contains(filter.id) ? chatId : nil
+            }
+            counts[filter.id] = chatIds.reduce(0) { $0 + dcContext.getUnreadMessages(chatId: $1) }
+        }
+        return counts
+    }
+
+    /// Total unread messages across all chats, and count of chats that have unread messages.
+    func systemFilterBadgeCounts() -> (allUnread: Int, unreadChats: Int) {
+        guard let list = chatList else { return (0, 0) }
+        var totalUnread = 0
+        var unreadChats = 0
+        for index in 0..<list.length {
+            let chatId = list.getChatId(index: index)
+            if chatId == DC_CHAT_ID_ARCHIVED_LINK { continue }
+            let unread = dcContext.getUnreadMessages(chatId: chatId)
+            if unread > 0 {
+                totalUnread += unread
+                unreadChats += 1
+            }
+        }
+        return (totalUnread, unreadChats)
     }
 
     func handleOnChatListUpdate() {
@@ -99,7 +167,7 @@ class ChatListViewModel: NSObject {
                 return searchResultMessageIds.count
             }
         }
-        return chatList.length
+        return filteredChatIndices.count
     }
 
     func cellDataFor(section: Int, row: Int) -> AvatarCellViewModel {
@@ -123,7 +191,8 @@ class ChatListViewModel: NSObject {
                 }
             }
         }
-        return makeChatCellViewModel(index: row, searchText: "")
+        let realIndex = filteredChatIndices.indices.contains(row) ? filteredChatIndices[row] : row
+        return makeChatCellViewModel(index: realIndex, searchText: "")
     }
 
     // only visible on search results
@@ -188,7 +257,14 @@ class ChatListViewModel: NSObject {
         if showSearchResults {
             return nil
         }
-        return chatList.getMsgId(index: row)
+        let realIndex = filteredChatIndices.indices.contains(row) ? filteredChatIndices[row] : row
+        return chatList.getMsgId(index: realIndex)
+    }
+
+    /// Returns the real chatList index for a table row, accounting for active filter.
+    func chatListIndex(for row: Int) -> Int {
+        guard !showSearchResults, filteredChatIndices.indices.contains(row) else { return row }
+        return filteredChatIndices[row]
     }
 
     func refreshData() {
