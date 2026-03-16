@@ -225,6 +225,9 @@
 		D84738D22BBC1C2C00ECD52B /* UIAction+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84738D12BBC1C2C00ECD52B /* UIAction+Extension.swift */; };
 		D84AED242B55E8EB00D753F6 /* ReactionsOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84AED232B55E8EB00D753F6 /* ReactionsOverviewViewController.swift */; };
 		D84AED272B566C0700D753F6 /* ReactionsOverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84AED262B566C0700D753F6 /* ReactionsOverviewTableViewCell.swift */; };
+		CF14C002AABBCCDD11223344 /* ChatFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C001AABBCCDD11223344 /* ChatFilter.swift */; };
+		CF14C004AABBCCDD11223344 /* UserDefaults+Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C003AABBCCDD11223344 /* UserDefaults+Filters.swift */; };
+		CF14C006AABBCCDD11223344 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C005AABBCCDD11223344 /* FilterBarView.swift */; };
 		D85DF9782C4A96CB00A01408 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */; };
 		D85DF9802C5250E200A01408 /* ProgressAlertHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DF97F2C5250E200A01408 /* ProgressAlertHandler.swift */; };
 		D86DF20C2D30318B00141B3E /* WebxdcStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86DF20B2D30318B00141B3E /* WebxdcStoreViewController.swift */; };
@@ -649,6 +652,9 @@
 		D84738D12BBC1C2C00ECD52B /* UIAction+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAction+Extension.swift"; sourceTree = "<group>"; };
 		D84AED232B55E8EB00D753F6 /* ReactionsOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsOverviewViewController.swift; sourceTree = "<group>"; };
 		D84AED262B566C0700D753F6 /* ReactionsOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsOverviewTableViewCell.swift; sourceTree = "<group>"; };
+		CF14C001AABBCCDD11223344 /* ChatFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilter.swift; sourceTree = "<group>"; };
+		CF14C003AABBCCDD11223344 /* UserDefaults+Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Filters.swift"; sourceTree = "<group>"; };
+		CF14C005AABBCCDD11223344 /* FilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
 		D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		D85DF97F2C5250E200A01408 /* ProgressAlertHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressAlertHandler.swift; sourceTree = "<group>"; };
 		D86DF20B2D30318B00141B3E /* WebxdcStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebxdcStoreViewController.swift; sourceTree = "<group>"; };
@@ -777,6 +783,7 @@
 				21D544FF299415B9008B54D5 /* Character+Extentions.swift */,
 				D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */,
 				D8083ACF2D14384F005DCB7D /* UserDefaults+Widgets.swift */,
+				CF14C003AABBCCDD11223344 /* UserDefaults+Filters.swift */,
 				64F9EB9F2E117CCF007EE3D9 /* UIView+Animations.swift */,
 				64AFC07F2F0EB9E900F44416 /* NSLayoutConstraints+activateWithPriority.swift */,
 				D82AD24C2D27E47A009D6026 /* UIApplication+Orientation.swift */,
@@ -1038,6 +1045,7 @@
 			children = (
 				AE57C07F2552BBD0003CFE70 /* GalleryItem.swift */,
 				D89C456C2D0AF6A8005B1491 /* WidgetEntry.swift */,
+				CF14C001AABBCCDD11223344 /* ChatFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1146,6 +1154,7 @@
 				30F4BFED252E3E020006B9B3 /* PaddingTextView.swift */,
 				305DDD8625DD97BF00974489 /* DynamicFontButton.swift */,
 				30F4E2932859213300ACA0D8 /* ChatListEditingBar.swift */,
+				CF14C005AABBCCDD11223344 /* FilterBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1888,6 +1897,9 @@
 				D82AD24D2D27E47A009D6026 /* UIApplication+Orientation.swift in Sources */,
 				AECEF03E244F2D55006C90DA /* QrPageController.swift in Sources */,
 				AEACE2E31FB32B5C00DCDD78 /* Constants.swift in Sources */,
+				CF14C002AABBCCDD11223344 /* ChatFilter.swift in Sources */,
+				CF14C004AABBCCDD11223344 /* UserDefaults+Filters.swift in Sources */,
+				CF14C006AABBCCDD11223344 /* FilterBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
