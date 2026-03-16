@@ -149,6 +149,7 @@
 		7A9FB14B1FB061E2001FEA36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9FB14A1FB061E2001FEA36 /* Assets.xcassets */; };
 		7A9FB14E1FB061E2001FEA36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9FB14C1FB061E2001FEA36 /* LaunchScreen.storyboard */; };
 		7AE0A5491FC42F65005ECB4B /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */; };
+		A1B2C3D4E5F60002A1B20001 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60001A1B20001 /* ContactsViewController.swift */; };
 		8A19190635E24C1DF7F0A35D /* Pods_deltachat_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEAC85C8C41D57193C24E9A /* Pods_deltachat_ios.framework */; };
 		AE0AA952247800E700D42A7F /* GalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0AA951247800E700D42A7F /* GalleryCell.swift */; };
 		AE0AA9562478191900D42A7F /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0AA9552478191900D42A7F /* GridCollectionViewFlowLayout.swift */; };
@@ -495,6 +496,7 @@
 		7A9FB14D1FB061E2001FEA36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A9FB14F1FB061E2001FEA36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60001A1B20001 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		AE0AA951247800E700D42A7F /* GalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCell.swift; sourceTree = "<group>"; };
 		AE0AA9552478191900D42A7F /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		AE0AA957247834A400D42A7F /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -1072,6 +1074,7 @@
 				305501732798CDE1008FD5CA /* WebxdcViewController.swift */,
 				785BE16721E247F1003BE98C /* MessageInfoViewController.swift */,
 				7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */,
+				A1B2C3D4E5F60001A1B20001 /* ContactsViewController.swift */,
 				7A0052C71FBE6CB40048C3BF /* NewContactController.swift */,
 				7070FB9A2101ECBB000DC258 /* NewGroupController.swift */,
 				AE4AEE3422B1030D000AA495 /* PreviewController.swift */,
@@ -1744,6 +1747,7 @@
 				302E1BB4252B5AB4008F4264 /* PlayButtonView.swift in Sources */,
 				303492AD2577CAC300A523D0 /* FileView.swift in Sources */,
 				7AE0A5491FC42F65005ECB4B /* NewChatViewController.swift in Sources */,
+				A1B2C3D4E5F60002A1B20001 /* ContactsViewController.swift in Sources */,
 				AE77838F23E4276D0093EABD /* ContactCellViewModel.swift in Sources */,
 				B20462E62440C99600367A57 /* AutodelOptionsViewController.swift in Sources */,
 				B23977F52D7BA351006290CE /* CallManager.swift in Sources */,
