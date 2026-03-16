@@ -10,9 +10,10 @@ class AppCoordinator: NSObject {
     private let dcAccounts: DcAccounts
     // the order below is important as well - and there are two enums, here and at
     // AppStateRestorer (this is error prone and could probably be merged)
-    private let qrTab = 0
+    private let contactsTab = 0
     public  let chatsTab = 1
     private let settingsTab = 2
+    private let qrTab = 3
 
     private let appStateRestorer = AppStateRestorer.shared
 
@@ -24,15 +25,23 @@ class AppCoordinator: NSObject {
 
     // MARK: - tabbar view handling
     lazy var tabBarController: UITabBarController = {
+        let contactsNavController = createContactsNavigationController()
         let qrNavController = createQrNavigationController()
         let chatsNavController = createChatsNavigationController()
         let settingsNavController = createSettingsNavigationController()
         let tabBarController = UITabBarController()
         tabBarController.delegate = self
-        tabBarController.viewControllers = [qrNavController, chatsNavController, settingsNavController]
+        tabBarController.viewControllers = [contactsNavController, chatsNavController, settingsNavController]
         tabBarController.tabBar.tintColor = DcColors.primary
         return tabBarController
     }()
+
+    private func createContactsNavigationController() -> UINavigationController {
+        let root = ContactsViewController(dcContext: dcAccounts.getSelected(), dcAccounts: dcAccounts)
+        let nav = UINavigationController(rootViewController: root)
+        nav.tabBarItem = UITabBarItem(title: String.localized("contacts_title"), image: UIImage(systemName: "person.2"), tag: contactsTab)
+        return nav
+    }
 
     private func createQrNavigationController() -> UINavigationController {
         let root = QrPageController(dcAccounts: dcAccounts)
@@ -587,7 +596,7 @@ class AppCoordinator: NSObject {
             }
         }
 
-        self.tabBarController.setViewControllers([createQrNavigationController(),
+        self.tabBarController.setViewControllers([createContactsNavigationController(),
                                                   createChatsNavigationController(),
                                                   createSettingsNavigationController()], animated: false)
         presentTabBarController()
