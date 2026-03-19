@@ -4,8 +4,8 @@ public struct DcColors {
     private static let white                                  = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     private static let actionCellBackgroundDark               = #colorLiteral(red: 0.1031623408, green: 0.1083367988, blue: 0.1185036376, alpha: 1)
 
-    public static let primary = UIColor.systemBlue
-    public static let highlight = UIColor.themeColor(light: UIColor.yellow, dark: UIColor.systemBlue)
+    public static let primary = UIColor(hexString: "10b981")
+    public static let highlight = UIColor.themeColor(light: UIColor.yellow, dark: UIColor(hexString: "10b981"))
     public static let colorDisabled = UIColor.themeColor(light: UIColor(white: 0.9, alpha: 1), dark: UIColor(white: 0.2, alpha: 1))
     public static let messagePrimaryColor = UIColor.themeColor(light: UIColor.rgb(red: 220, green: 248, blue: 198),
                                                         dark: UIColor.init(hexString: "224508"))

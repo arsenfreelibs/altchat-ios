@@ -33,6 +33,12 @@ class AppCoordinator: NSObject {
         tabBarController.delegate = self
         tabBarController.viewControllers = [contactsNavController, chatsNavController, settingsNavController]
         tabBarController.tabBar.tintColor = DcColors.primary
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarController.tabBar.standardAppearance = tabBarAppearance
+        if #available(iOS 15.0, *) {
+            tabBarController.tabBar.scrollEdgeAppearance = tabBarAppearance
+        }
         return tabBarController
     }()
 
@@ -528,11 +534,15 @@ class AppCoordinator: NSObject {
             presentWelcomeController()
         }
 
-        // make sure, we use the same font in all titles,
-        // here and in the custom chatlist title
-        // (according to https://learnui.design/blog/ios-font-size-guidelines.html )
-        // (it would be a bit nicer, if we would query the system font and pass it to chatlist, but well :)
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .semibold)]
+        // Configure a global UINavigationBarAppearance so all nav bars look consistent
+        // (replaces the deprecated .appearance().titleTextAttributes approach)
+        let titleAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)]
+        let navAppearance = UINavigationBarAppearance()
+        navAppearance.configureWithOpaqueBackground()
+        navAppearance.titleTextAttributes = titleAttributes
+        UINavigationBar.appearance().standardAppearance = navAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+        UINavigationBar.appearance().compactAppearance = navAppearance
     }
 
     func presentWelcomeController(accountCode: String? = nil) {

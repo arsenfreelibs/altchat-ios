@@ -1,4 +1,5 @@
 import UIKit
+import DcCore
 
 // a cell with a centered label in system blue
 
@@ -14,16 +15,16 @@ class ActionCell: UITableViewCell {
 
     var actionColor: UIColor? {
         didSet {
-            textLabel?.textColor = actionColor ?? UIColor.systemBlue
+            textLabel?.textColor = actionColor ?? DcColors.primary
             if let imageView {
-                imageView.tintColor = actionColor ?? UIColor.systemBlue
+                imageView.tintColor = actionColor ?? DcColors.primary
             }
         }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        textLabel?.textColor = UIColor.systemBlue
+        textLabel?.textColor = DcColors.primary
     }
 
     required init?(coder _: NSCoder) {

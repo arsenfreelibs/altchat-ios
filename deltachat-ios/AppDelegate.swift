@@ -146,6 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             fatalError("window was nil in app delegate")
         }
         window.backgroundColor = UIColor.systemBackground
+        window.tintColor = DcColors.primary
         callWindow = CallWindow(frame: UIScreen.main.bounds)
         installEventHandler()
         appCoordinator = AppCoordinator(window: window, dcAccounts: dcAccounts)
