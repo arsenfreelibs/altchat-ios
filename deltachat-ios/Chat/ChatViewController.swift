@@ -1240,7 +1240,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     private func updateRightMediaBtnImage() {
-        // Bold icons that match the send button's visual weight.
         let config = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold)
         let name: String
         switch rightBtnMode {
@@ -1319,7 +1318,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
 
         let mediaBtn = InputBarButtonItem()
-        // Same blue circle background and white icon as the send button.
         mediaBtn.tintColor = UIColor(white: 1, alpha: 1)
         mediaBtn.layer.cornerRadius = 20
         mediaBtn.backgroundColor = DcColors.primary
@@ -1625,19 +1623,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         recorderView.startRecording()
     }
 
-    @objc private func handleVideoNoteLongPress(_ gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            showVideoNoteRecorderView()
-        case .ended:
-            videoNoteRecorderView?.stopRecording(cancel: false)
-        case .cancelled, .failed:
-            videoNoteRecorderView?.stopRecording(cancel: true)
-        default:
-            break
-        }
-    }
-
     // MARK: - Right media button handlers
 
     /// Short tap on the right media button: toggles between video-note and audio-note mode.
@@ -1651,7 +1636,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     /// Long press on the right media button: dispatches to video or audio recording.
     @objc private func handleRightBtnLongPress(_ gesture: UILongPressGestureRecognizer) {
-        // Scale the button on hold.
+        // Scale the button on hold for tactile feedback
         switch gesture.state {
         case .began:
             UIView.animate(withDuration: 0.15, delay: 0,
@@ -2198,13 +2183,13 @@ extension ChatViewController {
 
     func tableView(_ tableView: UITableView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
         guard let messageId = configuration.identifier as? NSString, let index = messages.firstIndex(where: { $0.id == messageId.integerValue }) else {
-            debugPrint("booooom")
+            logger.warning("willEndContextMenuInteraction: no matching message for identifier")
             return
         }
 
         let indexPath = IndexPath(row: index, section: 0)
         guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageCell else {
-            debugPrint("booooom")
+            logger.warning("willEndContextMenuInteraction: cell at index \(index) is not a BaseMessageCell")
             return
         }
 
