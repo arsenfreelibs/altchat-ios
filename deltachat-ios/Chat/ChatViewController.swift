@@ -33,6 +33,23 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var searchResultIndex: Int = 0
     private var debounceTimer: Timer?
 
+    // MARK: - Right media button mode (video note / audio note)
+    private enum RightBtnMode { case videoNote, audioNote }
+    private var rightBtnMode: RightBtnMode = .videoNote
+    private var rightMediaBtn: InputBarButtonItem?
+
+    // video note recording
+    private weak var videoNoteRecorderView: VideoNoteRecorderView?
+
+    // inline audio note recording
+    private var audioNoteRecorder: AVAudioRecorder?
+    private var audioNoteURL: URL?
+    private var audioNoteTimer: Timer?
+    private var audioNoteSwipeStartX: CGFloat = 0
+    private var audioNoteCancelled = false
+    private var audioNoteAutoStopped = false  // set when the 30s limit fires so .cancelled handler skips
+    private var audioNoteStartDate: Date?      // wall-clock start time; currentTime resets to 0 after auto-stop
+
     /// Set additionalSafeAreaInsets on this view controller to cause PiP to avoid that area.
     /// Specifically this is used to avoid the draft area so you can see what you are typing while in a call
     private lazy var pipInsetViewController: UIViewController = {
@@ -56,6 +73,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.register(AudioMessageCell.self, forCellReuseIdentifier: AudioMessageCell.reuseIdentifier)
         tableView.register(WebxdcCell.self, forCellReuseIdentifier: WebxdcCell.reuseIdentifier)
         tableView.register(ContactCardCell.self, forCellReuseIdentifier: ContactCardCell.reuseIdentifier)
+        tableView.register(VideoNoteCell.self, forCellReuseIdentifier: VideoNoteCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .interactive
@@ -120,6 +138,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
     let messageInputBar = InputBarAccessoryView()
+
+    /// Shown during inline audio-note recording; floats above the inputBar.
+    private lazy var audioRecordingHintLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        label.textAlignment = .center
+        label.backgroundColor = DcColors.systemMessageBackgroundColor
+        label.layer.cornerRadius = 10
+        label.layer.masksToBounds = true
+        label.isHidden = true
+        return label
+    }()
 
     private lazy var draftArea: DraftArea = {
         let view = DraftArea()
@@ -274,6 +305,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         view.addSubview(tableView)
         tableView.fillSuperview()
+
+        // Audio-note recording hint covers the paperclip + text field but NOT the right button.
+        // It is added to contentView (the same parent as rightStackView) so z-order control works.
+        messageInputBar.contentView.addSubview(audioRecordingHintLabel)
+        NSLayoutConstraint.activate([
+            audioRecordingHintLabel.leadingAnchor.constraint(equalTo: messageInputBar.contentView.leadingAnchor),
+            audioRecordingHintLabel.trailingAnchor.constraint(equalTo: messageInputBar.rightStackView.leadingAnchor),
+            audioRecordingHintLabel.centerYAnchor.constraint(equalTo: messageInputBar.contentView.centerYAnchor),
+            audioRecordingHintLabel.heightAnchor.constraint(equalToConstant: 44),
+        ])
 
         view.addGestureRecognizer(performReplyOnOpeningSwipeActionsGestureRecognizer)
 
@@ -627,7 +668,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell: BaseMessageCell
         switch message.type {
         case DC_MSG_IMAGE, DC_MSG_GIF, DC_MSG_VIDEO, DC_MSG_STICKER:
-            cell = dequeueCell(ofType: ImageTextCell.self)
+            if message.type == DC_MSG_VIDEO && isVideoNote(message) {
+                cell = dequeueCell(ofType: VideoNoteCell.self)
+            } else {
+                cell = dequeueCell(ofType: ImageTextCell.self)
+            }
 
         case DC_MSG_FILE:
             cell = dequeueCell(ofType: FileTextCell.self)
@@ -733,7 +778,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             messageInputBar.setMiddleContentView(messageInputBar.inputTextView, animated: false)
             messageInputBar.setLeftStackViewWidthConstant(to: draft.sendEditRequestFor == nil ? 40 : 0, animated: false)
             messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
-            messageInputBar.padding = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 12)
+            messageInputBar.padding = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
             inputAccessoryView = messageInputBar
         }
 
@@ -1174,62 +1219,127 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     private func evaluateInputBar(draft: DraftModel) {
-        messageInputBar.sendButton.isEnabled = draft.canSend()
-        messageInputBar.sendButton.accessibilityTraits = draft.canSend() ? .button : .notEnabled
+        let canSend = draft.canSend()
+        messageInputBar.sendButton.isEnabled = canSend
+        messageInputBar.sendButton.accessibilityTraits = canSend ? .button : .notEnabled
+
+        // Show paper-plane send button when there is content to send; otherwise show the
+        // media button (video / audio note). The right-stack swap is animated so it feels smooth.
+        if canSend {
+            if messageInputBar.rightStackView.arrangedSubviews.first !== messageInputBar.sendButton {
+                messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
+                messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: true)
+            }
+        } else {
+            if let mediaBtn = rightMediaBtn,
+               messageInputBar.rightStackView.arrangedSubviews.first !== mediaBtn {
+                messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
+                messageInputBar.setStackViewItems([mediaBtn], forStack: .right, animated: true)
+            }
+        }
+    }
+
+    private func updateRightMediaBtnImage() {
+        // Bold icons that match the send button's visual weight.
+        let config = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold)
+        let name: String
+        switch rightBtnMode {
+        case .videoNote: name = "camera.metering.center.weighted"
+        case .audioNote: name = "microphone"
+        }
+        rightMediaBtn?.image = UIImage(systemName: name, withConfiguration: config)?
+            .withRenderingMode(.alwaysTemplate)
     }
 
     private func configureInputBarItems() {
         messageInputBar.setLeftStackViewWidthConstant(to: 40, animated: false)
         messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
 
-        let sendButtonImage = UIImage(named: "paper_plane")?.withRenderingMode(.alwaysTemplate)
-        messageInputBar.sendButton.image = sendButtonImage
+        messageInputBar.middleContentViewPadding = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
+        messageInputBar.padding = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        messageInputBar.shouldManageSendButtonEnabledState = false
+
+        // --- Left stack: attach only ---
+        // The InputStackView uses distribution=.fill, so UIStackView can allocate MORE than 40pt
+        // to this button. Fix: make the button transparent, draw the circle as a pinned 40×40
+        // subview — visually always a perfect circle, regardless of the allocated button width.
+        let attachButton = InputBarButtonItem()
+        attachButton.spacing = .fixed(0)
+        attachButton.setSize(CGSize(width: 40, height: 40), animated: false)
+        attachButton.accessibilityLabel = String.localized("menu_add_attachment")
+        attachButton.accessibilityTraits = .button
+        attachButton.backgroundColor = .clear
+        attachButton.tintColor = UIColor(white: 1, alpha: 1)
+        attachButton.contentHorizontalAlignment = .center
+        attachButton.contentVerticalAlignment = .center
+        attachButton.contentEdgeInsets = .zero
+
+        // Circle background — fixed 40×40, centered in the button frame
+        let attachCircle = UIView()
+        attachCircle.backgroundColor = DcColors.primary
+        attachCircle.layer.cornerRadius = 20
+        attachCircle.isUserInteractionEnabled = false
+        attachCircle.translatesAutoresizingMaskIntoConstraints = false
+        attachButton.insertSubview(attachCircle, at: 0)
+        NSLayoutConstraint.activate([
+            attachCircle.centerXAnchor.constraint(equalTo: attachButton.centerXAnchor),
+            attachCircle.centerYAnchor.constraint(equalTo: attachButton.centerYAnchor),
+            attachCircle.widthAnchor.constraint(equalToConstant: 40),
+            attachCircle.heightAnchor.constraint(equalToConstant: 40),
+        ])
+
+        let clipperConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold)
+        attachButton.image = UIImage(systemName: "paperclip", withConfiguration: clipperConfig)?
+            .withRenderingMode(.alwaysTemplate)
+        // UIButtonConfiguration is forced by showsMenuAsPrimaryAction on iOS 15+, but since
+        // our circle is a separate subview (transparent button), it cannot affect the appearance.
+        attachButton.showsMenuAsPrimaryAction = true
+        attachButton.menu = UIMenu()
+        attachButton.addAction(UIAction { [weak attachButton, weak self] _ in
+            attachButton?.menu = self?.clipperButtonMenu()
+        }, for: .menuActionTriggered)
+
+        messageInputBar.setStackViewItems([attachButton], forStack: .left, animated: false)
+
+        // --- Right stack: rightMediaBtn (video/audio); sendButton shown when text is present ---
+        messageInputBar.sendButton.image = UIImage(systemName: "paperplane.fill")?.withRenderingMode(.alwaysTemplate)
         messageInputBar.sendButton.accessibilityLabel = String.localized("menu_send")
         messageInputBar.sendButton.accessibilityTraits = .button
         messageInputBar.sendButton.title = nil
         messageInputBar.sendButton.tintColor = UIColor(white: 1, alpha: 1)
         messageInputBar.sendButton.layer.cornerRadius = 20
-        messageInputBar.middleContentViewPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        // this adds a padding between textinputfield and send button
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         messageInputBar.sendButton.setSize(CGSize(width: 40, height: 40), animated: false)
-        messageInputBar.padding = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 12)
-        messageInputBar.shouldManageSendButtonEnabledState = false
-
-        let attachButton = InputBarButtonItem()
-            .configure {
-                $0.spacing = .fixed(0)
-                let clipperIcon = UIImage(named: "ic_attach_file_36pt")?.withRenderingMode(.alwaysTemplate)
-                $0.image = clipperIcon
-                $0.tintColor = DcColors.primary
-                $0.setSize(CGSize(width: 40, height: 40), animated: false)
-                $0.accessibilityLabel = String.localized("menu_add_attachment")
-                $0.accessibilityTraits = .button
-            }.onSelected {
-                $0.tintColor = UIColor.themeColor(light: .lightGray, dark: .darkGray)
-            }.onDeselected {
-                $0.tintColor = DcColors.primary
-            }
-        attachButton.showsMenuAsPrimaryAction = true
-        attachButton.menu = UIMenu() // otherwise .menuActionTriggered is not triggered
-        attachButton.addAction(UIAction { [weak attachButton, weak self] _ in
-            attachButton?.menu = self?.clipperButtonMenu()
-        }, for: .menuActionTriggered)
-
-        let leftItems = [attachButton]
-
-        messageInputBar.setStackViewItems(leftItems, forStack: .left, animated: false)
-
-        // This just adds some more flare
         messageInputBar.sendButton
             .onEnabled { item in
-                UIView.animate(withDuration: 0.3, animations: {
-                    item.backgroundColor = DcColors.primary
-                })}
+                UIView.animate(withDuration: 0.3) { item.backgroundColor = DcColors.primary }
+            }
             .onDisabled { item in
-                UIView.animate(withDuration: 0.3, animations: {
-                    item.backgroundColor = DcColors.colorDisabled
-                })}
+                UIView.animate(withDuration: 0.3) { item.backgroundColor = DcColors.colorDisabled }
+            }
+
+        let mediaBtn = InputBarButtonItem()
+        // Same blue circle background and white icon as the send button.
+        mediaBtn.tintColor = UIColor(white: 1, alpha: 1)
+        mediaBtn.layer.cornerRadius = 20
+        mediaBtn.backgroundColor = DcColors.primary
+        mediaBtn.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        mediaBtn.setSize(CGSize(width: 40, height: 40), animated: false)
+        mediaBtn.spacing = .fixed(0)
+        mediaBtn.accessibilityTraits = .button
+
+        // Tap → toggle video/audio mode
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleRightBtnTap))
+        mediaBtn.addGestureRecognizer(tap)
+
+        // Long press → start recording
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleRightBtnLongPress(_:)))
+        longPress.minimumPressDuration = 0.15
+        mediaBtn.addGestureRecognizer(longPress)
+
+        rightMediaBtn = mediaBtn
+        updateRightMediaBtnImage()
+        messageInputBar.setStackViewItems([mediaBtn], forStack: .right, animated: false)
     }
 
     @objc private func chatProfilePressed() {
@@ -1262,12 +1372,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         func action(_ localized: String, _ systemImage: String, attributes: UIMenuElement.Attributes = [], _ handler: @escaping (ChatViewController) -> Void) -> UIAction {
             UIAction(title: String.localized(localized), image: UIImage(systemName: systemImage), attributes: attributes, handler: { [unowned self] _ in handler(self) })
         }
-
         actions.append(UIMenu(options: [.displayInline], children: [
             action("camera", "camera", { $0.showCameraViewController() }),
             action("gallery", "photo.on.rectangle", { $0.showPhotoVideoLibrary() })
         ]))
-
         actions.append(action("file", "doc", { $0.showFilesLibrary() }))
         actions.append(action("webxdc_app", "square.grid.2x2", { $0.showAppPicker() }))
         actions.append(action("voice_message", "mic", { $0.showVoiceMessageRecorder() }))
@@ -1281,7 +1389,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             ))
         }
         actions.append(action("contact", "person.crop.circle", { $0.showContactList() }))
-
         return UIMenu(children: actions)
     }
 
@@ -1474,6 +1581,261 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                 }
             })
+        }
+    }
+
+    // MARK: - Video Note Recording
+
+    private func showVideoNoteRecorderView() {
+        let videoStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        let audioStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+
+        if videoStatus == .notDetermined {
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] _ in
+                DispatchQueue.main.async { self?.showVideoNoteRecorderView() }
+            }
+            return
+        }
+        if audioStatus == .notDetermined {
+            AVCaptureDevice.requestAccess(for: .audio) { [weak self] _ in
+                DispatchQueue.main.async { self?.showVideoNoteRecorderView() }
+            }
+            return
+        }
+        guard videoStatus == .authorized, audioStatus == .authorized else {
+            showCameraPermissionAlert()
+            return
+        }
+
+        let recorderView = VideoNoteRecorderView(frame: .zero)
+        recorderView.delegate = self
+        recorderView.translatesAutoresizingMaskIntoConstraints = false
+        recorderView.alpha = 0
+        view.addSubview(recorderView)
+
+        NSLayoutConstraint.activate([
+            recorderView.topAnchor.constraint(equalTo: view.topAnchor),
+            recorderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            recorderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            recorderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+
+        UIView.animate(withDuration: 0.2) { recorderView.alpha = 1 }
+        videoNoteRecorderView = recorderView
+        recorderView.startRecording()
+    }
+
+    @objc private func handleVideoNoteLongPress(_ gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            showVideoNoteRecorderView()
+        case .ended:
+            videoNoteRecorderView?.stopRecording(cancel: false)
+        case .cancelled, .failed:
+            videoNoteRecorderView?.stopRecording(cancel: true)
+        default:
+            break
+        }
+    }
+
+    // MARK: - Right media button handlers
+
+    /// Short tap on the right media button: toggles between video-note and audio-note mode.
+    @objc private func handleRightBtnTap() {
+        rightBtnMode = rightBtnMode == .videoNote ? .audioNote : .videoNote
+        guard let btn = rightMediaBtn else { return }
+        UIView.transition(with: btn, duration: 0.25, options: .transitionCrossDissolve) {
+            self.updateRightMediaBtnImage()
+        }
+    }
+
+    /// Long press on the right media button: dispatches to video or audio recording.
+    @objc private func handleRightBtnLongPress(_ gesture: UILongPressGestureRecognizer) {
+        // Scale the button on hold.
+        switch gesture.state {
+        case .began:
+            UIView.animate(withDuration: 0.15, delay: 0,
+                           usingSpringWithDamping: 0.5, initialSpringVelocity: 4) {
+                self.rightMediaBtn?.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
+            }
+        case .ended, .cancelled, .failed:
+            UIView.animate(withDuration: 0.2) {
+                self.rightMediaBtn?.transform = .identity
+            }
+        default: break
+        }
+
+        switch rightBtnMode {
+        case .videoNote:
+            switch gesture.state {
+            case .began:    showVideoNoteRecorderView()
+            case .ended:    videoNoteRecorderView?.stopRecording(cancel: false)
+            case .cancelled, .failed: videoNoteRecorderView?.stopRecording(cancel: true)
+            default: break
+            }
+        case .audioNote:
+            handleAudioNoteLongPress(gesture)
+        }
+    }
+
+    private func sendVideoNote(url: URL) {
+        let fileName = "videonote_\(Int(Date().timeIntervalSince1970)).mp4"
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            // Always create a fresh DC_MSG_VIDEO message — do NOT reuse draft.draftMsg
+            // (which may be a DC_MSG_TEXT draft) so the type is always stored correctly.
+            let msg = self.dcContext.newMessage(viewType: DC_MSG_VIDEO)
+            msg.setFile(filepath: url.relativePath, fileName: fileName, mimeType: "video/x-videonote")
+            self.dcContext.sendMessage(chatId: self.chatId, message: msg)
+            FileHelper.deleteFileAsync(atPath: url.relativePath)
+        }
+    }
+
+    /// Returns true when a DC_MSG_VIDEO message is a video note (кружок).
+    /// Uses MIME type "video/x-videonote" as the stable marker — the Rust core
+    /// overwrites Param::Filename for privacy during send, but never overwrites
+    /// an already-set Param::MimeType.
+    private func isVideoNote(_ msg: DcMsg) -> Bool {
+        return msg.filemime == "video/x-videonote"
+    }
+
+    // MARK: - Inline audio note recording
+
+    private func handleAudioNoteLongPress(_ gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            let micStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+            if micStatus == .notDetermined {
+                AVCaptureDevice.requestAccess(for: .audio) { [weak self] granted in
+                    DispatchQueue.main.async {
+                        if granted { self?.startInlineAudioRecording(gesture: gesture) }
+                    }
+                }
+                return
+            }
+            guard micStatus == .authorized else {
+                showCameraPermissionAlert()
+                return
+            }
+            audioNoteSwipeStartX = gesture.location(in: view).x
+            audioNoteCancelled = false
+            startInlineAudioRecording(gesture: gesture)
+
+        case .changed:
+            let deltaX = audioNoteSwipeStartX - gesture.location(in: view).x
+            if deltaX > 60 {
+                audioNoteCancelled = true
+                audioRecordingHintLabel.text = "← отмена"
+                audioRecordingHintLabel.textColor = .systemRed
+            } else {
+                updateAudioHintTime()
+            }
+
+        case .ended:
+            stopInlineAudioRecording(send: !audioNoteCancelled)
+
+        case .cancelled, .failed:
+            // When 30s auto-stop cancels the gesture programmatically, delegate handles sending.
+            if audioNoteAutoStopped {
+                audioNoteAutoStopped = false
+            } else {
+                stopInlineAudioRecording(send: false)
+            }
+
+        default:
+            break
+        }
+    }
+
+    private func startInlineAudioRecording(gesture: UILongPressGestureRecognizer) {
+        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("audionote_\(Int(Date().timeIntervalSince1970)).m4a")
+        audioNoteURL = tmpURL
+
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatMPEG4AAC,
+            AVSampleRateKey: 44100.0,
+            AVEncoderBitRateKey: 32000,
+            AVNumberOfChannelsKey: 1
+        ]
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.record, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            let recorder = try AVAudioRecorder(url: tmpURL, settings: settings)
+            recorder.isMeteringEnabled = true
+            recorder.delegate = self
+            recorder.prepareToRecord()
+            recorder.record(forDuration: 30)
+            audioNoteRecorder = recorder
+            audioNoteStartDate = Date()
+        } catch {
+            logger.error("Cannot start audio note recording: \(error)")
+            return
+        }
+
+        audioRecordingHintLabel.text = "🎤 0:00  ← свайп для отмены"
+        audioRecordingHintLabel.textColor = DcColors.defaultTextColor
+        audioRecordingHintLabel.isHidden = false
+        // rightStackView is a sibling of hint label in contentView — bring it to front
+        messageInputBar.contentView.bringSubviewToFront(messageInputBar.rightStackView)
+
+        audioNoteTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            self?.updateAudioHintTime()
+        }
+    }
+
+    private func updateAudioHintTime() {
+        guard let recorder = audioNoteRecorder else { return }
+        let elapsed = recorder.currentTime
+        let remaining = 30.0 - elapsed
+
+        let mm = Int(elapsed) / 60
+        let ss = Int(elapsed) % 60
+        let timeStr = String(format: "%d:%02d", mm, ss)
+        if remaining <= 5 {
+            audioRecordingHintLabel.text = "🎤 \(timeStr)  ⚠️ \(Int(ceil(remaining)))с"
+            audioRecordingHintLabel.textColor = .systemRed
+        } else {
+            audioRecordingHintLabel.text = "🎤 \(timeStr)  ← свайп для отмены"
+            audioRecordingHintLabel.textColor = DcColors.defaultTextColor
+        }
+    }
+
+    private func stopInlineAudioRecording(send: Bool) {
+        audioNoteTimer?.invalidate()
+        audioNoteTimer = nil
+
+        audioRecordingHintLabel.isHidden = true
+
+        guard let recorder = audioNoteRecorder else { return }
+        // Use wall-clock elapsed time: currentTime resets to 0 once the recorder auto-stops at 30s.
+        let duration = audioNoteStartDate.map { Date().timeIntervalSince($0) } ?? recorder.currentTime
+        audioNoteStartDate = nil
+        recorder.stop()
+        audioNoteRecorder = nil
+
+        // Restore audio session to playback
+        try? AVAudioSession.sharedInstance().setCategory(.soloAmbient)
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+
+        guard send, duration >= 0.5, let url = audioNoteURL else {
+            if let url = audioNoteURL {
+                FileHelper.deleteFileAsync(atPath: url.relativePath)
+            }
+            audioNoteURL = nil
+            return
+        }
+        audioNoteURL = nil
+        sendAudioNote(url: url)
+    }
+
+    private func sendAudioNote(url: URL) {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            let msg = self.dcContext.newMessage(viewType: DC_MSG_VOICE)
+            msg.setFile(filepath: url.relativePath, mimeType: "audio/aac")
+            self.dcContext.sendMessage(chatId: self.chatId, message: msg)
+            FileHelper.deleteFileAsync(atPath: url.relativePath)
         }
     }
 
@@ -2369,6 +2731,7 @@ extension ChatViewController: BaseMessageCellDelegate {
         if handleSelection(indexPath: indexPath) { return }
 
         let message = dcContext.getMessage(id: messages[indexPath.row].id)
+
         if message.type != DC_MSG_STICKER {
             // prefer previewError over QLPreviewController.canPreview().
             // (the latter returns `true` for .webm - which is not wrong as _something_ is shown, even if the video cannot be played)
@@ -2547,6 +2910,50 @@ extension ChatViewController: MediaPickerDelegate {
 
 }
 
+// MARK: - VideoNoteRecorderDelegate
+extension ChatViewController: VideoNoteRecorderDelegate {
+    func videoNoteRecorder(_ recorder: VideoNoteRecorderView, didFinishRecordingAt url: URL?) {
+        // Reset button scale (enlarged by the long-press gesture) and cancel the gesture
+        // so it doesn't fire .ended when the user lifts their finger after 30s auto-stop.
+        UIView.animate(withDuration: 0.2) {
+            self.rightMediaBtn?.transform = .identity
+        }
+        if let btn = rightMediaBtn {
+            for gr in btn.gestureRecognizers ?? [] where gr is UILongPressGestureRecognizer {
+                gr.isEnabled = false
+                gr.isEnabled = true
+            }
+        }
+        UIView.animate(withDuration: 0.2) {
+            recorder.alpha = 0
+        } completion: { _ in
+            recorder.removeFromSuperview()
+        }
+        videoNoteRecorderView = nil
+        guard let url else { return }
+        sendVideoNote(url: url)
+    }
+}
+
+// MARK: - AVAudioRecorderDelegate
+extension ChatViewController: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        guard audioNoteRecorder === recorder else { return }
+        // Reset button scale and cancel the long-press gesture so lifting the finger
+        // after 30s auto-stop doesn't trigger .ended.
+        UIView.animate(withDuration: 0.2) { self.rightMediaBtn?.transform = .identity }
+        // Set flag BEFORE disabling the gesture so .cancelled handler skips stopInlineAudioRecording.
+        audioNoteAutoStopped = true
+        if let btn = rightMediaBtn {
+            for gr in btn.gestureRecognizers ?? [] where gr is UILongPressGestureRecognizer {
+                gr.isEnabled = false
+                gr.isEnabled = true
+            }
+        }
+        stopInlineAudioRecording(send: flag && !audioNoteCancelled)
+    }
+}
+
 // MARK: - MessageInputBarDelegate
 extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
@@ -2574,6 +2981,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.attributedText = nil
         draft.clear()
         draftArea.cancel()
+        if let mediaBtn = rightMediaBtn {
+            messageInputBar.setStackViewItems([mediaBtn], forStack: .right, animated: true)
+        }
 
         if doResignFirstResponder {
             inputBar.inputTextView.resignFirstResponder()
