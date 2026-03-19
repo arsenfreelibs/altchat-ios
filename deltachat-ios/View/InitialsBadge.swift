@@ -5,6 +5,13 @@ public class InitialsBadge: UIView {
 
     private let size: CGFloat
 
+    private let gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.startPoint = CGPoint(x: 0, y: 0)
+        layer.endPoint = CGPoint(x: 1, y: 1)
+        return layer
+    }()
+
     var leadingImageAnchorConstraint: NSLayoutConstraint?
     var trailingImageAnchorConstraint: NSLayoutConstraint?
     var topImageAnchorConstraint: NSLayoutConstraint?
@@ -71,7 +78,12 @@ public class InitialsBadge: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: size).isActive = true
         widthAnchor.constraint(equalToConstant: size).isActive = true
-        label.font = UIFont.systemFont(ofSize: size * 3 / 5)
+        label.font = UIFont.systemFont(ofSize: size * 0.40, weight: .semibold)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
+        gradientLayer.cornerRadius = radius
+        gradientLayer.masksToBounds = true
+        layer.insertSublayer(gradientLayer, at: 0)
         setupSubviews(with: radius)
         isAccessibilityElement = true
     }
@@ -108,8 +120,23 @@ public class InitialsBadge: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+
+    private static func twoInitials(from name: String) -> String {
+        let words = name.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
+        guard let first = words.first, let firstChar = first.unicodeScalars.first.map({ String($0) }) else { return "" }
+        guard words.count > 1, let last = words.last, last != first,
+              let lastChar = last.unicodeScalars.first.map({ String($0) }) else {
+            return firstChar.uppercased()
+        }
+        return (firstChar + lastChar).uppercased()
+    }
+
     public func setName(_ name: String) {
-        label.text = DcUtils.getInitials(inputName: name)
+        label.text = InitialsBadge.twoInitials(from: name)
         label.isHidden = name.isEmpty
         imageView.isHidden = !name.isEmpty
     }
@@ -127,7 +154,7 @@ public class InitialsBadge: UIView {
     }
 
     public func setColor(_ color: UIColor) {
-        backgroundColor = color
+        gradientLayer.colors = [color.lightened(by: 0.25).cgColor, color.darkened(by: 0.2).cgColor]
     }
 
     public func setRecentlySeen(_ seen: Bool) {
