@@ -61,7 +61,7 @@ class AppCoordinator: NSObject {
     private func createChatsNavigationController() -> UINavigationController {
         let root = ChatListViewController(dcContext: dcAccounts.getSelected(), dcAccounts: dcAccounts, isArchive: false)
         let nav = UINavigationController(rootViewController: root)
-        let chatTabImage = UIImage(named: "ic_chat")
+        let chatTabImage = UIImage(systemName: "message.fill")
         nav.tabBarItem = UITabBarItem(title: String.localized("pref_chats"), image: chatTabImage, tag: chatsTab)
         return nav
     }
