@@ -8,9 +8,9 @@ public struct DcColors {
     public static let highlight = UIColor.themeColor(light: UIColor.yellow, dark: UIColor(hexString: "10b981"))
     public static let colorDisabled = UIColor.themeColor(light: UIColor(white: 0.9, alpha: 1), dark: UIColor(white: 0.2, alpha: 1))
     public static let messagePrimaryColor = UIColor.themeColor(light: UIColor.rgb(red: 220, green: 248, blue: 198),
-                                                        dark: UIColor.init(hexString: "224508"))
+                                                        dark: UIColor(red: 26/255, green: 92/255, blue: 66/255, alpha: 1))
     public static let messageSecondaryColor = UIColor.themeColor(light: .white,
-                                                                 dark: .black)
+                                                                 dark: UIColor(red: 28/255, green: 28/255, blue: 30/255, alpha: 1))
     public static let contactCellBackgroundColor = UIColor.themeColor(light: .white, dark: .black)
     public static let defaultBackgroundColor = UIColor.themeColor(light: .white, dark: .black)
     public static let defaultTransparentBackgroundColor = DcColors.defaultBackgroundColor.withAlphaComponent(0.5)
@@ -32,7 +32,7 @@ public struct DcColors {
     public static let inputFieldColor =  UIColor.themeColor(
         light: UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 0.25),
         dark: UIColor(red: 30 / 255, green: 30 / 255, blue: 30 / 255, alpha: 0.25))
-    public static let placeholderColor = UIColor(red: 0.55, green: 0.55, blue: 0.55, alpha: 1)
+    public static let placeholderColor = UIColor.placeholderText
     public static let providerPreparationBackground = UIColor.init(hexString: "fdf7b2")
     public static let providerBrokenBackground = UIColor.systemRed
     public static let systemMessageBackgroundColor = UIColor.init(hexString: "65444444")
