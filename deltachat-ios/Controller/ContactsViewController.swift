@@ -96,22 +96,22 @@ class ContactsViewController: UITableViewController {
 
     @objc private func addButtonPressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .safeActionSheet)
+        alert.addAction(UIAlertAction(title: String.localized("search_by_name_or_nick"), style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.searchController.isActive = true
+            self.searchController.searchBar.becomeFirstResponder()
+        })
         alert.addAction(UIAlertAction(title: String.localized("paste_from_clipboard"), style: .default) { [weak self] _ in
             guard let self else { return }
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             appDelegate.appCoordinator.coordinate(qrCode: UIPasteboard.general.string ?? "", from: self)
         })
-        alert.addAction(UIAlertAction(title: String.localized("qrscan_title"), style: .default) { [weak self] _ in
-            self?.pushQrScanner()
+        alert.addAction(UIAlertAction(title: String.localized("qrscan_title"), style: .default) { _ in
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.appCoordinator.presentQrCodeController()
         })
         alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
         present(alert, animated: true)
-    }
-
-    private func pushQrScanner() {
-        let qrReader = QrCodeReaderController(title: String.localized("qrscan_title"))
-        qrReader.delegate = self
-        navigationController?.pushViewController(qrReader, animated: true)
     }
 
     private func inviteFriends(sourceView: UIView) {
@@ -321,16 +321,6 @@ extension ContactsViewController {
         })
         alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
         present(alert, animated: true)
-    }
-}
-
-// MARK: - QrCodeReaderDelegate
-
-extension ContactsViewController: QrCodeReaderDelegate {
-    func handleQrCode(_ qrCode: String) {
-        navigationController?.popViewController(animated: false)
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        appDelegate.appCoordinator.coordinate(qrCode: qrCode, from: self)
     }
 }
 
