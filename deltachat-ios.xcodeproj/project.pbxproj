@@ -12,6 +12,8 @@
 		3008CB7224F93EB900E6A617 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008CB7124F93EB900E6A617 /* AudioMessageCell.swift */; };
 		3008CB7424F9436C00E6A617 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008CB7324F9436C00E6A617 /* AudioPlayerView.swift */; };
 		3008CB7624F95B6D00E6A617 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008CB7524F95B6D00E6A617 /* AudioController.swift */; };
+		D4840D0048F742B6847B7655 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8CF840688B4C388C6E651F /* WaveformView.swift */; };
+		1963595E2C10475B99D881E7 /* AudioWaveformHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8853EA6C4432A35AE160 /* AudioWaveformHelper.swift */; };
 		3011E8052787365D00214221 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3011E8042787365D00214221 /* KeychainManager.swift */; };
 		30149D9322F21129003C12B5 /* QrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30149D9222F21129003C12B5 /* QrViewController.swift */; };
 		30152C9425A5D91400377714 /* PaddingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F4BFED252E3E020006B9B3 /* PaddingTextView.swift */; };
@@ -324,6 +326,8 @@
 		3008CB7124F93EB900E6A617 /* AudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
 		3008CB7324F9436C00E6A617 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		3008CB7524F95B6D00E6A617 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		8B8CF840688B4C388C6E651F /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		70CB8853EA6C4432A35AE160 /* AudioWaveformHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveformHelper.swift; sourceTree = "<group>"; };
 		3011E8042787365D00214221 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeychainManager.swift; path = ../../DcCore/DcCore/Helper/KeychainManager.swift; sourceTree = "<group>"; };
 		30149D9222F21129003C12B5 /* QrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrViewController.swift; sourceTree = "<group>"; };
 		3015634323A003BA00E9DEF4 /* AudioRecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderController.swift; sourceTree = "<group>"; };
@@ -908,6 +912,7 @@
 				AA11BB22CC33DD44EE55FF01 /* VideoNoteRecorderView.swift */,
 				30F8817524DA97DA0023780E /* BackgroundContainer.swift */,
 				3008CB7324F9436C00E6A617 /* AudioPlayerView.swift */,
+				8B8CF840688B4C388C6E651F /* WaveformView.swift */,
 				30EF7323252FF15F00E2C54A /* MessageLabel.swift */,
 				3052C609253F082E007D13EA /* MessageLabelDelegate.swift */,
 				3052C60D253F088E007D13EA /* DetectorType.swift */,
@@ -1138,6 +1143,7 @@
 				30CE137728D9C40700158DF4 /* ChatDropInteraction.swift */,
 				B2CDA6312CCDB3080024763F /* MuteDialog.swift */,
 				CA0003FE00000003CA0003FE /* UserSearchService.swift */,
+				70CB8853EA6C4432A35AE160 /* AudioWaveformHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1730,6 +1736,8 @@
 				303492B32577E40700A523D0 /* DocumentPreview.swift in Sources */,
 				D83227022D3AC9F300C239C5 /* RecentWebxdcAppsViewController.swift in Sources */,
 				3008CB7424F9436C00E6A617 /* AudioPlayerView.swift in Sources */,
+				D4840D0048F742B6847B7655 /* WaveformView.swift in Sources */,
+				1963595E2C10475B99D881E7 /* AudioWaveformHelper.swift in Sources */,
 				3080A01D277DDB8A00E74565 /* InputItem.swift in Sources */,
 				AED62BCE247687E6009E220D /* LocationStreamingIndicator.swift in Sources */,
 				30AAD71B2762869600DE3DC1 /* SelectableCell.swift in Sources */,
