@@ -228,6 +228,8 @@
 		CF14C002AABBCCDD11223344 /* ChatFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C001AABBCCDD11223344 /* ChatFilter.swift */; };
 		CF14C004AABBCCDD11223344 /* UserDefaults+Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C003AABBCCDD11223344 /* UserDefaults+Filters.swift */; };
 		CF14C006AABBCCDD11223344 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C005AABBCCDD11223344 /* FilterBarView.swift */; };
+		CA0002FE00000002CA0002FE /* RemoteUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0001FE00000001CA0001FE /* RemoteUser.swift */; };
+		CA0004FE00000004CA0004FE /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0003FE00000003CA0003FE /* UserSearchService.swift */; };
 		D85DF9782C4A96CB00A01408 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */; };
 		D85DF9802C5250E200A01408 /* ProgressAlertHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DF97F2C5250E200A01408 /* ProgressAlertHandler.swift */; };
 		D86DF20C2D30318B00141B3E /* WebxdcStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86DF20B2D30318B00141B3E /* WebxdcStoreViewController.swift */; };
@@ -655,6 +657,8 @@
 		D84AED232B55E8EB00D753F6 /* ReactionsOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsOverviewViewController.swift; sourceTree = "<group>"; };
 		D84AED262B566C0700D753F6 /* ReactionsOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsOverviewTableViewCell.swift; sourceTree = "<group>"; };
 		CF14C001AABBCCDD11223344 /* ChatFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilter.swift; sourceTree = "<group>"; };
+		CA0001FE00000001CA0001FE /* RemoteUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUser.swift; sourceTree = "<group>"; };
+		CA0003FE00000003CA0003FE /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
 		CF14C003AABBCCDD11223344 /* UserDefaults+Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Filters.swift"; sourceTree = "<group>"; };
 		CF14C005AABBCCDD11223344 /* FilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
 		D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
@@ -1052,6 +1056,7 @@
 				AE57C07F2552BBD0003CFE70 /* GalleryItem.swift */,
 				D89C456C2D0AF6A8005B1491 /* WidgetEntry.swift */,
 				CF14C001AABBCCDD11223344 /* ChatFilter.swift */,
+				CA0001FE00000001CA0001FE /* RemoteUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1132,6 +1137,7 @@
 				3011E8042787365D00214221 /* KeychainManager.swift */,
 				30CE137728D9C40700158DF4 /* ChatDropInteraction.swift */,
 				B2CDA6312CCDB3080024763F /* MuteDialog.swift */,
+				CA0003FE00000003CA0003FE /* UserSearchService.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1770,6 +1776,8 @@
 				3015634423A003BA00E9DEF4 /* AudioRecorderController.swift in Sources */,
 				30F4E2942859213400ACA0D8 /* ChatListEditingBar.swift in Sources */,
 				AE57C0802552BBD0003CFE70 /* GalleryItem.swift in Sources */,
+				CA0002FE00000002CA0002FE /* RemoteUser.swift in Sources */,
+				CA0004FE00000004CA0004FE /* UserSearchService.swift in Sources */,
 				AE25F09022807AD800CDEA66 /* AvatarSelectionCell.swift in Sources */,
 				D86DF20C2D30318B00141B3E /* WebxdcStoreViewController.swift in Sources */,
 				30DDCBE928FCA1FA00465D22 /* PartialScreenPresentationController.swift in Sources */,
