@@ -203,9 +203,7 @@ class NewChatViewController: UITableViewController {
         if section == sectionNew {
             let newOption = newOptions[row]
             if newOption == .scanQRCode {
-                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.appCoordinator.presentQrCodeController()
-                }
+                showAddContactSheet()
             } else if newOption == .newGroup {
                 showNewGroupController(createMode: .createGroup)
             } else if newOption == .newBroadcastList {
@@ -365,6 +363,26 @@ class NewChatViewController: UITableViewController {
     }
 
     // MARK: - coordinator
+    private func showAddContactSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .safeActionSheet)
+        alert.addAction(UIAlertAction(title: String.localized("search_by_name_or_nick"), style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.searchController.isActive = true
+            self.searchController.searchBar.becomeFirstResponder()
+        })
+        alert.addAction(UIAlertAction(title: String.localized("paste_from_clipboard"), style: .default) { [weak self] _ in
+            guard let self else { return }
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.appCoordinator.coordinate(qrCode: UIPasteboard.general.string ?? "", from: self)
+        })
+        alert.addAction(UIAlertAction(title: String.localized("qrscan_title"), style: .default) { _ in
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.appCoordinator.presentQrCodeController()
+        })
+        alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
+        present(alert, animated: true)
+    }
+
     private func showNewGroupController(createMode: NewGroupController.CreateMode) {
         let newGroupController = NewGroupController(dcContext: dcContext, createMode: createMode)
         navigationController?.pushViewController(newGroupController, animated: true)
