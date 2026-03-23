@@ -3,7 +3,7 @@ import DcCore
 
 class InstantOnboardingViewController: UIViewController {
 
-    static let defaultChatmailDomain: String = "nine.testrun.org"
+    static let defaultChatmailDomain: String = "alt-to.site"
 
     private var dcContext: DcContext
     private let dcAccounts: DcAccounts
@@ -281,7 +281,7 @@ class InstantOnboardingViewController: UIViewController {
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
 
-            let qrCodeData = self.qrCodeData ?? "dcaccount:nine.testrun.org"
+            let qrCodeData = self.qrCodeData ?? ("dcaccount:" + InstantOnboardingViewController.defaultChatmailDomain)
             do {
                 _ = try self.dcContext.addTransportFromQr(qrCode: qrCodeData)
             } catch {
