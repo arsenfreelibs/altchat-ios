@@ -21,6 +21,19 @@ open class AudioPlayerView: UIView {
         return playButton
     }()
 
+    /// Waveform visualisation replaces the flat progress bar.
+    public lazy var waveformView: WaveformView = {
+        let view = WaveformView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isAccessibilityElement = false
+        return view
+    }()
+
+    /// Called when the user seeks inside the waveform; parameter is progress in [0, 1].
+    public var seekAction: ((Float) -> Void)? {
+        didSet { waveformView.seekAction = seekAction }
+    }
+
     /// The time duration lable to display on audio messages.
     private lazy var durationLabel: UILabel = {
         let durationLabel = UILabel(frame: CGRect.zero)
@@ -33,13 +46,6 @@ open class AudioPlayerView: UIView {
         return durationLabel
     }()
 
-    private lazy var progressView: UIProgressView = {
-        let progressView = UIProgressView(progressViewStyle: .default)
-        progressView.progress = 0.0
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.isAccessibilityElement = false
-        return progressView
-    }()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,11 +70,12 @@ open class AudioPlayerView: UIView {
         self.addConstraints(playButtonConstraints)
         self.addConstraints(durationLabelConstraints)
 
-        progressView.addConstraints(left: playButton.rightAnchor,
-                                    right: durationLabel.leftAnchor,
-                                    centerY: self.centerYAnchor,
-                                    leftConstant: 8,
-                                    rightConstant: 8)
+        NSLayoutConstraint.activate([
+            waveformView.leftAnchor.constraint(equalTo: playButton.rightAnchor, constant: 8),
+            waveformView.rightAnchor.constraint(equalTo: durationLabel.leftAnchor, constant: -8),
+            waveformView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            waveformView.heightAnchor.constraint(equalToConstant: 32)
+        ])
         let height = self.heightAnchor.constraint(equalTo: playButton.heightAnchor)
         height.priority = .required
         height.isActive = true
@@ -77,19 +84,24 @@ open class AudioPlayerView: UIView {
     open func setupSubviews() {
         self.addSubview(playButton)
         self.addSubview(durationLabel)
-        self.addSubview(progressView)
+        self.addSubview(waveformView)
         setupConstraints()
     }
 
     open func reset() {
-        progressView.progress = 0
+        waveformView.progress = 0
+        waveformView.samples = []
         playButton.isSelected = false
         durationLabel.text = "0:00"
         playButton.accessibilityLabel = String.localized("menu_play")
     }
 
     open func setProgress(_ progress: Float) {
-        progressView.progress = progress
+        waveformView.progress = progress
+    }
+
+    open func setWaveform(_ samples: [Float]) {
+        waveformView.samples = samples
     }
 
     open func setDuration(duration: Double) {
