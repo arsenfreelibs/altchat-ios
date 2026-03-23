@@ -50,6 +50,9 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
     /// The `Timer` that update playing progress
     internal var progressTimer: Timer?
 
+    /// Cache of extracted waveform samples keyed by message id
+    private var waveformCache: [Int: [Float]] = [:]
+
     // MARK: - Init Methods
 
     public init(dcContext: DcContext, chatId: Int, delegate: AudioControllerDelegate? = nil) {
@@ -84,8 +87,33 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             cell.audioPlayerView.showPlayLayout((player.isPlaying == true) ? true : false)
             cell.audioPlayerView.setDuration(duration: player.currentTime)
         }
+        if let samples = waveformCache[messageId] {
+            cell.audioPlayerView.setWaveform(samples)
+        }
     }
     
+    public func getAudioWaveform(messageId: Int, successHandler: @escaping (Int, [Float]) -> Void) {
+        if let cached = waveformCache[messageId] {
+            successHandler(messageId, cached)
+            return
+        }
+        let message = dcContext.getMessage(id: messageId)
+        guard let fileURL = message.fileURL else { return }
+        AudioWaveformHelper.extractSamples(from: fileURL) { [weak self] samples in
+            guard let self else { return }
+            self.waveformCache[messageId] = samples
+            successHandler(messageId, samples)
+        }
+    }
+
+    public func seekAudio(messageId: Int, progress: Float) {
+        guard let player = audioPlayer,
+              playingMessage?.id == messageId else { return }
+        player.currentTime = Double(progress) * player.duration
+        playingCell?.audioPlayerView.setProgress(progress)
+        playingCell?.audioPlayerView.setDuration(duration: player.currentTime)
+    }
+
     public func getAudioDuration(messageId: Int, successHandler: @escaping (Int, Double) -> Void) {
         let message = dcContext.getMessage(id: messageId)
         if playingMessage?.id == messageId {

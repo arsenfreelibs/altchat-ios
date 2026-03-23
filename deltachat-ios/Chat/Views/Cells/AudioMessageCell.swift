@@ -6,7 +6,8 @@ import DcCore
 public protocol AudioMessageCellDelegate: AnyObject {
     func playButtonTapped(cell: AudioMessageCell, messageId: Int)
     func getAudioDuration(messageId: Int, successHandler: @escaping (Int, Double) -> Void)
-
+    func getAudioWaveform(messageId: Int, successHandler: @escaping (Int, [Float]) -> Void)
+    func seekAudio(messageId: Int, progress: Float)
 }
 
 public class AudioMessageCell: BaseMessageCell, ReusableCell {
@@ -25,8 +26,6 @@ public class AudioMessageCell: BaseMessageCell, ReusableCell {
 
     override func setupSubviews() {
         super.setupSubviews()
-        let spacerView = UIView()
-        spacerView.translatesAutoresizingMaskIntoConstraints = false
         mainContentView.addArrangedSubview(audioPlayerView)
         mainContentView.addArrangedSubview(messageLabel)
         messageLabel.paddingLeading = 12
@@ -35,6 +34,10 @@ public class AudioMessageCell: BaseMessageCell, ReusableCell {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onPlayButtonTapped))
         gestureRecognizer.numberOfTapsRequired = 1
         audioPlayerView.playButton.addGestureRecognizer(gestureRecognizer)
+        audioPlayerView.seekAction = { [weak self] seekProgress in
+            guard let self else { return }
+            self.delegate?.seekAudio(messageId: self.messageId, progress: seekProgress)
+        }
     }
 
     @objc public func onPlayButtonTapped() {
@@ -61,7 +64,13 @@ public class AudioMessageCell: BaseMessageCell, ReusableCell {
                 self.audioPlayerView.setDuration(duration: duration)
             }
         })
-        
+
+        delegate?.getAudioWaveform(messageId: messageId, successHandler: { [weak self] messageId, samples in
+            if let self,
+               messageId == self.messageId {
+                self.audioPlayerView.setWaveform(samples)
+            }
+        })
 
         super.update(dcContext: dcContext,
                      msg: msg,
