@@ -17,8 +17,9 @@ class NewChatViewController: UITableViewController {
     private let sectionNew = 0
     private let sectionContacts = 1
     private let sectionInviteFriends = 2
-    
-    private let sectionsCount = 3
+    private let sectionRemoteResults = 3
+
+    private let baseSectionsCount = 3
 
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -43,6 +44,9 @@ class NewChatViewController: UITableViewController {
 
     private var contactIds: [Int]
     private var filteredContactIds: [Int] = []
+    private var remoteResults: [RemoteUser] = []
+
+    private lazy var searchService = UserSearchService()
 
     private var searchText: String? {
         return searchController.searchBar.text
@@ -111,7 +115,8 @@ class NewChatViewController: UITableViewController {
 
     // MARK: - Table view data source
     override func numberOfSections(in _: UITableView) -> Int {
-        return sectionsCount
+        let showRemote = isFiltering && (searchText?.count ?? 0) >= 2
+        return showRemote ? baseSectionsCount + 1 : baseSectionsCount
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,6 +124,8 @@ class NewChatViewController: UITableViewController {
             return newOptions.count
         } else if section == sectionInviteFriends {
             return 1
+        } else if section == sectionRemoteResults {
+            return remoteResults.count
         } else {
             return isFiltering ? filteredContactIds.count : contactIds.count
         }
@@ -163,6 +170,14 @@ class NewChatViewController: UITableViewController {
             actionCell.actionTitle = String.localized("invite_friends")
             return actionCell
 
+        } else if section == sectionRemoteResults {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RemoteUserCell")
+                ?? UITableViewCell(style: .subtitle, reuseIdentifier: "RemoteUserCell")
+            let user = remoteResults[indexPath.row]
+            cell.textLabel?.text = user.name.isEmpty ? user.username : user.name
+            cell.detailTextLabel?.text = "@\(user.username) · \(user.addr.first ?? "")"
+            cell.detailTextLabel?.textColor = DcColors.middleGray
+            return cell
         } else {
             guard let contactCell = tableView.dequeueReusableCell(withIdentifier: ContactCell.reuseIdentifier, for: indexPath) as? ContactCell else { fatalError("ContactCell expected") }
 
@@ -175,6 +190,8 @@ class NewChatViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == sectionContacts {
             return String.localized("chat_with")
+        } else if section == sectionRemoteResults && !remoteResults.isEmpty {
+            return String.localized("search_results_on_server")
         }
         return nil
     }
@@ -198,6 +215,23 @@ class NewChatViewController: UITableViewController {
             }
         } else if section == sectionInviteFriends, let cell = tableView.cellForRow(at: indexPath) {
             inviteFriends(cell: cell)
+        } else if section == sectionRemoteResults {
+            let user = remoteResults[row]
+            guard let email = user.addr.first else {
+                tableView.deselectRow(at: indexPath, animated: false)
+                return
+            }
+            // TODO: import user.publicKey / user.fingerprint into DcCore once supported
+            let contactId = dcContext.createContact(name: user.name, email: email)
+            tableView.deselectRow(at: indexPath, animated: false)
+            if searchController.isActive {
+                searchController.dismiss(animated: false) { [weak self] in
+                    self?.showNewChat(contactId: contactId)
+                }
+            } else {
+                showNewChat(contactId: contactId)
+            }
+            return
         } else {
             showChatAt(row: row)
         }
@@ -279,11 +313,33 @@ class NewChatViewController: UITableViewController {
 
     private func filterContentForSearchText(_ searchText: String, scope _: String = String.localized("pref_show_emails_all")) {
         filteredContactIds = dcContext.getContacts(flags: DC_GCL_ADD_SELF, queryString: searchText)
+
+        if searchText.count >= 2 {
+            searchService.search(query: searchText) { [weak self] result in
+                guard let self else { return }
+                if case .success(let users) = result {
+                    let localEmails = Set(self.filteredContactIds.map { self.dcContext.getContact(id: $0).email.lowercased() })
+                    self.remoteResults = users.filter { user in
+                        !user.addr.contains { localEmails.contains($0.lowercased()) }
+                    }
+                } else {
+                    self.remoteResults = []
+                }
+                self.tableView.reloadData()
+                self.updateEmptyState(for: searchText)
+            }
+        } else {
+            searchService.cancel()
+            remoteResults = []
+        }
+
         tableView.reloadData()
         tableView.scrollToTop()
+        updateEmptyState(for: searchText)
+    }
 
-        // handle empty searchstate
-        if searchController.isActive && filteredContactIds.isEmpty {
+    private func updateEmptyState(for searchText: String) {
+        if searchController.isActive && filteredContactIds.isEmpty && remoteResults.isEmpty {
             let text = String.localizedStringWithFormat(
                 String.localized("search_no_result_for_x"),
                 searchText
@@ -303,7 +359,7 @@ class NewChatViewController: UITableViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // ensure the empty search state message can be fully read
-        if searchController.isActive && filteredContactIds.isEmpty {
+        if searchController.isActive && filteredContactIds.isEmpty && remoteResults.isEmpty {
             tableView.scrollRectToVisible(emptySearchStateLabel.frame, animated: false)
         }
     }
