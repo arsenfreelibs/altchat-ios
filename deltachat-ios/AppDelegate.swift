@@ -67,7 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UserDefaults.standard.register(defaults: [
             "broadcast_lists": true,
             "pref_calls_enabled": true,
-            "location_streaming": true
+            "location_streaming": true,
+            UserDefaults.onlineStatusEnabledKey: true
         ])
         UserDefaults.setMainIoRunning()
         UNUserNotificationCenter.current().delegate = self

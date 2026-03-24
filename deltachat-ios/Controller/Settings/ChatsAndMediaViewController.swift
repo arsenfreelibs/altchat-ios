@@ -13,6 +13,7 @@ internal final class ChatsAndMediaViewController: UITableViewController {
     private enum CellTags: Int {
         case blockedContacts
         case receiptConfirmation
+        case onlineStatus
         case exportBackup
         case autodelDevice
         case autodelServer
@@ -96,6 +97,22 @@ internal final class ChatsAndMediaViewController: UITableViewController {
         return cell
     }()
 
+    private lazy var onlineStatusSwitch: UISwitch = {
+        let switchControl = UISwitch()
+        switchControl.isOn = UserDefaults.standard.bool(forKey: UserDefaults.onlineStatusEnabledKey)
+        switchControl.addTarget(self, action: #selector(handleOnlineStatusToggle(_:)), for: .valueChanged)
+        return switchControl
+    }()
+
+    private lazy var onlineStatusCell: UITableViewCell = {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.tag = CellTags.onlineStatus.rawValue
+        cell.textLabel?.text = String.localized("pref_online_status")
+        cell.accessoryView = onlineStatusSwitch
+        cell.selectionStyle = .none
+        return cell
+    }()
+
     private lazy var exportBackupCell: ActionCell = {
         let cell = ActionCell()
         cell.tag = CellTags.exportBackup.rawValue
@@ -109,6 +126,11 @@ internal final class ChatsAndMediaViewController: UITableViewController {
             footerTitle: String.localized("pref_read_receipts_explain"),
             cells: [blockedContactsCell, mediaQualityCell, downloadOnDemandCell, receiptConfirmationCell]
         )
+        let onlineStatusSection = SectionConfigs(
+            headerTitle: nil,
+            footerTitle: String.localized("pref_online_status_explain"),
+            cells: [onlineStatusCell]
+        )
         let autoDelSection = SectionConfigs(
             headerTitle: String.localized("delete_old_messages"),
             footerTitle: nil,
@@ -119,7 +141,7 @@ internal final class ChatsAndMediaViewController: UITableViewController {
             footerTitle: String.localized("pref_backup_explain"),
             cells: [exportBackupCell]
         )
-        return [preferencesSection, autoDelSection, exportBackupSection]
+        return [preferencesSection, onlineStatusSection, autoDelSection, exportBackupSection]
     }()
 
     init(dcAccounts: DcAccounts) {
@@ -169,6 +191,7 @@ internal final class ChatsAndMediaViewController: UITableViewController {
         case .mediaQuality: showMediaQuality()
         case .downloadOnDemand: showDownloadOnDemand()
         case .receiptConfirmation: break
+        case .onlineStatus: break
 
         case .autodelDevice:
             let controller = AutodelOptionsViewController(dcContext: dcContext, fromServer: false)
@@ -229,6 +252,11 @@ internal final class ChatsAndMediaViewController: UITableViewController {
         dcContext.mdnsEnabled = sender.isOn
     }
 
+    @objc private func handleOnlineStatusToggle(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: UserDefaults.onlineStatusEnabledKey)
+        TypingManager.shared.onlineStatusSettingChanged()
+    }
+
     // MARK: - updates
     private func startImex(what: Int32, passphrase: String? = nil) {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -245,6 +273,7 @@ internal final class ChatsAndMediaViewController: UITableViewController {
 
     private func updateCells() {
         tableView.reloadData() // needed to update footer
+        onlineStatusSwitch.isOn = UserDefaults.standard.bool(forKey: UserDefaults.onlineStatusEnabledKey)
         mediaQualityCell.detailTextLabel?.text = MediaQualityViewController.getValString(val: dcContext.getConfigInt("media_quality"))
         downloadOnDemandCell.detailTextLabel?.text = DownloadOnDemandViewController.getValString(
             val: dcContext.getConfigInt("download_limit"))
