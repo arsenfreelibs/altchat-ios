@@ -46,7 +46,7 @@ class NewChatViewController: UITableViewController {
     private var filteredContactIds: [Int] = []
     private var remoteResults: [RemoteUser] = []
 
-    private lazy var searchService = UserSearchService()
+    private lazy var searchService = UserSearchService(accountId: dcContext.id)
 
     private var searchText: String? {
         return searchController.searchBar.text
@@ -219,8 +219,7 @@ class NewChatViewController: UITableViewController {
                 tableView.deselectRow(at: indexPath, animated: false)
                 return
             }
-            // TODO: import user.publicKey / user.fingerprint into DcCore once supported
-            let contactId = dcContext.createContact(name: user.name, email: email)
+            let contactId = dcContext.importContactWithKey(name: user.name, email: email, publicKey: user.publicKey)
             tableView.deselectRow(at: indexPath, animated: false)
             if searchController.isActive {
                 searchController.dismiss(animated: false) { [weak self] in

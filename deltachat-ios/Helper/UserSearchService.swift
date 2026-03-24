@@ -2,14 +2,17 @@ import Foundation
 
 final class UserSearchService {
 
-    // TODO: Replace with real JWT token from auth service once authentication is implemented
-    private static let accessToken = "fake_access_token"
     private static let baseURLString = "https://api.alt-to.online/v1/users/search"
     private static let debounceInterval: TimeInterval = 0.4
     private static let timeoutInterval: TimeInterval = 15
 
+    private let accountId: Int
     private var debounceTimer: Timer?
     private var currentRequestId = 0
+
+    init(accountId: Int) {
+        self.accountId = accountId
+    }
 
     /// Searches for users by name or username. Results are debounced (400 ms).
     /// - If `query` is shorter than 2 characters the timer is cancelled and
@@ -52,7 +55,9 @@ final class UserSearchService {
         }
 
         var request = URLRequest(url: url, timeoutInterval: Self.timeoutInterval)
-        request.setValue("Bearer \(Self.accessToken)", forHTTPHeaderField: "Authorization")
+        if let token = KeychainManager.loadJwtToken(accountId: accountId) {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         URLSession.shared.dataTask(with: request) { data, response, error in
