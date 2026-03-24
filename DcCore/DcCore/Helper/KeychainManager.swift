@@ -103,4 +103,76 @@ public class KeychainManager {
         }
         return password
     }
+
+    // MARK: - Alt Platform JWT & Recovery Password
+
+    public static func saveJwtToken(_ token: String, accountId: Int) {
+        let data = token.data(using: .utf8)!
+        let deleteQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "alt_jwt",
+            kSecAttrAccount as String: "\(accountId)",
+            kSecAttrAccessGroup as String: KcM.sharedKeychainGroup
+        ]
+        SecItemDelete(deleteQuery as CFDictionary)
+        let addQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "alt_jwt",
+            kSecAttrAccount as String: "\(accountId)",
+            kSecAttrAccessGroup as String: KcM.sharedKeychainGroup,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock,
+            kSecValueData as String: data
+        ]
+        SecItemAdd(addQuery as CFDictionary, nil)
+    }
+
+    public static func loadJwtToken(accountId: Int) -> String? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "alt_jwt",
+            kSecAttrAccount as String: "\(accountId)",
+            kSecAttrAccessGroup as String: KcM.sharedKeychainGroup,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnData as String: true
+        ]
+        var item: CFTypeRef?
+        guard SecItemCopyMatching(query as CFDictionary, &item) == errSecSuccess,
+              let data = item as? Data else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
+
+    public static func saveRecoveryPassword(_ password: String) {
+        let data = password.data(using: .utf8)!
+        let deleteQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "alt_recovery",
+            kSecAttrAccount as String: "alt_recovery_password",
+            kSecAttrAccessGroup as String: KcM.sharedKeychainGroup
+        ]
+        SecItemDelete(deleteQuery as CFDictionary)
+        let addQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "alt_recovery",
+            kSecAttrAccount as String: "alt_recovery_password",
+            kSecAttrAccessGroup as String: KcM.sharedKeychainGroup,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock,
+            kSecValueData as String: data
+        ]
+        SecItemAdd(addQuery as CFDictionary, nil)
+    }
+
+    public static func loadRecoveryPassword() -> String? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "alt_recovery",
+            kSecAttrAccount as String: "alt_recovery_password",
+            kSecAttrAccessGroup as String: KcM.sharedKeychainGroup,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnData as String: true
+        ]
+        var item: CFTypeRef?
+        guard SecItemCopyMatching(query as CFDictionary, &item) == errSecSuccess,
+              let data = item as? Data else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
 }
