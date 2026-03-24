@@ -1,6 +1,8 @@
 import Foundation
 
 extension UserDefaults {
+    static let onlineStatusEnabledKey = "pref_online_status_enabled"
+
     func populateDefaultEmojis() {
         let keys = DefaultReactions.allCases
             .reversed()

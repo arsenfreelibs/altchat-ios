@@ -674,6 +674,15 @@
 "pref_incognito_keyboard_explain" = "Request keyboard to disable personalized learning";
 "pref_read_receipts" = "Read Receipts";
 "pref_read_receipts_explain" = "If read receipts are disabled, you won\'t be able to see read receipts from others.";
+"pref_online_status" = "Online Status";
+"pref_online_status_explain" = "Show your online status and typing indicators to contacts who also have it enabled. Requires the Maps integration: open any chat\'s location at least once to activate.";
+"two_contact_names" = "%1$@ and %2$@";
+"typing" = "typing...";
+"online" = "Online";
+"is_typing" = "%1$@ is typing...";
+/* %1$@ is a pre-formatted names string, e.g. "Alice and Bob" (built from two_contact_names). Used for exactly 2 typists. */
+"are_typing" = "%1$@ are typing...";
+"is_typing_with_others" = "%1$@ and %2$d others are typing...";
 "pref_server" = "Server";
 "pref_encryption" = "Encryption";
 "pref_manage_keys" = "Manage Keys";
