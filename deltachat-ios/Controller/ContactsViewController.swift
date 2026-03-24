@@ -83,6 +83,8 @@ class ContactsViewController: UITableViewController {
         super.viewWillAppear(animated)
         contactIds = dcContext.getContacts(flags: DC_GCL_ADD_SELF)
         tableView.reloadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleOnlineStatusChanged),
+                                               name: TypingManager.onlineStatusChangedNotification, object: nil)
     }
 
     override func viewDidLayoutSubviews() {
@@ -92,7 +94,25 @@ class ContactsViewController: UITableViewController {
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: TypingManager.onlineStatusChangedNotification, object: nil)
+    }
+
     // MARK: - actions
+
+    @objc private func handleOnlineStatusChanged() {
+        let showOnline = UserDefaults.standard.bool(forKey: UserDefaults.onlineStatusEnabledKey)
+        for indexPath in tableView.indexPathsForVisibleRows ?? [] {
+            guard indexPath.section != sectionInviteFriends,
+                  indexPath.section != sectionRemoteResults,
+                  let cell = tableView.cellForRow(at: indexPath) as? ContactCell else { continue }
+            let contactId = contactIdByRow(indexPath.row)
+            // When showOnline is false the badge is explicitly cleared, not just skipped.
+            let isOnline = showOnline && TypingManager.shared.isOnline(contactId: contactId)
+            cell.avatar.setRecentlySeen(isOnline)
+        }
+    }
 
     @objc private func addButtonPressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .safeActionSheet)
@@ -171,8 +191,13 @@ class ContactsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.reuseIdentifier, for: indexPath) as? ContactCell else {
             fatalError("ContactCell expected")
         }
-        let viewModel = ContactCellViewModel.make(contactId: contactIdByRow(indexPath.row), searchText: searchText, dcContext: dcContext)
+        let contactId = contactIdByRow(indexPath.row)
+        let viewModel = ContactCellViewModel.make(contactId: contactId, searchText: searchText, dcContext: dcContext)
         cell.updateCell(cellViewModel: viewModel)
+        // Overlay online status from TypingManager (mutual opt-in: only visible if we also have it enabled)
+        if UserDefaults.standard.bool(forKey: UserDefaults.onlineStatusEnabledKey) {
+            cell.avatar.setRecentlySeen(TypingManager.shared.isOnline(contactId: contactId))
+        }
         return cell
     }
 
