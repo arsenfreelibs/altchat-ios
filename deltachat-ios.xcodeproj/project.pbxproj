@@ -232,6 +232,7 @@
 		CF14C006AABBCCDD11223344 /* FilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF14C005AABBCCDD11223344 /* FilterBarView.swift */; };
 		CA0002FE00000002CA0002FE /* RemoteUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0001FE00000001CA0001FE /* RemoteUser.swift */; };
 		CA0004FE00000004CA0004FE /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0003FE00000003CA0003FE /* UserSearchService.swift */; };
+		CA0006FE00000006CA0006FE /* AltPlatformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0005FE00000005CA0005FE /* AltPlatformService.swift */; };
 		D85DF9782C4A96CB00A01408 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */; };
 		D85DF9802C5250E200A01408 /* ProgressAlertHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DF97F2C5250E200A01408 /* ProgressAlertHandler.swift */; };
 		D86DF20C2D30318B00141B3E /* WebxdcStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86DF20B2D30318B00141B3E /* WebxdcStoreViewController.swift */; };
@@ -663,6 +664,7 @@
 		CF14C001AABBCCDD11223344 /* ChatFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilter.swift; sourceTree = "<group>"; };
 		CA0001FE00000001CA0001FE /* RemoteUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUser.swift; sourceTree = "<group>"; };
 		CA0003FE00000003CA0003FE /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
+		CA0005FE00000005CA0005FE /* AltPlatformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltPlatformService.swift; sourceTree = "<group>"; };
 		CF14C003AABBCCDD11223344 /* UserDefaults+Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Filters.swift"; sourceTree = "<group>"; };
 		CF14C005AABBCCDD11223344 /* FilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
 		D85DF9772C4A96CB00A01408 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
@@ -1143,6 +1145,7 @@
 				30CE137728D9C40700158DF4 /* ChatDropInteraction.swift */,
 				B2CDA6312CCDB3080024763F /* MuteDialog.swift */,
 				CA0003FE00000003CA0003FE /* UserSearchService.swift */,
+				CA0005FE00000005CA0005FE /* AltPlatformService.swift */,
 				70CB8853EA6C4432A35AE160 /* AudioWaveformHelper.swift */,
 			);
 			path = Helper;
@@ -1786,6 +1789,7 @@
 				AE57C0802552BBD0003CFE70 /* GalleryItem.swift in Sources */,
 				CA0002FE00000002CA0002FE /* RemoteUser.swift in Sources */,
 				CA0004FE00000004CA0004FE /* UserSearchService.swift in Sources */,
+				CA0006FE00000006CA0006FE /* AltPlatformService.swift in Sources */,
 				AE25F09022807AD800CDEA66 /* AvatarSelectionCell.swift in Sources */,
 				D86DF20C2D30318B00141B3E /* WebxdcStoreViewController.swift in Sources */,
 				30DDCBE928FCA1FA00465D22 /* PartialScreenPresentationController.swift in Sources */,
