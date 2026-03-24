@@ -295,6 +295,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleEphemeralTimerModified(_:)), name: Event.ephemeralTimerModified, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.applicationWillResignActive(_:)), name: UIApplication.willResignActiveNotification, object: nil)
+        // handleRealtimeData is registered in viewDidAppear / removed in viewDidDisappear
+        // to avoid N redundant calls when multiple ChatViewControllers live in the nav stack.
     }
 
     required init?(coder _: NSCoder) {
@@ -462,6 +464,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         handleUserVisibility(isVisible: true)
         messageInputBar.backgroundView.backgroundColor = DcColors.defaultTransparentBackgroundColor
+
+        // Remove before add: guards against double-registration if viewDidAppear fires
+        // twice without an intervening viewDidDisappear (multiwindow / iOS edge cases).
+        NotificationCenter.default.removeObserver(self, name: TypingManager.typingChangedNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Event.webxdcRealtimeDataReceived, object: nil)
+        NotificationCenter.default.removeObserver(self, name: TypingManager.onlineStatusChangedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleTypingChanged(_:)),
+                                               name: TypingManager.typingChangedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleRealtimeData(_:)),
+                                               name: Event.webxdcRealtimeDataReceived, object: nil)
+        // Also refresh on setting toggle (e.g. user disables online status from another screen).
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleOnlineStatusChanged),
+                                               name: TypingManager.onlineStatusChangedNotification, object: nil)
+        TypingManager.shared.joinChat(chatId: chatId, dcContext: dcContext)
+        updateTitle()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -476,6 +493,22 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         AppStateRestorer.shared.resetLastActiveChat()
         handleUserVisibility(isVisible: false)
         audioController.stopAnyOngoingPlaying()
+        NotificationCenter.default.removeObserver(self, name: TypingManager.typingChangedNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Event.webxdcRealtimeDataReceived, object: nil)
+        NotificationCenter.default.removeObserver(self, name: TypingManager.onlineStatusChangedNotification, object: nil)
+        // Only leave when actually navigating away from this chat (back swipe / pop),
+        // NOT when a sub-screen (ChatInfo, SharedMedia, …) is pushed onto the stack.
+        // The background case is handled separately in applicationWillResignActive.
+        // TODO: if ChatViewController is ever placed in a UITabBarController or split view,
+        // add `|| (tabBarController != nil && !isMovingFromParent)` to cover tab switches.
+        if isMovingFromParent || isBeingDismissed {
+            TypingManager.shared.leaveChat(chatId: chatId, dcContext: dcContext)
+        } else {
+            // Sub-screen pushed: stop timers and drop any pending typing packet so we
+            // don't send stale data while the view is invisible. joinChat restores
+            // everything when the user comes back (viewDidAppear).
+            TypingManager.shared.suspendTimers()
+        }
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -493,6 +526,26 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: - Notifications
+
+    @objc private func handleRealtimeData(_ notification: Notification) {
+        guard let ui = notification.userInfo,
+              let msgId = ui["message_id"] as? Int,
+              let data = ui["data"] as? Data else { return }
+        // The event handler posts this notification from a background thread.
+        // TypingManager requires main-thread access.
+        DispatchQueue.main.async {
+            TypingManager.shared.handleRealtimeData(msgId: msgId, data: data)
+        }
+    }
+
+    @objc private func handleTypingChanged(_ notification: Notification) {
+        guard let cId = notification.userInfo?["chatId"] as? Int, cId == chatId else { return }
+        updateTitle()
+    }
+
+    @objc private func handleOnlineStatusChanged() {
+        updateTitle()
+    }
 
     @objc private func handleEphemeralTimerModified(_ notification: Notification) {
         DispatchQueue.main.async { [weak self] in
@@ -607,6 +660,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
         if navigationController?.visibleViewController == self {
             handleUserVisibility(isVisible: true)
+            // Re-join the realtime channel: it was left in applicationWillResignActive.
+            // viewDidAppear is NOT called again when the app returns from background,
+            // so this is the only place to re-establish the connection.
+            TypingManager.shared.joinChat(chatId: chatId, dcContext: dcContext)
         }
         // Update the last seen indicator
         updateTitle()
@@ -616,6 +673,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if navigationController?.visibleViewController == self {
             handleUserVisibility(isVisible: false)
             draft.save(context: dcContext)
+            TypingManager.shared.leaveChat(chatId: chatId, dcContext: dcContext)
         }
     }
 
@@ -950,7 +1008,27 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else if dcChat.isOutBroadcast {
                 subtitle = String.localized(stringID: "n_recipients", parameter: chatContactIds.count)
             } else if dcChat.isMultiUser {
-                if chatContactIds.count > 1 || chatContactIds.contains(Int(DC_CONTACT_ID_SELF)) {
+                let typingContacts = TypingManager.shared.typingContacts(for: chatId)
+                if !typingContacts.isEmpty {
+                    let sortedNames = typingContacts
+                        .compactMap { id -> String? in
+                            let n = dcContext.getContact(id: id).displayName
+                            return n.isEmpty ? nil : n
+                        }
+                        .sorted()
+                    if sortedNames.isEmpty {
+                        subtitle = String.localized("typing")
+                    } else if sortedNames.count == 1 {
+                        subtitle = String.localizedStringWithFormat(String.localized("is_typing"), sortedNames[0])
+                    } else if sortedNames.count == 2 {
+                        let names = String.localizedStringWithFormat(String.localized("two_contact_names"), sortedNames[0], sortedNames[1])
+                        subtitle = String.localizedStringWithFormat(String.localized("are_typing"), names)
+                    } else {
+                        // 3+ typists: give first name + count of the rest so translators
+                        // can place both tokens freely without a pre-built inner string.
+                        subtitle = String.localizedStringWithFormat(String.localized("is_typing_with_others"), sortedNames[0], sortedNames.count - 1)
+                    }
+                } else if chatContactIds.count > 1 || chatContactIds.contains(Int(DC_CONTACT_ID_SELF)) {
                     subtitle = String.localized(stringID: "n_members", parameter: chatContactIds.count)
                 } else {
                     // do not show misleading "1 member" in case securejoin has not finished
@@ -962,7 +1040,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 subtitle = String.localized("chat_self_talk_subtitle")
             } else if chatContactIds.count >= 1 {
                 dcContact = dcContext.getContact(id: chatContactIds[0])
-                if let dcContact, dcContact.isBot {
+                let typingContacts = TypingManager.shared.typingContacts(for: chatId)
+                if !typingContacts.isEmpty {
+                    let name = dcContact?.displayName ?? ""
+                    let displayName = name.isEmpty ? (dcContact?.email ?? "") : name
+                    subtitle = displayName.isEmpty
+                        ? String.localized("typing")
+                        : String.localizedStringWithFormat(String.localized("is_typing"), displayName)
+                } else if TypingManager.shared.isOnline(contactId: chatContactIds[0]) {
+                    subtitle = String.localized("online")
+                } else if let dcContact, dcContact.isBot {
                     subtitle = String.localized("bot")
                 } else if !dcChat.isEncrypted {
                     subtitle = dcContact?.email
@@ -994,6 +1081,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
             if !dcChat.isSelfTalk {
                 let recentlySeen = DcUtils.showRecentlySeen(context: dcContext, chat: dcChat)
+                    || (!dcChat.isMultiUser && chatContactIds.count >= 1 && TypingManager.shared.isOnline(contactId: chatContactIds[0]))
                 titleView.initialsBadge.setRecentlySeen(recentlySeen)
 
                 if !dcChat.isMultiUser && dcChat.canSend && UserDefaults.standard.bool(forKey: "pref_calls_enabled"),
@@ -2978,6 +3066,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
         draft.text = text
         evaluateInputBar(draft: draft)
+        if dcChat.canSend {
+            TypingManager.shared.textDidChange(chatId: chatId, dcContext: dcContext)
+        }
     }
 }
 
