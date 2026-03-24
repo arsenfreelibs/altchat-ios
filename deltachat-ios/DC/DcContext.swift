@@ -552,6 +552,44 @@ public class DcContext {
         return nil
     }
 
+    public func importVcardContents(_ contents: String) -> [Int]? {
+        do {
+            if let data = try DcAccounts.shared.blockingCall(method: "import_vcard_contents", params: [id as AnyObject, contents as AnyObject]) {
+                return try JSONDecoder().decode(DcVcardImportResult.self, from: data).result
+            }
+        } catch {
+            logger.error("cannot import vcard contents: \(error)")
+        }
+        return nil
+    }
+
+    /// Creates a contact importing their PGP public key via vCard.
+    /// Falls back to createContact if key is absent or import fails.
+    public func importContactWithKey(name: String, email: String, publicKey: String?) -> Int {
+        if let armoredKey = publicKey, !armoredKey.isEmpty,
+           let vcard = DcContext.buildVCard(name: name, email: email, armoredKey: armoredKey),
+           let contactIds = importVcardContents(vcard),
+           let contactId = contactIds.first {
+            return contactId
+        }
+        return createContact(name: name, email: email)
+    }
+
+    private static func buildVCard(name: String, email: String, armoredKey: String) -> String? {
+        var lines = armoredKey.components(separatedBy: "\n")
+        lines = lines.filter { line in
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard !trimmed.isEmpty else { return false }
+            if trimmed.hasPrefix("-----") { return false }
+            if trimmed.hasPrefix("=") && trimmed.count <= 6 { return false }
+            if trimmed.contains(":") { return false }  // header fields like "Hash:"
+            return true
+        }
+        let cleanBase64 = lines.joined().replacingOccurrences(of: " ", with: "")
+        guard !cleanBase64.isEmpty else { return nil }
+        return "BEGIN:VCARD\r\nVERSION:4.0\r\nFN:\(name)\r\nEMAIL:\(email)\r\nKEY:data:application/pgp-keys;base64,\(cleanBase64)\r\nEND:VCARD\r\n"
+    }
+
     public func forwardMessagesToAccount(messageIds: [Int], destContextId: Int, destChatId: Int) {
         do {
             try DcAccounts.shared.blockingCall(method: "forward_messages_to_account", params: [id as AnyObject, messageIds as AnyObject, destContextId as AnyObject, destChatId as AnyObject])
@@ -602,6 +640,24 @@ public class DcContext {
             logger.error(error.localizedDescription)
         }
         return []
+    }
+
+    public func getSelfPublicKeyArmored() -> String? {
+        guard let data = try? DcAccounts.shared.blockingCall(method: "get_self_public_key_armored", params: [id as AnyObject]),
+              let decoded = try? JSONDecoder().decode(JsonrpcStringResult.self, from: data) else { return nil }
+        return decoded.result
+    }
+
+    public func getSelfPrivateKeyArmored() -> String? {
+        guard let data = try? DcAccounts.shared.blockingCall(method: "get_self_private_key_armored", params: [id as AnyObject]),
+              let decoded = try? JSONDecoder().decode(JsonrpcStringResult.self, from: data) else { return nil }
+        return decoded.result
+    }
+
+    public func getSelfFingerprintHex() -> String? {
+        guard let data = try? DcAccounts.shared.blockingCall(method: "get_self_fingerprint_hex", params: [id as AnyObject]),
+              let decoded = try? JSONDecoder().decode(JsonrpcStringResult.self, from: data) else { return nil }
+        return decoded.result
     }
 
     public func addOrUpdateTransport(param: DcEnteredLoginParam) throws -> Bool {
