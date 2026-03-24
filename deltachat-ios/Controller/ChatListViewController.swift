@@ -188,6 +188,16 @@ class ChatListViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startTimer()
+        retryQuickRegisterIfNeeded()
+    }
+
+    private func retryQuickRegisterIfNeeded() {
+        guard KeychainManager.loadJwtToken(accountId: dcContext.id) == nil else { return }
+        guard let displayName = dcContext.displayname, !displayName.isEmpty else { return }
+        let dcCtx = dcContext
+        DispatchQueue.global().async {
+            AltPlatformService(dcContext: dcCtx).quickRegister(displayName: displayName)
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {

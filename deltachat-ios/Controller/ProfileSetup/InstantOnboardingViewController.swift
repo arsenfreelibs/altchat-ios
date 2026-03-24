@@ -296,6 +296,11 @@ class InstantOnboardingViewController: UIViewController {
     }
 
     private func handleCreateSuccess() {
+        let dcCtx = dcContext
+        let displayName = dcCtx.displayname ?? ""
+        DispatchQueue.global().async {
+            AltPlatformService(dcContext: dcCtx).quickRegister(displayName: displayName)
+        }
         DispatchQueue.main.async {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             appDelegate.registerForNotifications()
