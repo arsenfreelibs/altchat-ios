@@ -55,6 +55,74 @@ struct DcTestContext {
     }
 }
 
+// MARK: - TypingManager Tests
+
+struct TypingManagerTests {
+
+    // MARK: handleRealtimeData — input validation (pure, no DcContext needed)
+
+    @Test @MainActor func handleRealtimeDataShortDataIsNoop() {
+        // data.count < 7 — must return silently without posting any notifications
+        var typingFired = false
+        var onlineFired = false
+        let t = NotificationCenter.default.addObserver(forName: TypingManager.typingChangedNotification, object: nil, queue: .main) { _ in typingFired = true }
+        let o = NotificationCenter.default.addObserver(forName: TypingManager.onlineStatusChangedNotification, object: nil, queue: .main) { _ in onlineFired = true }
+        defer {
+            NotificationCenter.default.removeObserver(t)
+            NotificationCenter.default.removeObserver(o)
+        }
+
+        TypingManager.shared.handleRealtimeData(msgId: 99, data: Data([0xDC, 0x54]))  // too short (2 bytes)
+        #expect(!typingFired)
+        #expect(!onlineFired)
+    }
+
+    @Test @MainActor func handleRealtimeDataWrongMagicIsNoop() {
+        // Correct length but wrong magic — must be silently rejected
+        var typingFired = false
+        var onlineFired = false
+        let t = NotificationCenter.default.addObserver(forName: TypingManager.typingChangedNotification, object: nil, queue: .main) { _ in typingFired = true }
+        let o = NotificationCenter.default.addObserver(forName: TypingManager.onlineStatusChangedNotification, object: nil, queue: .main) { _ in onlineFired = true }
+        defer {
+            NotificationCenter.default.removeObserver(t)
+            NotificationCenter.default.removeObserver(o)
+        }
+
+        TypingManager.shared.handleRealtimeData(msgId: 99, data: Data([0xFF, 0xFF, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        #expect(!typingFired)
+        #expect(!onlineFired)
+    }
+
+    // MARK: Initial / boundary state queries (safe without DcContext)
+
+    @Test @MainActor func typingContactsReturnsEmptyForUnknownChat() {
+        // typingContacts(for:) must never crash and return empty for a never-joined chatId
+        let contacts = TypingManager.shared.typingContacts(for: Int.max)
+        #expect(contacts.isEmpty)
+    }
+
+    @Test @MainActor func isOnlineReturnsFalseForUnknownContact() {
+        #expect(!TypingManager.shared.isOnline(contactId: Int.max))
+    }
+
+    // MARK: Integration: joinChat clears typing state (needs an offline account)
+
+    @Test @MainActor func joinChatResetsTypingState() async {
+        let context = DcTestContext.newOfflineAccount()
+        defer { DcTestContext.cleanup() }
+
+        let chatId = context.createChatByContactId(contactId: Int(DC_CONTACT_ID_SELF))
+        defer { TypingManager.shared.leaveChat(chatId: chatId, dcContext: context) }
+
+        // joinChat must initialise typingContacts to an empty set for the chat
+        TypingManager.shared.joinChat(chatId: chatId, dcContext: context)
+        let contacts = TypingManager.shared.typingContacts(for: chatId)
+        #expect(contacts.isEmpty)
+    }
+}
+
+// MARK: - UIViewController helpers
+
 extension UIViewController {
     func dismiss(animated: Bool) async {
         await withCheckedContinuation { continuation in
