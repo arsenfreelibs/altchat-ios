@@ -323,6 +323,10 @@
 "start_call" = "Hovor";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Zvedni";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Vyzvání";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Připojování";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Pokles";
 "declined_call" = "Odmítnutý hovor";

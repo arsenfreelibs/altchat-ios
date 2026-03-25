@@ -769,3 +769,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Toque aqui para receber mensagens enquanto o alt.chat estiver em segundo plano.";
 "perm_enable_bg_already_done" = "Você já permitiu que o alt.chat receba mensagens em segundo plano.\n\nSe as mensagens ainda não chegarem em segundo plano, verifique também as configurações do sistema.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Chamando";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Conectando";

@@ -555,3 +555,8 @@
 "a11y_delivery_status_read" = "送信状態：既読";
 "a11y_delivery_status_invalid" = "不明な送信状態";
 "a11y_disappearing_messages_activated" = "消えるメッセージを有効にしました。";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "呼び出し中";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "接続中";

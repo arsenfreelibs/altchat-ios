@@ -205,3 +205,8 @@
 "remove_desktop" = "أزِل";
 "save_desktop" = "حفظ";
 "name_desktop" = "الاسم";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "جاري الرنين";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "جاري الاتصال";

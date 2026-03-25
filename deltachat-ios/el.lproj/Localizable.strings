@@ -721,3 +721,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Πατήστε εδώ για να λαμβάνετε μηνύματα ενώ το alt.chat είναι στο παρασκήνιο.";
 "perm_enable_bg_already_done" = "Επιτρέψατε ήδη στο alt.chat να λαμβάνει μηνύματα στο παρασκήνιο.\n\nΕάν τα μηνύματα εξακολουθούν να μην φτάνουν στο παρασκήνιο, ελέγξτε τις ρυθμίσεις του συστήματός σας.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Κλήση";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Σύνδεση";

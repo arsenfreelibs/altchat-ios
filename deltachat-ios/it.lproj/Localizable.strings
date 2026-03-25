@@ -329,6 +329,10 @@
 "start_audio_call" = "Chiamata Audio";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Chiamata Video";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Chiamata in corso";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Connessione";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Rispondi";
 // the action "to decline" a call, not: "the decline"

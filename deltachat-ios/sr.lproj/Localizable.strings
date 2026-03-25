@@ -261,6 +261,10 @@
 "start_call" = "Позови";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Одговори";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Звони";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Повезивање";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Одби";
 // get confirmations

@@ -456,3 +456,8 @@
 "pref_read_receipts" = "Citiți Chitanțele";
 "pref_read_receipts_explain" = "Dacă sunt dezactivate chitanțele de citire, nu veți putea vedea chitanțele de citire de la alte persoane.";
 "pref_manage_keys" = "Gestionați Cheile";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Sună";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Conectare";

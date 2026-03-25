@@ -885,3 +885,8 @@ Ak chcete pokračovať, aktualizujte toto zariadenie na najnovšiu verziu alt.ch
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Klepnutím sem prijmete správy, zatiaľ čo je alt.chat na pozadí.";
 "perm_enable_bg_already_done" = "Službe alt.chat ste už povolili príjem správ na pozadí.\n\nAk správy stále neprichádzajú na pozadí, skontrolujte tiež svoje systémové nastavenia.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Vyzvonenie";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Pripájanie";

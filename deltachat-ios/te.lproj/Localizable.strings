@@ -197,3 +197,8 @@
 "remove_desktop" = "తొలగించు";
 "save_desktop" = "భద్రపరుచు";
 "export_backup_desktop" = "బ్యాకప్ ఎగుమతి చెయి";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "రింగ్ అవుతోంది";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "కనెక్ట్ అవుతోంది";

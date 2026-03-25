@@ -205,3 +205,8 @@
 "remove_desktop" = "நீக்கு";
 "save_desktop" = "சேமி";
 "name_desktop" = "பெயர்";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "அழைக்கிறது";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "இணைக்கிறது";

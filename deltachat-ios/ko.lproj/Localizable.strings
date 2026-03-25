@@ -697,3 +697,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "alt.chat이 백그라운드에 있는 동안 메시지를 받으려면 여기를 누르십시오.";
 "perm_enable_bg_already_done" = "이미 alt.chat 에서 백그라운드로 메시지를 수신하도록 허용했습니다.\n\n메시지가 여전히 백그라운드로 도착하지 않으면 시스템 설정도 확인하십시오.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "벨 울리는 중";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "연결 중";

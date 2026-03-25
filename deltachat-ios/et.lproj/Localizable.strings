@@ -333,6 +333,10 @@
 "start_audio_call" = "Häälkõne";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Videokõne";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Helistab";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Ühendamine";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Vasta";
 // the action "to decline" a call, not: "the decline"

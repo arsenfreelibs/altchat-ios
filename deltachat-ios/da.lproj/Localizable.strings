@@ -586,3 +586,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Tryk her for at modtage beskeder når alt.chat er i baggrunden.";
 "perm_enable_bg_already_done" = "Du har allerede tilladt alt.chat at modtage beskeder i baggrunden.\n\nHvis beskeder ikke ankommer i baggrunden, undersøg dine systemindstillinger.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Ringer";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Forbinder";

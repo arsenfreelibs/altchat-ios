@@ -850,3 +850,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Napauta vastaanottaaksesi viestejä, kun alt.chat on taustalla.";
 "perm_enable_bg_already_done" = "Annoit jo luvan viestien vastaanottamiselle taustalla.\n\nJos et saa viestejä taustalla, tarkista myös järjestelmäasetukset.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Soi";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Yhdistää";

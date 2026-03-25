@@ -795,3 +795,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Nhấn vào đây để nhận tin nhắn khi alt.chat ở chế độ nền.";
 "perm_enable_bg_already_done" = "Bạn đã cho phép alt.chat nhận tin nhắn trong nền.\n\nNếu tin nhắn vẫn không đến trong nền, vui lòng kiểm tra cài đặt hệ thống của bạn.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Đang đổ chuông";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Đang kết nối";

@@ -842,3 +842,8 @@
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Докоснете тук, за да получавате съобщения, докато alt.chat е във фонов режим.";
 "perm_enable_bg_already_done" = "Вече разрешихте alt.chat да получава съобщения във фонов режим.\n\nАко съобщенията все още не пристигат във фонов режим, моля проверете Вашите системни настройки.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Позвъняване";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Свързване";

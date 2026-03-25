@@ -333,6 +333,10 @@
 "start_audio_call" = "音訊通話";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "視訊通話";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "響鈴中";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "連線中";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "接聽";
 // the action "to decline" a call, not: "the decline"

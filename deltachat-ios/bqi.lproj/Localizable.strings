@@ -399,3 +399,8 @@
 "message_detail_received_desktop" = "گرؽڌه وابی";
 "show_window" = "نشووݩ داڌن نیمدری";
 "open_settings" = "گۊشیڌن سامووا";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "در حال زنگ زدن";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "در حال اتصال";

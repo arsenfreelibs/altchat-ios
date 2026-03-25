@@ -389,3 +389,8 @@
 "timestamp_format_m_desktop" = "MMM D";
 "remove_desktop" = "Forviŝi";
 "save_desktop" = "Konservi";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Sonoras";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Konektante";

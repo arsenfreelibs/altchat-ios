@@ -937,3 +937,8 @@
 "perm_enable_bg_already_done" = "Xa permitiches que alt.chat reciba mensaxes en segundo plano\n\nSe aínda así non recibes as mensaxes, por favor comproba os axustes do sistema.";
 // device messages for updates
 "update_2_0" = "Que hai de novo?\n\n💯 Agora cifrado extremo-a-extremo é de fiar e para sempre. Non hai máis cadeados 🔒!\n\n✉️ Emails clásicos sen cifrado extremo-a-extremo son marcados con unha carta\n\n😻 Nova páxina de perfil mellorada para todos os teus contactos\n\n🔲 Novo botón de acceso rápido a apps usadas nun chat\n\n❤️ Por favor doa para continuarmos independentes e a mellorar: %1$@";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Chamando";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Conectando";

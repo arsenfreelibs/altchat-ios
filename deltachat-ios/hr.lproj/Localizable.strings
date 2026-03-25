@@ -210,3 +210,8 @@
 "name_desktop" = "Ime";
 "message_detail_sent_desktop" = "poslano";
 "message_detail_received_desktop" = "primljeno";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Zvoni";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Povezivanje";

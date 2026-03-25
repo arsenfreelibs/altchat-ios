@@ -325,6 +325,10 @@
 "start_audio_call" = "Audio deia";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Bideo deia";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Deitzen";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Konektatzen";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Erantzun";
 // the action "to decline" a call, not: "the decline"

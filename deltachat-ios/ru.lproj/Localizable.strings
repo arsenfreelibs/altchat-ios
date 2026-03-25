@@ -329,6 +329,10 @@
 "start_audio_call" = "Аудиозвонок";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Видеозвонок";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Вызов";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Соединение";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Ответить";
 // the action "to decline" a call, not: "the decline"

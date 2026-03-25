@@ -365,3 +365,8 @@
 "write_message_desktop" = "Iscrie unu messàgiu";
 "encryption_info_title_desktop" = "Informatziones de tzifradura";
 "more_info_desktop" = "Àteras informatziones";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Ringing";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Connecting";

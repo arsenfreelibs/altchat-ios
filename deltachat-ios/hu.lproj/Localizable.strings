@@ -323,6 +323,10 @@
 "start_call" = "Hívás";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Fogadás";
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Csörög";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Csatlakozás";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Elutasítás";
 "declined_call" = "Elutasított hívás";

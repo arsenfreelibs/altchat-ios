@@ -370,3 +370,8 @@
 "menu.view.developer.open.current.log.file" = "Loq-faylı açın";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "alt.chat arxa fonda mesajları almaq üçün bura toxunun.";
+
+// Status text shown on the call screen while the outgoing call is ringing
+"call_status_ringing" = "Zəng gedir";
+// Status text shown on the call screen while the connection is being established
+"call_status_connecting" = "Qoşulur";
