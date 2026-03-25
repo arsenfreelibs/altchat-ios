@@ -295,8 +295,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleEphemeralTimerModified(_:)), name: Event.ephemeralTimerModified, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.applicationWillResignActive(_:)), name: UIApplication.willResignActiveNotification, object: nil)
-        // handleRealtimeData is registered in viewDidAppear / removed in viewDidDisappear
-        // to avoid N redundant calls when multiple ChatViewControllers live in the nav stack.
     }
 
     required init?(coder _: NSCoder) {
@@ -468,12 +466,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Remove before add: guards against double-registration if viewDidAppear fires
         // twice without an intervening viewDidDisappear (multiwindow / iOS edge cases).
         NotificationCenter.default.removeObserver(self, name: TypingManager.typingChangedNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Event.webxdcRealtimeDataReceived, object: nil)
         NotificationCenter.default.removeObserver(self, name: TypingManager.onlineStatusChangedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleTypingChanged(_:)),
                                                name: TypingManager.typingChangedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleRealtimeData(_:)),
-                                               name: Event.webxdcRealtimeDataReceived, object: nil)
         // Also refresh on setting toggle (e.g. user disables online status from another screen).
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleOnlineStatusChanged),
                                                name: TypingManager.onlineStatusChangedNotification, object: nil)
@@ -494,7 +489,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         handleUserVisibility(isVisible: false)
         audioController.stopAnyOngoingPlaying()
         NotificationCenter.default.removeObserver(self, name: TypingManager.typingChangedNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Event.webxdcRealtimeDataReceived, object: nil)
         NotificationCenter.default.removeObserver(self, name: TypingManager.onlineStatusChangedNotification, object: nil)
         // Only leave when actually navigating away from this chat (back swipe / pop),
         // NOT when a sub-screen (ChatInfo, SharedMedia, …) is pushed onto the stack.
@@ -526,17 +520,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: - Notifications
-
-    @objc private func handleRealtimeData(_ notification: Notification) {
-        guard let ui = notification.userInfo,
-              let msgId = ui["message_id"] as? Int,
-              let data = ui["data"] as? Data else { return }
-        // The event handler posts this notification from a background thread.
-        // TypingManager requires main-thread access.
-        DispatchQueue.main.async {
-            TypingManager.shared.handleRealtimeData(msgId: msgId, data: data)
-        }
-    }
 
     @objc private func handleTypingChanged(_ notification: Notification) {
         guard let cId = notification.userInfo?["chatId"] as? Int, cId == chatId else { return }

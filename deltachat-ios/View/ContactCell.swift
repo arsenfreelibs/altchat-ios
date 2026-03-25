@@ -384,6 +384,13 @@ class ContactCell: UITableViewCell {
                                 isAccountMuted: cellViewModel.dcContext.isMuted(),
                                 isContactRequest: isContactRequest,
                                 isArchiveLink: chatData.chatId == DC_CHAT_ID_ARCHIVED_LINK)
+            if chatData.chatId != DC_CHAT_ID_ARCHIVED_LINK,
+               !TypingManager.shared.typingContacts(for: chatData.chatId).isEmpty {
+                subtitleLabel.text = String.localized("typing")
+                subtitleLabel.textColor = DcColors.defaultTextColor
+            } else {
+                subtitleLabel.textColor = DcColors.middleGray
+            }
 
         case .contact(let contactData):
             let contact = cellViewModel.dcContext.getContact(id: contactData.contactId)

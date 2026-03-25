@@ -132,6 +132,7 @@ class ChatListViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRelayHelperDidChange), name: Event.relayHelperDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleTypingChanged(_:)), name: TypingManager.typingChangedNotification, object: nil)
     }
 
     required init?(coder _: NSCoder) {
@@ -271,6 +272,18 @@ class ChatListViewController: UITableViewController {
             refreshInBg()
             quitSearch(animated: false)
             tableView.scrollToTop()
+        }
+    }
+
+    @objc private func handleTypingChanged(_ notification: Notification) {
+        guard let viewModel,
+              !viewModel.searchActive,
+              let chatId = notification.userInfo?["chatId"] as? Int else { return }
+        for row in 0..<viewModel.numberOfRowsIn(section: 0) {
+            if viewModel.chatIdFor(section: 0, row: row) == chatId {
+                tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+                return
+            }
         }
     }
     private func setupSubviews() {

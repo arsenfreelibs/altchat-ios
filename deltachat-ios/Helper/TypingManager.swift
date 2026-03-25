@@ -29,6 +29,25 @@ final class TypingManager {
         DispatchQueue.main.async { [self] in
             startStalePresenceTimer()
         }
+        // Subscribe permanently so typing packets are processed even when no chat screen
+        // is open (e.g. the user is on the chat list). ChatViewController no longer needs
+        // to forward this event.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleRealtimeDataNotification(_:)),
+            name: Event.webxdcRealtimeDataReceived,
+            object: nil
+        )
+    }
+
+    @objc private func handleRealtimeDataNotification(_ notification: Notification) {
+        guard let ui = notification.userInfo,
+              let msgId = ui["message_id"] as? Int,
+              let data = ui["data"] as? Data else { return }
+        // The C event handler posts on a background thread; TypingManager requires main thread.
+        DispatchQueue.main.async { [weak self] in
+            self?.handleRealtimeData(msgId: msgId, data: data)
+        }
     }
 
     // MARK: - Protocol constants
@@ -91,6 +110,8 @@ final class TypingManager {
     /// Set to `true` when `textDidChange` is called before the async msgId lookup completes.
     /// Flushed as a single typing packet once `setupRealtime` stores the msgId.
     private var pendingTypingSend: Bool = false
+    /// Typing packets received before `fingerprintCache` was ready; flushed once the cache is built.
+    private var pendingIncomingPackets: [(msgId: Int, data: Data)] = []
 
     // MARK: - Public API
 
@@ -109,6 +130,7 @@ final class TypingManager {
             heartbeatDates.removeAll()
             onlineContactIds.removeAll()
             pendingTypingSend = false
+            pendingIncomingPackets.removeAll()
         }
 
         // Reset presence state when switching to a different chat: the new chat has its own
@@ -116,6 +138,7 @@ final class TypingManager {
         if currentChatId != chatId {
             onlineContactIds.removeAll()
             heartbeatDates.removeAll()
+            pendingIncomingPackets.removeAll()
         }
 
         currentChatId = chatId
@@ -140,8 +163,14 @@ final class TypingManager {
                 map[Self.fingerprint(of: email)] = contactId
             }
             DispatchQueue.main.async { [weak self] in
-                guard self?.currentChatId == chatId else { return }
-                self?.fingerprintCache[chatId] = map
+                guard let self, self.currentChatId == chatId else { return }
+                self.fingerprintCache[chatId] = map
+                // Flush packets that arrived while the cache was being built.
+                let buffered = self.pendingIncomingPackets
+                self.pendingIncomingPackets.removeAll()
+                for packet in buffered {
+                    self.handleRealtimeData(msgId: packet.msgId, data: packet.data)
+                }
             }
         }
 
@@ -166,6 +195,7 @@ final class TypingManager {
         }
         stopTypingTimers()
         pendingTypingSend = false
+        pendingIncomingPackets.removeAll()
         typingContactIds.removeValue(forKey: chatId)
         typingLastSeen.removeValue(forKey: chatId)
         fingerprintCache.removeValue(forKey: chatId)
@@ -272,6 +302,13 @@ final class TypingManager {
         // Ignore packets from ourselves
         if fp == selfFp { return }
 
+        // Buffer if the fingerprint→contactId cache is not yet ready (async build in flight).
+        // The packet will be replayed once joinChat's background task completes.
+        guard fingerprintCache[chatId] != nil else {
+            pendingIncomingPackets.append((msgId: msgId, data: data))
+            return
+        }
+
         guard let contactId = resolveFingerprint(fp, chatId: chatId) else { return }
 
         switch type {
@@ -353,8 +390,14 @@ final class TypingManager {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             // initWebxdcIntegration is idempotent per chat: returns the same msgId on
             // repeated calls. Returns 0 if no global integration XDC has been set yet
-            // (i.e. Maps was never opened). Safe to call alongside Maps.
-            let msgId = dcContext.initWebxdcIntegration(for: chatId)
+            // (i.e. Maps was never opened). Register the bundled maps XDC if needed so
+            // that typing works even on a fresh install before the user opens Maps.
+            var msgId = dcContext.initWebxdcIntegration(for: chatId)
+            if msgId == 0,
+               let mapsXdc = Bundle.main.url(forResource: "maps", withExtension: "xdc", subdirectory: "Assets") {
+                dcContext.setWebxdcIntegration(filepath: mapsXdc.path)
+                msgId = dcContext.initWebxdcIntegration(for: chatId)
+            }
             guard msgId != 0 else { return }
 
             DispatchQueue.main.async { [weak self] in
