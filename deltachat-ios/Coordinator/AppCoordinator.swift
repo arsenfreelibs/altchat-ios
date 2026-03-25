@@ -340,9 +340,8 @@ class AppCoordinator: NSObject {
         } else {
             showTab(index: qrTab)
             if let navController = self.tabBarController.selectedViewController as? UINavigationController,
-               let topViewController = navController.topViewController,
-               let qrPageController = topViewController as? QrPageController {
-                coordinate(qrCode: code, from: qrPageController)
+               let topViewController = navController.topViewController {
+                coordinate(qrCode: code, from: topViewController)
             }
         }
     }
@@ -351,7 +350,6 @@ class AppCoordinator: NSObject {
     func coordinate(qrCode code: String, from viewController: UIViewController) {
         let dcContext = dcAccounts.getSelected()
 
-        showChats()
         let qrParsed: DcLot = dcContext.checkQR(qrCode: code)
         let state = Int32(qrParsed.state)
         switch state {
