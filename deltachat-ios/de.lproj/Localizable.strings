@@ -257,7 +257,7 @@
 "menu_export_attachment" = "Datei exportieren";
 "menu_export_attachments" = "Dateien exportieren";
 "menu_all_media" = "Alle Medien";
-"all_apps_and_media" = "Alle Apps & Medien";
+"all_apps_and_media" = "Alle Dateien & Medien";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Im Chat zeigen";
 "show_app_in_chat" = "App im Chat zeigen";

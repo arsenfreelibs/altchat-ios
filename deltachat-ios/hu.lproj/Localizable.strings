@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Melléklet exportálása";
 "menu_export_attachments" = "Mellékletek exportálása";
 "menu_all_media" = "Összes média";
-"all_apps_and_media" = "Összes alkalmazás & média";
+"all_apps_and_media" = "Osszes fajl & media";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Megjelenítés a csevegésben";
 "show_app_in_chat" = "Alkalmazás megjelenítése a csevegésben";

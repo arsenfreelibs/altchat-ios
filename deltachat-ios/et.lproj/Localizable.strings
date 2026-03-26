@@ -257,7 +257,7 @@
 "menu_export_attachment" = "Ekspordi manus";
 "menu_export_attachments" = "Ekspordi manused";
 "menu_all_media" = "Kõik meediumid";
-"all_apps_and_media" = "Kõik rakendused ja meediumid";
+"all_apps_and_media" = "Koik failid ja meediumid";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Näita vestluses";
 "show_app_in_chat" = "Näita rakendust vestluses";

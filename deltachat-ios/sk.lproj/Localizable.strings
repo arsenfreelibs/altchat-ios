@@ -232,7 +232,7 @@
 "menu_export_attachment" = "Exportovať prílohu";
 "menu_export_attachments" = "Exportovať príloh";
 "menu_all_media" = "Všetky médiá";
-"all_apps_and_media" = "Všetky aplikácie a médiá";
+"all_apps_and_media" = "Vsetky subory a media";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Zobraziť v konverzácií";
 "show_app_in_chat" = "Zobraziť aplikáciu v konverzácii";

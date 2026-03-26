@@ -257,7 +257,7 @@
 "menu_export_attachment" = "导出附件";
 "menu_export_attachments" = "导出附件";
 "menu_all_media" = "所有媒体";
-"all_apps_and_media" = "所有应用和媒体";
+"all_apps_and_media" = "所有文件和媒体";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "在聊天中显示";
 "show_app_in_chat" = "在聊天中显示应用";

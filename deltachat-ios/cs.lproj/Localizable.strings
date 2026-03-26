@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Exportovat přílohu";
 "menu_export_attachments" = "Exportovat přílohy";
 "menu_all_media" = "Všechna multimédia";
-"all_apps_and_media" = "Všechny aplikace a multimédia";
+"all_apps_and_media" = "Vsechny soubory a multimedia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Ukázat v chatu";
 "show_app_in_chat" = "Zobrazit aplikaci v chatu";

@@ -250,7 +250,7 @@
 "menu_export_attachment" = "Exporta l\'adjunt";
 "menu_export_attachments" = "Exporta els adjunts";
 "menu_all_media" = "Tots els multimèdia";
-"all_apps_and_media" = "Totes les Apps & Multimèdia";
+"all_apps_and_media" = "Tots els fitxers & Multimedia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Mostra al xat";
 "show_app_in_chat" = "Mostra l\'aplicació al xat";

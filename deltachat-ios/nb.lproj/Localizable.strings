@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Eksporter vedlegg";
 "menu_export_attachments" = "Eksporter vedlegg";
 "menu_all_media" = "Alle medier";
-"all_apps_and_media" = "Alle apper og media";
+"all_apps_and_media" = "Alle filer og media";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Vis i chat";
 "show_app_in_chat" = "Vis app i chat";

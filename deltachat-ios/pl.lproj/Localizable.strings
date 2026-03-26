@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Eksportuj załącznik";
 "menu_export_attachments" = "Eksportuj załączniki";
 "menu_all_media" = "Wszystkie multimedia";
-"all_apps_and_media" = "Wszystkie aplikacje i multimedia";
+"all_apps_and_media" = "Wszystkie pliki i multimedia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Pokaż w czacie";
 "show_app_in_chat" = "Pokaż aplikację w czacie";

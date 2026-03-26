@@ -250,7 +250,7 @@
 "menu_export_attachment" = "Exporter la pièce jointe";
 "menu_export_attachments" = "Exporter les pièces jointes";
 "menu_all_media" = "Tous les fichiers multimédias";
-"all_apps_and_media" = "Toutes les applis & et fichiers multimédias";
+"all_apps_and_media" = "Tous les fichiers et medias";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Montrer dans la discussion";
 "show_app_in_chat" = "Montrer l\'appli dans la discussion";

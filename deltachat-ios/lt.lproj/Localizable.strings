@@ -228,7 +228,7 @@
 "menu_export_attachment" = "Eksportuoti priedą";
 "menu_export_attachments" = "Eksportuoti priedus";
 "menu_all_media" = "Visa medija";
-"all_apps_and_media" = "Visos programėlės ir medija";
+"all_apps_and_media" = "Visi failai ir medija";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Rodyti pokalbyje";
 "menu_share" = "Bendrinti";

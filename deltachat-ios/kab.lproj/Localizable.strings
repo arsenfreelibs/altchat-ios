@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Sifeḍ amedday";
 "menu_export_attachments" = "Sifeḍ imeddayen";
 "menu_all_media" = "Akk imidyaten";
-"all_apps_and_media" = "Akk isnasen & Amidya";
+"all_apps_and_media" = "Akk ifuyla & Amidya";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Sken deg Udiwenni";
 "show_app_in_chat" = "Sken asnas deg Udiwenni";

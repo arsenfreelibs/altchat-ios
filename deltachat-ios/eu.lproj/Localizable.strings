@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Esportatu eranskina";
 "menu_export_attachments" = "Esportatu eranskinak";
 "menu_all_media" = "Multimedia guztia";
-"all_apps_and_media" = "Aplikazio guztiak eta multimedia";
+"all_apps_and_media" = "Fitxategi guztiak eta multimedia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Erakutsi txatean";
 "show_app_in_chat" = "Erakutsi aplikazioa txatean";

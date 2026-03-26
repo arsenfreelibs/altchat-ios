@@ -249,7 +249,7 @@
 "menu_export_attachment" = "Експортувати вкладення";
 "menu_export_attachments" = "Експортувати вкладення";
 "menu_all_media" = "Всі матеріали";
-"all_apps_and_media" = "Усі додатки й медіа";
+"all_apps_and_media" = "Усі файли й медіа";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Показати в чаті";
 "show_app_in_chat" = "Показати Застосунок у чаті";

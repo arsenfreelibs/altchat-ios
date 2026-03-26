@@ -257,7 +257,7 @@
 "menu_export_attachment" = "İlişiği Dışa Aktar";
 "menu_export_attachments" = "İlişikleri Dışa Aktar";
 "menu_all_media" = "Tüm Ortamlar";
-"all_apps_and_media" = "Tüm Uygulamalar ve Ortamlar";
+"all_apps_and_media" = "Tum Dosyalar ve Medya";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Sohbette Göster";
 "show_app_in_chat" = "Uygulamayı Sohbette Göster";
