@@ -125,7 +125,11 @@ internal final class SettingsViewController: UITableViewController {
         return cell
     }()
 
-    private lazy var sections: [SectionConfigs] = {
+    private var titleTapCount = 0
+    private var showDevOptions = false
+    private var sections: [SectionConfigs] = []
+
+    private func buildSections() -> [SectionConfigs] {
         var appNameAndVersion = "alt.chat"
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             appNameAndVersion += " v" + appVersion
@@ -134,9 +138,13 @@ internal final class SettingsViewController: UITableViewController {
             headerTitle: String.localized("pref_profile_info_headline"),
             cells: [self.profileCell]
         )
-        let preferencesSection = SectionConfigs(
-            cells: [self.chatsAndMediaCell, self.notificationCell, self.selectBackgroundCell, self.addAnotherDeviceCell, self.connectivityCell, self.advancedCell]
-        )
+        var preferencesCells: [UITableViewCell] = [
+            self.chatsAndMediaCell, self.notificationCell, self.selectBackgroundCell, self.addAnotherDeviceCell
+        ]
+        if showDevOptions {
+            preferencesCells.append(contentsOf: [self.connectivityCell, self.advancedCell])
+        }
+        let preferencesSection = SectionConfigs(cells: preferencesCells)
         let listsSection = SectionConfigs(
             cells: [allAppsAndMediaCell]
         )
@@ -144,9 +152,8 @@ internal final class SettingsViewController: UITableViewController {
             footerTitle: appNameAndVersion,
             cells: [inviteFriendsCell, helpCell]
         )
-
         return [profileSection, preferencesSection, listsSection, helpSection]
-    }()
+    }
 
     init(dcAccounts: DcAccounts) {
         self.dcContext = dcAccounts.getSelected()
@@ -166,7 +173,6 @@ internal final class SettingsViewController: UITableViewController {
     // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = String.localized("menu_settings")
         tableView.rowHeight = UITableView.automaticDimension
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "qrcode"),
@@ -174,12 +180,28 @@ internal final class SettingsViewController: UITableViewController {
             target: self,
             action: #selector(qrButtonPressed)
         )
+        let titleLabel = UILabel()
+        titleLabel.text = String.localized("menu_settings")
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        titleLabel.sizeToFit()
+        titleLabel.isUserInteractionEnabled = true
+        titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(titleTapped)))
+        navigationItem.titleView = titleLabel
+        sections = buildSections()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        sections = buildSections()
+        tableView.reloadData()
         notificationCell.detailTextLabel?.text = " " // nil does not reserve space for the warning calculated in background
         updateCells()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        showDevOptions = false
+        titleTapCount = 0
     }
 
     // MARK: - UITableViewDelegate + UITableViewDatasource
@@ -329,5 +351,14 @@ internal final class SettingsViewController: UITableViewController {
         let nav = UINavigationController(rootViewController: qrPageController)
         nav.modalPresentationStyle = .formSheet
         present(nav, animated: true)
+    }
+
+    @objc private func titleTapped() {
+        titleTapCount += 1
+        if titleTapCount >= 20, !showDevOptions {
+            showDevOptions = true
+            sections = buildSections()
+            tableView.reloadData()
+        }
     }
 }
