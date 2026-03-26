@@ -578,10 +578,10 @@ class AppCoordinator: NSObject {
     }
 
     func presentQrCodeController() {
-        popTabsToRootViewControllers()
-        window.rootViewController = tabBarController
-        showTab(index: qrTab)
-        window.makeKeyAndVisible()
+        let qrPageController = QrPageController(dcAccounts: dcAccounts, initialPage: .scanner)
+        let nav = UINavigationController(rootViewController: qrPageController)
+        nav.modalPresentationStyle = .formSheet
+        tabBarController.present(nav, animated: true)
     }
 
     func popTabsToRootViewControllers() {

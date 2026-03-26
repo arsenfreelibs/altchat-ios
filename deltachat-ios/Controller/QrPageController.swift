@@ -90,12 +90,6 @@ class QrPageController: UIPageViewController {
         self.progressObserver = nil
     }
 
-    func showScannerPage() {
-        qrSegmentControl.selectedSegmentIndex = 1
-        setViewControllers([qrCodeReaderController], direction: .forward, animated: false, completion: nil)
-        updateMenuItems()
-    }
-
     // MARK: - actions
     @objc private func qrSegmentControlChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
