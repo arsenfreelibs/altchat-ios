@@ -2,8 +2,15 @@ import UIKit
 import DcCore
 
 class QrPageController: UIPageViewController {
+
+    enum Page: Int {
+        case qrCode = 0
+        case scanner = 1
+    }
+
     private let dcContext: DcContext
     private let dcAccounts: DcAccounts
+    private let initialPage: Page
     var progressObserver: NSObjectProtocol?
     let qrCodeReaderController: QrCodeReaderController
     let qrViewController: QrViewController
@@ -24,9 +31,10 @@ class QrPageController: UIPageViewController {
         return control
     }()
 
-    init(dcAccounts: DcAccounts) {
+    init(dcAccounts: DcAccounts, initialPage: Page = .qrCode) {
         self.dcAccounts = dcAccounts
         self.dcContext = dcAccounts.getSelected()
+        self.initialPage = initialPage
 
         qrViewController = QrViewController(dcContext: dcContext)
         qrCodeReaderController = QrCodeReaderController(title: String.localized("qrscan_title"))
@@ -46,12 +54,14 @@ class QrPageController: UIPageViewController {
         dataSource = self
         delegate = self
         navigationItem.titleView = qrSegmentControl
+        qrSegmentControl.selectedSegmentIndex = initialPage.rawValue
         updateMenuItems()
 
+        let initialController: UIViewController = initialPage == .scanner ? qrCodeReaderController : qrViewController
         setViewControllers(
-            [qrViewController],
+            [initialController],
             direction: .forward,
-            animated: true,
+            animated: false,
             completion: nil
         )
 
@@ -78,6 +88,12 @@ class QrPageController: UIPageViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.progressObserver = nil
+    }
+
+    func showScannerPage() {
+        qrSegmentControl.selectedSegmentIndex = 1
+        setViewControllers([qrCodeReaderController], direction: .forward, animated: false, completion: nil)
+        updateMenuItems()
     }
 
     // MARK: - actions
