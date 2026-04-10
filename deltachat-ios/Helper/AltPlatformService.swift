@@ -34,8 +34,8 @@ final class AltPlatformService {
         }
 
         // 1. Collect transport addresses
-        let transports = dcContext.listTransports()
-        var addrs = transports.map { $0.addr }
+        let transports = dcContext.listTransportsEx()
+        var addrs = transports.map { $0.param.addr }
         if addrs.isEmpty, let addr = dcContext.addr { addrs = [addr] }
         guard !addrs.isEmpty else { return }
 

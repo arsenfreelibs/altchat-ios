@@ -436,7 +436,7 @@ class ChatListViewController: UITableViewController {
 
     @objc func markReadPressed() {
         if isEditing {
-            viewModel?.markUnreadSelectedChats(in: tableView.indexPathsForSelectedRows)
+            viewModel?.markReadSelectedChats(in: tableView.indexPathsForSelectedRows)
             setLongTapEditing(false)
         } else if isArchive {
             dcContext.marknoticedChat(chatId: Int(DC_CHAT_ID_ARCHIVED_LINK))
@@ -596,6 +596,17 @@ class ChatListViewController: UITableViewController {
             markReadAction.image = UIImage(systemName: imageName)
 
             return UISwipeActionsConfiguration(actions: [markReadAction, pinAction])
+        } else if !chat.isSelfTalk {
+            let markUnreadAction = UIContextualAction(style: .destructive, title: String.localized("mark_as_unread_short")) { [weak self] _, _, completionHandler in
+                self?.dcContext.markfreshChat(chatId: chatId)
+                NotificationManager.updateBadgeCounters() // we do not get an INCOMING_MSG event, updated manually
+                completionHandler(true)
+            }
+            markUnreadAction.backgroundColor = UIColor.systemBlue
+            let imageName = if #available(iOS 16, *) { "message.badge" } else { "circle" }
+            markUnreadAction.image = UIImage(systemName: imageName)
+
+            return UISwipeActionsConfiguration(actions: [markUnreadAction, pinAction])
         } else {
             let actions = UISwipeActionsConfiguration(actions: [pinAction])
             actions.performsFirstActionWithFullSwipe = false

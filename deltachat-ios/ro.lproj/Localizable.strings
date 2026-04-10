@@ -10,7 +10,6 @@
 "off" = "Închideți";
 "def" = "Implicit";
 "default_value" = "Implicit (%1$@)";
-"default_value_as_above" = "Implicit (la fel ca mai sus)";
 "custom" = "Personalizat";
 "none" = "Nici unul";
 "automatic" = "Automat";
@@ -204,7 +203,6 @@
 "menu_more_options" = "Mai multe opțiuni";
 "menu_learn_spelling" = "Învățați Ortografia";
 "jump_to_message" = "Sari la Mesaj";
-"copy_json" = " Copiați JSON";
 "replace_draft" = "Înlocuiți proiectul";
 "title_share_location" = "Partajați locația cu toți membrii grupului";
 "device_talk" = "Mesajele Dispozitivului";
@@ -244,7 +242,7 @@
 "ask_delete_contact" = "Ștergerea contactului %1$@?\n\nContacts cu discuții în curs sau din agenda de adrese a sistemului nu pot fi șterse definitiv.";
 "ask_start_chat_with" = "Chat cu %1$@?";
 // %1$s is replaced by a comma-separated list of names
-"ask_remove_members" = "Scoateți  %1$@ din grup?";
+"ask_remove_members" = "Scoateți %1$@ din grup?";
 "open_url_confirmation" = "Doriți să deschideți acest link?";
 // contact list
 "contacts_title" = "Contacte";
@@ -287,16 +285,10 @@
 "start_app" = "Start…";
 // this is a warning that is shown when one tries to send something to a chat that is not yet accepted.
 "accept_request_first" = "Vă rugăm să acceptați mai întâi cererea de chat.";
-// map
-"filter_map_on_time" = "Afișați locațiile în intervalul de timp";
-"show_location_traces" = "Afișați urme";
-"add_poi" = "Trimiteți punctul de interes";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "Nu cereți din nou %1$@";
 "puny_code_warning_header" = "Link suspect detectat";
 // placeholder contains the hostname converted to ascii
-"puny_code_warning_question" = "Ești sigur că vrei să vizitezi  %1$@?";
+"puny_code_warning_question" = "Ești sigur că vrei să vizitezi %1$@?";
 // this message is shown whenever a link with non-latin characters is clicked. first placeholder is original hostname with special chars, second placeholder is hostname encoded in ascii
 "puny_code_warning_description" = "Acest link poate denatura caracterele cu caractere asemănătoare din diferite alfabete. Urmând linkul etichetat %1$@ va duce la %2$@ ceea ce este normal pentru caracterele non-latine. Dacă nu v-ați așteptat la astfel de caractere, acest link ar putea fi dăunător.";
 // search

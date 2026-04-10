@@ -1,20 +1,47 @@
 # Delta Chat iOS Changelog
 
-## Unreleased
+## v2.48.0 Testflight
+2026-03
 
-- Increase reply swipe sensitivity
+- Add a warning about updating all devices to "Settings / Advanced / Relays"
+- Improve logging
+- Fix reordering problems introduced in 2.46.0
+- Fix resending of larger messages
+- Fix chats not marked as read sometime on other devices
+- Fix importing backups created by 1.86.0
+
+
+## v2.47.0 Testflight
+2026-03
+
+- Fix infinite loop in case a folder is missing on the relay
+- Fix downloading full attachments if the message is already downloaded
+- Fix downloading full attachments if the message was deleted
+- Fix: Make newlines work in chat descriptions
+
+
+## v2.46.0 Testflight
+2026-03
+
+- Increase resilience of multi-relay usage: if on relay goes down, messages are still received in the others
+- Allow to hide a relay from contacts instead of removing, allowing smoother relay changes
+- In the chat list, swipe a read chat to the right to mark it "unread"
 - Allow to switch profile when sharing or forwarding
+- Leave groups and channels before deletion
+- Support GIF stickers
+- Display message views count for channel owners
+- Increase reply swipe sensitivity
+- Show the group description when tapping its info message
 - Add tab bar icon bounce animation on tap
 - Explain at "Settings / Chats / Outgoing Media Quality" how to send original quality
-- Leave groups and channels before deletion
+- Improve mini-app summaries
+- Fix: Voice messages now no longer silence the VoiceOver permanently
 - Fix: remove meaningless address from vCard
 - Fix: No more UI ghosting on cell swipe
-- VoiceOver: Voice messages now no longer silence the VoiceOver permanently
-- Display message views count for channel owners
-- Improve mini-app summaries
-- Show the group description when tapping its info message
+- Fix: Calls are now marked as read when you accept or decline a call
+- Fix: More reliable "Add Second Device" QR code joining
 - Update translations and local help
-- Update core to 2.44.0
+- Update core to 2.46.0
 
 
 ## v2.43.0
