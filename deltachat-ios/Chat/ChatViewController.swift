@@ -1055,7 +1055,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             button.accessibilityLabel = String.localized("apps_and_media")
             rightBarButtonItems.append(button)
 
-            if let image = dcChat.profileImage {
+            if dcChat.isSelfTalk {
+                titleView.initialsBadge.setColor(UIColor.systemBlue)
+                if let overlay = UIImage.symbolOverlay(systemName: "bookmark.fill", size: 37) {
+                    titleView.initialsBadge.setImage(overlay)
+                }
+            } else if dcChat.isDeviceTalk {
+                if let icons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
+                   let primary = icons["CFBundlePrimaryIcon"] as? [String: Any],
+                   let files = primary["CFBundleIconFiles"] as? [String],
+                   let iconName = files.last,
+                   let icon = UIImage(named: iconName) {
+                    titleView.initialsBadge.setImage(icon)
+                } else {
+                    titleView.initialsBadge.setColor(DcColors.primary)
+                    if let overlay = UIImage.symbolOverlay(systemName: "info.bubble.fill", size: 37) {
+                        titleView.initialsBadge.setImage(overlay)
+                    }
+                }
+            } else if let image = dcChat.profileImage {
                 titleView.initialsBadge.setImage(image)
             } else {
                 titleView.initialsBadge.setName(dcChat.name)

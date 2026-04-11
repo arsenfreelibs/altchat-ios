@@ -52,3 +52,18 @@ extension UIImage {
         return UIImage(data: imageData)
     }
 }
+
+extension UIImage {
+    static func symbolOverlay(systemName: String, size: CGFloat) -> UIImage? {
+        let config = UIImage.SymbolConfiguration(pointSize: size * 0.38, weight: .medium)
+        guard let symbol = UIImage(systemName: systemName, withConfiguration: config)?
+            .withTintColor(.white, renderingMode: .alwaysOriginal) else { return nil }
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: size, height: size))
+        return renderer.image { _ in
+            symbol.draw(at: CGPoint(
+                x: (size - symbol.size.width) / 2,
+                y: (size - symbol.size.height) / 2
+            ))
+        }
+    }
+}

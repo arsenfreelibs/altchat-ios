@@ -367,7 +367,26 @@ class ContactCell: UITableViewCell {
             } else {
                 backgroundColor = DcColors.contactCellBackgroundColor
             }
-            if let img = chat.profileImage {
+            if chat.isSelfTalk {
+                avatar.setColor(UIColor.systemBlue)
+                if let overlay = UIImage.symbolOverlay(systemName: "bookmark.fill", size: badgeSize) {
+                    avatar.setImage(overlay)
+                }
+            } else if chat.isDeviceTalk {
+                if let icons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
+                   let primary = icons["CFBundlePrimaryIcon"] as? [String: Any],
+                   let files = primary["CFBundleIconFiles"] as? [String],
+                   let iconName = files.last,
+                   let icon = UIImage(named: iconName) {
+                    resetBackupImage()
+                    setImage(icon)
+                } else {
+                    avatar.setColor(DcColors.primary)
+                    if let overlay = UIImage.symbolOverlay(systemName: "info.bubble.fill", size: badgeSize) {
+                        avatar.setImage(overlay)
+                    }
+                }
+            } else if let img = chat.profileImage {
                 resetBackupImage()
                 setImage(img)
             } else {
