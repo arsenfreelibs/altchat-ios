@@ -104,10 +104,23 @@ public class NotificationManager {
             let eventContext = dcAccounts.get(id: accountId)
             let chat = eventContext.getChat(chatId: chatId)
             let msg = eventContext.getMessage(id: messageId)
-            if let content = UNMutableNotificationContent(forMessage: msg, chat: chat, context: eventContext) {
+            let content: UNNotificationContent?
+            if #available(iOS 15, *) {
+                content = UNMutableNotificationContent.communicationContent(forMessage: msg, chat: chat, context: eventContext)
+            } else {
+                content = UNMutableNotificationContent(forMessage: msg, chat: chat, context: eventContext)
+            }
+            if let content {
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
-                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-                logger.info("notification added for \(messageId)")
+                UNUserNotificationCenter.current().add(request) { error in
+                    #if DEBUG
+                    if let error {
+                        logger.info("notification add error msgId=\(messageId): \(error)")
+                    } else {
+                        logger.info("notification added for \(messageId)")
+                    }
+                    #endif
+                }
             }
 
             // this line should always be reached
@@ -131,7 +144,13 @@ public class NotificationManager {
             let eventContext = dcAccounts.get(id: accountId)
             let msg = eventContext.getMessage(id: msgId)
             let chat = eventContext.getChat(chatId: msg.chatId)
-            if let content = UNMutableNotificationContent(forReaction: reaction, from: contact, msg: msg, chat: chat, context: eventContext) {
+            let content: UNNotificationContent?
+            if #available(iOS 15, *) {
+                content = UNMutableNotificationContent.communicationContent(forReaction: reaction, from: contact, msg: msg, chat: chat, context: eventContext)
+            } else {
+                content = UNMutableNotificationContent(forReaction: reaction, from: contact, msg: msg, chat: chat, context: eventContext)
+            }
+            if let content {
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
             }
@@ -154,7 +173,13 @@ public class NotificationManager {
             let eventContext = dcAccounts.get(id: accountId)
             let msg = eventContext.getMessage(id: msgId)
             let chat = eventContext.getChat(chatId: msg.chatId)
-            if let content = UNMutableNotificationContent(forWebxdcNotification: text, msg: msg, chat: chat, context: eventContext) {
+            let content: UNNotificationContent?
+            if #available(iOS 15, *) {
+                content = UNMutableNotificationContent.communicationContent(forWebxdcNotification: text, msg: msg, chat: chat, context: eventContext)
+            } else {
+                content = UNMutableNotificationContent(forWebxdcNotification: text, msg: msg, chat: chat, context: eventContext)
+            }
+            if let content {
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
             }

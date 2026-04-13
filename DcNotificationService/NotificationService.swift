@@ -58,7 +58,7 @@ class NotificationService: UNNotificationServiceExtension {
         UserDefaults.setNseFetchingDone()
         memoryPressureSource.cancel()
 
-        var notifications: [UNMutableNotificationContent] = []
+        var notifications: [UNNotificationContent] = []
         while true {
             guard let event = eventEmitter.getNextEvent() else { break }
             if event.id == DC_EVENT_ACCOUNTS_BACKGROUND_FETCH_DONE { break }
@@ -66,23 +66,35 @@ class NotificationService: UNNotificationServiceExtension {
                 let dcContext = dcAccounts.get(id: event.accountId)
                 let chat = dcContext.getChat(chatId: event.data1Int)
                 let msg = dcContext.getMessage(id: event.data2Int)
-                if let content = UNMutableNotificationContent(forMessage: msg, chat: chat, context: dcContext) {
-                    notifications.append(content)
+                let content: UNNotificationContent?
+                if #available(iOSApplicationExtension 15, *) {
+                    content = UNMutableNotificationContent.communicationContent(forMessage: msg, chat: chat, context: dcContext)
+                } else {
+                    content = UNMutableNotificationContent(forMessage: msg, chat: chat, context: dcContext)
                 }
+                if let content { notifications.append(content) }
             } else if event.id == DC_EVENT_INCOMING_REACTION {
                 let dcContext = dcAccounts.get(id: event.accountId)
                 let msg = dcContext.getMessage(id: event.data2Int)
                 let chat = dcContext.getChat(chatId: msg.chatId)
-                if let content = UNMutableNotificationContent(forReaction: event.data2String, from: event.data1Int, msg: msg, chat: chat, context: dcContext) {
-                    notifications.append(content)
+                let content: UNNotificationContent?
+                if #available(iOSApplicationExtension 15, *) {
+                    content = UNMutableNotificationContent.communicationContent(forReaction: event.data2String, from: event.data1Int, msg: msg, chat: chat, context: dcContext)
+                } else {
+                    content = UNMutableNotificationContent(forReaction: event.data2String, from: event.data1Int, msg: msg, chat: chat, context: dcContext)
                 }
+                if let content { notifications.append(content) }
             } else if event.id == DC_EVENT_INCOMING_WEBXDC_NOTIFY {
                 let dcContext = dcAccounts.get(id: event.accountId)
                 let msg = dcContext.getMessage(id: event.data2Int)
                 let chat = dcContext.getChat(chatId: msg.chatId)
-                if let content = UNMutableNotificationContent(forWebxdcNotification: event.data2String, msg: msg, chat: chat, context: dcContext) {
-                    notifications.append(content)
+                let content: UNNotificationContent?
+                if #available(iOSApplicationExtension 15, *) {
+                    content = UNMutableNotificationContent.communicationContent(forWebxdcNotification: event.data2String, msg: msg, chat: chat, context: dcContext)
+                } else {
+                    content = UNMutableNotificationContent(forWebxdcNotification: event.data2String, msg: msg, chat: chat, context: dcContext)
                 }
+                if let content { notifications.append(content) }
             } else if event.id == DC_EVENT_INCOMING_CALL {
                 UserDefaults.pushToDebugArray("☎️")
                 let payload: [String: Any] = [
@@ -150,7 +162,7 @@ class NotificationService: UNNotificationServiceExtension {
 
         // Queue all notifications
         for notification in notifications {
-            let req = UNNotificationRequest(identifier: UUID().uuidString, content: notification, trigger: nil)
+            let req = UNNotificationRequest(identifier: UUID().uuidString, content: notification as UNNotificationContent, trigger: nil)
             do {
                 try await UNUserNotificationCenter.current().add(req)
             } catch {
