@@ -6,11 +6,11 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.romanvalchuk.altchat</string>
+		<string>group.me.alt.chat</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)group.romanvalchuk.altchat</string>
+		<string>$(AppIdentifierPrefix)group.me.alt.chat</string>
 	</array>
 </dict>
 </plist>

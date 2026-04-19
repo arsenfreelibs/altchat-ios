@@ -13,7 +13,7 @@ public class KeychainManager {
     // It is required as a prefix for the shared keychain identifier, but not straight forward to access programmatically,
     // so we're hardcoding it here
     private static let teamId = "U97T6JQUY7" // Roman Valchuk Team ID
-    private static let keychainGroupSuffix = "group.romanvalchuk.altchat"
+    private static let keychainGroupSuffix = "group.me.alt.chat"
     private static let sharedKeychainGroup = "\(KcM.teamId).\(KcM.keychainGroupSuffix)"
 
     public static func getAccountSecret(accountID: Int) throws -> String {

@@ -9,7 +9,7 @@ public extension UserDefaults {
     static var incomingCallPayloadKey = "incomingCallPayload"
 
     static var shared: UserDefaults? {
-        return UserDefaults(suiteName: "group.romanvalchuk.altchat")
+        return UserDefaults(suiteName: "group.me.alt.chat")
     }
 
     static var mainIoRunning: Bool {
