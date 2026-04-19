@@ -1429,7 +1429,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2640;
 				ORGANIZATIONNAME = "merlinux GmbH";
 				TargetAttributes = {
 					30E8F20F2447285600CE2C90 = {
@@ -2196,7 +2196,7 @@
 					"-iframework",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImageWebPCoder\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcShare;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcShare;
 				PRODUCT_NAME = alt.chat;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.5;
@@ -2239,7 +2239,7 @@
 					"-iframework",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImageWebPCoder\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcShare;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcShare;
 				PRODUCT_NAME = alt.chat;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.5;
@@ -2266,7 +2266,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcTests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -2294,7 +2294,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcTests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
@@ -2364,6 +2364,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.5;
@@ -2423,6 +2424,7 @@
 				MARKETING_VERSION = 1.0.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.5;
@@ -2490,7 +2492,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift\"",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2559,7 +2561,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift\"",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2592,7 +2594,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcNotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2627,7 +2629,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcNotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2664,7 +2666,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -2700,7 +2702,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.romanvalchuk.altchat.DcWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = me.alt.chat.DcWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
