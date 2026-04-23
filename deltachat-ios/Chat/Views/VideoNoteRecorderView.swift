@@ -284,7 +284,95 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
                 try? FileManager.default.removeItem(at: outputFileURL)
                 self.delegate?.videoNoteRecorder(self, didFinishRecordingAt: nil)
             } else {
-                self.delegate?.videoNoteRecorder(self, didFinishRecordingAt: outputFileURL)
+                self.exportFixedOrientationVideo(from: outputFileURL) { [weak self] fixedURL in
+                    guard let self else { return }
+                    self.delegate?.videoNoteRecorder(self, didFinishRecordingAt: fixedURL)
+                }
+            }
+        }
+    }
+
+    // MARK: - Orientation Fix
+
+    /// Re-encodes the recorded video so that the rotation transform is baked into
+    /// the pixel data rather than stored as container metadata. This ensures the
+    /// video displays correctly on Android clients that ignore MP4 rotation metadata.
+    /// The completion block is always called on the main queue.
+    private func exportFixedOrientationVideo(from inputURL: URL, completion: @escaping (URL?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let asset = AVURLAsset(url: inputURL)
+            guard let videoTrack = asset.tracks(withMediaType: .video).first else {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+
+            let transform = videoTrack.preferredTransform
+            let transformedSize = videoTrack.naturalSize.applying(transform)
+            let renderSize = CGSize(width: abs(transformedSize.width), height: abs(transformedSize.height))
+
+            let composition = AVMutableComposition()
+            guard let compositionVideoTrack = composition.addMutableTrack(
+                withMediaType: .video,
+                preferredTrackID: kCMPersistentTrackID_Invalid
+            ) else {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+
+            let timeRange = CMTimeRange(start: .zero, duration: asset.duration)
+            do {
+                try compositionVideoTrack.insertTimeRange(timeRange, of: videoTrack, at: .zero)
+            } catch {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+            // Reset the inherited transform so the output file has no rotation metadata.
+            // The AVMutableVideoComposition bakes the transform into pixels, so any
+            // residual preferredTransform in the container would cause double-rotation
+            // on players that honour it (e.g. some Android decoders).
+            compositionVideoTrack.preferredTransform = .identity
+
+            if let audioTrack = asset.tracks(withMediaType: .audio).first,
+               let compositionAudioTrack = composition.addMutableTrack(
+                   withMediaType: .audio,
+                   preferredTrackID: kCMPersistentTrackID_Invalid
+               ) {
+                try? compositionAudioTrack.insertTimeRange(timeRange, of: audioTrack, at: .zero)
+            }
+
+            let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: compositionVideoTrack)
+            layerInstruction.setTransform(transform, at: .zero)
+
+            let instruction = AVMutableVideoCompositionInstruction()
+            instruction.timeRange = timeRange
+            instruction.layerInstructions = [layerInstruction]
+
+            let frameRate = videoTrack.nominalFrameRate > 0 ? videoTrack.nominalFrameRate : 30
+            let videoComposition = AVMutableVideoComposition()
+            videoComposition.frameDuration = CMTime(value: 1, timescale: CMTimeScale(frameRate))
+            videoComposition.renderSize = renderSize
+            videoComposition.instructions = [instruction]
+
+            let outputURL = URL(fileURLWithPath: NSTemporaryDirectory())
+                .appendingPathComponent("videonote_\(Int(Date().timeIntervalSince1970)).mp4")
+
+            guard let exporter = AVAssetExportSession(
+                asset: composition,
+                presetName: AVAssetExportPresetHighestQuality
+            ) else {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+            exporter.videoComposition = videoComposition
+            exporter.outputURL = outputURL
+            exporter.outputFileType = .mp4
+            exporter.shouldOptimizeForNetworkUse = true
+
+            exporter.exportAsynchronously {
+                try? FileManager.default.removeItem(at: inputURL)
+                DispatchQueue.main.async {
+                    completion(exporter.status == .completed ? outputURL : nil)
+                }
             }
         }
     }
