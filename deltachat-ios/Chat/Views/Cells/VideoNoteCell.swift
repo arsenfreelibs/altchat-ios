@@ -13,6 +13,8 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
     private var loopObserver: Any?
     private var progressTimer: Timer?
     private var isPlaying = false
+    /// Guards against stale async duration callbacks after cell reuse.
+    private var currentMsgId: Int = -1
 
     // Progress ring drawn on contentView.layer, around the circle
     private let progressTrackLayer: CAShapeLayer = {
@@ -55,6 +57,28 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
         return iv
     }()
 
+    /// Semi-transparent pill shown at the bottom-left of the circle, mirroring the
+    /// send-time status view at the bottom-right.
+    private lazy var durationPillView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = DcColors.systemMessageBackgroundColor
+        v.layer.cornerRadius = 5
+        v.layer.masksToBounds = true
+        v.isHidden = true
+        return v
+    }()
+
+    private lazy var durationLabel: UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = UIFont.preferredFont(for: .caption1, weight: .regular)
+        l.textColor = .white
+        l.textAlignment = .left
+        l.isAccessibilityElement = false
+        return l
+    }()
+
     // MARK: - Setup
 
     override func setupSubviews() {
@@ -77,11 +101,22 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
         videoContainer.addSubview(playIconView)
         mainContentView.addArrangedSubview(videoContainer)
 
+        durationPillView.addSubview(durationLabel)
+        messageBackgroundContainer.addSubview(durationPillView)
+
         NSLayoutConstraint.activate([
             videoContainer.widthAnchor.constraint(equalToConstant: VideoNoteCell.noteSize),
             videoContainer.heightAnchor.constraint(equalToConstant: VideoNoteCell.noteSize),
             playIconView.centerXAnchor.constraint(equalTo: videoContainer.centerXAnchor),
             playIconView.centerYAnchor.constraint(equalTo: videoContainer.centerYAnchor),
+
+            // Duration pill: mirror statusView position (trailing - 8, bottom - 6) to leading + 8, bottom - 6
+            durationLabel.topAnchor.constraint(equalTo: durationPillView.topAnchor),
+            durationLabel.bottomAnchor.constraint(equalTo: durationPillView.bottomAnchor),
+            durationLabel.leadingAnchor.constraint(equalTo: durationPillView.leadingAnchor, constant: 5),
+            durationPillView.trailingAnchor.constraint(equalTo: durationLabel.trailingAnchor, constant: 5),
+            durationPillView.leadingAnchor.constraint(equalTo: messageBackgroundContainer.leadingAnchor, constant: 8),
+            durationPillView.bottomAnchor.constraint(equalTo: messageBackgroundContainer.bottomAnchor, constant: -6),
         ])
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(onVideoTapped))
@@ -159,6 +194,31 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
         messageLabel.text = nil
         a11yDcType = String.localized("video")
 
+        // Duration pill
+        currentMsgId = msg.id
+        let durationMs = msg.duration
+        if durationMs > 0 {
+            showDuration(seconds: Double(durationMs) / 1000.0)
+        } else {
+            durationPillView.isHidden = true
+            // Fallback: read duration from the local file (covers old messages
+            // and incoming messages where the sender didn't store duration metadata).
+            if let url = msg.fileURL {
+                let msgId = msg.id
+                DispatchQueue.global(qos: .utility).async { [weak self] in
+                    let asset = AVURLAsset(url: url)
+                    let seconds = CMTimeGetSeconds(asset.duration)
+                    guard seconds > 0 else { return }
+                    // Cache it so subsequent opens don't need to re-read.
+                    msg.setLateFilingMediaSize(width: 0, height: 0, duration: Int(seconds * 1000))
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self, self.currentMsgId == msgId else { return }
+                        self.showDuration(seconds: seconds)
+                    }
+                }
+            }
+        }
+
         super.update(
             dcContext: dcContext,
             msg: msg,
@@ -169,6 +229,17 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
             searchText: searchText,
             highlight: highlight
         )
+    }
+
+    private func showDuration(seconds: Double) {
+        let text: String
+        if seconds < 60 {
+            text = String(format: "0:%02d", Int(seconds.rounded(.up)))
+        } else {
+            text = String(format: "%d:%02d", Int(seconds) / 60, Int(seconds) % 60)
+        }
+        durationLabel.text = text
+        durationPillView.isHidden = false
     }
 
     // MARK: - Inline Playback
@@ -266,5 +337,8 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
         progressTrackLayer.isHidden = true
         progressFillLayer.isHidden = true
         progressFillLayer.strokeEnd = 0
+        durationPillView.isHidden = true
+        durationLabel.text = nil
+        currentMsgId = -1
     }
 }

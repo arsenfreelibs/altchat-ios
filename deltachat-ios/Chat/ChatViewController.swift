@@ -1759,6 +1759,18 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             // (which may be a DC_MSG_TEXT draft) so the type is always stored correctly.
             let msg = self.dcContext.newMessage(viewType: DC_MSG_VIDEO)
             msg.setFile(filepath: url.relativePath, fileName: fileName, mimeType: "video/x-videonote")
+
+            // Read duration from the fully-written local file and store it on the message
+            // so VideoNoteCell can display it without waiting for playback to start.
+            let asset = AVURLAsset(url: url)
+            let assetDuration = asset.duration
+            if assetDuration.isValid && !assetDuration.isIndefinite {
+                let durationMs = Int(CMTimeGetSeconds(assetDuration) * 1000)
+                if durationMs > 0 {
+                    msg.setLateFilingMediaSize(width: 0, height: 0, duration: durationMs)
+                }
+            }
+
             self.dcContext.sendMessage(chatId: self.chatId, message: msg)
             FileHelper.deleteFileAsync(atPath: url.relativePath)
         }
