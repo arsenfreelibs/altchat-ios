@@ -260,6 +260,7 @@
 		F5B675EB2F72FEB200C440F3 /* AltPlatformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E82F72FEB200C440F3 /* AltPlatformService.swift */; };
 		F5B675ED2F72FF0A00C440F3 /* VideoNoteRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */; };
 		F5B675EF2F72FF1E00C440F3 /* VideoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */; };
+		F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -690,6 +691,7 @@
 		F5B675E92F72FEB200C440F3 /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
 		F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteRecorderView.swift; sourceTree = "<group>"; };
 		F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteCell.swift; sourceTree = "<group>"; };
+		F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNoteRecordingOverlay.swift; sourceTree = "<group>"; };
 		FCEAC85C8C41D57193C24E9A /* Pods_deltachat_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_deltachat_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -906,6 +908,7 @@
 			isa = PBXGroup;
 			children = (
 				F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */,
+				F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */,
 				D8FB03FE2B4F0CE500A355F8 /* Reactions */,
 				30FDB6B624D193DD0066C48D /* Cells */,
 				302D544F268B6B2300A8B271 /* StatusView.swift */,
@@ -1887,6 +1890,7 @@
 				3080A038277DE30100E74565 /* UIView+AutoLayout.swift in Sources */,
 				30B0ACFA24AB5B99004D5E29 /* EphemeralMessagesViewController.swift in Sources */,
 				F5B675ED2F72FF0A00C440F3 /* VideoNoteRecorderView.swift in Sources */,
+				F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */,
 				305962102346154D00C80F33 /* String+Extension.swift in Sources */,
 				789E879621D6CB58003ED1C5 /* QrCodeReaderController.swift in Sources */,
 				64D049A02EC890840093A0A8 /* PiPVideoView.swift in Sources */,
