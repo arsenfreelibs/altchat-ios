@@ -2,6 +2,7 @@ import UIKit
 import AVFoundation
 
 protocol VideoNoteRecorderDelegate: AnyObject {
+    func videoNoteRecorderDidStartRecording(_ recorder: VideoNoteRecorderView)
     func videoNoteRecorder(_ recorder: VideoNoteRecorderView, didFinishRecordingAt url: URL?)
 }
 
@@ -52,26 +53,6 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
         return l
     }()
 
-    private let durationLabel: UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "0:00"
-        l.textColor = .white
-        l.font = .systemFont(ofSize: 16, weight: .medium)
-        l.textAlignment = .center
-        return l
-    }()
-
-    private let hintLabel: UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Release to send"
-        l.textColor = UIColor.white.withAlphaComponent(0.75)
-        l.font = .preferredFont(forTextStyle: .footnote)
-        l.textAlignment = .center
-        return l
-    }()
-
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -94,20 +75,12 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
     private func setupUI() {
         backgroundColor = UIColor.black.withAlphaComponent(0.65)
         addSubview(circleContainer)
-        addSubview(durationLabel)
-        addSubview(hintLabel)
 
         NSLayoutConstraint.activate([
             circleContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
-            circleContainer.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -40),
+            circleContainer.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20),
             circleContainer.widthAnchor.constraint(equalToConstant: circleSize),
             circleContainer.heightAnchor.constraint(equalToConstant: circleSize),
-
-            durationLabel.topAnchor.constraint(equalTo: circleContainer.bottomAnchor, constant: 20),
-            durationLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-
-            hintLabel.topAnchor.constraint(equalTo: durationLabel.bottomAnchor, constant: 8),
-            hintLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
 
         layer.addSublayer(progressTrackLayer)
@@ -213,6 +186,8 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent("videonote_tmp_\(Int(Date().timeIntervalSince1970)).mp4")
         movieOutput.startRecording(to: tempURL, recordingDelegate: self)
+        delegate?.videoNoteRecorderDidStartRecording(self)
+        guard !cancelled else { return }  // delegate may have called stopRecording
         startProgressTimer()
     }
 
@@ -222,8 +197,6 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
             self.elapsedTime += 0.05
             let progress = self.elapsedTime / VideoNoteRecorderView.maxDuration
             self.progressFillLayer.strokeEnd = CGFloat(min(progress, 1.0))
-            let totalSeconds = Int(self.elapsedTime)
-            self.durationLabel.text = String(format: "%d:%02d", totalSeconds / 60, totalSeconds % 60)
         }
     }
 
@@ -257,6 +230,11 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
     }
 
     private func cleanup() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
         previewLayer?.removeFromSuperlayer()
         previewLayer = nil
         sessionQueue.async { [weak self] in
