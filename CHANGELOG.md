@@ -1,26 +1,33 @@
 # Delta Chat iOS Changelog
 
-## v2.48.0 Testflight
-2026-03
+## v2.49.2
 
-- Add a warning about updating all devices to "Settings / Advanced / Relays"
-- Improve logging
-- Fix reordering problems introduced in 2.46.0
-- Fix resending of larger messages
-- Fix chats not marked as read sometime on other devices
-- Fix importing backups created by 1.86.0
+- Configurable app picker url
+- When tapping an invite link, after app installation, offer corresponding chat
+- Fix: do not crash when swiping keyboard down
+- Update translations and local help
+- Usign core 2.49.0
 
 
-## v2.47.0 Testflight
-2026-03
+## v2.49.0
+2026-04
 
-- Fix infinite loop in case a folder is missing on the relay
-- Fix downloading full attachments if the message is already downloaded
-- Fix downloading full attachments if the message was deleted
-- Fix: Make newlines work in chat descriptions
+- Fix: Mark a message as delivered only after it has been fully sent out
+- Fix: Do not create 1:1 chat on second device when scanning a QR code
+- Fix: Do not URL-encode proxy hostnames
+- Fix sometimes missing assigning of webxdc updates to webxdc instance
+- Fix: Let search also return hidden contacts if search value is an email address
+- Fix: Make informational messages stick to the top of the chat
+- Fix sometimes wrong detection of self-messages
+- Fix sometimes wrong orientaton of images
+- Fix: in-chat unread counter on the back button was not always updated after marking chats as unread
+- Fix memory leak when opening chatlist and chat frequently
+- Fix: Ignore messages about group name change from non-member
+- Update translations and local help
+- Update core to 2.49.0
 
 
-## v2.46.0 Testflight
+## v2.48.0
 2026-03
 
 - Increase resilience of multi-relay usage: if on relay goes down, messages are still received in the others
@@ -35,13 +42,21 @@
 - Add tab bar icon bounce animation on tap
 - Explain at "Settings / Chats / Outgoing Media Quality" how to send original quality
 - Improve mini-app summaries
+- Improve logging
+- Fix resending of larger messages
+- Fix chats not marked as read sometime on other devices
+- Fix importing backups created by 1.86.0
+- Fix infinite loop in case a folder is missing on the relay
+- Fix downloading full attachments if the message is already downloaded
+- Fix downloading full attachments if the message was deleted
+- Fix: Make newlines work in chat descriptions
 - Fix: Voice messages now no longer silence the VoiceOver permanently
 - Fix: remove meaningless address from vCard
 - Fix: No more UI ghosting on cell swipe
 - Fix: Calls are now marked as read when you accept or decline a call
 - Fix: More reliable "Add Second Device" QR code joining
 - Update translations and local help
-- Update core to 2.46.0
+- Update core to 2.48.0
 
 
 ## v2.43.0

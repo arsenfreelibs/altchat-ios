@@ -10,11 +10,16 @@ protocol WebxdcStoreViewControllerDelegate: AnyObject {
 class WebxdcStoreViewController: UIViewController {
     weak var delegate: WebxdcStoreViewControllerDelegate?
     let webView: WKWebView
+    let appPickerUrl: URL?
 
-    init(url: URL = URL(string: "https://webxdc.org/apps/")!) {
+    init() {
         webView = WKWebView(frame: .zero)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.load(URLRequest(url: url))
+
+        appPickerUrl = URL(string: UserDefaults.getAppPickerUrlString())
+        if let appPickerUrl {
+            webView.load(URLRequest(url: appPickerUrl))
+        }
 
         super.init(nibName: nil, bundle: nil)
 
@@ -62,7 +67,7 @@ extension WebxdcStoreViewController: WKNavigationDelegate {
                 delegate?.pickedAnDownloadedApp(self, fileURL: fileURL as URL)
                 decisionHandler(.cancel)
             }
-        } else if url.host == "webxdc.org" {
+        } else if url.host == appPickerUrl?.host {
             decisionHandler(.allow)
         } else if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)

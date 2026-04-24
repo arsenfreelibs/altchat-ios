@@ -195,10 +195,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if dcAccounts.getSelected().isConfigured() {
             registerForNotifications()
             prepopulateWidget()
+            handleAppClipInviteLink()
         }
 
         launchOptions = nil
         appFullyInitialized = true
+    }
+
+    /// Forward an invite link stored by DcAppClip before the app was installed to the QR handler.
+    func handleAppClipInviteLink() {
+        guard dcAccounts.getSelected().isConfigured() else { return }
+        let inviteLinkKey = "appClipInviteLink"
+        guard let inviteLink = UserDefaults.shared?.string(forKey: inviteLinkKey) else { return }
+        UserDefaults.shared?.removeObject(forKey: inviteLinkKey)
+        appCoordinator.handleQRCode(inviteLink)
     }
 
     func application(_ application: UIApplication,
@@ -303,6 +313,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UserDefaults.setMainIoRunning()
         applicationInForeground = true
         NotificationManager.updateBadgeCounters()
+        if dcAccounts.getSelected().isConfigured() {
+            // This supports the case that app clips stay installed and
+            // keep handling i.delta.chat links instead of the main app which
+            // shouldn't happen but would be pretty bad so better safe than sorry
+            handleAppClipInviteLink()
+        }
     }
 
     func applicationWillResignActive(_: UIApplication) {
@@ -775,6 +791,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         dcContext.setStockTranslation(id: DC_STR_SECURE_JOIN_CHANNEL_QR_DESC, localizationKey: "qrshow_join_channel_hint")
         dcContext.setStockTranslation(id: DC_STR_MSG_YOU_JOINED_CHANNEL, localizationKey: "you_joined_the_channel")
         dcContext.setStockTranslation(id: DC_STR_SECURE_JOIN_CHANNEL_STARTED, localizationKey: "secure_join_channel_started")
+        dcContext.setStockTranslation(id: DC_STR_CHANNEL_NAME_CHANGED, localizationKey: "channel_name_changed")
+        dcContext.setStockTranslation(id: DC_STR_CHANNEL_IMAGE_CHANGED, localizationKey: "channel_image_changed")
         dcContext.setStockTranslation(id: DC_STR_STATS_MSG_BODY, localizationKey: "stats_msg_body")
         dcContext.setStockTranslation(id: DC_STR_PROXY_ENABLED, localizationKey: "proxy_enabled")
         dcContext.setStockTranslation(id: DC_STR_PROXY_ENABLED_DESCRIPTION, localizationKey: "proxy_enabled_hint")

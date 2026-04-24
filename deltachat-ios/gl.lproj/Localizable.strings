@@ -67,8 +67,9 @@
 "show_full_message" = "Mostrar mensaxe completa…";
 // Stay short here, say ~16 characters. The source string could also be "All Read", maybe that hint can make translations easier :)
 "mark_all_as_read" = "Marcar Todo como lido";
+// Used as an menu entry or button
 "mark_as_read" = "Marcar como lida";
-// Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
+// Used beside an icon with very few space. Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
 "mark_as_read_short" = "Ler";
 // Placeholder text when something is loading
 "loading" = "Cargando…";
@@ -128,7 +129,9 @@
 // "Stickers" as known from other messengers; in some languages, the English "Sticker" is fine.
 "sticker" = "Adhesivo";
 "add_to_sticker_collection" = "Engadir á colección de adhesivos";
+// deprecated, use sticker_picker_empty_hint instead
 "add_stickers_instructions" = "Para engadir adhesivos toca en \"Abrir cartafol de adhesivos\", crea un subcartafol para o paquete de adhesivos e arrastra alí ficheiros de imaxe e adhesivos";
+// deprecated
 "open_sticker_folder" = "Abrir cartafol de adhesivos";
 "images" = "Imaxes";
 // a noun, used for "Music" and other "Audio" files
@@ -404,6 +407,7 @@
 "remove_group_image" = "Eliminar imaxe do grupo";
 "change_group_image" = "Cambiar imaxe do grupo";
 "group_create_button" = "Crear grupo";
+// deprecated, use please_enter_chat_name
 "group_please_enter_group_name" = "Por favor, introduce un nome para o grupo";
 "group_add_members" = "Engadir membros";
 "group_self_not_in_group" = "Debes ser membro do grupo para executar esta acción.";
@@ -643,10 +647,6 @@
 "up_to_x_most_worse_quality_images" = "Ata %1$@, a maioría de imaxes da menor calidade";
 "up_to_x_most_balanced_quality_images" = "Ata %1$@, a maioría de imaxes de calidade media";
 "download_failed" = "Fallou a descarga";
-// %1$s will be replaced by a human-readable number of bytes, eg. 32 KiB, 1 MiB. Resulting string eg. "1 MiB message"
-"n_bytes_message" = "%1$@ mensaxe";
-// %1$s will be replaced by human-readable date and time
-"download_max_available_until" = "Descarga o máximo dispoñible ata %1$@";
 "profile_image_select" = "Elixe imaxe de perfil";
 "select_your_new_profile_image" = "Elixe a túa nova imaxe de perfil";
 "profile_image_delete" = "Elimina a imaxe de perfil";

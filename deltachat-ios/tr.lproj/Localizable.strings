@@ -67,9 +67,12 @@
 "show_full_message" = "Tam İletiyi Göster…";
 // Stay short here, say ~16 characters. The source string could also be "All Read", maybe that hint can make translations easier :)
 "mark_all_as_read" = "Tümünü Okundu Olarak İmle";
+// Used as an menu entry or button
 "mark_as_read" = "Okundu Olarak İmle";
-// Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
+// Used beside an icon with very few space. Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
 "mark_as_read_short" = "Okundu İmi";
+// Used beside an icon with very few space. Shortest text for "Mark as being unread". In english, this could be "Unread" (past tense of "to unread"), in german, this could be "Ungelesen".
+"mark_as_unread_short" = "Okunmayan";
 // Placeholder text when something is loading
 "loading" = "Yükleniyor…";
 "hide" = "Gizle";
@@ -132,7 +135,9 @@
 // "Stickers" as known from other messengers; in some languages, the English "Sticker" is fine.
 "sticker" = "Çıkartma";
 "add_to_sticker_collection" = "Çıkartma Toplamasına Ekle";
+// deprecated, use sticker_picker_empty_hint instead
 "add_stickers_instructions" = "Çıkartmalar eklemek için “Çıkartma Klasörünü Aç”a dokunun, çıkartma paketiniz için bir alt klasör oluşturun ve görseli ve çıkartma dosyalarını oraya sürükleyin";
+// deprecated
 "open_sticker_folder" = "Çıkartma Klasörünü Aç";
 "ask_add_sticker_to_collection" = "Bu çıkartma, koleksiyonunuza eklensin mi?";
 "ask_delete_sticker" = "Bu çıkartma silinsin mi?";
@@ -450,6 +455,7 @@
 "remove_group_image" = "Grup Görselini Kaldır";
 "change_group_image" = "Grup Görselini Değiştir";
 "group_create_button" = "Grup Oluştur";
+// deprecated, use please_enter_chat_name
 "group_please_enter_group_name" = "Lütfen grup için bir ad girin.";
 "group_add_members" = "Üyeler Ekle";
 "group_self_not_in_group" = "Bu eylemi gerçekleştirmek için grubun bir üyesi olmalısınız.";
@@ -723,10 +729,6 @@
 "up_to_x_most_worse_quality_images" = "%1$@ kadar, en kötü kaliteli görseller";
 "up_to_x_most_balanced_quality_images" = "%1$@ kadar, en dengeli kaliteli görseller";
 "download_failed" = "İndirme başarısız";
-// %1$s will be replaced by a human-readable number of bytes, eg. 32 KiB, 1 MiB. Resulting string eg. "1 MiB message"
-"n_bytes_message" = "%1$@ ileti";
-// %1$s will be replaced by human-readable date and time
-"download_max_available_until" = "İndirme en fazla %1$@ zamanına kadar kullanılabilir";
 "profile_image_select" = "Profil Görseli Seç";
 "select_your_new_profile_image" = "Yeni profil görselinizi seçin";
 "profile_image_delete" = "Profil Görselini Sil";

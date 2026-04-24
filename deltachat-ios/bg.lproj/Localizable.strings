@@ -51,7 +51,7 @@
 "show_full_message" = "Показване на пълното съобщение...";
 // Stay short here, say ~16 characters. The source string could also be "All Read", maybe that hint can make translations easier :)
 "mark_all_as_read" = "Маркиране на всички като прочетени";
-// Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
+// Used beside an icon with very few space. Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
 "mark_as_read_short" = "Прочетено";
 // Placeholder text when something is loading
 "loading" = "Зарежда се ...";
@@ -109,7 +109,9 @@
 // "Stickers" as known from other messengers; in some languages, the English "Sticker" is fine.
 "sticker" = "Стикер";
 "add_to_sticker_collection" = "Добавяне към колекция от стикери";
+// deprecated, use sticker_picker_empty_hint instead
 "add_stickers_instructions" = "За да добавите стикери, натиснете върху \"Отваряне на папка Стикери\", създайте подпапка за Вашия пакет от стикери и дърпайте файлове със стикери и изображения тук";
+// deprecated
 "open_sticker_folder" = "Отваряне на папка Стикери";
 "images" = "Изображения";
 // a noun, used for "Music" and other "Audio" files
@@ -334,6 +336,7 @@
 "remove_group_image" = "Премахване на изображението на групата";
 "change_group_image" = "Промяна на изображението на групата";
 "group_create_button" = "Създаване на група";
+// deprecated, use please_enter_chat_name
 "group_please_enter_group_name" = "Моля, въведете име на групата";
 "group_add_members" = "Добавяне на членове";
 "group_self_not_in_group" = "Трябва да сте член на групата, за да изпълните това действие.";
@@ -553,10 +556,6 @@
 "up_to_x_most_worse_quality_images" = "До %1$@, повечето от които изображения с по-лошо качество";
 "up_to_x_most_balanced_quality_images" = "До %1$@, повечето от които изображения с балансирано качество";
 "download_failed" = "Неуспешно сваляне";
-// %1$s will be replaced by a human-readable number of bytes, eg. 32 KiB, 1 MiB. Resulting string eg. "1 MiB message"
-"n_bytes_message" = "%1$@ съобщение";
-// %1$s will be replaced by human-readable date and time
-"download_max_available_until" = "Сваляне на максимално наличното до %1$@";
 "profile_image_select" = "Избор на изображение за профила";
 "select_your_new_profile_image" = "Изберете новото изображение за профила си";
 "profile_image_delete" = "Изтриване на изображението на профила";

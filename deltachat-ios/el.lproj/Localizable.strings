@@ -301,6 +301,7 @@
 "remove_group_image" = "Αφαίρεση φωτογραφίας ομάδας;";
 "change_group_image" = "Αλλαγή Εικόνας Ομάδας";
 "group_create_button" = "Δημιουργία ομάδας";
+// deprecated, use please_enter_chat_name
 "group_please_enter_group_name" = "Εισάγετε ένα όνομα για αυτή την ομάδα.";
 "group_add_members" = "Προσθήκη μελών";
 "group_self_not_in_group" = "Πρέπει να είστε μέλος της ομάδας για να εκτελέσετε αυτήν την ενέργεια.";
@@ -463,10 +464,6 @@
 "up_to_x_most_worse_quality_images" = "Έως και %1$@, τις περισσότερες εικόνες χειρότερης ποιότητας";
 "up_to_x_most_balanced_quality_images" = "Έως %1$@, εικόνες πιο ισορροπημένης ποιότητας";
 "download_failed" = "Αποτυχία Λήψης";
-// %1$s will be replaced by a human-readable number of bytes, eg. 32 KiB, 1 MiB. Resulting string eg. "1 MiB message"
-"n_bytes_message" = "%1$@ μήνυμα";
-// %1$s will be replaced by human-readable date and time
-"download_max_available_until" = "Μέγιστη διαθέσιμη λήψη μέχρι %1$@";
 "profile_image_select" = "Επιλογή Εικόνας Προφίλ";
 "select_your_new_profile_image" = "Επιλογή Νέας Εικόνας Προφίλ";
 "profile_image_delete" = "Διαγραφή Εικόνας Προφίλ";

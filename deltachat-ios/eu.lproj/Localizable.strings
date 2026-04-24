@@ -67,9 +67,12 @@
 "show_full_message" = "Erakutsi mezu osoa";
 // Stay short here, say ~16 characters. The source string could also be "All Read", maybe that hint can make translations easier :)
 "mark_all_as_read" = "Ezarri denak irakurri gisa";
+// Used as an menu entry or button
 "mark_as_read" = "Ezarri irakurri gisa";
-// Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
+// Used beside an icon with very few space. Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
 "mark_as_read_short" = "Markatu irakurrita";
+// Used beside an icon with very few space. Shortest text for "Mark as being unread". In english, this could be "Unread" (past tense of "to unread"), in german, this could be "Ungelesen".
+"mark_as_unread_short" = "Irakurri gabe";
 // Placeholder text when something is loading
 "loading" = "Kargatzen...";
 "hide" = "Ezkutatu";
@@ -112,7 +115,7 @@
 "last_week" = "Azken astea";
 "last_month" = "Azken hilabetea";
 // Refers to the time a contact was last seen. Shown below contact name in the profile. The placeholder will be replaced by date or time, resulting in "Last seen at 12:13 AM" or "Last seen Nov 12"
-"last_seen_at" = "%1$@-n ikusi da azken";
+"last_seen_at" = "Azken aldiz begiratua: %1$@";
 // Refers to the time a contact was last seen. Shown below contact name in the profile. The placeholder will be replaced by a relative point in time as "3 minutes ago" (see https://momentjs.com for more examples and languages)
 "last_seen_relative" = "Azken aldiz begiratua %1$@";
 "last_seen_unknown" = "Azken aldiz begiratzea: ezezaguna";
@@ -130,6 +133,9 @@
 "sticker" = "Stickerra";
 "add_to_sticker_collection" = "Gehitu Sticker bildumara";
 "add_stickers_instructions" = "Stickerretara gehitzeko, klik egin \"Ireki sticker karpeta\"  aukeran, sortu azpikarpeta bat zure sticker multzoarentzat eta arrastatu irudi eta sticker fitxategiak bertara.";
+// deprecated, use sticker_picker_empty_hint instead
+"add_stickers_instructions" = "Stickerretara gehitzeko, klik egin \"Ireki sticker karpeta\" aukeran, sortu azpikarpeta bat zure sticker multzoarentzat eta arrastatu irudi eta sticker fitxategiak bertara.";
+// deprecated
 "open_sticker_folder" = "Ireki sticker karpeta";
 "images" = "Irudiak";
 // a noun, used for "Music" and other "Audio" files
@@ -438,6 +444,7 @@
 "remove_group_image" = "Ezabatu taldearen irudia";
 "change_group_image" = "Aldatu taldearen irudia";
 "group_create_button" = "Sortu taldea";
+// deprecated, use please_enter_chat_name
 "group_please_enter_group_name" = "Idatzi izen bat taldearentzat.";
 "group_add_members" = "Gehitu kideak";
 "group_self_not_in_group" = "Taldeko kidea izan behar zara ekintza hau burutzeko.";
@@ -570,6 +577,11 @@
 "add_transport" = "Gehitu errelea";
 "remove_transport" = "Ezabatu errelea";
 "edit_transport" = "Editatu errelea";
+"used_for_sending" = "Bidaltzeko erabilita";
+"hide_from_contacts" = "Ezkutatu kontaktuetatik";
+"hidden_from_contacts" = "Kontaktuetatik ezkutatuta";
+// Hint for the list of relays
+"transport_list_hint" = "Mezuak errele guztietan jasotzen dira.\n\n⚠️ Hemen zerbait aldatzen baduzu, ziurtatu zure gailu guztiek gutxienez 2.47.0 bertsioa dutela. Bestela, gailu zaharragoek mezuak gal ditzakete.";
 // shown if a QR code was scanned that can be used as a relay
 "confirm_add_transport" = "Gehitu errelea?";
 "invalid_transport_qr" = "Eskaneatutako QR kodeak ez dauka baliozko errelerik.";
@@ -706,10 +718,6 @@
 "up_to_x_most_worse_quality_images" = "%1$@ arte: kalitate txarreneko irudiak";
 "up_to_x_most_balanced_quality_images" = "%1$@ arte: kalitate orekatueneko irudiak";
 "download_failed" = "Deskargak huts egin du";
-// %1$s will be replaced by a human-readable number of bytes, eg. 32 KiB, 1 MiB. Resulting string eg. "1 MiB message"
-"n_bytes_message" = "%1$@ mezu";
-// %1$s will be replaced by human-readable date and time
-"download_max_available_until" = "Deskargatu eskuragarri dagoen gehienezkoa %1$@ arte";
 "profile_image_select" = "Aukeratu abatarra";
 "select_your_new_profile_image" = "Aukeratu zure abatar berria";
 "profile_image_delete" = "Ezabatu abatarra";
@@ -1049,4 +1057,4 @@
 "perm_enable_bg_reminder_title" = "Sakatu hemen mezuak jasotzeko alt.chat bigarren planoan dagoenean.";
 "perm_enable_bg_already_done" = "Dagoeneko baimendu diozu alt.chat aplikazioari bigarren planoan mezuak jasotzea,\n\nOraindik ere mezuak heltzen ez badira, egiaztatu ere zure sistemaren ezarpenak.";
 // device messages for updates
-"update_2_0" = "Zer berri?\n\n💯 Muturretik muturrerako zifratze fidagarria eta betirakoa da orain. Sarrailak 🔒 joan dira!\n\n✉️ Muturretik muturrerako zifratzerik gabeko posta elektroniko klasikoa gutun-azal ikur batekin markatuta dago\n\n😻 Kontuaren pantaila berria zure kontaktu guztientzat\n\n🔲 Txat batean erabilitako aplikazioetara azkar sartzeko botoi berria\n\n❤️ Mesedez, egin dohaintza independente jarraitzen laguntzeko eta hobekuntzak ekartzen jarraitzeko: %1$@";
+"update_2_0" = "Zer berri?\n\n💯 Muturretik muturrerako zifratze fidagarria eta betirakoa da orain. Sarrailak 🔒 joan dira!\n\n✉️ Muturretik muturrerako zifratzerik gabeko posta elektroniko klasikoa gutun-azal ikur batekin markatuta dago\n\n😻 Profil-bistaratze berri hobetua zure kontaktu guztientzat\n\n🔲 Txat batean erabilitako aplikazioetara azkar sartzeko botoi berria\n\n❤️ Mesedez, egin dohaintza independente jarraitzen laguntzeko eta hobekuntzak ekartzen jarraitzeko: %1$@";

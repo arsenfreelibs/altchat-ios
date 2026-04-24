@@ -99,7 +99,7 @@ class ChatListViewController: UITableViewController {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let self else { return }
             self.viewModel = ChatListViewModel(dcContext: self.dcContext, isArchive: isArchive)
-            self.viewModel?.onChatListUpdate = self.handleChatListUpdate
+            self.viewModel?.onChatListUpdate = { [weak self] in self?.handleChatListUpdate() }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 if !isArchive {
@@ -245,6 +245,8 @@ class ChatListViewController: UITableViewController {
                 viewModel.updateSearchResults(for: self.searchController)
             }
 
+            let changedChatId = notification.userInfo?["chat_id"] as? Int
+            self.updateNextScreensBackButton(accountId: self.dcContext.id, chatId: changedChatId)
             self.refreshInBg()
         }
     }

@@ -57,8 +57,9 @@
 "show_full_message" = "Прикажи поруку у њеној целости...";
 // Stay short here, say ~16 characters. The source string could also be "All Read", maybe that hint can make translations easier :)
 "mark_all_as_read" = "Означи све као прочитано";
+// Used as an menu entry or button
 "mark_as_read" = "Означи као прочитано";
-// Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
+// Used beside an icon with very few space. Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
 "mark_as_read_short" = "Прочитано";
 // Placeholder text when something is loading
 "loading" = "Учитавање...";
@@ -348,6 +349,7 @@
 "remove_group_image" = "Уклони слику групе";
 "change_group_image" = "Промени слику групе";
 "group_create_button" = "Направи групу";
+// deprecated, use please_enter_chat_name
 "group_please_enter_group_name" = "Унесите назив групе";
 "group_add_members" = "Додајте чланове";
 "group_self_not_in_group" = "Морате бити члан групе да бисте извршили ову радњу.";
@@ -510,10 +512,6 @@
 "up_to_x_most_worse_quality_images" = "Повећано на %1$@, најлошији квалитет слика";
 "up_to_x_most_balanced_quality_images" = "Повећано на %1$@, уравнотежен квалитет слика";
 "download_failed" = "Преузимање није успело";
-// %1$s will be replaced by a human-readable number of bytes, eg. 32 KiB, 1 MiB. Resulting string eg. "1 MiB message"
-"n_bytes_message" = "%1$@ поруке";
-// %1$s will be replaced by human-readable date and time
-"download_max_available_until" = "Преузмите максимално доступно до %1$@";
 "profile_image_select" = "Изабери слику за профил";
 "select_your_new_profile_image" = "Изаберите нову слику за ваш профил";
 "profile_image_delete" = "Избриши слику профила";
