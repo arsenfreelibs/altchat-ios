@@ -2,7 +2,7 @@ import SwiftUI
 
 
 let appDeeplinkUrl = URL(string: "chat.delta.deeplink://")!
-let appstoreUrl = URL(string: "https://apps.apple.com/app/delta-chat/id1459523234")!
+let appstoreUrl = URL(string: "https://apps.apple.com/app/alt-chat/id6743641168")!
 
 @main
 struct AppClipApp: App {
@@ -22,20 +22,20 @@ struct AppClipApp: App {
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .shadow(radius: 30, y: 20)
 
-                Text("Delta Chat")
+                Text("Alt Chat")
                     .font(.largeTitle)
                     .bold()
 
                 Spacer()
 
                 if mainAppInstalled == true {
-                    Text("You have Delta Chat installed, you can remove this App Clip")
+                    Text("You have Alt Chat installed, you can remove this App Clip")
                         .multilineTextAlignment(.center)
                         .foregroundColor(.secondary)
                         .padding(.horizontal)
                 } else if mainAppInstalled == false {
                     if inviteLink != nil {
-                        Text("Install Delta Chat to accept this invite link")
+                        Text("Install Alt Chat to accept this invite link")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.secondary)
                             .padding(.horizontal)
@@ -44,7 +44,7 @@ struct AppClipApp: App {
                     Button(action: {
                         openURL(appstoreUrl)
                     }, label: {
-                        Label("Get Delta Chat", systemImage: "arrow.down.circle.fill")
+                        Label("Get Alt Chat", systemImage: "arrow.down.circle.fill")
                             .font(.headline)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -58,7 +58,7 @@ struct AppClipApp: App {
             .padding(.vertical, 50)
             .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { userActivity in
                 guard let link = userActivity.webpageURL?.absoluteString else { return }
-                UserDefaults(suiteName: "group.chat.delta.ios")?.set(link, forKey: "appClipInviteLink")
+                UserDefaults(suiteName: "group.me.alt.chat")?.set(link, forKey: "appClipInviteLink")
                 inviteLink = link
                 openURL(appDeeplinkUrl) { mainAppInstalled = $0 }
             }
