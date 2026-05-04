@@ -16,6 +16,7 @@ public class NotificationManager {
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationManager.handleIncomingReaction(_:)), name: Event.incomingReaction, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationManager.handleIncomingWebxdcNotify(_:)), name: Event.incomingWebxdcNotify, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationManager.handleMessagesNoticed(_:)), name: Event.messagesNoticed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationManager.handleMessageDeleted(_:)), name: Event.messageDeleted, object: nil)
     }
 
     deinit {
@@ -56,6 +57,24 @@ public class NotificationManager {
         nc.removeAllDeliveredNotifications()
     }
 
+    public static func removeNotificationForMessage(accountId: Int, chatId: Int, messageId: Int) {
+        DispatchQueue.global().async {
+            let nc = UNUserNotificationCenter.current()
+            nc.getDeliveredNotifications { notifications in
+                let toRemove = notifications
+                    .filter {
+                        $0.request.content.userInfo["account_id"] as? Int == accountId &&
+                        $0.request.content.userInfo["chat_id"] as? Int == chatId &&
+                        $0.request.content.userInfo["message_id"] as? Int == messageId
+                    }
+                    .map { $0.request.identifier }
+                guard !toRemove.isEmpty else { return }
+                nc.removeDeliveredNotifications(withIdentifiers: toRemove)
+                NotificationManager.updateBadgeCounters()
+            }
+        }
+    }
+
     public static func removeNotificationsForChat(dcContext: DcContext, chatId: Int) {
         DispatchQueue.global().async {
             let nc = UNUserNotificationCenter.current()
@@ -83,6 +102,14 @@ public class NotificationManager {
             let chatId = ui["chat_id"] as? Int else { return }
 
         NotificationManager.removeNotificationsForChat(dcContext: self.dcContext, chatId: chatId)
+    }
+
+    @objc private func handleMessageDeleted(_ notification: Notification) {
+        guard let ui = notification.userInfo,
+              let accountId = ui["account_id"] as? Int,
+              let chatId = ui["chat_id"] as? Int,
+              let messageId = ui["message_id"] as? Int else { return }
+        NotificationManager.removeNotificationForMessage(accountId: accountId, chatId: chatId, messageId: messageId)
     }
 
     @objc private func handleIncomingMessageOnAnyAccount(_ notification: Notification) {

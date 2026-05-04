@@ -10,6 +10,7 @@ public enum Event {
     public static let incomingReaction = Notification.Name(rawValue: "incomingReaction")
     public static let incomingWebxdcNotify = Notification.Name(rawValue: "incomingWebxdcNotify")
     public static let messagesNoticed = Notification.Name(rawValue: "messagesNoticed")
+    public static let messageDeleted = Notification.Name(rawValue: "messageDeleted")
 
     // Chats
     public static let chatModified = Notification.Name(rawValue: "chatModified")
@@ -110,6 +111,15 @@ public class DcEventHandler {
             }
             
             NotificationCenter.default.post(name: Event.messagesNoticed, object: nil, userInfo: [
+                "chat_id": Int(data1),
+                "account_id": accountId
+            ])
+
+        case DC_EVENT_MSG_DELETED:
+            // No account guard: notification removal must work across all accounts, not just the selected one.
+            logger.info("📡[\(accountId)] message deleted: chatId=\(data1) msgId=\(data2)")
+            NotificationCenter.default.post(name: Event.messageDeleted, object: nil, userInfo: [
+                "message_id": Int(data2),
                 "chat_id": Int(data1),
                 "account_id": accountId
             ])

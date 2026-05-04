@@ -157,6 +157,18 @@ class NotificationService: UNNotificationServiceExtension {
                     .filter { $0.request.content.threadIdentifier == noticedThreadId }
                     .map { $0.request.identifier }
                 nc.removeDeliveredNotifications(withIdentifiers: deliveredNotificationIds)
+            } else if event.id == DC_EVENT_MSG_DELETED {
+                let nc = UNUserNotificationCenter.current()
+                let toRemove = await nc.deliveredNotifications()
+                    .filter {
+                        $0.request.content.userInfo["account_id"] as? Int == event.accountId &&
+                        $0.request.content.userInfo["chat_id"] as? Int == event.data1Int &&
+                        $0.request.content.userInfo["message_id"] as? Int == event.data2Int
+                    }
+                    .map { $0.request.identifier }
+                if !toRemove.isEmpty {
+                    nc.removeDeliveredNotifications(withIdentifiers: toRemove)
+                }
             }
         }
 
