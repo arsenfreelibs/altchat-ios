@@ -1054,11 +1054,16 @@ class ChatListViewController: UITableViewController {
         navigationController?.pushViewController(newChatVC, animated: true)
     }
 
+    /// Shared audio controller injected by the coordinator; nil falls back to per-chat instance.
+    var audioController: AudioController?
+
     func showChat(chatId: Int, highlightedMsg: Int? = nil, animated: Bool = true) {
         if searchController.isActive {
             searchController.searchBar.resignFirstResponder()
         }
-        let chatViewController = ChatViewController(dcContext: dcContext, chatId: chatId, highlightedMsg: highlightedMsg)
+        let chatViewController = ChatViewController(dcContext: dcContext, chatId: chatId,
+                                                    audioController: audioController,
+                                                    highlightedMsg: highlightedMsg)
         backButtonUpdateableDataSource = chatViewController
         updateNextScreensBackButton(accountId: dcContext.id, chatId: chatId)
 

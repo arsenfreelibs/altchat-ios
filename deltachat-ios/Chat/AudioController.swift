@@ -17,6 +17,21 @@ public enum PlayerState {
 
 public protocol AudioControllerDelegate: AnyObject {
     func onAudioPlayFailed()
+    /// Called during headless autoplay so the controller can bind a visible cell immediately.
+    /// Return the `AudioMessageCell` currently displayed for `messageId`, or `nil` if not visible.
+    func audioController(_ controller: AudioController, visibleCellForMessageId messageId: Int) -> AudioMessageCell?
+}
+
+/// Observed by a persistent global observer (e.g. AppCoordinator) that needs to show / update
+/// a mini-player bar. Unlike `AudioControllerDelegate` this reference is never released while
+/// the app is running.
+public protocol AudioControllerMiniPlayerDelegate: AnyObject {
+    /// Called when playback starts for a message.
+    func audioController(_ controller: AudioController, didStartPlaying message: DcMsg)
+    /// Called on each progress timer tick with the current progress (0.0–1.0).
+    func audioController(_ controller: AudioController, didUpdateProgress progress: Float)
+    /// Called when playback stops for any reason.
+    func audioControllerDidStop(_ controller: AudioController)
 }
 
 /// The `AudioController` update UI for current audio cell that is playing a sound
@@ -24,6 +39,8 @@ public protocol AudioControllerDelegate: AnyObject {
 open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDelegate {
 
     open weak var delegate: AudioControllerDelegate?
+    /// Persistent observer for mini-player UI. Set once by AppCoordinator and never cleared.
+    open weak var miniPlayerDelegate: AudioControllerMiniPlayerDelegate?
 
     lazy var audioSession: AVAudioSession = {
         let audioSession = AVAudioSession.sharedInstance()
@@ -43,9 +60,15 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
     /// Specify if current audio controller state: playing, in pause or none
     open private(set) var state: PlayerState = .stopped
 
-    private let dcContext: DcContext
-    private let chatId: Int
-    private let chat: DcChat
+    private(set) var dcContext: DcContext
+    private(set) var chatId: Int
+    private(set) var chat: DcChat
+
+    /// Current playback rate. Applied to new and resumed playback.
+    private(set) var playbackRate: Float = {
+        let saved = UserDefaults.standard.float(forKey: "audioPlaybackRate")
+        return saved > 0 ? saved : 1.0
+    }()
 
     /// The `Timer` that update playing progress
     internal var progressTimer: Timer?
@@ -65,6 +88,14 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
                                                selector: #selector(audioRouteChanged),
                                                name: AVAudioSession.routeChangeNotification,
                                                object: AVAudioSession.sharedInstance())
+    }
+
+    /// Updates the controller's context to the given chat so that autoplay targets the correct
+    /// message list. Does NOT stop ongoing playback — audio continues across chat navigation.
+    public func configure(dcContext: DcContext, chatId: Int) {
+        self.dcContext = dcContext
+        self.chatId = chatId
+        self.chat = dcContext.getChat(chatId: chatId)
     }
 
     deinit {
@@ -182,12 +213,15 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             playingMessage = message
             if let fileUrl = message.fileURL, let player = try? AVAudioPlayer(contentsOf: fileUrl) {
                 audioPlayer = player
+                audioPlayer?.enableRate = true
                 audioPlayer?.prepareToPlay()
+                audioPlayer?.rate = playbackRate
                 audioPlayer?.delegate = self
                 audioPlayer?.play()
                 state = .playing
                 audioCell.audioPlayerView.showPlayLayout(true)  // show pause button on audio cell
                 startProgressTimer()
+                miniPlayerDelegate?.audioController(self, didStartPlaying: message)
             } else {
                 delegate?.onAudioPlayFailed()
             }
@@ -209,6 +243,14 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
     /// Stops any ongoing audio playing if exists
     open func stopAnyOngoingPlaying() {
         // If the audio player is nil then we don't need to go through the stopping logic
+        guard audioPlayer != nil else { return }
+        stopInternally()
+        miniPlayerDelegate?.audioControllerDidStop(self)
+    }
+
+    /// Internal stop: tears down the player but does NOT notify miniPlayerDelegate.
+    /// Use when autoplay will immediately start the next message so the mini-player stays visible.
+    private func stopInternally() {
         guard let player = audioPlayer else { return }
         player.stop()
         state = .stopped
@@ -222,6 +264,7 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
         audioPlayer = nil
         playingMessage = nil
         playingCell = nil
+        // playbackRate is intentionally NOT reset — it persists across messages.
         try? audioSession.setActive(false)
     }
 
@@ -232,19 +275,46 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             return
         }
         player.prepareToPlay()
+        player.rate = playbackRate
         player.play()
         state = .playing
         startProgressTimer()
         cell.audioPlayerView.showPlayLayout(true) // show pause button on audio cell
     }
 
+    /// Set the playback rate (1.0 = normal, 1.5, 2.0 etc.).
+    /// Persists the value to UserDefaults so it survives app restarts.
+    open func setPlaybackRate(_ rate: Float) {
+        playbackRate = rate
+        UserDefaults.standard.set(rate, forKey: "audioPlaybackRate")
+        audioPlayer?.rate = rate
+    }
+
+    /// Toggle between playing and paused without requiring a cell reference.
+    /// Use this from contexts where the AudioMessageCell is not available (e.g. mini-player).
+    open func togglePlayPause() {
+        guard let player = audioPlayer else { return }
+        if state == .playing {
+            player.pause()
+            state = .pause
+            progressTimer?.invalidate()
+        } else {
+            player.rate = playbackRate
+            player.play()
+            state = .playing
+            startProgressTimer()
+        }
+    }
+
     // MARK: - Fire Methods
     @objc private func didFireProgressTimer(_ timer: Timer) {
-        guard let player = audioPlayer, let cell = playingCell else {
-            return
+        guard let player = audioPlayer else { return }
+        let progress = player.duration == 0 ? Float(0) : Float(player.currentTime / player.duration)
+        if let cell = playingCell {
+            cell.audioPlayerView.setProgress(progress)
+            cell.audioPlayerView.setDuration(duration: player.currentTime)
         }
-        cell.audioPlayerView.setProgress((player.duration == 0) ? 0 : Float(player.currentTime/player.duration))
-        cell.audioPlayerView.setDuration(duration: player.currentTime)
+        miniPlayerDelegate?.audioController(self, didUpdateProgress: progress)
     }
 
     // MARK: - Private Methods
@@ -260,7 +330,68 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
 
     // MARK: - AVAudioPlayerDelegate
     open func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        stopAnyOngoingPlaying()
+        let finishedId = playingMessage?.id
+        // Use stopInternally so the mini-player stays visible while we search for the next message.
+        // startAutoplayAfter will notify audioControllerDidStop if the chain has ended.
+        stopInternally()
+        if let finishedId, flag {
+            startAutoplayAfter(messageId: finishedId)
+        } else {
+            miniPlayerDelegate?.audioControllerDidStop(self)
+        }
+    }
+
+    // MARK: - Autoplay
+
+    /// Searches forward in the chat for the next audio/voice message after `messageId`
+    /// and starts playing it headlessly (without requiring a visible cell).
+    private func startAutoplayAfter(messageId: Int) {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            let allMsgIds = self.dcContext.getChatMsgs(chatId: self.chatId, flags: 0)
+            guard let currentIndex = allMsgIds.firstIndex(of: messageId) else {
+                DispatchQueue.main.async { self.miniPlayerDelegate?.audioControllerDidStop(self) }
+                return
+            }
+            for nextId in allMsgIds[(currentIndex + 1)...] {
+                let msg = self.dcContext.getMessage(id: nextId)
+                if msg.type == DC_MSG_AUDIO || msg.type == DC_MSG_VOICE {
+                    DispatchQueue.main.async { self.startPlayingHeadless(message: msg) }
+                    return
+                }
+            }
+            // No next message found — the chain has ended.
+            DispatchQueue.main.async { self.miniPlayerDelegate?.audioControllerDidStop(self) }
+        }
+    }
+
+    /// Starts playback of `message` without a pre-existing cell reference.
+    /// Immediately tries to bind the visible cell via the delegate so animations start right away;
+    /// if the cell is off-screen, `update(_:with:)` will bind it when it scrolls into view.
+    private func startPlayingHeadless(message: DcMsg) {
+        guard let fileUrl = message.fileURL,
+              let player = try? AVAudioPlayer(contentsOf: fileUrl) else {
+            delegate?.onAudioPlayFailed()
+            return
+        }
+        _ = try? audioSession.setActive(true)
+        playingMessage = message
+        audioPlayer = player
+        audioPlayer?.enableRate = true
+        audioPlayer?.prepareToPlay()
+        audioPlayer?.rate = playbackRate
+        audioPlayer?.delegate = self
+        audioPlayer?.play()
+        state = .playing
+        // Bind the visible cell immediately so its animation starts without waiting for cellForRowAt.
+        if let cell = delegate?.audioController(self, visibleCellForMessageId: message.id) {
+            playingCell = cell
+            cell.audioPlayerView.showPlayLayout(true)
+        } else {
+            playingCell = nil
+        }
+        startProgressTimer()
+        miniPlayerDelegate?.audioController(self, didStartPlaying: message)
     }
 
     open func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {

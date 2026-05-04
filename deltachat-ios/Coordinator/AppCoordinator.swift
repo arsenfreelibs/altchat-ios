@@ -17,6 +17,30 @@ class AppCoordinator: NSObject {
 
     private let appStateRestorer = AppStateRestorer.shared
 
+    /// Global audio controller shared across all chat screens so playback persists during navigation.
+    lazy var audioController: AudioController = {
+        let controller = AudioController(dcContext: dcAccounts.getSelected(), chatId: 0)
+        controller.miniPlayerDelegate = self
+        return controller
+    }()
+
+    /// Mini-player bar shown below the navigation bar in the chats tab during audio playback.
+    private lazy var miniPlayerView = MiniAudioPlayerView()
+    /// Speed steps cycled by the speed button.
+    private let speedSteps: [Float] = [1.0, 1.5, 2.0]
+    private var currentSpeedIndex = 0
+    /// Tracks whether the mini-player is currently visible so insets can be applied to new VCs.
+    private var miniPlayerVisible = false
+
+    private var chatsNavigationController: UINavigationController? {
+        tabBarController.viewControllers?[chatsTab] as? UINavigationController
+    }
+
+    /// Applies or removes the top inset on the currently visible chats VC.
+    private func applyMiniPlayerInset(_ active: Bool) {
+        chatsNavigationController?.topViewController?.additionalSafeAreaInsets.top = active ? MiniAudioPlayerView.height : 0
+    }
+
     // MARK: - login view handling
     private lazy var loginNavController: UINavigationController = {
         let nav = UINavigationController() // we change the root, therefore do not set on implicit creation
@@ -60,7 +84,9 @@ class AppCoordinator: NSObject {
 
     private func createChatsNavigationController() -> UINavigationController {
         let root = ChatListViewController(dcContext: dcAccounts.getSelected(), dcAccounts: dcAccounts, isArchive: false)
+        root.audioController = audioController
         let nav = UINavigationController(rootViewController: root)
+        nav.delegate = self
         let chatTabImage = UIImage(systemName: "message.fill")
         nav.tabBarItem = UITabBarItem(title: String.localized("pref_chats"), image: chatTabImage, tag: chatsTab)
         return nav
@@ -119,7 +145,9 @@ class AppCoordinator: NSObject {
             chatListViewController.setLongTapEditing(false)
             if let msgId, openHighlightedMsg {
                 let dcContext = dcAccounts.getSelected()
-                let chatViewController = ChatViewController(dcContext: dcContext, chatId: chatId, highlightedMsg: msgId)
+                let chatViewController = ChatViewController(dcContext: dcContext, chatId: chatId,
+                                                            audioController: audioController,
+                                                            highlightedMsg: msgId)
                 chatListViewController.backButtonUpdateableDataSource = chatViewController
                 let webxdcVC = WebxdcViewController(dcContext: dcContext, messageId: msgId)
                 let controllers: [UIViewController] = [chatListViewController, chatViewController, webxdcVC]
@@ -677,5 +705,68 @@ extension AppCoordinator: UITabBarControllerDelegate {
             }
         }
         return nil
+    }
+}
+
+// MARK: - UINavigationControllerDelegate (chats tab)
+extension AppCoordinator: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController,
+                               didShow viewController: UIViewController, animated: Bool) {
+        // Propagate mini-player inset to each newly shown view controller so content
+        // is pushed below the mini-player bar on push and restored on pop.
+        viewController.additionalSafeAreaInsets.top = miniPlayerVisible ? MiniAudioPlayerView.height : 0
+    }
+}
+
+// MARK: - AudioControllerMiniPlayerDelegate
+extension AppCoordinator: AudioControllerMiniPlayerDelegate {
+
+    func audioController(_ controller: AudioController, didStartPlaying message: DcMsg) {
+        // Restore speed index from the controller's persisted rate.
+        let savedRate = controller.playbackRate
+        currentSpeedIndex = speedSteps.firstIndex(of: savedRate) ?? 0
+
+        let senderName = controller.dcContext.getContact(id: message.fromContactId).displayName
+        let subtitle = String.localized("voice_message")
+
+        if miniPlayerView.superview == nil {
+            // First time — show the bar.
+            guard let nav = chatsNavigationController else { return }
+            miniPlayerView.onPlayPause = { [weak self] in
+                guard let self else { return }
+                self.audioController.togglePlayPause()
+                self.miniPlayerView.setPlaying(self.audioController.state == .playing)
+            }
+            miniPlayerView.onSpeedToggle = { [weak self] in
+                guard let self else { return }
+                self.currentSpeedIndex = (self.currentSpeedIndex + 1) % self.speedSteps.count
+                let rate = self.speedSteps[self.currentSpeedIndex]
+                self.audioController.setPlaybackRate(rate)
+                self.miniPlayerView.setSpeed(rate)
+            }
+            miniPlayerView.onClose = { [weak self] in
+                self?.audioController.stopAnyOngoingPlaying()
+            }
+            // Attach below the navigation bar.
+            miniPlayerView.show(in: nav.view, below: nav.navigationBar.bottomAnchor)
+        }
+        miniPlayerVisible = true
+        applyMiniPlayerInset(true)
+
+        miniPlayerView.configure(title: senderName, subtitle: subtitle)
+        miniPlayerView.setPlaying(true)
+        miniPlayerView.setSpeed(speedSteps[currentSpeedIndex])
+        miniPlayerView.setProgress(0)
+    }
+
+    func audioController(_ controller: AudioController, didUpdateProgress progress: Float) {
+        miniPlayerView.setProgress(progress)
+    }
+
+    func audioControllerDidStop(_ controller: AudioController) {
+        guard miniPlayerView.superview != nil else { return }
+        miniPlayerVisible = false
+        applyMiniPlayerInset(false)
+        miniPlayerView.hide()
     }
 }

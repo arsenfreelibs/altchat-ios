@@ -218,6 +218,7 @@
 		B2DF96312EE3368F0037F07F /* TransportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF96302EE3368F0037F07F /* TransportCell.swift */; };
 		B2F899E129F96A67003797D5 /* AllMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F899E029F96A67003797D5 /* AllMediaViewController.swift */; };
 		D4840D0048F742B6847B7655 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8CF840688B4C388C6E651F /* WaveformView.swift */; };
+		FA1A2B3C4D5E6F7A8B9C0D1E /* MiniAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A2B3C4D5E6F7A8B9C0D1F /* MiniAudioPlayerView.swift */; };
 		D8083AD02D14384F005DCB7D /* UserDefaults+Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8083ACF2D14384F005DCB7D /* UserDefaults+Widgets.swift */; };
 		D8083AD12D143868005DCB7D /* UserDefaults+Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8083ACF2D14384F005DCB7D /* UserDefaults+Widgets.swift */; };
 		D80F62792B59D1CC00877059 /* DefaultReactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F62782B59D1CC00877059 /* DefaultReactions.swift */; };
@@ -542,6 +543,7 @@
 		7A9FB14F1FB061E2001FEA36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
 		8B8CF840688B4C388C6E651F /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		FA1A2B3C4D5E6F7A8B9C0D1F /* MiniAudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayerView.swift; sourceTree = "<group>"; };
 		AE0AA951247800E700D42A7F /* GalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCell.swift; sourceTree = "<group>"; };
 		AE0AA9552478191900D42A7F /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		AE0AA957247834A400D42A7F /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -975,6 +977,7 @@
 				30F8817524DA97DA0023780E /* BackgroundContainer.swift */,
 				3008CB7324F9436C00E6A617 /* AudioPlayerView.swift */,
 				8B8CF840688B4C388C6E651F /* WaveformView.swift */,
+				FA1A2B3C4D5E6F7A8B9C0D1F /* MiniAudioPlayerView.swift */,
 				30EF7323252FF15F00E2C54A /* MessageLabel.swift */,
 				3052C609253F082E007D13EA /* MessageLabelDelegate.swift */,
 				3052C60D253F088E007D13EA /* DetectorType.swift */,
@@ -1838,6 +1841,7 @@
 				D83227022D3AC9F300C239C5 /* RecentWebxdcAppsViewController.swift in Sources */,
 				3008CB7424F9436C00E6A617 /* AudioPlayerView.swift in Sources */,
 				D4840D0048F742B6847B7655 /* WaveformView.swift in Sources */,
+				FA1A2B3C4D5E6F7A8B9C0D1E /* MiniAudioPlayerView.swift in Sources */,
 				1963595E2C10475B99D881E7 /* AudioWaveformHelper.swift in Sources */,
 				3080A01D277DDB8A00E74565 /* InputItem.swift in Sources */,
 				AED62BCE247687E6009E220D /* LocationStreamingIndicator.swift in Sources */,

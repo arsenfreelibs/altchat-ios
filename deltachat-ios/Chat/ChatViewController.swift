@@ -305,8 +305,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return dcContext.getMessageReactions(messageId: messageId)?.reactions.filter { $0.isFromSelf } .map { $0.emoji } ?? []
     }
 
-    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and update audio cell UI accordingly.
-    private lazy var audioController = AudioController(dcContext: dcContext, chatId: chatId, delegate: self)
+    /// Audio controller shared across chats (injected by coordinator) or a local instance when opened standalone.
+    var audioController: AudioController
 
     private var keyboardManager: KeyboardManager? = KeyboardManager()
 
@@ -330,10 +330,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         set { _bag = newValue }
     }
 
-    init(dcContext: DcContext, chatId: Int, highlightedMsg: Int? = nil) {
+    init(dcContext: DcContext, chatId: Int, audioController: AudioController? = nil, highlightedMsg: Int? = nil) {
         self.dcContext = dcContext
         self.chatId = chatId
         self.highlightedMsg = highlightedMsg
+        self.audioController = audioController ?? AudioController(dcContext: dcContext, chatId: chatId)
         super.init(nibName: nil, bundle: nil)
         hidesBottomBarWhenPushed = true
 
@@ -442,6 +443,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // this will be removed in viewWillDisappear
         navigationController?.navigationBar.addGestureRecognizer(navBarTap)
         updateTitle()
+        // Keep audio controller context in sync and register as delegate for cell UI updates.
+        audioController.configure(dcContext: dcContext, chatId: chatId)
+        audioController.delegate = self
 
         if activateSearch {
             activateSearch = false
@@ -536,13 +540,18 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         // the navigationController will be used when chatDetail is pushed, so we have to remove that gestureRecognizer
         navigationController?.navigationBar.removeGestureRecognizer(navBarTap)
+        // Release the delegate so the audio controller can be re-claimed by the next chat or the mini-player.
+        if audioController.delegate === self {
+            audioController.delegate = nil
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         AppStateRestorer.shared.resetLastActiveChat()
         handleUserVisibility(isVisible: false)
-        audioController.stopAnyOngoingPlaying()
+        // Audio is now managed globally; do not stop on navigation —
+        // the mini-player (or a new chat's playButtonTapped) handles stopping.
         NotificationCenter.default.removeObserver(self, name: TypingManager.typingChangedNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: TypingManager.onlineStatusChangedNotification, object: nil)
         // Only leave when actually navigating away from this chat (back swipe / pop),
@@ -3607,6 +3616,11 @@ extension ChatViewController: QLPreviewControllerDelegate {
 extension ChatViewController: AudioControllerDelegate {
     func onAudioPlayFailed() {
         self.logAndAlert(error: String.localized("cannot_play_audio_file"))
+    }
+
+    func audioController(_ controller: AudioController, visibleCellForMessageId messageId: Int) -> AudioMessageCell? {
+        guard let index = messages.firstIndex(where: { $0.id == messageId }) else { return nil }
+        return tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? AudioMessageCell
     }
 }
 
