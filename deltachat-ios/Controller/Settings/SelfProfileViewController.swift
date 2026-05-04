@@ -1,5 +1,6 @@
 import UIKit
 import DcCore
+import Intents
 
 class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
 
@@ -9,6 +10,7 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
         let cells: [UITableViewCell]
     }
 
+    private let dcAccounts: DcAccounts
     private let dcContext: DcContext
 
     lazy var doneButton: UIBarButtonItem = {
@@ -46,16 +48,29 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
         return cell
     }()
 
+    private lazy var deleteAccountCell: ActionCell = {
+        let cell = ActionCell()
+        cell.actionTitle = String.localized("delete_account")
+        cell.actionColor = .systemRed
+        return cell
+    }()
+
     private lazy var sections: [SectionConfigs] = {
         let nameSection = SectionConfigs(
             headerTitle: nil,
             footerTitle: String.localized("pref_who_can_see_profile_explain"),
             cells: [nameCell, avatarSelectionCell, statusCell]
         )
-        return [nameSection]
+        let deleteSection = SectionConfigs(
+            headerTitle: nil,
+            footerTitle: nil,
+            cells: [deleteAccountCell]
+        )
+        return [nameSection, deleteSection]
     }()
 
     init(dcAccounts: DcAccounts) {
+        self.dcAccounts = dcAccounts
         self.dcContext = dcAccounts.getSelected()
         super.init(style: .insetGrouped)
         hidesBottomBarWhenPushed = true
@@ -104,6 +119,13 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
         return sections[section].footerTitle
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 1 {
+            deleteCurrentAccount()
+        }
+    }
+
     // MARK: - Notifications
     @objc func textDidChange(notification: Notification) {
         validateFields()
@@ -123,6 +145,32 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
             dcContext.selfavatar = nil
         }
         navigationController?.popViewController(animated: true)
+    }
+
+    private func deleteCurrentAccount() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        Utils.authenticateDeviceOwner(reason: String.localized("delete_account")) { [weak self] in
+            guard let self else { return }
+            let accountId = dcContext.id
+            let message = "⚠️ " + String.localized(stringID: "delete_account_explain_with_name",
+                                                    parameter: dcContext.displayname ?? dcContext.addr ?? "")
+            let alert = UIAlertController(title: String.localized("delete_account_ask"),
+                                          message: message,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: String.localized("delete_account"), style: .destructive) { [weak self] _ in
+                guard let self else { return }
+                appDelegate.locationManager.disableLocationStreamingInAllChats()
+                _ = dcAccounts.remove(id: accountId)
+                KeychainManager.deleteAccountSecret(id: accountId)
+                INInteraction.delete(with: "\(accountId)", completion: nil)
+                if dcAccounts.getAll().isEmpty {
+                    _ = dcAccounts.add()
+                }
+                appDelegate.reloadDcContext()
+            })
+            alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel))
+            present(alert, animated: true)
+        }
     }
 
     private func enlargeAvatarPressed(_ action: UIAlertAction) {
