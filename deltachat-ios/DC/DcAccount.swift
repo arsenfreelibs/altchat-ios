@@ -100,15 +100,15 @@ public class DcAccounts {
             // The other way round, NSE is not started when main-IO is running.
             startOrReschedule()
             func startOrReschedule() {
-                if UserDefaults.mainIoRunning {
+                if UserDefaults.nseFetching {
                     logger.info("➡️ wait for NSE to terminate")
-                    if UserDefaults.nseFetching {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: startOrReschedule)
-                    } else {
-                        dc_accounts_start_io(accountsPointer)
-                        NotificationCenter.default.post(name: Event.messagesChanged, object: nil, userInfo: ["message_id": Int(0), "chat_id": Int(0)])
-                        DispatchQueue.main.async(execute: sendQueuedCallPayload)
-                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: startOrReschedule)
+                } else if UserDefaults.mainIoRunning {
+                    dc_accounts_start_io(accountsPointer)
+                    NotificationCenter.default.post(name: Event.messagesChanged, object: nil, userInfo: ["message_id": Int(0), "chat_id": Int(0)])
+                    DispatchQueue.main.async(execute: sendQueuedCallPayload)
+                } else {
+                    logger.info("⏸️ IO deferred: NSE done, app in background")
                 }
             }
         } else {

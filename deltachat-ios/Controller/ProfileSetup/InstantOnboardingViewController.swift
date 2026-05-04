@@ -301,13 +301,15 @@ class InstantOnboardingViewController: UIViewController {
         DispatchQueue.global().async {
             AltPlatformService(dcContext: dcCtx).quickRegister(displayName: displayName)
         }
-        DispatchQueue.main.async {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            appDelegate.registerForNotifications()
-            appDelegate.reloadDcContext()
-            appDelegate.prepopulateWidget()
-            appDelegate.handleAppClipInviteLink()
-        }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.registerForNotifications()
+        // Explicitly set mainIoRunning before reloadDcContext so startIo()'s
+        // startOrReschedule() loop doesn't silently exit if a push notification
+        // triggered NSE during account creation (see DcAccount.startIo).
+        UserDefaults.setMainIoRunning()
+        appDelegate.reloadDcContext()
+        appDelegate.prepopulateWidget()
+        appDelegate.handleAppClipInviteLink()
     }
 
     private func storeImageAndName() {
