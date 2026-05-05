@@ -432,7 +432,14 @@ class AppCoordinator: NSObject {
             alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: String.localized("start_chat"), style: .default, handler: { [weak self] _ in
                 let chatId = dcContext.createChatByContactId(contactId: qrParsed.id)
-                self?.showChat(chatId: chatId)
+                let vcToDismiss = viewController.navigationController ?? viewController
+                if vcToDismiss.presentingViewController != nil {
+                    vcToDismiss.dismiss(animated: true) { [weak self] in
+                        self?.showChat(chatId: chatId)
+                    }
+                } else {
+                    self?.showChat(chatId: chatId)
+                }
             }))
             viewController.present(alert, animated: true, completion: nil)
 
@@ -539,7 +546,18 @@ class AppCoordinator: NSObject {
         alert.addAction(UIAlertAction(title: positiveButton, style: .default, handler: { [weak self] _ in
             let chatId = dcContext.joinSecurejoin(qrCode: code)
             if chatId != 0 {
-                self?.showChat(chatId: chatId)
+                let vcToDismiss = viewController.navigationController ?? viewController
+                if vcToDismiss.presentingViewController != nil {
+                    // Dismiss the modal QR scanner first, then open the chat.
+                    // If showChat is called before dismiss completes, the form-sheet dismiss
+                    // animation races with becomeFirstResponder() in the new ChatViewController,
+                    // preventing the inputAccessoryView (message input bar) from attaching.
+                    vcToDismiss.dismiss(animated: true) { [weak self] in
+                        self?.showChat(chatId: chatId)
+                    }
+                } else {
+                    self?.showChat(chatId: chatId)
+                }
             } else {
                 viewController.logAndAlert(error: dcContext.lastErrorString)
             }
