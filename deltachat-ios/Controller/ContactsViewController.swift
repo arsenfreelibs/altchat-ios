@@ -13,6 +13,7 @@ class ContactsViewController: UITableViewController {
     private var contactIds: [Int] = []
     private var filteredContactIds: [Int] = []
     private var remoteResults: [RemoteUser] = []
+    private var isRemoteSearchPending = false
 
     private lazy var searchService = UserSearchService(accountId: dcContext.id)
 
@@ -85,6 +86,16 @@ class ContactsViewController: UITableViewController {
         tableView.reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(handleOnlineStatusChanged),
                                                name: TypingManager.onlineStatusChangedNotification, object: nil)
+        retryRegistrationIfNeeded()
+    }
+
+    private func retryRegistrationIfNeeded() {
+        guard KeychainManager.loadJwtToken(accountId: dcContext.id) == nil else { return }
+        guard let displayName = dcContext.displayname, !displayName.isEmpty else { return }
+        let dcCtx = dcContext
+        DispatchQueue.global().async {
+            AltPlatformService(dcContext: dcCtx).quickRegister(displayName: displayName)
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -149,7 +160,7 @@ class ContactsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == sectionInviteFriends {
-            return 1
+            return isFiltering ? 0 : 1
         } else if section == sectionRemoteResults {
             return remoteResults.count
         }
@@ -280,17 +291,23 @@ class ContactsViewController: UITableViewController {
     }
 
     private func filterContentForSearchText(_ searchText: String) {
-        filteredContactIds = dcContext.getContacts(flags: DC_GCL_ADD_SELF, queryString: searchText)
+        let keyContactIds = dcContext.getContacts(flags: DC_GCL_ADD_SELF, queryString: searchText)
+        let addrContactIds = dcContext.getContacts(flags: DC_GCL_ADDRESS, queryString: searchText)
+        let keyContactSet = Set(keyContactIds)
+        filteredContactIds = keyContactIds + addrContactIds.filter { !keyContactSet.contains($0) }
 
         if searchText.count >= 2 {
+            isRemoteSearchPending = true
             searchService.search(query: searchText) { [weak self] result in
                 guard let self else { return }
-                if case .success(let users) = result {
+                self.isRemoteSearchPending = false
+                switch result {
+                case .success(let users):
                     let localEmails = Set(self.filteredContactIds.map { self.dcContext.getContact(id: $0).email.lowercased() })
                     self.remoteResults = users.filter { user in
                         !user.addr.contains { localEmails.contains($0.lowercased()) }
                     }
-                } else {
+                case .failure:
                     self.remoteResults = []
                 }
                 self.tableView.reloadData()
@@ -298,6 +315,7 @@ class ContactsViewController: UITableViewController {
             }
         } else {
             searchService.cancel()
+            isRemoteSearchPending = false
             remoteResults = []
         }
 
@@ -307,7 +325,7 @@ class ContactsViewController: UITableViewController {
     }
 
     private func updateEmptyState(for searchText: String) {
-        if searchController.isActive && filteredContactIds.isEmpty && remoteResults.isEmpty {
+        if searchController.isActive && filteredContactIds.isEmpty && remoteResults.isEmpty && !isRemoteSearchPending {
             let text = String.localizedStringWithFormat(String.localized("search_no_result_for_x"), searchText)
             emptySearchStateLabel.text = text
             emptySearchStateLabel.isHidden = false

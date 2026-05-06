@@ -303,7 +303,7 @@ class InstantOnboardingViewController: UIViewController {
         }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.registerForNotifications()
-        // Explicitly set mainIoRunning before reloadDcContext so startIo()'s
+        // Explicitly set mainIoore reloadDcContext so startIo()'s
         // startOrReschedule() loop doesn't silently exit if a push notification
         // triggered NSE during account creation (see DcAccount.startIo).
         UserDefaults.setMainIoRunning()

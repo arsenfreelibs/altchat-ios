@@ -26,27 +26,38 @@ final class AltPlatformService {
                 shouldRun = true
             }
         }
-        guard shouldRun else { return }
+        guard shouldRun else {
+            logger.debug("AltPlatformService: quickRegister skipped (already in progress)")
+            return
+        }
         defer {
             AltPlatformService.registrationQueue.sync {
                 AltPlatformService.isRegistering = false
             }
         }
+        logger.debug("AltPlatformService: quickRegister starting for account \(dcContext.id)")
 
         // 1. Collect transport addresses
         let transports = dcContext.listTransportsEx()
         var addrs = transports.map { $0.param.addr }
         if addrs.isEmpty, let addr = dcContext.addr { addrs = [addr] }
-        guard !addrs.isEmpty else { return }
+        guard !addrs.isEmpty else {
+            logger.debug("AltPlatformService: quickRegister aborted — no email address configured")
+            return
+        }
 
         // 2. Derive username from first address
         let email = addrs[0]
         let username = deriveUsername(from: email)
+        logger.debug("AltPlatformService: quickRegister email=\(email) username=\(username)")
 
         // 3. Obtain OpenPGP keys and fingerprint via RPC
         guard let publicKey = dcContext.getSelfPublicKeyArmored(),
               let privateKeyArmored = dcContext.getSelfPrivateKeyArmored(),
-              let fingerprint = dcContext.getSelfFingerprintHex() else { return }
+              let fingerprint = dcContext.getSelfFingerprintHex() else {
+            logger.debug("AltPlatformService: quickRegister aborted — OpenPGP key/fingerprint not available yet")
+            return
+        }
 
         // 4. Generate recovery password
         let recoveryPassword = generateRecoveryPassword()
@@ -55,7 +66,10 @@ final class AltPlatformService {
         KeychainManager.saveRecoveryPassword(recoveryPassword)
 
         // 6. Encrypt private key — do NOT send it in plain text
-        guard let encryptedPrivKey = encryptPrivateKey(privateKeyArmored, password: recoveryPassword) else { return }
+        guard let encryptedPrivKey = encryptPrivateKey(privateKeyArmored, password: recoveryPassword) else {
+            logger.debug("AltPlatformService: quickRegister aborted — private key encryption failed")
+            return
+        }
 
         // 7. Build and send the POST request
         let body = RegisterRequest(
@@ -70,6 +84,7 @@ final class AltPlatformService {
 
         guard let url = URL(string: AltPlatformService.quickRegisterURL),
               let bodyData = try? JSONEncoder().encode(body) else { return }
+        logger.debug("AltPlatformService: quickRegister request body=\(String(data: bodyData, encoding: .utf8) ?? "<encode error>")")
 
         var request = URLRequest(url: url, timeoutInterval: 30)
         request.httpMethod = "POST"
@@ -89,7 +104,11 @@ final class AltPlatformService {
         semaphore.wait()
 
         // 8. Handle result
-        guard let statusCode = httpResponse?.statusCode else { return }
+        guard let statusCode = httpResponse?.statusCode else {
+            logger.debug("AltPlatformService: quickRegister — no HTTP response received")
+            return
+        }
+        logger.debug("AltPlatformService: quickRegister HTTP \(statusCode) for account \(dcContext.id)")
 
         if statusCode == 200,
            let data = responseData,
@@ -98,6 +117,11 @@ final class AltPlatformService {
             KeychainManager.saveJwtToken(decoded.token, accountId: dcContext.id)
             UserDefaults.shared?.set(username, forKey: "alt_username")
             UserDefaults.shared?.set(email, forKey: "alt_email")
+            logger.debug("AltPlatformService: quickRegister succeeded, JWT saved")
+        } else if statusCode != 200 {
+            if let data = responseData, let body = String(data: data, encoding: .utf8) {
+                logger.debug("AltPlatformService: quickRegister failed body=\(body)")
+            }
         }
         // 409 or other errors: silent — retryQuickRegisterIfNeeded() will retry on next foreground
     }
@@ -162,6 +186,16 @@ private struct RegisterRequest: Encodable {
     let publicKey: String
     let fingerprint: String
     let encryptedPrivateKey: String
+
+    enum CodingKeys: String, CodingKey {
+        case username
+        case email
+        case addr
+        case displayName = "name"
+        case publicKey = "public_key"
+        case fingerprint
+        case encryptedPrivateKey = "encrypted_private_key"
+    }
 }
 
 private struct RegisterResponse: Decodable {
