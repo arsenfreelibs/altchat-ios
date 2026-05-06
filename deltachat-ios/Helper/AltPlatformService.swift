@@ -27,7 +27,7 @@ final class AltPlatformService {
             }
         }
         guard shouldRun else {
-            logger.debug("AltPlatformService: quickRegister skipped (already in progress)")
+            logger.info("AltPlatformService: quickRegister skipped (already in progress)")
             return
         }
         defer {
@@ -35,27 +35,27 @@ final class AltPlatformService {
                 AltPlatformService.isRegistering = false
             }
         }
-        logger.debug("AltPlatformService: quickRegister starting for account \(dcContext.id)")
+        logger.info("AltPlatformService: quickRegister starting for account \(dcContext.id)")
 
         // 1. Collect transport addresses
         let transports = dcContext.listTransportsEx()
         var addrs = transports.map { $0.param.addr }
         if addrs.isEmpty, let addr = dcContext.addr { addrs = [addr] }
         guard !addrs.isEmpty else {
-            logger.debug("AltPlatformService: quickRegister aborted — no email address configured")
+            logger.info("AltPlatformService: quickRegister aborted — no email address configured")
             return
         }
 
         // 2. Derive username from first address
         let email = addrs[0]
         let username = deriveUsername(from: email)
-        logger.debug("AltPlatformService: quickRegister email=\(email) username=\(username)")
+        logger.info("AltPlatformService: quickRegister email=\(email) username=\(username)")
 
         // 3. Obtain OpenPGP keys and fingerprint via RPC
         guard let publicKey = dcContext.getSelfPublicKeyArmored(),
               let privateKeyArmored = dcContext.getSelfPrivateKeyArmored(),
               let fingerprint = dcContext.getSelfFingerprintHex() else {
-            logger.debug("AltPlatformService: quickRegister aborted — OpenPGP key/fingerprint not available yet")
+            logger.info("AltPlatformService: quickRegister aborted — OpenPGP key/fingerprint not available yet")
             return
         }
 
@@ -67,7 +67,7 @@ final class AltPlatformService {
 
         // 6. Encrypt private key — do NOT send it in plain text
         guard let encryptedPrivKey = encryptPrivateKey(privateKeyArmored, password: recoveryPassword) else {
-            logger.debug("AltPlatformService: quickRegister aborted — private key encryption failed")
+            logger.info("AltPlatformService: quickRegister aborted — private key encryption failed")
             return
         }
 
@@ -84,7 +84,7 @@ final class AltPlatformService {
 
         guard let url = URL(string: AltPlatformService.quickRegisterURL),
               let bodyData = try? JSONEncoder().encode(body) else { return }
-        logger.debug("AltPlatformService: quickRegister request body=\(String(data: bodyData, encoding: .utf8) ?? "<encode error>")")
+        logger.info("AltPlatformService: quickRegister request body=\(String(data: bodyData, encoding: .utf8) ?? "<encode error>")")
 
         var request = URLRequest(url: url, timeoutInterval: 30)
         request.httpMethod = "POST"
@@ -105,10 +105,10 @@ final class AltPlatformService {
 
         // 8. Handle result
         guard let statusCode = httpResponse?.statusCode else {
-            logger.debug("AltPlatformService: quickRegister — no HTTP response received")
+            logger.info("AltPlatformService: quickRegister — no HTTP response received")
             return
         }
-        logger.debug("AltPlatformService: quickRegister HTTP \(statusCode) for account \(dcContext.id)")
+        logger.info("AltPlatformService: quickRegister HTTP \(statusCode) for account \(dcContext.id)")
 
         if statusCode == 200,
            let data = responseData,
@@ -117,10 +117,10 @@ final class AltPlatformService {
             KeychainManager.saveJwtToken(decoded.token, accountId: dcContext.id)
             UserDefaults.shared?.set(username, forKey: "alt_username")
             UserDefaults.shared?.set(email, forKey: "alt_email")
-            logger.debug("AltPlatformService: quickRegister succeeded, JWT saved")
+            logger.info("AltPlatformService: quickRegister succeeded, JWT saved")
         } else if statusCode != 200 {
             if let data = responseData, let body = String(data: data, encoding: .utf8) {
-                logger.debug("AltPlatformService: quickRegister failed body=\(body)")
+                logger.info("AltPlatformService: quickRegister failed body=\(body)")
             }
         }
         // 409 or other errors: silent — retryQuickRegisterIfNeeded() will retry on next foreground

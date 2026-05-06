@@ -59,15 +59,15 @@ final class UserSearchService {
         if let token = KeychainManager.loadJwtToken(accountId: accountId) {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
-            logger.debug("UserSearchService: no JWT token for account \(accountId), sending unauthenticated request")
+            logger.info("UserSearchService: no JWT token for account \(accountId), sending unauthenticated request")
         }
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        logger.debug("UserSearchService: searching for \"\(query)\" (authenticated=\(hasToken))")
+        logger.info("UserSearchService: searching for \"\(query)\" (authenticated=\(hasToken))")
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if let error {
-                    logger.debug("UserSearchService: network error for \"\(query)\": \(error.localizedDescription)")
+                    logger.info("UserSearchService: network error for \"\(query)\": \(error.localizedDescription)")
                     completion(.failure(error))
                     return
                 }
@@ -76,7 +76,7 @@ final class UserSearchService {
                     return
                 }
                 guard httpResponse.statusCode == 200 else {
-                    logger.debug("UserSearchService: HTTP \(httpResponse.statusCode) for \"\(query)\"")
+                    logger.info("UserSearchService: HTTP \(httpResponse.statusCode) for \"\(query)\"")
                     let err = NSError(domain: "UserSearchService", code: httpResponse.statusCode,
                                      userInfo: [NSLocalizedDescriptionKey: "Server error \(httpResponse.statusCode)"])
                     completion(.failure(err))
@@ -88,10 +88,10 @@ final class UserSearchService {
                 }
                 do {
                     let users = try JSONDecoder().decode([RemoteUser].self, from: data)
-                    logger.debug("UserSearchService: found \(users.count) user(s) for \"\(query)\"")
+                    logger.info("UserSearchService: found \(users.count) user(s) for \"\(query)\"")
                     completion(.success(users))
                 } catch {
-                    logger.debug("UserSearchService: decode error for \"\(query)\": \(error)")
+                    logger.info("UserSearchService: decode error for \"\(query)\": \(error)")
                     completion(.failure(error))
                 }
             }
