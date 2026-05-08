@@ -320,7 +320,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Ana Ekrana Ekle";
 "donate" = "Bağış";
-"donate_device_msg" = "❤️ alt.chat\'in tadını çıkarıyor gibisiniz!\n\nalt.chat\'in herkes için ücretsiz kalmasını sağlamak için lütfen bağış yapmayı düşünün.\n\nalt.chat, kullanımı ücretsiz ve açık kaynaklıdır, geliştirme paraya mâl olur. alt.chat\'in bağımsızlığını korumak ve onu gelecekte daha da harika yapmak için bize yardımcı olun.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ alt.chat\'in tadını çıkarıyor gibisiniz!\n\nalt.chat\'in herkes için ücretsiz kalmasını sağlamak için lütfen bağış yapmayı düşünün.\n\nalt.chat, kullanımı ücretsiz ve açık kaynaklıdır, geliştirme paraya mâl olur. alt.chat\'in bağımsızlığını korumak ve onu gelecekte daha da harika yapmak için bize yardımcı olun.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "1 saatliğine sessize al";
 "mute_for_eight_hours" = "8 saatliğine sessize al";
 "mute_for_one_day" = "1 günlüğüne sessize al";
@@ -489,7 +489,7 @@
 "multidevice_title" = "İkinci Aygıt Ekle";
 "multidevice_same_network_hint" = "Her iki aygıtın da aynı Wi-Fi\'da ya da ağda olduğundan emin olun";
 "multidevice_this_creates_a_qr_code" = "Bu, ikinci aygıtın profili kopyalamak için tarayabileceği bir QR kodu oluşturur.\n\nİstenmeyen gözlemcinin ya da kameranın aşağıdaki ekranı göremediğinden emin olun.";
-"multidevice_install_dc_on_other_device" = "alt.chat\'i diğer aygıtınıza kurun (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "alt.chat\'i diğer aygıtınıza kurun (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "alt.chat\'i başlatın, “Zaten Bir Profilim Var / İkinci Aygıt Olarak Ekle”ye dokunun ve burada gösterilen kodu tarayın";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -743,7 +743,7 @@
 "stats_disable_dialog" = "İstatistiklerin gönderimi zaten etkinleştirildi.\n\nOnu etkisizleştirmek istiyor musunuz?";
 "disable" = "Etkisizleştir";
 "stats_keep_sending" = "Gönderimde tut";
-"stats_msg_body" = "İlişik, alt.chat\'i geliştirmemize yardımcı olan belirsiz kullanım istatistikleri içerir. Daha fazla bilgi için https://delta.chat/help#statssending adresine bakın. Teşekkür ederiz!";
+"stats_msg_body" = "İlişik, alt.chat\'i geliştirmemize yardımcı olan belirsiz kullanım istatistikleri içerir. Daha fazla bilgi için https://alt-chat.me/help#statssending adresine bakın. Teşekkür ederiz!";
 // Emoji picker and categories
 "emoji_search_results" = "Arama Sonuçları";
 "emoji_not_found" = "Emoji bulunamadı";
@@ -869,7 +869,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Sağlayıcınızın depolaması dolmak üzere: %1$@%% zaten kullanımda.\n\nDepolama tam dolduğunda iletileri alamayabilirsiniz.\n\n👉 Lütfen sağlayıcınızın web arabiriminden eski verileri silip silemeyeceğinizi denetleyin ve “Ayarlar / Sohbetler / Eski İletileri Sil”i etkinleştirmeyi düşünün. Herhangi bir zamanda şu anki depolama kullanımınızı “Ayarlar / Bağlanabilirlik”ten denetleyebilirsiniz.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Aygıtınızdaki tarih ya da saat yanlış görünüyor (%1$@).\n\nİletilerinizin doğru şekilde alınmasını sağlamak için saatinizi ⏰🔧 ayarlayın.";
-"devicemsg_update_reminder" = "⚠️ alt.chat sürümünüz eski olabilir.\n\nBu, sorunlara neden olabilir; çünkü sohbet ortaklarınız daha yeni sürümleri kullanıyor - ve en yeni özellikleri kaybediyorsunuz 😳\nGüncelleştirmeler için lütfen https://get.delta.chat ya da uygulama mağazanızı denetleyin.";
+"devicemsg_update_reminder" = "⚠️ alt.chat sürümünüz eski olabilir.\n\nBu, sorunlara neden olabilir; çünkü sohbet ortaklarınız daha yeni sürümleri kullanıyor - ve en yeni özellikleri kaybediyorsunuz 😳\nGüncelleştirmeler için lütfen https://alt-chat.me/app/ ya da uygulama mağazanızı denetleyin.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Sürdürmek için kilidi açın";
 // qr code stuff

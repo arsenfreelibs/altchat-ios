@@ -441,7 +441,7 @@
 "multidevice_title" = "Engadir segundo dispositivo";
 "multidevice_same_network_hint" = "Comproba que os dous dispositivos estean na mesma Wi-Fi ou rede";
 "multidevice_this_creates_a_qr_code" = "Isto crea un código QR que hai que escanear co segundo dispositivo para copiar o perfil.\n\nComproba que non hai ninguén mirando ou unha cámara que poida ver a seguinte pantalla.";
-"multidevice_install_dc_on_other_device" = "Instala alt.chat no teu outro dispositivo (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Instala alt.chat no teu outro dispositivo (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Inicia alt.chat, toca en \"Xa teño un perfil / Engadir como segundo dispositivo\" e escanea este código";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -758,7 +758,7 @@
 "devicemsg_storage_exceeding" = "⚠️ A almacenaxe do teu provedor vaise esgotar, xa utilizaches %1$@ %%.\n\nPode que non recibas mensaxes cando a almacenaxe chegue a 100%% utilizado.\n\n👉 Mira se podes eliminar datos antigos na interface web do teu provedor e pensa se debes activar \"Axustes / Eliminar Mensaxes Antigas\". Podes ver a almacenaxe actual utilizada en \"Axustes / Conectividade\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ A hora ou data no teu dispositivo poderían ser incorrectas (%1$@).\n\nAxusta o reloxio ⏰🔧 para asegurar que as túas mensaxes son recibidas correctamente.";
-"devicemsg_update_reminder" = "⚠️ A túa versión de alt.chat podería estar desactualizada.\n\nEsto podería causar problemas porque os teus correspondentes utilizan versións máis novas - e ademáis non tes as últimas características 😳\nVai a https://get.delta.chat ou tenda de aplicacións para máis detalles.";
+"devicemsg_update_reminder" = "⚠️ A túa versión de alt.chat podería estar desactualizada.\n\nEsto podería causar problemas porque os teus correspondentes utilizan versións máis novas - e ademáis non tes as últimas características 😳\nVai a https://alt-chat.me/app/ ou tenda de aplicacións para máis detalles.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Escribe o código establecido no sistema para continuar.";
 // qr code stuff

@@ -321,7 +321,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Aggiungi alla Schermata Iniziale";
 "donate" = "Dona";
-"donate_device_msg" = "❤️ Sembra che alt.chat ti piaccia!\n\nConsidera una donazione per contribuire a garantire che alt.chat rimanga gratuita per tutti.\n\nSebbene alt.chat sia gratuita e open source, lo sviluppo richiede soldi. Aiutaci a mantenere alt.chat indipendente e a renderla ancora più fantastica in futuro.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Sembra che alt.chat ti piaccia!\n\nConsidera una donazione per contribuire a garantire che alt.chat rimanga gratuita per tutti.\n\nSebbene alt.chat sia gratuita e open source, lo sviluppo richiede soldi. Aiutaci a mantenere alt.chat indipendente e a renderla ancora più fantastica in futuro.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Silenzia per 1 ora";
 "mute_for_eight_hours" = "Silenzia per 8 ore";
 "mute_for_one_day" = "Silenzia per 1 giorno";
@@ -489,7 +489,7 @@
 "multidevice_title" = "Aggiungi Secondo Dispositivo";
 "multidevice_same_network_hint" = "Assicurati che entrambi i dispositivi siano sulla stessa rete o Wi-Fi.";
 "multidevice_this_creates_a_qr_code" = "Questo crea un codice QR che il secondo dispositivo può scansionare per copiare il profilo.\n\nAssicurati che nessun osservatore o telecamera indesiderata possa vedere la schermata seguente.";
-"multidevice_install_dc_on_other_device" = "Installa alt.chat sull\'altro tuo dispositivo (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Installa alt.chat sull\'altro tuo dispositivo (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Avvia alt.chat, tocca \"Ho già un Profilo / Aggiungi come Secondo Dispositivo\" e scansiona il codice mostrato qui";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -868,7 +868,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Lo spazio di archiviazione del tuo fornitore sta per esaurirsi:%1$@%% sono già utilizzati.\n\nPotresti non essere in grado di ricevere messaggi se lo spazio di archiviazione è pieno.\n\n👉 Per piacere controlla se puoi eliminare i vecchi dati nell\'interfaccia web del fornitore e considera di abilitare \"Impostazioni / Chat e Media / Elimina Vecchi Messaggi\". Puoi controllare l\'utilizzo attuale dello spazio di archiviazione in qualsiasi momento in \"Impostazioni / Connettività\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ La data o l\'ora del tuo dispositivo sembrano essere imprecise (%1$@).\n\nRegola l\'orologio ⏰🔧 per assicurarti che i tuoi messaggi vengano ricevuti correttamente.";
-"devicemsg_update_reminder" = "⚠️ La tua versione di alt.chat potrebbe essere obsoleta.\n\nCiò potrebbe causare problemi perché i tuoi partner di chat utilizzano versioni più recenti - e ti mancano le funzionalità più recenti 😳\nPer piacere controlla https://get.delta.chat o il tuo app store per gli aggiornamenti. ";
+"devicemsg_update_reminder" = "⚠️ La tua versione di alt.chat potrebbe essere obsoleta.\n\nCiò potrebbe causare problemi perché i tuoi partner di chat utilizzano versioni più recenti - e ti mancano le funzionalità più recenti 😳\nPer piacere controlla https://alt-chat.me/app/ o il tuo app store per gli aggiornamenti. ";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Sblocca per continuare";
 // qr code stuff

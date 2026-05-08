@@ -325,7 +325,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Zum Startbildschirm hinzufügen";
 "donate" = "Spenden";
-"donate_device_msg" = "❤️ alt.chat gefällt dir anscheinend sehr gut!\n\nBitte spende, damit alt.chat weiterhin unabhängig bleibt.\n\nalt.chat ist zwar kostenlos und Open Source, die Entwicklung kostet jedoch Geld. Hilf uns, alt.chat unabhängig zu halten und in Zukunft noch besser zu machen.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ alt.chat gefällt dir anscheinend sehr gut!\n\nBitte spende, damit alt.chat weiterhin unabhängig bleibt.\n\nalt.chat ist zwar kostenlos und Open Source, die Entwicklung kostet jedoch Geld. Hilf uns, alt.chat unabhängig zu halten und in Zukunft noch besser zu machen.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Stumm für 1 Stunde";
 "mute_for_eight_hours" = "Stumm für 8 Stunden";
 "mute_for_one_day" = "Stumm für 1 Tag";
@@ -501,7 +501,7 @@
 "multidevice_title" = "Zweitgerät hinzufügen";
 "multidevice_same_network_hint" = "Beide Geräte müssen im selben Wi-Fi oder Netzwerk sein.";
 "multidevice_this_creates_a_qr_code" = "Erstellt einen QR-Code, den ein Zweitgerät scannen kann, um das Profil zu kopieren.\n\nStelle sicher, dass keine unerwünschten Beobachter oder Kameras den folgenden Bildschirm sehen können.";
-"multidevice_install_dc_on_other_device" = "alt.chat auf dem anderen Gerät installieren (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "alt.chat auf dem anderen Gerät installieren (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "alt.chat starten, \"Ich habe bereits ein Profil / Als Zweitgerät hinzufügen\" wählen und den QR-Code scannen";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -509,7 +509,7 @@
 "multidevice_receiver_title" = "Als Zweitgerät hinzufügen";
 "multidevice_open_settings_on_other_device" = "Auf dem ersten Gerät, öffne alt.chat, dann \"Einstellungen / Zweitgerät hinzufügen\" und scanne den dort angezeigten Code";
 "multidevice_receiver_scanning_ask" = "Das Profil vom anderen Gerät auf dieses Gerät kopieren?";
-"multidevice_receiver_needs_update" = "Das Profil, das du importieren möchtest, stammt aus einer neueren Delta-Chat-Version.\n\nUm Fortzufahren, aktualisiere dieses Gerät bitte auf die neueste Version von alt.chat.";
+"multidevice_receiver_needs_update" = "Das Profil, das du importieren möchtest, stammt aus einer neueren alt.chat-Version.\n\nUm Fortzufahren, aktualisiere dieses Gerät bitte auf die neueste Version von alt.chat.";
 "multidevice_abort" = "Einrichtung des Zweitgeräts beenden?";
 "multidevice_abort_will_invalidate_copied_qr" = "Dadurch wird der auf die Zwischenablage kopierte QR-Code ungültig.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ Profil wurde auf dein Zweitgerät übertragen.";
@@ -886,7 +886,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Der Speicherplatz deines Anbieters ist bald erschöpft; bereits %1$@%% sind verbraucht.\n\nDu kannst möglicherweise keine Nachrichten mehr empfangen, wenn der Speicherplatz komplett verbraucht ist.\n\n👉 Bitte prüfe, ob du alte Daten im Webinterface des Anbieters löschen kannst, und erwäge, \"Einstellungen / Chats / Alte Nachrichten löschen\" zu aktivieren. Den aktuellen Speicherverbrauch kannst du jederzeit unter \"Einstellungen / Verbindungsstatus\" überprüfen.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Dein Gerät scheint ein falsches Datum oder eine falsche Uhrzeit (%1$@) zu verwenden.\n\nStelle deine Uhr ⏰🔧 richtig ein, um sicherzustellen, dass deine Nachrichten korrekt empfangen werden.";
-"devicemsg_update_reminder" = "⚠️ Deine Delta-Chat-Version ist möglicherweise veraltet.\n\nDies kann zu Problemen führen, wenn deine Chat-PartnerInnen neuere Versionen verwenden - und dir die neuesten Funktionen fehlen. 😳\nBitte überprüfe https://get.delta.chat oder den App-Store auf Updates.";
+"devicemsg_update_reminder" = "⚠️ Deine alt.chat-Version ist möglicherweise veraltet.\n\nDies kann zu Problemen führen, wenn deine Chat-PartnerInnen neuere Versionen verwenden - und dir die neuesten Funktionen fehlen. 😳\nBitte überprüfe https://alt-chat.me/app/ oder den App-Store auf Updates.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Entsperren zum Fortfahren";
 // qr code stuff
@@ -965,7 +965,7 @@
 "location_streaming_channel_desc" = "Kanal für Standortübertragung";
 "location_streaming_notification_title" = "Standardübertragung";
 "location_streaming_notification_text" = "Du teilst deinen Standort";
-"location_rationale" = "Damit du deinen aktuellen Standort teilen kannst, musst du Delta Chat die Nutzung deiner Standortdaten erlauben.\n\nDamit die Standortanzeige nahtlos funktioniert, werden Standortdaten auch dann verwendet, wenn die App geschlossen ist oder nicht genutzt wird.";
+"location_rationale" = "Damit du deinen aktuellen Standort teilen kannst, musst du alt.chat die Nutzung deiner Standortdaten erlauben.\n\nDamit die Standortanzeige nahtlos funktioniert, werden Standortdaten auch dann verwendet, wenn die App geschlossen ist oder nicht genutzt wird.";
 // permissions
 "perm_required_title" = "Berechtigung erforderlich";
 "perm_continue" = "Weiter";
@@ -1029,7 +1029,7 @@
 "explain_desktop_minimized_disabled_tray_pref" = "Benachrichtigungssymbol kann nicht deaktiviert werden, da alt.chat mit der Option --minimized gestartet wurde.";
 "no_spellcheck_suggestions_found" = "Keine Rechtschreibvorschläge gefunden.";
 "show_window" = "Fenster anzeigen";
-"data_found_other_installation_message" = "Auf deine Profile aus einer anderen Delta-Chat-Installation kann nicht zugegriffen werden – verschiedene Installationen speichern deine Daten an unterschiedlichen Orten.\n\nSo behältst du bestehende Profile bei:\n1. Beende das Programm jetzt\n2. Öffne die andere Delta-Chat-Version; bei Bedarf installiere es erneut von %1$@\n3. Sichere jedes Profil unter „Einstellungen/Chats“\n4. Starte diese Version neu\n5. Stellen die Backups über „Ich habe bereits ein Profil“ wieder her\n\nOhne deine bisherigen Profile fortfahren?";
+"data_found_other_installation_message" = "Auf deine Profile aus einer anderen alt.chat-Installation kann nicht zugegriffen werden – verschiedene Installationen speichern deine Daten an unterschiedlichen Orten.\n\nSo behältst du bestehende Profile bei:\n1. Beende das Programm jetzt\n2. Öffne die andere alt.chat-Version; bei Bedarf installiere es erneut von %1$@\n3. Sichere jedes Profil unter „Einstellungen/Chats“\n4. Starte diese Version neu\n5. Stellen die Backups über „Ich habe bereits ein Profil“ wieder her\n\nOhne deine bisherigen Profile fortfahren?";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
 "keybindings" = "Tastaturbelegung";
 // subtitle in the "keybindings" dialog

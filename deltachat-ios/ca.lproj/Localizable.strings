@@ -313,7 +313,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Afegeix a la pantalla d\'inici";
 "donate" = "Feu un donatiu";
-"donate_device_msg" = "❤️ Sembla que estàs gaudint de alt.chat!\n\nConsidera fer una donació per ajudar a garantir que alt.chat segueixi sent gratuït per a tothom.\n\nTot i que alt.chat és gratuït i de codi obert, el desenvolupament té un cost.\n\nAjuda’ns a mantenir alt.chat independent i a fer-lo encara millor en el futur.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Sembla que estàs gaudint de alt.chat!\n\nConsidera fer una donació per ajudar a garantir que alt.chat segueixi sent gratuït per a tothom.\n\nTot i que alt.chat és gratuït i de codi obert, el desenvolupament té un cost.\n\nAjuda’ns a mantenir alt.chat independent i a fer-lo encara millor en el futur.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Silencia 1 hora";
 "mute_for_eight_hours" = "Silencia 8 hores";
 "mute_for_one_day" = "Silencia 1 dia";
@@ -478,7 +478,7 @@
 "multidevice_title" = "Afegeix un segon dispositiu";
 "multidevice_same_network_hint" = "Assegureu-vos que els dos dispositius estan a la mateixa Wi-Fi o xarxa";
 "multidevice_this_creates_a_qr_code" = "Això crea un codi QR que es pot escanejar en un segon dispositiu per a copiar el perfil.";
-"multidevice_install_dc_on_other_device" = "Instal·leu alt.chat en el vostre altre dispositiu (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Instal·leu alt.chat en el vostre altre dispositiu (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Inicieu alt.chat, toqueu  «Ja tinc un perfil / Afegeix un segon dispositiu» i escanegeu el codi que es mostra aquí.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -727,7 +727,7 @@
 "stats_disable_dialog" = "L\'enviament d\'estadístiques ja està activat.\n\nVoleu desactivar-lo?";
 "disable" = "Desactiva";
 "stats_keep_sending" = "Continua enviant";
-"stats_msg_body" = "El fitxer adjunt conté estadístiques d\'ús anònimes que ens ajuden a millorar el alt.chat. Veieu https://delta.chat/help#statssending per a més informació. Gràcies!";
+"stats_msg_body" = "El fitxer adjunt conté estadístiques d\'ús anònimes que ens ajuden a millorar el alt.chat. Veieu https://alt-chat.me/help#statssending per a més informació. Gràcies!";
 // Emoji picker and categories
 "emoji_search_results" = "Resultats de la cerca";
 "emoji_not_found" = "No s\'ha trobat cap emoji";
@@ -853,7 +853,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Esteu a punt de quedar-vos sense espai d\'emmagatzematge al vostre proveïdor: ja esteu utilitzant %1$@%% .\n\nPodríeu deixar de rebre missatges si s\'emplena.\n\n👉 Reviseu a la interfície web del proveïdor si podeu esborrar dades antigues i considereu habilitar \"Preferències / Xats i multimèdia / Esborra els missatges antics\". Podeu veure sempre el nivell d\'ocupació a \"Preferències / Connectivitat\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ La data o l\'hora del vostre dispositiu no semblen correctes (%1$@).\n\nAdjusteu el rellotge ⏰🔧 per a assegurar que els missatges es reben correctament.";
-"devicemsg_update_reminder" = "⚠️ alt.chat podría no estar actualitzat.\n\n Això us podria causar problemes perquè els vostres companys de xat utilitzen versions més noves i no teniu les últimes funcionalitats 😳\nComproveu a https://get.delta.chat o a la vostra botiga d\'aplicacions si hi ha actualitzacions.";
+"devicemsg_update_reminder" = "⚠️ alt.chat podría no estar actualitzat.\n\n Això us podria causar problemes perquè els vostres companys de xat utilitzen versions més noves i no teniu les últimes funcionalitats 😳\nComproveu a https://alt-chat.me/app/ o a la vostra botiga d\'aplicacions si hi ha actualitzacions.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Desbloca per a continuar";
 // qr code stuff

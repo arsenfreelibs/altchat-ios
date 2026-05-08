@@ -313,7 +313,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Gehitu hasierako pantailan";
 "donate" = "Egin dohaintza";
-"donate_device_msg" = "❤️ Badirudi alt.chat-ekin gozatzen ari zarela!\n\nMesedez, pentsatu dohaintza bat egitea alt.chat guztiontzat doakoa izan dadin laguntzeko.\n\nalt.chat-en erabilera doakoa eta kode irekikoa den arren, garapenak dirua balio du. Lagundu iezaguzu alt.chat independente mantentzen eta etorkizunean are hobea egiten.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Badirudi alt.chat-ekin gozatzen ari zarela!\n\nMesedez, pentsatu dohaintza bat egitea alt.chat guztiontzat doakoa izan dadin laguntzeko.\n\nalt.chat-en erabilera doakoa eta kode irekikoa den arren, garapenak dirua balio du. Lagundu iezaguzu alt.chat independente mantentzen eta etorkizunean are hobea egiten.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Mututu ordubete";
 "mute_for_eight_hours" = "Mututu 8 ordu";
 "mute_for_one_day" = "Mututu egun bat";
@@ -478,7 +478,7 @@
 "multidevice_title" = "Gehitu bigarren gailua";
 "multidevice_same_network_hint" = "Ziurtatu gailu biak Wi-Fi edo sare berera konektatuta daudela.";
 "multidevice_this_creates_a_qr_code" = "Honek QR kode bat sortuko du, bigarren gailuak eskaneatu eta profila kopiatu dezan.\n\nZiurtatu zuk nahi ez duzun inork ez ezein kamerak ezin duela ondorengo pantaila ikusi.";
-"multidevice_install_dc_on_other_device" = "Instalatu alt.chat zure beste gailuan (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Instalatu alt.chat zure beste gailuan (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Abiarazi alt.chat, sakatu “Badut profil bat / Gehitu bigarren gailu gisa” eta eskaneatu hemen agertzen den kodea.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -732,7 +732,7 @@
 "stats_disable_dialog" = "Estatistiken bidalketa gaituta dago jada.\n\nDesaktibatu nahi duzu?";
 "disable" = "Desgaitu";
 "stats_keep_sending" = "Bidaltzen jarraitu";
-"stats_msg_body" = "Eranskinak erabilera-estatistika anonimoak ditu, alt.chat hobetzen laguntzen digutenak. Ikusi https://delta.chat/help#statssending informazio gehiago lortzeko. Eskerrik asko!";
+"stats_msg_body" = "Eranskinak erabilera-estatistika anonimoak ditu, alt.chat hobetzen laguntzen digutenak. Ikusi https://alt-chat.me/help#statssending informazio gehiago lortzeko. Eskerrik asko!";
 // Emoji picker and categories
 "emoji_search_results" = "Bilatu emaitzak";
 "emoji_not_found" = "Ez da emojirik aurkitu";
@@ -858,7 +858,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Zure hornitzailearen biltegiratzea agortzear dago: %%-tik %1$@ erabili dituzu dagoeneko.\n\nLitekeena da mezuak jaso ezin izatea biltegiratzea beteta badago.\n\n👉 Mesedez, egiaztatu datu zaharrak hornitzailearen web-interfazean ezaba ditzakezun eta kontuan hartu \"Ezarpenak / Txatak / Ezabatu mezu zaharrak\" aukera aktibatzea. Zure uneko biltegiratze-erabilera edozein unetan egiaztatu dezakezu \"Ezarpenak / Konektibitatea\" atalean.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Zure gailuko data edo ordua okerra dela dirudi (%1$@).\n\nEgokitu zure erlojua ⏰🔧 zure mezuak zuzen jasotzen direla ziurtatzeko.";
-"devicemsg_update_reminder" = "⚠️ Zure alt.chat bertsioa zaharkituta egon daiteke.\n\nHorrek arazoak sor ditzake zure txat-kideek bertsio berriagoak erabiltzen dituztelako - eta azken funtzioak falta dituzulako 😳\nMesedez, egiaztatu https://get.delta.chat edo zure aplikazio-denda eguneratzeak ikusteko.";
+"devicemsg_update_reminder" = "⚠️ Zure alt.chat bertsioa zaharkituta egon daiteke.\n\nHorrek arazoak sor ditzake zure txat-kideek bertsio berriagoak erabiltzen dituztelako - eta azken funtzioak falta dituzulako 😳\nMesedez, egiaztatu https://alt-chat.me/app/ edo zure aplikazio-denda eguneratzeak ikusteko.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Desblokeatu jarraitzeko";
 // qr code stuff

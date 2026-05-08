@@ -321,7 +321,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Додати на стартовий екран";
 "donate" = "Задонатити";
-"donate_device_msg" = "❤️ Здається, вам подобається alt.chat!\n\nПодумайте про пожертвування, щоб допомогти забезпечити безкоштовність alt.chat для всіх.\n\nХоча alt.chat є безкоштовним у використанні та з відкритим вихідним кодом, розробка коштує грошей. Допоможіть нам зберегти незалежність alt.chat і зробити його ще більш чудовим у майбутньому.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Здається, вам подобається alt.chat!\n\nПодумайте про пожертвування, щоб допомогти забезпечити безкоштовність alt.chat для всіх.\n\nХоча alt.chat є безкоштовним у використанні та з відкритим вихідним кодом, розробка коштує грошей. Допоможіть нам зберегти незалежність alt.chat і зробити його ще більш чудовим у майбутньому.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Вимкнути сповіщення на годину";
 "mute_for_eight_hours" = "Вимкнути сповіщення на 8 годин";
 "mute_for_one_day" = "Вимкнути сповіщення на добу";
@@ -497,7 +497,7 @@
 "multidevice_title" = "Додати другий пристрій";
 "multidevice_same_network_hint" = "Переконайтеся, що обидва пристрої підключено до однієї мережі Wi-Fi";
 "multidevice_this_creates_a_qr_code" = "Це створить QR-код, який другий пристрій зможе відсканувати, щоб скопіювати профіль.\n\nПереконайтеся, що жоден небажаний спостерігач або камера не зможе побачити наступний екран.";
-"multidevice_install_dc_on_other_device" = "Установіть alt.chat на Ваш інший пристрій (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Установіть alt.chat на Ваш інший пристрій (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Запустіть alt.chat, торкніться \"Я вже маю профіль / Додати як другий пристрій\" і відскануйте код, показаний тут";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -884,7 +884,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Сховище вашого провайдера електронної пошти майже заповнено, уже використовується %1$@%%.\n\nМожливо, Ви не зможете отримувати повідомлення, коли сховище буде заповнене.\n\n👉 Перевірте, чи можна видалити старі дані у веб-інтерфейсі провайдера та ввімкніть \"Налаштування / Чати / Видалити старі повідомлення\". Ви можете будь-коли перевірити своє поточне використання сховища в \"Налаштування / Зʼєднання\". ";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Дата й час на вашому пристрої видаються неточними (%1$@).\n\nНалаштуйте свій годинник ⏰🔧 для правильного отримання повідомлень.";
-"devicemsg_update_reminder" = "⚠️ Ваша версія alt.chat може бути застарілою.\n\nЦе може спричинити проблеми, оскільки Ваші співрозмовники в чаті використовують новіші версії, а Вам не вистачає найновіших функцій 😳 \nПеревірте оновлення на https://get.delta.chat або в магазині додатків. ";
+"devicemsg_update_reminder" = "⚠️ Ваша версія alt.chat може бути застарілою.\n\nЦе може спричинити проблеми, оскільки Ваші співрозмовники в чаті використовують новіші версії, а Вам не вистачає найновіших функцій 😳 \nПеревірте оновлення на https://alt-chat.me/app/ або в магазині додатків. ";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Введіть захисний код, щоб продовжити.";
 // qr code stuff
@@ -968,7 +968,6 @@
 "perm_explain_access_to_location_denied" = "Щоб передати місцезнаходження, додатку потрібен доступ до геоданих пристрою, але зараз його не надано. Для надання доступу перейдіть у системне меню налаштувань, у розділі \"Додатки\" знайдіть alt.chat, оберіть \"Дозволи\" і надайте доступ до місцезнаходження пристрою.";
 "perm_explain_access_to_notifications_denied" = "Щоб отримувати сповіщення зайдіть у \"Налаштування системи / Застосунки / alt.chat\" і увімкніть \"Сповіщення\"";
 "perm_explain_access_to_location_denied" = "Щоб прикріпити місцеперебування, перейдіть до налаштувань програми, оберіть \"Дозволи\" та увімкніть \"місцеперебування\".";
-"perm_explain_access_to_notifications_denied" = "Щоб отримувати сповіщення зайдіть у \"Налаштування системи / Застосунки / Delta Chat\" і увімкніть \"Сповіщення\"";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Малюйте будь-де для розмиття";
 "ImageEditorHud_add_text" = "Додати текст";

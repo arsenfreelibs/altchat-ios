@@ -325,7 +325,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Add to Home Screen";
 "donate" = "Donate";
-"donate_device_msg" = "❤️ Seems you\'re enjoying alt.chat!\n\nPlease consider donating to help ensure that alt.chat stays free for everyone.\n\nWhile alt.chat is free to use and open source, development costs money. Help us to keep alt.chat independent and make it even more awesome in the future.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Seems you\'re enjoying alt.chat!\n\nPlease consider donating to help ensure that alt.chat stays free for everyone.\n\nWhile alt.chat is free to use and open source, development costs money. Help us to keep alt.chat independent and make it even more awesome in the future.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Mute for 1 hour";
 "mute_for_eight_hours" = "Mute for 8 hours";
 "mute_for_one_day" = "Mute for 1 day";
@@ -503,7 +503,7 @@
 "multidevice_title" = "Add Second Device";
 "multidevice_same_network_hint" = "Make sure both devices are on the same Wi-Fi or network";
 "multidevice_this_creates_a_qr_code" = "This creates a QR code that the second device can scan to copy the profile.\n\nMake sure no unwanted observer or camera can see the following screen.";
-"multidevice_install_dc_on_other_device" = "Install alt.chat on your other device (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Install alt.chat on your other device (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Start alt.chat, tap “I Already Have a Profile / Add as Second Device” and scan the code shown here";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -768,7 +768,7 @@
 "stats_disable_dialog" = "Sending of statistics is already enabled.\n\nDo you want to disable it?";
 "disable" = "Disable";
 "stats_keep_sending" = "Keep sending";
-"stats_msg_body" = "The attachment contains anonymous usage statistics, which helps us improve alt.chat. See https://delta.chat/help#statssending for more information. Thank you!";
+"stats_msg_body" = "The attachment contains anonymous usage statistics, which helps us improve alt.chat. See https://alt-chat.me/help#statssending for more information. Thank you!";
 // Emoji picker and categories
 "emoji_search_results" = "Search Results";
 "emoji_not_found" = "No emoji found";
@@ -897,7 +897,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Your provider\'s storage is about to run out: %1$@%% are already used.\n\nYou may not be able to receive messages if storage is full.\n\n👉 Please check if you can delete old data in the provider\'s web interface and consider enabling \"Settings / Chats / Delete Old Messages\". You can check your current storage usage anytime at \"Settings / Connectivity\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Date or time on your device seems to be inaccurate (%1$@).\n\nAdjust your clock ⏰🔧 to ensure your messages are received correctly.";
-"devicemsg_update_reminder" = "⚠️ Your alt.chat version might be outdated.\n\nThis may cause problems because your chat partners use newer versions - and you are missing the latest features 😳\nPlease check https://get.delta.chat or your app store for updates.";
+"devicemsg_update_reminder" = "⚠️ Your alt.chat version might be outdated.\n\nThis may cause problems because your chat partners use newer versions - and you are missing the latest features 😳\nPlease check https://alt-chat.me/app/ or your app store for updates.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Unlock to continue";
 // qr code stuff
@@ -976,7 +976,7 @@
 "location_streaming_channel_desc" = "Channel for On-demand Location Streaming";
 "location_streaming_notification_title" = "Location Streaming";
 "location_streaming_notification_text" = "You are sharing your location";
-"location_rationale" = "To share your live location with chat members, allow Delta Chat to use your location data.\n\nTo make live location work gaplessly, location data is used even when the app is closed or not in use.";
+"location_rationale" = "To share your live location with chat members, allow alt.chat to use your location data.\n\nTo make live location work gaplessly, location data is used even when the app is closed or not in use.";
 // permissions
 "perm_required_title" = "Permission required";
 "perm_continue" = "Continue";
@@ -1040,7 +1040,7 @@
 "explain_desktop_minimized_disabled_tray_pref" = "Tray icon cannot be disabled as alt.chat was started with the --minimized option.";
 "no_spellcheck_suggestions_found" = "No spelling suggestions found.";
 "show_window" = "Show Window";
-"data_found_other_installation_message" = "Your profiles from another Delta Chat installation are not accessible - different installations store their data in separate locations.\n\nTo keep existing profiles:\n1. Quit now\n2. Open the other Delta Chat - if needed, reinstall it from %1$@\n3. Back up each profile at \"Settings/Chats\"\n4. Relaunch this version\n5. Restore the backups using \"I already have a profile\"\n\nContinue without your previous profiles?";
+"data_found_other_installation_message" = "Your profiles from another alt.chat installation are not accessible - different installations store their data in separate locations.\n\nTo keep existing profiles:\n1. Quit now\n2. Open the other alt.chat - if needed, reinstall it from %1$@\n3. Back up each profile at \"Settings/Chats\"\n4. Relaunch this version\n5. Restore the backups using \"I already have a profile\"\n\nContinue without your previous profiles?";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
 "keybindings" = "Keybindings";
 // subtitle in the "keybindings" dialog

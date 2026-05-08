@@ -317,7 +317,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Добавить на главный экран";
 "donate" = "Пожертвовать";
-"donate_device_msg" = "❤️ Кажется, вам нравится alt.chat!\n\nРассмотрите возможность сделать пожертвование, чтобы alt.chat и дальше оставался бесплатным для всех пользователей.\n\nalt.chat — это бесплатное приложение с открытым исходным кодом, но его разработка требует денег. Поддержите нас, чтобы сохранить независимость alt.chat и сделать его ещё более крутым в будущем.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Кажется, вам нравится alt.chat!\n\nРассмотрите возможность сделать пожертвование, чтобы alt.chat и дальше оставался бесплатным для всех пользователей.\n\nalt.chat — это бесплатное приложение с открытым исходным кодом, но его разработка требует денег. Поддержите нас, чтобы сохранить независимость alt.chat и сделать его ещё более крутым в будущем.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "На 1 час";
 "mute_for_eight_hours" = "На 8 часов";
 "mute_for_one_day" = "На 1 день";
@@ -482,7 +482,7 @@
 "multidevice_title" = "Добавить второе устройство";
 "multidevice_same_network_hint" = "Убедитесь, что оба устройства подключены к одной и той же локальной или Wi-Fi сети.";
 "multidevice_this_creates_a_qr_code" = "Это позволяет создать QR-код, который можно отсканировать на втором устройстве, чтобы скопировать профиль.\n\nУбедитесь, что посторонние люди или камера не видят следующий экран.";
-"multidevice_install_dc_on_other_device" = "Установите alt.chat на другом устройстве (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Установите alt.chat на другом устройстве (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Запустите alt.chat, выберите \"У меня уже есть профиль / Добавить как второе устройство\" и отсканируйте код, показанный здесь";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -491,13 +491,6 @@
 "multidevice_open_settings_on_other_device" = "На первом устройстве запустите alt.chat, откройте \"Настройки / Добавить второе устройство\" и отсканируйте показанный там код";
 "multidevice_receiver_scanning_ask" = "Скопировать профиль с другого устройства на это устройство?";
 "multidevice_receiver_needs_update" = "Профиль, который вы хотите импортировать, создан в более новой версии alt.chat. Чтобы продолжить настройку второго устройства, пожалуйста, обновите это устройство до последней версии alt.chat.";
-"multidevice_tap_scan_on_other_device" = "Запустите Delta Chat, нажмите \"У меня уже есть профиль / Добавить как второе устройство\" и отсканируйте показанный здесь код";
-// Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
-"multidevice_qr_subtitle" = "Отсканируйте, чтобы настроить второе устройство для %1$@";
-"multidevice_receiver_title" = "Добавить как второе устройство";
-"multidevice_open_settings_on_other_device" = "На первом устройстве запустите Delta Chat, перейдите в \"Настройки / Добавить второе устройство\" и отсканируйте показанный там код";
-"multidevice_receiver_scanning_ask" = "Скопировать профиль с другого устройства на это устройство?";
-"multidevice_receiver_needs_update" = "Профиль, который вы хотите импортировать, создан в более новой версии Delta Chat.\n\nЧтобы продолжить настройку второго устройства, пожалуйста, обновите это устройство до последней версии Delta Chat.";
 "multidevice_abort" = "Прервать настройку второго устройства?";
 "multidevice_abort_will_invalidate_copied_qr" = "Это сделает недействительным QR-код, скопированный в буфер обмена.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ Профиль перенесен на ваше второе устройство.";
@@ -592,7 +585,7 @@
 "hide_from_contacts" = "Скрыть из контактов";
 "hidden_from_contacts" = "Скрыт из контактов";
 // Hint for the list of relays
-"transport_list_hint" = "Сообщения поступают на все релеи.\n\n⚠️ Если вы измените какие-либо настройки в этом разделе, убедитесь, что на всех ваших устройствах установлена версия Delta Chat не ниже 2.47.0. В противном случае старые версии могут не получать сообщения.";
+"transport_list_hint" = "Сообщения поступают на все релеи.\n\n⚠️ Если вы измените какие-либо настройки в этом разделе, убедитесь, что на всех ваших устройствах установлена версия Alt Chat не ниже 1.0.1. В противном случае старые версии могут не получать сообщения.";
 // shown if a QR code was scanned that can be used as a relay
 "confirm_add_transport" = "Добавить этот релей?";
 "invalid_transport_qr" = "Отсканированный QR-код не содержит корректный релей.";
@@ -749,14 +742,10 @@
 "stats_device_message" = "Хотите помочь улучшить alt.chat и поддержать исследования, отправляя еженедельную анонимную статистику использования?\n\n👉 Нажмите здесь...👈";
 "stats_confirmation_dialog" = "Хотите помочь улучшить alt.chat и поддержать исследования, отправляя еженедельную анонимную статистику использования?";
 "stats_thanks" = "Спасибо! Вы всегда можете отключить отправку в разделе \"Настройки -> Дополнительно\"\n\nУ вас есть 5 минут, чтобы принять участие в научном исследовании по безопасности alt.chat?";
-"send_stats_to_devs" = "Отправить статистику разработчикам Delta Chat";
-"stats_device_message" = "Хотите помочь улучшить Delta Chat и поддержать исследования, отправляя еженедельную анонимную статистику использования?\n\n👉 Нажмите здесь...👈";
-"stats_confirmation_dialog" = "Хотите помочь улучшить Delta Chat и поддержать исследования, отправляя еженедельную анонимную статистику использования?";
-"stats_thanks" = "Спасибо! Вы всегда можете отключить отправку в разделе \"Настройки -> Дополнительно\"\n\nУ вас есть 5 минут, чтобы принять участие в исследовании безопасности Delta Chat?";
 "stats_disable_dialog" = "Отправка статистики уже включена.\n\nВы хотите отключить её?";
 "disable" = "Отключить";
 "stats_keep_sending" = "Продолжить отправку";
-"stats_msg_body" = "Вложение содержит анонимную статистику использования, которая поможет нам улучшить alt.chat. Более подробную информацию смотрите на https://delta.chat/help#statssending. Спасибо!";
+"stats_msg_body" = "Вложение содержит анонимную статистику использования, которая поможет нам улучшить alt.chat. Более подробную информацию смотрите на https://alt-chat.me/help#statssending. Спасибо!";
 // Emoji picker and categories
 "emoji_search_results" = "Результаты поиска";
 "emoji_not_found" = "Эмодзи не найдены";
@@ -882,7 +871,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Хранилище вашего провайдера почти заполнено: %1$@%% уже использовано.\n\nЕсли хранилище полностью заполнено, вы не сможете получать сообщения.\n\n👉 Проверьте, можно ли удалить старые данные в веб-интерфейсе провайдера, и подумайте об включении \"Настройки / Чаты / Удалить старые сообщения\". Текущее использование хранилища можно проверить в любое время в разделе \"Настройки / Соединение\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Вероятно, дата или время на вашем устройстве неточные (%1$@).\n\nУстановите правильное время ⏰🔧 чтобы обеспечить правильное получение сообщений.";
-"devicemsg_update_reminder" = "⚠️ Вероятно, ваша версия alt.chat устарела.\n\nЭто может привести к проблемам, поскольку ваши собеседники используют более новые версии, а вы не имеете доступа к последним функциям 😳\nПроверьте https://get.delta.chat или магазин приложений на наличие обновлений.";
+"devicemsg_update_reminder" = "⚠️ Вероятно, ваша версия alt.chat устарела.\n\nЭто может привести к проблемам, поскольку ваши собеседники используют более новые версии, а вы не имеете доступа к последним функциям 😳\nПроверьте https://alt-chat.me/app/ или магазин приложений на наличие обновлений.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Разблокируйте для продолжения";
 // qr code stuff
@@ -970,7 +959,7 @@
 "perm_explain_access_to_mic_denied" = "Чтобы отправлять аудиосообщения, откройте настройки приложения, выберите \"Разрешения\" или \"Конфиденциальность и безопасность\" и включите доступ к \"Микрофону\".";
 "perm_explain_access_to_storage_denied" = "Чтобы получать или отправлять файлы, откройте настройки приложения, выберите \"Разрешения\" и включите доступ к \"Хранилищу\".";
 "perm_explain_access_to_location_denied" = "Чтобы прикрепить местоположение, откройте настройки приложения, выберите \"Разрешения\" и включите доступ к \"Местоположению\".";
-"perm_explain_access_to_notifications_denied" = "Для получения уведомлений, перейдите в \"Настройки системы / Приложения / Delta Chat\" и включите доступ к \"Уведомлениям\".";
+"perm_explain_access_to_notifications_denied" = "Для получения уведомлений, перейдите в \"Настройки системы / Приложения / alt.chat\" и включите доступ к \"Уведомлениям\".";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Нарисуйте где угодно, чтобы размыть";
 "ImageEditorHud_add_text" = "Добавить текст";

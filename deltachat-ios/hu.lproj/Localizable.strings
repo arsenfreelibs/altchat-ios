@@ -310,7 +310,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Hozzáadás a kezdőképernyőhöz";
 "donate" = "Adományozás";
-"donate_device_msg" = "❤️ Úgy tűnik, hogy tetszik önnek a alt.chat!\n\nFontolja meg az adományozást, hogy a alt.chat mindenki számára ingyenes maradhasson.\n\nUgyan a alt.chat szabadon használható és nyílt forráskódú, de a fejlesztés pénzbe kerül. Segítsen nekünk, hogy a alt.chat független maradhasson, és a jövőben még fantasztikusabbá váljon.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Úgy tűnik, hogy tetszik önnek a alt.chat!\n\nFontolja meg az adományozást, hogy a alt.chat mindenki számára ingyenes maradhasson.\n\nUgyan a alt.chat szabadon használható és nyílt forráskódú, de a fejlesztés pénzbe kerül. Segítsen nekünk, hogy a alt.chat független maradhasson, és a jövőben még fantasztikusabbá váljon.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Némítás 1 órára";
 "mute_for_eight_hours" = "Némítás 8 órára";
 "mute_for_one_day" = "Némítás 1 napra";
@@ -463,7 +463,7 @@
 "multidevice_title" = "Második eszköz hozzáadása";
 "multidevice_same_network_hint" = "Győződjön meg arról, hogy mindkét eszköz ugyanazon a Wi-Fi-n vagy hálózaton van-e";
 "multidevice_this_creates_a_qr_code" = "Ez létrehoz egy QR-kódot, amit a második eszközön beolvashat a profil másolásához.\n\nÜgyeljen arra, hogy egy nem kívánatos megfigyelő vagy kamera ne láthassa a következő képernyőt.";
-"multidevice_install_dc_on_other_device" = "Telepítse a alt.chatet a másik eszközére (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Telepítse a alt.chatet a másik eszközére (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Indítsa el a alt.chatet, koppintson a „Már van profilom / Hozzáadás második eszközként” lehetőségre, és olvassa be az itt megjelenő QR-kódot.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -810,7 +810,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Az e-mail-szolgáltatójától kapott tárhelye hamarosan megtelik: %1$@%% már felhasználásra került.\n\n\nElképzelhető, hogy nem tud üzeneteket fogadni, ha a tárhelye megtelt.\n\n👉 Ellenőrizze, hogy a szolgáltatója webes felületén tudja-e törölni a alt.chat-mappából az üzeneteket, és fontolja meg a „Beállítások / Csevegések és média / Üzenetek törlése a kiszolgálóról” engedélyezését. Az aktuális tárhelyhasználatot bármikor ellenőrizheti a „Beállítások / Tárhely” menüpontban.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Az eszközén lévő dátum vagy idő pontatlannak tűnik (%1$@).\n\nJavítsa meg az órát ⏰🔧 az üzenetek helyes fogadásának biztosítása érdekében.";
-"devicemsg_update_reminder" = "⚠️ Lehet, hogy a alt.chat verziója elavult.\n\nEz problémákat okozhat, mivel a partnerei újabb verziókat használnak - továbbá hiányoznak a legújabb funkciók 😳\nEllenőrizze a https://get.delta.chat oldalon vagy az alkalmazásboltban a frissítéseket.";
+"devicemsg_update_reminder" = "⚠️ Lehet, hogy a alt.chat verziója elavult.\n\nEz problémákat okozhat, mivel a partnerei újabb verziókat használnak - továbbá hiányoznak a legújabb funkciók 😳\nEllenőrizze a https://alt-chat.me/app/ oldalon vagy az alkalmazásboltban a frissítéseket.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Feloldás a folytatáshoz";
 // qr code stuff

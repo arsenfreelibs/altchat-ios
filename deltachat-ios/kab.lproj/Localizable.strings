@@ -311,7 +311,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Rnu ɣer ugdil agejdan";
 "donate" = "Mudd tawsa";
-"donate_device_msg" = "❤️ Yettban-iyi-d dakken aql-ik·im tḥemmled alt.chat!\n\nMa ulac aɣilif, mudd-d tawsa akken ad tḍemneḍ d akken alt.chat ad yeqqim baṭel i yal yiwen.\n\nMa d alt.chat baṭel i useqdec d uɣbalu yeldin, taneflit tesqam-d idrimen. Mudd-aɣ-d afus ad neḥrez alt.chat d ilelli u ad t-nerr d imgerrez ugar ɣer zdat.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Yettban-iyi-d dakken aql-ik·im tḥemmled alt.chat!\n\nMa ulac aɣilif, mudd-d tawsa akken ad tḍemneḍ d akken alt.chat ad yeqqim baṭel i yal yiwen.\n\nMa d alt.chat baṭel i useqdec d uɣbalu yeldin, taneflit tesqam-d idrimen. Mudd-aɣ-d afus ad neḥrez alt.chat d ilelli u ad t-nerr d imgerrez ugar ɣer zdat.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = " Sgugem i 1 usrag";
 "mute_for_eight_hours" = "Sgugem i 8 yisragen";
 "mute_for_one_day" = "Sgugem i 1 wass";
@@ -476,7 +476,7 @@
 "multidevice_title" = "Rnu ibenk wis sin";
 "multidevice_same_network_hint" = "Wali ma yella sin n yibenkan-a deg yiwen n uzeṭṭa Wi-Fi neɣ deg yiwen n uẓeṭṭa";
 "multidevice_this_creates_a_qr_code" = "Aya ad yernu tangalt QR i yezmer ad yeḍumm ibenk wis sin akken ad yenɣel amaɣnu.\n\nḍmen d akken ula d yiwen n umnadi neɣ n tkamra ur yezmer ad iwali agdil-a.";
-"multidevice_install_dc_on_other_device" = "Sebded delta Chat ɣef yibenk-ik·im nniḍen (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Sebded alt.chat ɣef yibenk-ik·im nniḍen (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Bdu alt.chat, sit “Sεiɣ yakan amaɣnu / Rnu am yibenk wis sin” sakin ḍumm tangalt i d-yettwaseknen dagi";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -725,7 +725,7 @@
 "stats_disable_dialog" = "Tuzzna n tdaddanin termed yakan.\n\nTebɣiḍ ad t-tessexsiḍ?";
 "disable" = "Sens";
 "stats_keep_sending" = "Eǧǧ tuzna";
-"stats_msg_body" = "Afaylu amedday yegber tiddadanin tudrigin, i ɣ-iεawnen ad nesnerni alt.chat. Wali https://delta.chat/help#statssending i wugar n telɣut. Tanemmirt-ik·im!";
+"stats_msg_body" = "Afaylu amedday yegber tiddadanin tudrigin, i ɣ-iεawnen ad nesnerni alt.chat. Wali https://alt-chat.me/help#statssending i wugar n telɣut. Tanemmirt-ik·im!";
 // Emoji picker and categories
 "emoji_search_results" = "Igmaḍ n unadi";
 "emoji_not_found" = "Ulac imujit";
@@ -851,7 +851,7 @@
 "devicemsg_storage_exceeding" = "⚠️Asaǧǧaw-ik·im n usekles qrib ad yaččar: %1$@%% yettwaseqdec yakan.\n\nAhat ur tezmireḍ ara ad d-remseḍ iznan ma yella asekles yeččur.\n\n 👉 Ttxil-k·m senqed ma yella tzemreḍ ad tekkseḍ isefka iqburen deg ugrudem n web n isaǧǧawen syin rmed \"Iɣewwaṛen / Idiwenniyen / Kkes iznan iqbuṛen\". Tzemreḍ ad tesneqdeḍ aseqdec n usekles-inek·inem amiran deg \"Iɣewwaṛen / tuqqna\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Azemz neɣ akud deg yibenk-ik·im yettban-d ur iṣeḥḥa ara (%1$@).\n\nṢeggem tamasragt-ik·im ⏰🔧Akken ad neḍmen d akken iznan-ik·im ad ttwaremsen akken iwata. ";
-"devicemsg_update_reminder" = "⚠️Yezmer lḥal alqem-ik·im n alt.chat d aqbur.\n\nAya yezmer ad d-yeglu s wuguren acku imendiden-ik·im n udiwenni sseqdacen ileqman imaynuten - yerna txuṣṣeḍ timahilin tineggura 😳\nTtxil-k·m, ssefqed https://get.delta.chat neɣ taḥanut-nnek·nnem n usnas i uleqqem.";
+"devicemsg_update_reminder" = "⚠️Yezmer lḥal alqem-ik·im n alt.chat d aqbur.\n\nAya yezmer ad d-yeglu s wuguren acku imendiden-ik·im n udiwenni sseqdacen ileqman imaynuten - yerna txuṣṣeḍ timahilin tineggura 😳\nTtxil-k·m, ssefqed https://alt-chat.me/app/ neɣ taḥanut-nnek·nnem n usnas i uleqqem.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Kkes assekeṛ akken ad tkemmleḍ";
 // qr code stuff

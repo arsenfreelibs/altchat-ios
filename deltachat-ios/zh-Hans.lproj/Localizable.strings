@@ -325,7 +325,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "添加到主屏幕";
 "donate" = "捐赠";
-"donate_device_msg" = "❤️ 看起来您很喜欢 alt.chat！\n\n恳请您考虑捐款支持，让 alt.chat 始终保持自由开放。\n\n虽然 alt.chat 是自由且开源的，但开发仍需资金支持。请帮助我们保持 alt.chat 的独立性，并在未来让它变得更加出色。\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ 看起来您很喜欢 alt.chat！\n\n恳请您考虑捐款支持，让 alt.chat 始终保持自由开放。\n\n虽然 alt.chat 是自由且开源的，但开发仍需资金支持。请帮助我们保持 alt.chat 的独立性，并在未来让它变得更加出色。\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "静音 1 小时";
 "mute_for_eight_hours" = "静音 8 小时";
 "mute_for_one_day" = "静音 1 天";
@@ -501,7 +501,7 @@
 "multidevice_title" = "添加第二台设备";
 "multidevice_same_network_hint" = "让两台设备连接相同的 Wi-Fi 或网络";
 "multidevice_this_creates_a_qr_code" = "这将创建一个二维码，第二台设备可以扫描该二维码来复制配置文件。\n\n请确保没有不必要的观察者或摄像机可以看到以下屏幕。";
-"multidevice_install_dc_on_other_device" = "在你的其他设备上安装 alt.chat (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "在你的其他设备上安装 alt.chat (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "启动 alt.chat，点按“我已有账号/添加为第二台设备”，然后扫描此处显示的二维码";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -762,7 +762,7 @@
 "stats_disable_dialog" = "统计数据发送功能已启用。\n\n是否要禁用此功能？";
 "disable" = "禁用";
 "stats_keep_sending" = "继续发送";
-"stats_msg_body" = "附件包含匿名使用统计数据，这有助于我们改进 alt.chat。如需了解详情，请访问 https://delta.chat/help#statssending 。谢谢！";
+"stats_msg_body" = "附件包含匿名使用统计数据，这有助于我们改进 alt.chat。如需了解详情，请访问 https://alt-chat.me/help#statssending 。谢谢！";
 // Emoji picker and categories
 "emoji_search_results" = "搜索结果";
 "emoji_not_found" = "未找到表情符号";
@@ -891,7 +891,7 @@
 "devicemsg_storage_exceeding" = "⚠️ 您的服务提供者存储空间即将用完：已使用 %1$@%%。\n\n如果存储空间已满，您可能无法接收消息。\n\n👉 请检查您是否可以在服务提供者的网页界面中删除旧数据，并考虑启用“设置/聊天/删除旧消息”。您可以随时在“设置/连接”中查看当前的存储空间使用情况。";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️设备的日期或时间似乎不准确 （%1$@）。\n\n请调整时钟⏰🔧以确保能够正确接收消息。";
-"devicemsg_update_reminder" = "⚠️您的 alt.chat 版本可能过时了。\n\n这可能会在您的聊天伙伴使用更新的版本时造成问题。并且您缺失了最新功能😳\n请浏览 https://get.delta.chat 或应用商店来获取更新。";
+"devicemsg_update_reminder" = "⚠️您的 alt.chat 版本可能过时了。\n\n这可能会在您的聊天伙伴使用更新的版本时造成问题。并且您缺失了最新功能😳\n请浏览 https://alt-chat.me/app/ 或应用商店来获取更新。";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "解锁以继续";
 // qr code stuff
@@ -970,7 +970,7 @@
 "location_streaming_channel_desc" = "按需位置流频道";
 "location_streaming_notification_title" = "位置流";
 "location_streaming_notification_text" = "您正在共享您的位置";
-"location_rationale" = "要与聊天成员共享您的实时位置，请允许 Delta Chat 使用您的位置数据。\n\n为了确保实时位置无缝工作，即使应用已关闭或未使用，也会使用位置数据。";
+"location_rationale" = "要与聊天成员共享您的实时位置，请允许 alt.chat 使用您的位置数据。\n\n为了确保实时位置无缝工作，即使应用已关闭或未使用，也会使用位置数据。";
 // permissions
 "perm_required_title" = "需要权限";
 "perm_continue" = "继续";
@@ -1034,7 +1034,7 @@
 "explain_desktop_minimized_disabled_tray_pref" = "在 alt.chat 带 --minimized 参数启动时，无法禁用托盘图标。";
 "no_spellcheck_suggestions_found" = "未找到拼写建议";
 "show_window" = "显示窗口";
-"data_found_other_installation_message" = "您无法访问其他 Delta Chat 安装中的配置文件 - 不同安装的数据存储在不同的位置。\n\n要保留现有配置文件：\n1. 立即退出\n2. 打开其他 Delta Chat - 如果需要，请从 %1$@ 重新安装\n3. 在“设置/聊天”中备份每个配置文件\n4. 重新启动此版本\n5. 使用“我已有账号”恢复备份\n\n不使用之前的配置文件继续吗？";
+"data_found_other_installation_message" = "您无法访问其他 alt.chat 安装中的配置文件 - 不同安装的数据存储在不同的位置。\n\n要保留现有配置文件：\n1. 立即退出\n2. 打开其他 alt.chat - 如果需要，请从 %1$@ 重新安装\n3. 在“设置/聊天”中备份每个配置文件\n4. 重新启动此版本\n5. 使用“我已有账号”恢复备份\n\n不使用之前的配置文件继续吗？";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
 "keybindings" = "按键绑定";
 // subtitle in the "keybindings" dialog

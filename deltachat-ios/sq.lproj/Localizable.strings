@@ -320,7 +320,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Shtoje te Skena e Kreut";
 "donate" = "Dhuroni";
-"donate_device_msg" = "❤️ Duket se po ju shijon alt.chat-i!\n\nJu lutemi, shihni mundësinë e dhurimit, si ndihmë në garantimin se alt.chat mbetet e lirë për këdo.\n\nTeksa alt.chat-i është falas për përdorim dhe me burim të hapët, zhvillimi kushton para. Ndihmonani ta mbajmë alt.chat-in të pavarur dhe për ta bërë edhe më të shkëlqyer në të ardhëm.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Duket se po ju shijon alt.chat-i!\n\nJu lutemi, shihni mundësinë e dhurimit, si ndihmë në garantimin se alt.chat mbetet e lirë për këdo.\n\nTeksa alt.chat-i është falas për përdorim dhe me burim të hapët, zhvillimi kushton para. Ndihmonani ta mbajmë alt.chat-in të pavarur dhe për ta bërë edhe më të shkëlqyer në të ardhëm.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Heshtoji për 1 orë";
 "mute_for_eight_hours" = "Heshtoje për 8 orë";
 "mute_for_one_day" = "Heshtoji për 1 ditë";
@@ -495,7 +495,7 @@
 "multidevice_title" = "Shtoni Pajisje të Dytë";
 "multidevice_same_network_hint" = "Sigurohuni se të dy pajisjet janë në të njëjtin rrjet Wi-Fi ose klasik";
 "multidevice_this_creates_a_qr_code" = "Kjo krijon një kod QR që pajisja e dytë mund ta skanojë për të kopjuar llogarinë..\n\nSigurohuni se asnjë vëzhgues i padëshiruar apo kamera mund të shohë skenën vijuese.";
-"multidevice_install_dc_on_other_device" = "Instaloni alt.chat-in në pajisjen tuaj tjetër (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Instaloni alt.chat-in në pajisjen tuaj tjetër (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Nisni alt.chat-in, prekni mbi “Kam Tashmë një Profil / Shtoje si Pajisje të Dytë” dhe skanoni kodin e treguar këtu";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -879,7 +879,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Po mbaron depozita e shërbimit tuaj: përdoren tashmë %1$@%%.\n\nNëse depozita është plot, mund të mos jeni në gjendje të merrni mesazhe.\n\n👉 Ju lutemi, shihni se mos mund të fshini të dhëna të vjetra që nga ndërfaqja web e furnizuesit të shërbimit dhe shihni mundësinë të aktivizoni “Rregullime / Fjalosje dje Media / Fshi Mesazhe të Vjetër”. Se sa depozitë është aktualisht e përdorur mund ta kontrolloni kurdo, që nga \"Rregullime / Lidhje\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Data ose koha në pajisjen tuaj duket të jetë e pasaktë (%1$@).\n\nRregulloni sahatin tuaj ⏰🔧 që të garantohet se mesazhet tuaj merren saktë.";
-"devicemsg_update_reminder" = "⚠️ Versioni juaj i alt.chat-it duket të jetë i vjetruar.\n\nKjo mund të shkaktojë probleme, ngaqë partnerët tuaj të fjalosjes përdorin versione të rinj - dhe ju mungojnë veçoritë më të reja 😳\nPër përditësime, ju lutemi, shihni te https://get.delta.chat ose te shitorja juaj e aplikacioneve.";
+"devicemsg_update_reminder" = "⚠️ Versioni juaj i alt.chat-it duket të jetë i vjetruar.\n\nKjo mund të shkaktojë probleme, ngaqë partnerët tuaj të fjalosjes përdorin versione të rinj - dhe ju mungojnë veçoritë më të reja 😳\nPër përditësime, ju lutemi, shihni te https://alt-chat.me/app/ ose te shitorja juaj e aplikacioneve.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Që të vazhdohet, shkyçeni";
 // qr code stuff

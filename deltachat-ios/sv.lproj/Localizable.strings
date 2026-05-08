@@ -318,7 +318,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Lägg till på hemskärmen";
 "donate" = "Donera";
-"donate_device_msg" = "❤️ Det verkar som att du gillar alt.chat!\n\nVänligen överväg att donera för att hjälpa till att säkerställa att alt.chat förblir gratis för alla.\n\nÄven om alt.chat är gratis att använda och öppen källkod, kostar utvecklingen pengar. Hjälp oss att hålla alt.chat oberoende och göra det ännu bättre i framtiden.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Det verkar som att du gillar alt.chat!\n\nVänligen överväg att donera för att hjälpa till att säkerställa att alt.chat förblir gratis för alla.\n\nÄven om alt.chat är gratis att använda och öppen källkod, kostar utvecklingen pengar. Hjälp oss att hålla alt.chat oberoende och göra det ännu bättre i framtiden.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Tysta 1 timma";
 "mute_for_eight_hours" = "Tysta 8 timmar";
 "mute_for_one_day" = "Tysta 1 dag";
@@ -487,7 +487,7 @@
 "multidevice_title" = "Lägg till en andra enhet";
 "multidevice_same_network_hint" = "Tillse att bägge enheterna är på samma WiFi eller nätverk";
 "multidevice_this_creates_a_qr_code" = "Detta skapar en QR-kod som den andra enheten kan skanna för att kopiera profilen.";
-"multidevice_install_dc_on_other_device" = "Installera alt.chat på din andra enhet (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Installera alt.chat på din andra enhet (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Starta alt.chat, tryck på \"Jag har redan en profil / Lägg till som andra enhet\" och skanna koden som visas här.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -741,7 +741,7 @@
 "stats_disable_dialog" = "Skickande av statistik är redan aktiverat.\n\nVill du inaktivera det?";
 "disable" = "Avaktivera";
 "stats_keep_sending" = "Fortsätt skicka";
-"stats_msg_body" = "Bilagan innehåller anonym användningsstatistik, som hjälper oss att förbättra alt.chat. Se https://delta.chat/help#statssending för mer information. Tack!";
+"stats_msg_body" = "Bilagan innehåller anonym användningsstatistik, som hjälper oss att förbättra alt.chat. Se https://alt-chat.me/help#statssending för mer information. Tack!";
 // Emoji picker and categories
 "emoji_search_results" = "Sökresultat";
 "emoji_not_found" = "Inga emoji hittades";
@@ -867,7 +867,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Din leverantörs lagringsutrymme är snart slut: %1$@%% är redan använt.\n\nDu kanske inte kan ta emot meddelanden om lagringsutrymmet är fullt.\n\n👉 Kontrollera om du kan radera gammal data i leverantörens webbgränssnitt och överväg att aktivera \"Inställningar / Chattar och media / Ta bort gamla meddelanden\". Du kan kontrollera din aktuella lagringsanvändning när som helst under \"Inställningar / Anslutning\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Datum eller tid på din enhet verkar vara felaktigt (%1$@).\n\nJustera din klocka ⏰🔧 för att säkerställa att dina meddelanden tas emot korrekt.";
-"devicemsg_update_reminder" = "⚠️ Din alt.chat-version kan vara föråldrad.\n\nDetta kan orsaka problem eftersom dina chattpartners använder nyare versioner - och du saknar de senaste funktionerna 😳\nSök efter uppdateringar på https://get.delta.chat eller i din appbutik.";
+"devicemsg_update_reminder" = "⚠️ Din alt.chat-version kan vara föråldrad.\n\nDetta kan orsaka problem eftersom dina chattpartners använder nyare versioner - och du saknar de senaste funktionerna 😳\nSök efter uppdateringar på https://alt-chat.me/app/ eller i din appbutik.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Lås upp för att fortsätta";
 // qr code stuff

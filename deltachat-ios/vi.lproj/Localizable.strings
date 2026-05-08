@@ -364,7 +364,7 @@
 "multidevice_title" = "Thêm thiết bị thứ hai";
 "multidevice_same_network_hint" = "Đảm bảo cả hai thiết bị đều sử dụng cùng một Wi-Fi hoặc mạng";
 "multidevice_this_creates_a_qr_code" = "Thao tác này sẽ tạo mã QR mà thiết bị thứ hai có thể quét để sao chép tài khoản.";
-"multidevice_install_dc_on_other_device" = "Cài đặt alt.chat trên thiết bị khác của bạn (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Cài đặt alt.chat trên thiết bị khác của bạn (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Bắt đầu alt.chat, nhấn vào “Thêm làm thiết bị thứ hai” và quét mã được hiển thị ở đây";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -632,7 +632,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Bộ nhớ nhà cung cấp của bạn sắp hết: %1$@%% đã được sử dụng.\n\nBạn có thể không nhận được tin nhắn nếu bộ nhớ đầy.\n\n 👉 Vui lòng kiểm tra xem bạn có thể xóa không dữ liệu cũ trong giao diện web của nhà cung cấp và cân nhắc bật \"Cài đặt / Xóa tin nhắn cũ\". Bạn có thể kiểm tra mức sử dụng bộ nhớ hiện tại của mình bất kỳ lúc nào tại \"Cài đặt / Kết nối\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Ngày hoặc giờ trên thiết bị của bạn có vẻ không chính xác (%1$@).\n\nĐiều chỉnh đồng hồ của bạn ⏰🔧 để đảm bảo tin nhắn của bạn được nhận chính xác.";
-"devicemsg_update_reminder" = "⚠️ Phiên bản alt.chat của bạn có thể đã lỗi thời.\n\nĐiều này có thể gây ra sự cố vì đối tác trò chuyện của bạn sử dụng các phiên bản mới hơn - và bạn đang thiếu các tính năng mới nhất 😳\nVui lòng kiểm tra https://get.delta.chat hoặc cửa hàng ứng dụng của bạn để biết thông tin cập nhật .";
+"devicemsg_update_reminder" = "⚠️ Phiên bản alt.chat của bạn có thể đã lỗi thời.\n\nĐiều này có thể gây ra sự cố vì đối tác trò chuyện của bạn sử dụng các phiên bản mới hơn - và bạn đang thiếu các tính năng mới nhất 😳\nVui lòng kiểm tra https://alt-chat.me/app/ hoặc cửa hàng ứng dụng của bạn để biết thông tin cập nhật .";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Mở khóa để tiếp tục";
 // qr code stuff

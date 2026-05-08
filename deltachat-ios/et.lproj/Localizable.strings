@@ -320,7 +320,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Lisa avaekraanile";
 "donate" = "Toeta arendust";
-"donate_device_msg" = "❤️ Tundub, et alt.chat meeldib sulle!\n\nTagamaks, et alt.chat jääb kõigi jaoks vabaks ning tasuta kasutatavaks, palun kaalu projekti rahalist toetamist.\n\nKuigi alt.chat on vabalt pruugitav ja põhineb avatud lähtekoodil, siis arenduseks kulub paratamatult raha. Sinu toetus võimaldab alt.chatil jääda sõltumatuks ning iga uue versiooniga muutuda aina paremaks.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Tundub, et alt.chat meeldib sulle!\n\nTagamaks, et alt.chat jääb kõigi jaoks vabaks ning tasuta kasutatavaks, palun kaalu projekti rahalist toetamist.\n\nKuigi alt.chat on vabalt pruugitav ja põhineb avatud lähtekoodil, siis arenduseks kulub paratamatult raha. Sinu toetus võimaldab alt.chatil jääda sõltumatuks ning iga uue versiooniga muutuda aina paremaks.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Summuta üheks tunniks";
 "mute_for_eight_hours" = "Summuta kaheksaks tunniks";
 "mute_for_one_day" = "Summuta üheks päevaks";
@@ -489,7 +489,7 @@
 "multidevice_title" = "Lisa täiendav seade";
 "multidevice_same_network_hint" = "Palun vaat, et mõlemad seadmed oleks samas WiFi võrgus";
 "multidevice_this_creates_a_qr_code" = "Sellega luuakse QR-kood, mida täiendavast seadmest skaneerides on võimalik sinna kopeerida sinu profiili.\n\nPalun kontrolli, et ükski kõrvaline vaataja ega kaamera ei näeks järgnevat ekraanivaadet.";
-"multidevice_install_dc_on_other_device" = "Paigalda teise seadmesse alt.chat (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Paigalda teise seadmesse alt.chat (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Klõpsi valikut „Mul juba on profiil olemas / Lisa täiendava seadmena“ ja skaneeri siin näidatud koodi.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -874,7 +874,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Sinu poolt teenusepakkuja juures kasutatav andmeruum hakkab täis saama: %1$@%% on juba kasutusel.\n\nKui andmeruum on täis, siis sa ilmselt ei pruugi enam sõnumeid saada.\n\n👉 Palun kontrolli, kas sul on võimalik teenusepakkuja veebiliidesest vanu sõnumeid kustutada või veelgi parem on, kui kasutad automaatse kustutamise võimalust: „Seadistused“ → „Vestlused“ → „Kustuta vanad sõnumid“. Hetkel kasutatavat andmeruumi mahutu saad alati kontrollida siit: „Seadistused“ → „Ühenduvus“.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Sinu seadme kuupäev või kellaaeg tundub olema ebatäpne (%1$@).\n\nPalun seadista kella ⏰🔧 ja taga, et sõnumivahetus, sh selle krüptimine toimib korrektselt.";
-"devicemsg_update_reminder" = "⚠️ Sinu kasutatav alt.chati versioon võib olla aegunud.\n\nKuna sinu vestluspartnerid ilmselt kasutavad uuemaid versioone, ja sinu oma ei oska uuemaid funktsionaalsusi, siis võib tekkida probleeme 😳\nUuenduste teavet leiad https://get.delta.chat saidist või oma rakendustepoest.";
+"devicemsg_update_reminder" = "⚠️ Sinu kasutatav alt.chati versioon võib olla aegunud.\n\nKuna sinu vestluspartnerid ilmselt kasutavad uuemaid versioone, ja sinu oma ei oska uuemaid funktsionaalsusi, siis võib tekkida probleeme 😳\nUuenduste teavet leiad https://alt-chat.me/app/ saidist või oma rakendustepoest.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Jätkamiseks eemalda lukustus";
 // qr code stuff

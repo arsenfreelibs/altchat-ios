@@ -367,7 +367,7 @@
 "multidevice_title" = "Lisää toinen laite";
 "multidevice_same_network_hint" = "Varmista että molemmat laitteet ovat samassa Wi-Fi verkossa";
 "multidevice_this_creates_a_qr_code" = "Tämä luo QR koodin, jolla toinen laite saa ladattua kopion profiilista.";
-"multidevice_install_dc_on_other_device" = "Lataa alt.chat toiselle laitteellesi (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Lataa alt.chat toiselle laitteellesi (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Avaa alt.chat, valitse \"Minulla on jo profiili / Lisää toiseksi laitteeksi\" ja skannaa täällä näkyvä koodi";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -675,7 +675,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Palveluntarjoajasi tallennuskiintiö ylitetään pian, käytössä on jo %1$@ / %%.\n\nEt välttämättä enää voi vastaanottaa viestejäsi, kun 100 %% on käytössä.\n\n👉 Kokeile poistaa viestejä palveluntarjoajasi internetkäyttöliittymästä. Kannattaa myös ehkä kytkeä päälle \"Asetukset / Poista vanhat viestit\". Voit tarkistaa tämän hetkisen tallennustilan käytön \"Asetukset / Yhteys\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Laitteesi päivämäärä tai aika vaikuttaa olevan väärässä (%1$@).\n\nAseta kellonaika ⏰🔧 varmistaaksesi, että viestin vastaanottaminen onnistuu.";
-"devicemsg_update_reminder" = "⚠️ alt.chat -versio saattaa olla vanhentunut.\n\nTämä saattaa aiheuttaa ongelmia, koska muut käyttävät uudempia versioita - ja saatat jäädä paitsi uusista ominaisuuksista. 😳\nTarkista uudet päivitykset sovelluskaupastasi tai https://get.delta.chat";
+"devicemsg_update_reminder" = "⚠️ alt.chat -versio saattaa olla vanhentunut.\n\nTämä saattaa aiheuttaa ongelmia, koska muut käyttävät uudempia versioita - ja saatat jäädä paitsi uusista ominaisuuksista. 😳\nTarkista uudet päivitykset sovelluskaupastasi tai https://alt-chat.me/app/";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Avaa lukitus jatkaaksesi";
 // qr code stuff

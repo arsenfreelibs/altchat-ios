@@ -322,8 +322,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Dodaj do ekranu głównego";
 "donate" = "Wspomóż";
-"donate_device_msg" = "❤️ Wygląda na to, że podoba ci się alt.chat!\n\nProsimy o przekazanie darowizny, abyśmy mogli zapewnić, że alt.chat pozostanie darmowy dla wszystkich.\n\nChociaż alt.chat jest darmowy i ma otwarte oprogramowanie, jego rozwój kosztuje. Pomóż nam zachować niezależność alt.chat i uczynić go w przyszłości jeszcze lepszym.\n\nhttps://delta.chat/pl/donate";
-"donate_device_msg" = "❤️ Wygląda na to, że podoba ci się Delta Chat!\n\nProsimy o przekazanie darowizny, abyśmy mogli zapewnić, że Delta Chat pozostanie dla wszystkich darmowy.\n\nChociaż Delta Chat jest darmowy i ma otwarte oprogramowanie, jego rozwój kosztuje. Pomóż nam zachować niezależność Delta Chat i uczynić go w przyszłości jeszcze lepszym.\n\nhttps://delta.chat/pl/donate";
+"donate_device_msg" = "❤️ Wygląda na to, że podoba ci się alt.chat!\n\nProsimy o przekazanie darowizny, abyśmy mogli zapewnić, że alt.chat pozostanie darmowy dla wszystkich.\n\nChociaż alt.chat jest darmowy i ma otwarte oprogramowanie, jego rozwój kosztuje. Pomóż nam zachować niezależność alt.chat i uczynić go w przyszłości jeszcze lepszym.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Wyłącz na 1 godzinę";
 "mute_for_eight_hours" = "Wyłącz na 8 godzin";
 "mute_for_one_day" = "Wyłącz na 1 dzień";
@@ -500,9 +499,8 @@
 "multidevice_title" = "Dodaj kolejne urządzenie";
 "multidevice_same_network_hint" = "Upewnij się, że oba urządzenia są połączone z tym samym Wi-Fi lub siecią";
 "multidevice_this_creates_a_qr_code" = "Spowoduje to utworzenie kodu QR, który kolejne urządzenie może zeskanować w celu skopiowania konta.";
-"multidevice_install_dc_on_other_device" = "Zainstaluj alt.chat na swoim kolejnym urządzeniu (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Zainstaluj alt.chat na swoim kolejnym urządzeniu (https://alt-chat.me/app/)";
 "multidevice_this_creates_a_qr_code" = "Spowoduje to utworzenie kodu QR, który kolejne urządzenie może zeskanować w celu skopiowania konta.\n\nUpewnij się, że żaden niepożądany obserwator lub kamera nie zobaczy poniższego ekranu.";
-"multidevice_install_dc_on_other_device" = "Zainstaluj Delta Chat na swoim kolejnym urządzeniu (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Uruchom alt.chat, dotknij „Mam już profil / Dodaj jako kolejne urządzenie” i zeskanuj pokazany tutaj kod";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -766,14 +764,10 @@
 "stats_device_message" = "Chcesz pomóc w ulepszeniu alt.chat i wesprzeć badania, wysyłając co tydzień anonimowe statystyki użytkowania?\n\n👉 Kliknij tutaj… 👈";
 "stats_confirmation_dialog" = "Chcesz pomóc w ulepszeniu alt.chat i wesprzeć badania, wysyłając co tydzień anonimowe statystyki użytkowania?";
 "stats_thanks" = "Dziękujemy! Zawsze możesz wyłączyć wysyłanie w „Ustawienia » Zaawansowane”.\n\nCzy masz dodatkowo 5 minut na udział w badaniu naukowym dotyczącym bezpieczeństwa alt.chat?";
-"send_stats_to_devs" = "Wyślij statystyki do programistów Delta Chat";
-"stats_device_message" = "Chcesz pomóc w ulepszeniu Delta Chat i wesprzeć badania, wysyłając co tydzień anonimowe statystyki użytkowania?\n\n👉 Dotknij tutaj… 👈";
-"stats_confirmation_dialog" = "Chcesz pomóc w ulepszeniu Delta Chat i wesprzeć badania, wysyłając co tydzień anonimowe statystyki użytkowania?";
-"stats_thanks" = "Dziękujemy! Zawsze możesz wyłączyć wysyłanie w „Ustawienia » Zaawansowane”.\n\nCzy masz dodatkowo 5 minut na udział w badaniu naukowym dotyczącym bezpieczeństwa Delta Chat?";
 "stats_disable_dialog" = "Wysyłanie statystyk jest już włączone.\n\nChcesz je wyłączyć?";
 "disable" = "Wyłącz";
 "stats_keep_sending" = "Kontynuuj wysyłanie";
-"stats_msg_body" = "Załącznik zawiera anonimowe statystyki użytkowania, które pomagają nam ulepszać alt.chat. Więcej informacji można znaleźć na: https://delta.chat/help#statssending. Dziękujemy!";
+"stats_msg_body" = "Załącznik zawiera anonimowe statystyki użytkowania, które pomagają nam ulepszać alt.chat. Więcej informacji można znaleźć na: https://alt-chat.me/help#statssending. Dziękujemy!";
 // Emoji picker and categories
 "emoji_search_results" = "Wyniki wyszukiwania";
 "emoji_not_found" = "Nie znaleziono emoji";
@@ -900,8 +894,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Limit pamięci u twojego dostawcy wkrótce zostanie przekroczony, wykorzystano już %1$@%%.\n\nMożesz nie być w stanie otrzymywać wiadomości, gdy pamięć jest pełna.\n\n👉 Sprawdzić, czy możesz usunąć stare dane w interfejsie internetowym dostawcy i rozważyć włączenie opcji \"Ustawienia » Czaty » Usuwanie starych wiadomości\". W dowolnym momencie możesz sprawdzić swoje bieżące wykorzystanie pamięci w \"Ustawienia » Łączność\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Data lub godzina urządzenia wydaje się być niedokładna (%1$@).\n\nDostosuj zegar ⏰🔧, aby upewnić się, że wiadomości są prawidłowo odbierane.";
-"devicemsg_update_reminder" = "⚠️ Twoja wersja alt.chat może być nieaktualna.\n\nMoże to powodować problemy, ponieważ Twoi partnerzy czatu korzystają z nowszych wersji, a Ty nie masz najnowszych funkcji 😳\nSprawdź aktualizacje na stronie https://get.delta.chat lub w sklepie z aplikacjami.";
-"devicemsg_update_reminder" = "⚠️ Twoja wersja Delta Chat może być nieaktualna.\n\nMoże to powodować problemy, ponieważ twoi partnerzy czatu korzystają z nowszych wersji, a ty nie masz najnowszych funkcji 😳\nSprawdź aktualizacje na stronie https://get.delta.chat lub w sklepie z aplikacjami.";
+"devicemsg_update_reminder" = "⚠️ Twoja wersja alt.chat może być nieaktualna.\n\nMoże to powodować problemy, ponieważ Twoi partnerzy czatu korzystają z nowszych wersji, a Ty nie masz najnowszych funkcji 😳\nSprawdź aktualizacje na stronie https://alt-chat.me/app/ lub w sklepie z aplikacjami.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Aby kontynuować, wprowadź swój tajny kod zdefiniowany w systemie.";
 // qr code stuff
@@ -988,7 +981,6 @@
 "perm_explain_access_to_mic_denied" = "Aby wysyłać wiadomości audio, przejdź do ustawień systemu lub aplikacji, wybierz „Uprawnienia” lub „Prywatność i bezpieczeństwo” i włącz „Mikrofon”.";
 "perm_explain_access_to_storage_denied" = "Aby odbierać lub wysyłać pliki, przejdź do ustawień aplikacji, wybierz „Uprawnienia” i włącz „Pamięć”.";
 "perm_explain_access_to_location_denied" = "Aby dołączyć lokalizację, przejdź do ustawień aplikacji, wybierz „Uprawnienia” i włącz „Lokalizacja”.";
-"perm_explain_access_to_notifications_denied" = "Aby odbierać powiadomienia, przejdź do ustawień systemu „Ustawienia » Aplikacje » Delta Chat” i włącz „Powiadomienia”.";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Rysuj gdziekolwiek, aby rozmyć";
 "ImageEditorHud_add_text" = "Dodaj tekst";
@@ -1040,7 +1032,7 @@
 "menu.view.developer.open.log.folder" = "Otwórz folder dziennika";
 "menu.view.developer.open.current.log.file" = "Otwórz bieżący plik dziennika";
 "explain_desktop_minimized_disabled_tray_pref" = "Ikona w zasobniku nie może być wyłączona, ponieważ alt.chat został uruchomiony z opcją --minimized.";
-"explain_desktop_minimized_disabled_tray_pref" = "Ikony w zasobniku systemowym nie można wyłączyć, ponieważ Delta Chat został uruchomiony z opcją --minimized.";
+"explain_desktop_minimized_disabled_tray_pref" = "Ikony w zasobniku systemowym nie można wyłączyć, ponieważ alt.chat został uruchomiony z opcją --minimized.";
 // deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Nie znaleziono propozycji pisowni.";
 "show_window" = "Pokaż okno";
@@ -1104,7 +1096,7 @@
 "pref_reliable_service" = "Wymuś połączenie w tle";
 "pref_reliable_service_explain" = "Powoduje trwałe powiadomienie";
 "pref_background_notifications_rationale" = "Aby utrzymać połączenie z i odbierać wiadomości w tle, zignoruj optymalizacje baterii w następnym kroku.\n\nalt.chat zużywa niewiele zasobów i dba o to, aby nie wyczerpać baterii.";
-"pref_background_notifications_rationale" = "Aby utrzymać połączenie i odbierać wiadomości w tle, w następnym kroku zignoruj optymalizację baterii.\n\nDelta Chat zużywa niewiele zasobów i dba o to, aby nie wyczerpać baterii.";
+"pref_background_notifications_rationale" = "Aby utrzymać połączenie i odbierać wiadomości w tle, w następnym kroku zignoruj optymalizację baterii.\n\nalt.chat zużywa niewiele zasobów i dba o to, aby nie wyczerpać baterii.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
 "perm_enable_bg_reminder_title" = "Dotknij tutaj, aby odbierać wiadomości, podczas gdy alt.chat działa w tle.";
 "perm_enable_bg_already_done" = "Pozwolono już alt.chat na odbieranie wiadomości w tle.\n\nJeśli wiadomości nadal nie docierają w tle, sprawdź też ustawienia systemu.";

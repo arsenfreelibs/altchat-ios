@@ -325,7 +325,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Toevoegen aan startscherm";
 "donate" = "Doneren";
-"donate_device_msg" = "❤️ Het lijkt er op dat je blij bent met alt.chat!\n\nAls dat zo is, zouden we je vriendelijk willen vragen om een donatie, zodat alt.chat gratis beschikbaar kan blijven.\n\n Ook al is alt.chat gratis en opensource, de ontwikkeling ervan kost wél geld. Jouw donatie kan het verschil maken!\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Het lijkt er op dat je blij bent met alt.chat!\n\nAls dat zo is, zouden we je vriendelijk willen vragen om een donatie, zodat alt.chat gratis beschikbaar kan blijven.\n\n Ook al is alt.chat gratis en opensource, de ontwikkeling ervan kost wél geld. Jouw donatie kan het verschil maken!\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "1 uur lang uitschakelen";
 "mute_for_eight_hours" = "8 uur lang uitschakelen";
 "mute_for_one_day" = "1 dag lang uitschakelen";
@@ -501,7 +501,7 @@
 "multidevice_title" = "Secundair apparaat toevoegen";
 "multidevice_same_network_hint" = "Zorg ervoor dat beide apparaten verbonden zijn met hetzelfde (wifi)netwerk";
 "multidevice_this_creates_a_qr_code" = "Hiermee wordt een QR-code samengesteld die door het tweede apparaat kan worden gescand om het account te kopiëren.\n\nZorg dat er geen vreemden meekijken, al dan niet door een camera.";
-"multidevice_install_dc_on_other_device" = "Installeer alt.chat op je andere apparaat (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Installeer alt.chat op je andere apparaat (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Start alt.chat, druk op ‘Ik heb al een profiel → Toevoegen als secundair apparaat’ en scan de hier getoonde code";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -886,7 +886,7 @@
 "devicemsg_storage_exceeding" = "⚠️ De opslagruimte die je provider biedt is bijna overschreden. Momenteel heb je %1$@%% ervan in gebruik.\n\nAls je geen ruimte meer hebt, kun je mogelijk geen berichten meer ontvangen.\n\n👉 Kijk of je oude gegevens kunt verwijderen in de webclient van je provider. Overweeg ook ‘Instellingen → Oude berichten verwijderen’ in te schakelen. Je kunt je huidige gebruik te allen tijde bekijken via ‘Instellingen → Verbindingen’.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ De datum en tijd van je apparaat lijken niet te kloppen (%1$@).\n\nVerzet je klok ⏰🔧 om er zeker van te zijn dat je berichten kunt ontvangen.";
-"devicemsg_update_reminder" = "⚠️ Je versie van alt.chat is mogelijk verouderd.\n\nDit kan problemen veroorzaken aangezien je gesprekspartners nieuwe versies gebruiken. Bovendien mis je hierdoor enkele nieuwe functies. 😳\nGa naar https://get.delta.chat of de appwinkel van je apparaat om te controleren op updates.";
+"devicemsg_update_reminder" = "⚠️ Je versie van alt.chat is mogelijk verouderd.\n\nDit kan problemen veroorzaken aangezien je gesprekspartners nieuwe versies gebruiken. Bovendien mis je hierdoor enkele nieuwe functies. 😳\nGa naar https://alt-chat.me/app/ of de appwinkel van je apparaat om te controleren op updates.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Ontgrendelen om verder te gaan";
 // qr code stuff
@@ -1029,7 +1029,7 @@
 "explain_desktop_minimized_disabled_tray_pref" = "Het systeemvakpictogram is uitgeschakeld omdat alt.chat is gestart met de optie --minimized";
 "no_spellcheck_suggestions_found" = "Geen suggesties gevonden.";
 "show_window" = "Venster tonen";
-"data_found_other_installation_message" = "Profielen uit een andere Delta Chat-installatie zijn niet beschikbaar, daar ze allen gebruikmaken van eigen opslaglocaties.\n\nWil je tóch bestaande profielen gebruiken, volg dan deze stappen:\n1. Sluit de app af\n2. Open de andere Delta Chat-installatie en herinstalleer deze zonodig vanaf %1$@\n3. Maak een reservekopie van ieder profiel via ‘Instellingen → Gesprekken’\n4. Herstart deze versie\n5. Herstel de gesprekken door te kiezen voor ‘Ik heb al een profiel’\n\nWil je doorgaan zonder bestaande profielen?";
+"data_found_other_installation_message" = "Profielen uit een andere alt.chat-installatie zijn niet beschikbaar, daar ze allen gebruikmaken van eigen opslaglocaties.\n\nWil je tóch bestaande profielen gebruiken, volg dan deze stappen:\n1. Sluit de app af\n2. Open de andere alt.chat-installatie en herinstalleer deze zonodig vanaf %1$@\n3. Maak een reservekopie van ieder profiel via ‘Instellingen → Gesprekken’\n4. Herstart deze versie\n5. Herstel de gesprekken door te kiezen voor ‘Ik heb al een profiel’\n\nWil je doorgaan zonder bestaande profielen?";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
 "keybindings" = "Sneltoetsen";
 // subtitle in the "keybindings" dialog

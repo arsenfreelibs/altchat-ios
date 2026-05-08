@@ -305,7 +305,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Legg til på hjemmeskjermen";
 "donate" = "Doner";
-"donate_device_msg" = "❤️ Det ser ut som du liker alt.chat!\n\nVurder å donere for å holde alt.chat gratis for alle.\n\nSelv om alt.chat er gratis å bruke og åpen kildekode, så koster det penger å utvikle. Hjelp oss å holde alt.chat uavhengig og gjøre det enda bedre.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Det ser ut som du liker alt.chat!\n\nVurder å donere for å holde alt.chat gratis for alle.\n\nSelv om alt.chat er gratis å bruke og åpen kildekode, så koster det penger å utvikle. Hjelp oss å holde alt.chat uavhengig og gjøre det enda bedre.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Demp i 1 time";
 "mute_for_eight_hours" = "Demp i 8 timer";
 "mute_for_one_day" = "Demp i 1 dag";

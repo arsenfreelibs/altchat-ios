@@ -310,7 +310,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Přidat na domovskou obrazovku";
 "donate" = "Darovat";
-"donate_device_msg" = "❤️ Vypadá to, že se vám alt.chat líbí! \n\n Prosím, zvažte možnost darování, abyste pomohli zajistit, že alt.chat zůstane zdarma pro všechny. \n\n Ačkoli je alt.chat zdarma a má otevřený zdrojový kód, vývoj stojí peníze. Pomozte nám udržet alt.chat nezávislý a v budoucnu jej udělat ještě úžasnějším. \n\n https://delta.chat/donate";
+"donate_device_msg" = "❤️ Vypadá to, že se vám alt.chat líbí! \n\n Prosím, zvažte možnost darování, abyste pomohli zajistit, že alt.chat zůstane zdarma pro všechny. \n\n Ačkoli je alt.chat zdarma a má otevřený zdrojový kód, vývoj stojí peníze. Pomozte nám udržet alt.chat nezávislý a v budoucnu jej udělat ještě úžasnějším. \n\n https://alt-chat.me/donate";
 "mute_for_one_hour" = "Ztlumit na 1 hodinu";
 "mute_for_eight_hours" = "Ztlumit na 8 hodin";
 "mute_for_one_day" = "Ztlumit na 1 den";
@@ -463,7 +463,7 @@
 "multidevice_title" = "Přidat další zařízení";
 "multidevice_same_network_hint" = "Ujistěte se, že jsou obě zařízení na stejné Wi-Fi či síti";
 "multidevice_this_creates_a_qr_code" = "Tímto bude vytvořen QR kód, který můžete naskenovat dalším zařízením ke zkopírování profilu.\n\nUjistěte se, že následující obrazovku neuvidí žádný nechtěný přihlížející či kamera.";
-"multidevice_install_dc_on_other_device" = "Nainstalujte si alt.chat do druhého zařízení (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Nainstalujte si alt.chat do druhého zařízení (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Spusťte alt.chat, klepněte na „Již mám svůj profil / Přidat jako další zařízení“ a naskenujte následující kód";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -828,7 +828,7 @@
 "devicemsg_storage_exceeding" = "⚠️ Úložiště u vašeho poskytovatele je téměř vyčerpané: %1$@ %% je již využito.\n\nPokud se úložiště zaplní, nebudete moci přijímat zprávy.\n\n👉 Zkuste smazat stará data ve webovém prostředí poskytovatele a zvažte povolení volby \"Nastavení / Chaty a multimédia / Mazat staré zprávy\". Aktuální využití úložiště můžete kdykoliv zkontrolovat v \"Nastavení / Připojení\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Datum a čas na vašem zařízení se zdají být nepřesné (%1$@).\n\nUpravte si čas ⏰🔧, abyste mohli přijímat své zprávy.";
-"devicemsg_update_reminder" = "⚠️ Vaše verze alt.chatu může být zastaralá.\n\nTo může způsobit problémy, protože vaši partneři v chatu používají novější verze – a vám chybí nejnovější funkce 😳\nAktualizace najdete na https://get.delta.chat nebo v obchodě s aplikacemi.";
+"devicemsg_update_reminder" = "⚠️ Vaše verze alt.chatu může být zastaralá.\n\nTo může způsobit problémy, protože vaši partneři v chatu používají novější verze – a vám chybí nejnovější funkce 😳\nAktualizace najdete na https://alt-chat.me/app/ nebo v obchodě s aplikacemi.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Pro pokračování odemkněte";
 // qr code stuff

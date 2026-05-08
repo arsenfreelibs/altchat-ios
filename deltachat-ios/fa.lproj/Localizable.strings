@@ -305,7 +305,7 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "افزودن به صفحه خانه";
 "donate" = "حمایت مالی";
-"donate_device_msg" = "❤️ بنظر می‌آید شما در حال لذت بردن از دلتاچت هستید!\n\nلطفا هدیه دهید تا مطمئن باشیم دلتاچت برای همه آزاد باقی می‌ماند.\n\nبا وجودی که دلتاچت برای استفاده رایگان است و یک نرم‌افزار آزاد نیز هست، توسعهٔ آن هزینه دارد. به ما کمک کنید تا دلتاچت را مستقل نگه‌داریم و در آینده حتی آن‌را خفن‌تر کنیم. هدایا از طریق رمزارز نیز پذیرفته می‌شوند.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ بنظر می‌آید شما در حال لذت بردن از دلتاچت هستید!\n\nلطفا هدیه دهید تا مطمئن باشیم دلتاچت برای همه آزاد باقی می‌ماند.\n\nبا وجودی که دلتاچت برای استفاده رایگان است و یک نرم‌افزار آزاد نیز هست، توسعهٔ آن هزینه دارد. به ما کمک کنید تا دلتاچت را مستقل نگه‌داریم و در آینده حتی آن‌را خفن‌تر کنیم. هدایا از طریق رمزارز نیز پذیرفته می‌شوند.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "ساکت کردن به مدت۱ ساعت";
 "mute_for_eight_hours" = "بی‌صدا کردن به مدت ۸ ساعت";
 "mute_for_one_day" = "ساکت کردن به مدت ۱ روز";
@@ -462,7 +462,7 @@
 "multidevice_title" = "افزودن دستگاه دوم";
 "multidevice_same_network_hint" = "مطمئن شوید هر دو دستگاه در یک وای‌فای یا شبکه هستند";
 "multidevice_this_creates_a_qr_code" = "این یک کد کیوآر ایجاد می‌کند که دستگاه دوم می‌تواند برای کپی حساب اسکن کند.";
-"multidevice_install_dc_on_other_device" = "دلتاچت را روی دستگاه دیگر خود نصب کنید (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "alt.chat را روی دستگاه دیگر خود نصب کنید (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "دلتاچت را باز کنید، روی «افزودن به عنوان دستگاه دوم» بزنید و کد نشان داده شده در اینجا را اسکن کنید";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -706,7 +706,7 @@
 "stats_disable_dialog" = "ارسال آمار‌ها قبلا فعال شدن است.\n\n می‌خواهید آن را غیر فعال کنید؟";
 "disable" = "غیرفعال کردن";
 "stats_keep_sending" = "ادامه‌دادن به ارسال";
-"stats_msg_body" = "این پیوست شامل آمار استفادهٔ ناشناس است که به ما کمک می‌کند دلتاچت را بهبود دهیم. برای اطلاعات بیش‌تر https://delta.chat/help#statssending را ببینید. متشکریم!";
+"stats_msg_body" = "این پیوست شامل آمار استفادهٔ ناشناس است که به ما کمک می‌کند دلتاچت را بهبود دهیم. برای اطلاعات بیش‌تر https://alt-chat.me/help#statssending را ببینید. متشکریم!";
 // Emoji picker and categories
 "emoji_search_results" = "نتایج جستجو";
 "emoji_not_found" = "شکلکی پیدا نشد";
@@ -829,7 +829,7 @@
 "devicemsg_storage_exceeding" = " ⚠️ میزان فضای در دسترس کارساز رایانامه شما در حال تمام شدن است. %1$@ از %% استفاده شده است. اگر فضا کاملا پر شده باشد دیگر امکان دریافت پیام را نخواهید داشت. 👈 لطفا پیام‌های قدیمی در رایانامه خود را از طریق نسخهٔ وب رایانامه پاک کنید. همچنین می‌توانید گزینه پاک کردن پیام‌های قدیمی در دلتاچت را فعال نمایید. هروقت خواستید می‌توانید فضای در دسترس را از «تنظیم‌ها / اتصال‌ها» بررسی کنید. ";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "هشدار⚠️ به نظر می‌رسد زمان و تاریخ دستگاه شما دقیق نیست(%1$@). ساعت دستگاه خود را تنظیم کنید ⏰🔧 تا پیام‌ها به درستی دریافت شوند. ";
-"devicemsg_update_reminder" = "هشدار⚠️ ممکن است نسخه دلتاچت مورد استفاده قدیمی شده باشد. این موضوع ممکن است مشکلاتی ایجاد کند چون مخاطبین شما از نسخه‌های جدیدتر استفاده می‌کنند. همچنین قابلیت‌های جدید را هم از دست می‌دهید😳 لطفا برای دریافت نسخه جدید به app store یا https://get.delta.chat مراجعه کنید. ";
+"devicemsg_update_reminder" = "هشدار⚠️ ممکن است نسخه alt.chat مورد استفاده قدیمی شده باشد. این موضوع ممکن است مشکلاتی ایجاد کند چون مخاطبین شما از نسخه‌های جدیدتر استفاده می‌کنند. همچنین قابلیت‌های جدید را هم از دست می‌دهید😳 لطفا برای دریافت نسخه جدید به app store یا https://alt-chat.me/app/ مراجعه کنید. ";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "برای ادامه، لطفا رمز تعیین شده توسط سیستم خود را وارد کنید";
 // qr code stuff

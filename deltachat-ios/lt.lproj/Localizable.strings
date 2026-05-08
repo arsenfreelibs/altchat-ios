@@ -286,7 +286,7 @@
 "reply_privately" = "Atsakyti privačiai";
 "source_code" = "Pirminis kodas";
 "donate" = "Paaukoti";
-"donate_device_msg" = "❤️ Atrodo, kad mėgaujatės naudodami alt.chat!\n\nApsvarstykite galimybę paaukoti, kad užtikrintumėte, jog alt.chat ir toliau visiems būtų nemokama.\n\nNors alt.chat yra nemokama ir atvirojo kodo, jos plėtojimas kainuoja pinigus. Padėkite mums išlaikyti alt.chat nepriklausomą ir paversti ją ateityje dar labiau nuostabia.\n\nhttps://delta.chat/donate";
+"donate_device_msg" = "❤️ Atrodo, kad mėgaujatės naudodami alt.chat!\n\nApsvarstykite galimybę paaukoti, kad užtikrintumėte, jog alt.chat ir toliau visiems būtų nemokama.\n\nNors alt.chat yra nemokama ir atvirojo kodo, jos plėtojimas kainuoja pinigus. Padėkite mums išlaikyti alt.chat nepriklausomą ir paversti ją ateityje dar labiau nuostabia.\n\nhttps://alt-chat.me/donate";
 "mute_for_one_hour" = "Išjungti 1 valandai";
 "mute_for_eight_hours" = "Išjungti 8 valandoms";
 "mute_for_one_day" = "Išjungti 1 dienai";
@@ -430,7 +430,7 @@
 "multidevice_title" = "Pridėti antrąjį įrenginį";
 "multidevice_same_network_hint" = "Įsitikinkite, kad abu įrenginiai yra prisijungę prie to pačio belaidžio (Wi-Fi) arba laidinio tinklo";
 "multidevice_this_creates_a_qr_code" = "Tai sukuria QR kodą, kurį antrasis įrenginys gali nuskenuoti, kad nukopijuotų profilį.\n\nĮsitikinkite, kad joks pašalinis stebėtojas ar kamera nematys lango, kuris bus parodytas paspaudus mygtuką.";
-"multidevice_install_dc_on_other_device" = "Įsidiekite alt.chat kitame savo įrenginyje (https://get.delta.chat)";
+"multidevice_install_dc_on_other_device" = "Įsidiekite alt.chat kitame savo įrenginyje (https://alt-chat.me/app/)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
 "multidevice_tap_scan_on_other_device" = "Paleiskite alt.chat, bakstelėkite „Aš jau turiu profilį / Pridėti kaip antrąjį įrenginį“ ir nuskenuokite čia rodomą kodą";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
@@ -763,7 +763,7 @@
 "devicemsg_self_deleted" = "Jūs ištrynėte „Įrašytų žinučių“ pokalbį.\n\nℹ️ Norėdami vėl naudotis „Įrašytų žinučių“ ypatybe, sukurkite naują pokalbį su savimi.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Atrodo, kad jūsų įrenginyje yra nustatyta netiksli data ar laikas (%1$@).\n\nSuderinkite savo laikrodį ⏰🔧 kad užtikrintumėte, jog žinutės bus gaunamos teisingai.";
-"devicemsg_update_reminder" = "⚠️ Gali būti, kad jūsų alt.chat versija yra pasenusi.\n\nTai gali sukelti problemų, nes jūsų pokalbių partneriai naudoja naujesnę versiją ir jūs netenkate galimybės naudotis naujausiomis ypatybėmis 😳\nPatikrinkite, ar yra atnaujinimų, apsilankę adresu https://get.delta.chat arba atvėrę programėlių parduotuvę.";
+"devicemsg_update_reminder" = "⚠️ Gali būti, kad jūsų alt.chat versija yra pasenusi.\n\nTai gali sukelti problemų, nes jūsų pokalbių partneriai naudoja naujesnę versiją ir jūs netenkate galimybės naudotis naujausiomis ypatybėmis 😳\nPatikrinkite, ar yra atnaujinimų, apsilankę adresu https://alt-chat.me/app/ arba atvėrę programėlių parduotuvę.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Atrakinkite, norėdami tęsti";
 // qr code stuff
