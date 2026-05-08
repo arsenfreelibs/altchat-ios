@@ -202,7 +202,11 @@ class WelcomeViewController: UIViewController {
                 dcContext = dcAccounts.getSelected()
                 navigationItem.title = String.localized(canCancel ? "add_account" : "welcome_desktop")
             }
-            progressAlertHandler.updateProgressAlert(error: ui["errorMessage"] as? String ?? "ErrString")
+            var errorMessage = ui["errorMessage"] as? String ?? "ErrString"
+            if !importByFile {
+                errorMessage += "\n\n" + String.localized("multidevice_same_network_hint")
+            }
+            progressAlertHandler.updateProgressAlert(error: errorMessage)
             stopAccessingSecurityScopedResource()
             removeBackupProgressObserver()
         } else if let done = ui["done"] as? Bool, done {
@@ -234,13 +238,7 @@ extension WelcomeViewController: QrCodeReaderDelegate {
         } else if lot.state == DC_QR_BACKUP_TOO_NEW {
             qrErrorAlert(title: String.localized("multidevice_receiver_needs_update"))
         } else {
-            // WORKAROUND: Support DCBACKUP4 format from newer alt.chat versions
-            // TODO: Update deltachat-core-rust to natively support DCBACKUP4
-            if qrCode.uppercased().starts(with: "DCBACKUP4:") || qrCode.uppercased().starts(with: "DCBACKUP3:") {
-                confirmSetupNewDevice(qrCode: qrCode)
-            } else {
-                qrErrorAlert(title: String.localized("qraccount_qr_code_cannot_be_used"), message: dcContext.lastErrorString)
-            }
+            qrErrorAlert(title: String.localized("qraccount_qr_code_cannot_be_used"), message: dcContext.lastErrorString)
         }
     }
 
