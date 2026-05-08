@@ -46,7 +46,7 @@ class NewChatViewController: UITableViewController {
     private var filteredContactIds: [Int] = []
     private var remoteResults: [RemoteUser] = []
 
-    private lazy var searchService = UserSearchService(accountId: dcContext.id)
+    private lazy var searchService = UserSearchService(dcContext: dcContext)
 
     private var searchText: String? {
         return searchController.searchBar.text

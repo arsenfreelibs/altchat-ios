@@ -5,6 +5,7 @@ import DcCore
 final class AltPlatformService {
 
     private static let quickRegisterURL = "https://api.alt-to.online/v1/users/quick-register"
+    private static let profileBaseURL = "https://api.alt-to.online/v1/users"
     private static let registrationQueue = DispatchQueue(label: "alt.platform.register")
     private static var isRegistering = false
 
@@ -162,6 +163,37 @@ final class AltPlatformService {
         let b64 = Data(bytes).base64EncodedString()
         let alnum = b64.filter { $0.isLetter || $0.isNumber }
         return String(alnum.prefix(20))
+    }
+
+    /// Probes the current JWT token by calling GET /v1/users/{username}.
+    /// Must be called from a background thread. Returns `false` only on HTTP 401
+    /// (token invalid/expired). Network errors and 5xx responses return `true` to
+    /// avoid triggering re-registration when the server is temporarily unreachable.
+    @discardableResult
+    func probeToken() -> Bool {
+        guard let username = UserDefaults.shared?.string(forKey: "alt_username"),
+              !username.isEmpty,
+              let token = KeychainManager.loadJwtToken(accountId: dcContext.id) else {
+            logger.info("AltPlatformService: probeToken skipped — username or token missing")
+            return true
+        }
+        guard let url = URL(string: "\(AltPlatformService.profileBaseURL)/\(username)") else { return true }
+
+        var request = URLRequest(url: url, timeoutInterval: 15)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        let semaphore = DispatchSemaphore(value: 0)
+        var statusCode: Int?
+
+        URLSession.shared.dataTask(with: request) { _, response, _ in
+            statusCode = (response as? HTTPURLResponse)?.statusCode
+            semaphore.signal()
+        }.resume()
+        semaphore.wait()
+
+        logger.info("AltPlatformService: probeToken HTTP \(statusCode.map(String.init) ?? "nil") for account \(dcContext.id)")
+        return statusCode != 401
     }
 
     /// Encrypts the armored private key using AES-GCM with a SHA-256-derived key.

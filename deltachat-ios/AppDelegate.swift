@@ -278,6 +278,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let reachability = self.reachability {
                 if reachability.connection != .unavailable {
                     self.dcAccounts.maybeNetwork()
+                    self.probeAltTokenIfNeeded()
                 }
             }
 
@@ -349,6 +350,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
+
+    // MARK: - Alt Platform helpers
+
+    /// Called on foreground resume (network available). Probes the JWT token
+    /// via GET /v1/users/{username}; if the token is invalid (401) triggers
+    /// quickRegister so the token is refreshed before the user opens Search.
+    private func probeAltTokenIfNeeded() {
+        let selected = dcAccounts.getSelected()
+        guard selected.isConfigured() else { return }
+        guard KeychainManager.loadJwtToken(accountId: selected.id) != nil else { return }
+        let service = AltPlatformService(dcContext: selected)
+        if !service.probeToken() {
+            logger.info("AppDelegate: JWT invalid on resume, re-registering")
+            guard let displayName = selected.displayname, !displayName.isEmpty else { return }
+            service.quickRegister(displayName: displayName)
+        }
+    }
 
     // MARK: - fade out app smoothly
 

@@ -15,7 +15,7 @@ class ContactsViewController: UITableViewController {
     private var remoteResults: [RemoteUser] = []
     private var isRemoteSearchPending = false
 
-    private lazy var searchService = UserSearchService(accountId: dcContext.id)
+    private lazy var searchService = UserSearchService(dcContext: dcContext)
 
     private var searchText: String? {
         return searchController.searchBar.text
