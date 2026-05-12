@@ -847,3 +847,4 @@
 "call_status_ringing" = "Позвъняване";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Свързване";
+"update_available" = "Update Available";

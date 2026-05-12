@@ -1107,3 +1107,4 @@
 "perm_enable_bg_already_done" = "您已允许 alt.chat 在后台接收消息。\n\n若 alt.chat 在后台时消息仍未到达，请检查系统设置。";
 // device messages for updates
 "update_2_0" = "新版变化?\n\n💯 端到端加密现在可靠且永久。挂锁图标 🔒 没有了!\n\n✉️ 没有端到端加密的经典电子邮件用字母符号标记l\n\n😻 所有联系人的新的增强的个人资料屏\n\n🔲 新增快速访问聊天中所用应用的按钮\n\n❤️ 请捐赠帮助我们保持独立并继续带来改进: %1$@";
+"update_available" = "Update Available";

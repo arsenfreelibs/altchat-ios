@@ -366,3 +366,4 @@
 "call_status_ringing" = "Ringing";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Connecting";
+"update_available" = "Update Available";

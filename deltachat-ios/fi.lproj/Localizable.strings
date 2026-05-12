@@ -855,3 +855,4 @@
 "call_status_ringing" = "Soi";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Yhdistää";
+"update_available" = "Update Available";

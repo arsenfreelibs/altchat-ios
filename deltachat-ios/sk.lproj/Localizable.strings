@@ -891,3 +891,4 @@ Ak chcete pokračovať, aktualizujte toto zariadenie na najnovšiu verziu alt.ch
 "call_status_ringing" = "Vyzvonenie";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Pripájanie";
+"update_available" = "Update Available";

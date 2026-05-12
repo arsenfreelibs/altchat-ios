@@ -800,3 +800,4 @@
 "call_status_ringing" = "Đang đổ chuông";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Đang kết nối";
+"update_available" = "Update Available";

@@ -372,3 +372,4 @@
 "call_status_ringing" = "Zəng gedir";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Qoşulur";
+"update_available" = "Update Available";

@@ -559,3 +559,4 @@
 "call_status_ringing" = "呼び出し中";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "接続中";
+"update_available" = "Update Available";

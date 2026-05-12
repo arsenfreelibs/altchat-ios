@@ -592,3 +592,4 @@
 "call_status_ringing" = "Ringer";
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Forbinder";
+"update_available" = "Update Available";
