@@ -39,6 +39,10 @@ final class AudioNoteRecordingOverlay: UIView {
     private let lockContainer = UIView()
     private let lockOpenIcon = UIImageView()    // shown initially
     private let lockClosedIcon = UIImageView()  // crossfades in on lock
+    private let lockPauseIcon = UIImageView()   // shown in locked mode instead of padlock
+
+    /// Called when the user taps the pause icon in locked recording mode.
+    var onPauseTapped: (() -> Void)?
 
     // MARK: - Geometry (populated by show())
 
@@ -94,6 +98,12 @@ final class AudioNoteRecordingOverlay: UIView {
 
         lockContainer.addSubview(lockOpenIcon)
         lockContainer.addSubview(lockClosedIcon)
+
+        lockPauseIcon.image = UIImage(systemName: "pause.fill", withConfiguration: cfg)
+        lockPauseIcon.tintColor = .white
+        lockPauseIcon.contentMode = .center
+        lockPauseIcon.alpha = 0
+        lockContainer.addSubview(lockPauseIcon)
 
         addSubview(blurBg)
         addSubview(redDot)
@@ -158,6 +168,7 @@ final class AudioNoteRecordingOverlay: UIView {
                                      width: lockSize, height: lockSize)
         lockOpenIcon.frame = lockContainer.bounds
         lockClosedIcon.frame = lockContainer.bounds
+        lockPauseIcon.frame = lockContainer.bounds
         lockContainer.alpha = 0
         // Encode +16pt downward start offset into the transform (divide by scale factor 0.7).
         lockContainer.transform = CGAffineTransform(scaleX: 0.7, y: 0.7).translatedBy(x: 0, y: 16 / 0.7)
@@ -208,32 +219,35 @@ final class AudioNoteRecordingOverlay: UIView {
     // MARK: - Drag tracking
 
     /// Call on every `.changed` gesture event. `location` is in **window** coordinates.
-    /// Returns `(shouldCancel, shouldLock)` — the caller acts on these flags.
-    func updateDrag(location: CGPoint) -> (shouldCancel: Bool, shouldLock: Bool) {
+    /// Returns `(shouldCancel, shouldLock, hintFade)` — the caller acts on these flags.
+    /// `hintFade` is 1.0 normally and fades to 0.0 as the finger nears the cancel threshold.
+    func updateDrag(location: CGPoint) -> (shouldCancel: Bool, shouldLock: Bool, hintFade: CGFloat) {
         let movedLeft = micWindowX - location.x        // positive = moved left
         let movedUp   = lockTargetWindowY - location.y // positive = moved toward lock
 
         let horizontal = abs(movedLeft) >= abs(movedUp)
 
+        var hintFade: CGFloat = 1.0
         // Fade the hint as the finger approaches the cancel threshold
         if horizontal && movedLeft > 0 {
             let maxDx = max(micWindowX - cancelThresholdX, 1)
             let t = min(movedLeft / maxDx, 1.0)
-            hintLabel.alpha = max(0, 1 - t)
-            arrowLabel.alpha = hintLabel.alpha
+            hintFade = max(0, 1 - t)
+            hintLabel.alpha = hintFade
+            arrowLabel.alpha = hintFade
         }
 
         // Lock: predominantly upward drag that reaches the lock target zone
         if !horizontal && location.y <= lockTargetWindowY + 20 {
-            return (false, true)
+            return (false, true, hintFade)
         }
 
         // Cancel: finger passed the cancel threshold while moving left
         if horizontal && location.x <= cancelThresholdX {
-            return (true, false)
+            return (true, false, hintFade)
         }
 
-        return (false, false)
+        return (false, false, hintFade)
     }
 
     // MARK: - Lock-close animation
@@ -274,6 +288,65 @@ final class AudioNoteRecordingOverlay: UIView {
 
     func updateTimerText(_ text: String) {
         timerLabel.text = text
+    }
+
+    /// Hides the input-bar recording strip (blur, dot, timer, hint), leaving only the padlock.
+    /// Called for audio note mode — the input bar itself shows the timer/hint in Telegram style.
+    func hideRecordingControls() {
+        blurBg.isHidden = true
+        redDot.isHidden = true
+        timerLabel.isHidden = true
+        arrowLabel.isHidden = true
+        hintLabel.isHidden = true
+    }
+
+    /// Shows the overlay directly in pause-button state — used when resuming after preview.
+    /// Skips the padlock animation; the lockContainer appears immediately as a pause icon
+    /// positioned above `sendButtonCenter` (window coordinates), matching the lock-icon position.
+    func showAsPause(sendButtonCenter: CGPoint, inputBarFrame: CGRect, onTap: @escaping () -> Void) {
+        show(micButtonCenter: sendButtonCenter, inputBarFrame: inputBarFrame)
+        hideRecordingControls()
+
+        lockShowTask?.cancel()
+        lockShowTask = nil
+        lockContainer.transform = .identity
+        lockContainer.alpha = 1
+        // Hide all other icons; show only the pause icon.
+        lockOpenIcon.alpha = 0
+        lockClosedIcon.alpha = 0
+        lockPauseIcon.alpha = 1
+
+        onPauseTapped = onTap
+        isUserInteractionEnabled = true
+        lockContainer.isUserInteractionEnabled = true
+        lockContainer.gestureRecognizers?.forEach { lockContainer.removeGestureRecognizer($0) }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handlePauseTap))
+        lockContainer.addGestureRecognizer(tap)
+    }
+
+    /// Transitions the floating icon from closed padlock → pause button.
+    /// After calling this the overlay intercepts touches only within the lock container.
+    func transitionToPause(onTap: @escaping () -> Void) {
+        onPauseTapped = onTap
+        isUserInteractionEnabled = true
+        lockContainer.isUserInteractionEnabled = true
+        lockContainer.gestureRecognizers?.forEach { lockContainer.removeGestureRecognizer($0) }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handlePauseTap))
+        lockContainer.addGestureRecognizer(tap)
+
+        // Crossfade: closed padlock → pause icon
+        UIView.animate(withDuration: 0.15) { self.lockClosedIcon.alpha = 0 }
+        UIView.animate(withDuration: 0.2, delay: 0.1) { self.lockPauseIcon.alpha = 1 }
+    }
+
+    @objc private func handlePauseTap() { onPauseTapped?() }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard isUserInteractionEnabled else { return nil }
+        // Only the lock container intercepts touches; everything else passes through.
+        let lockPoint = lockContainer.convert(point, from: self)
+        if lockContainer.bounds.contains(lockPoint) { return lockContainer }
+        return nil
     }
 
     // MARK: - Dismiss

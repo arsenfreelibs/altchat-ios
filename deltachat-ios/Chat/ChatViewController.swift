@@ -52,6 +52,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var audioNoteLocked = false
     private var audioNoteStopRequested = false
     private var attachButton: InputBarButtonItem?  // strong ref so it survives left-stack swaps
+    /// Pulsing blob animation view positioned behind the mic button during pre-lock recording.
+    private var voiceBlobView: VoiceBlobView?
+    /// Preview bar shown after the user stops a locked recording before sending.
+    private var audioNotePreviewBar: AudioNotePreviewBar?
+    /// Window-level mic-resume button shown above the send button in preview mode.
+    private var audioNoteMicResumeBtn: UIButton?
+    /// Previously recorded segments when user resumes recording after preview.
+    private var audioNoteSegments: [URL] = []
+    private var audioNoteSegmentsDuration: Double = 0
+    /// Maximum total recording duration across all segments.
+    private static let maxAudioNoteDuration: TimeInterval = 30
 
     // inline video note overlay recording
     private var videoNoteStartDate: Date?
@@ -179,7 +190,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return btn
     }()
 
-    /// Send (▶) button shown on the right in locked audio-note recording mode.
+    /// Send (↑) button shown on the right in locked video-note recording mode.
     private lazy var audioNoteSendBtn: InputBarButtonItem = {
         let btn = InputBarButtonItem()
         btn.setSize(CGSize(width: 40, height: 40), animated: false)
@@ -190,6 +201,33 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         btn.backgroundColor = DcColors.primary
         btn.layer.cornerRadius = 20
         btn.addTarget(self, action: #selector(audioNoteSendTapped), for: .touchUpInside)
+        return btn
+    }()
+
+    /// Stop (⏹) button shown on the right in locked *audio-note* recording mode.
+    /// Tapping it stops recording and opens the preview panel instead of sending immediately.
+    private lazy var audioNoteStopBtn: InputBarButtonItem = {
+        let btn = InputBarButtonItem()
+        btn.setSize(CGSize(width: 40, height: 40), animated: false)
+        btn.spacing = .fixed(0)
+        let conf = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
+        btn.image = UIImage(systemName: "stop.fill", withConfiguration: conf)?.withRenderingMode(.alwaysTemplate)
+        btn.tintColor = UIColor(white: 1, alpha: 1)
+        btn.backgroundColor = .systemRed
+        btn.layer.cornerRadius = 20
+        btn.addTarget(self, action: #selector(audioNoteStopForPreviewTapped), for: .touchUpInside)
+        return btn
+    }()
+
+    /// Inline "Cancel" text button shown during locked audio-note recording.
+    private lazy var audioNoteCancelTextBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle(String.localized("cancel"), for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        btn.tintColor = DcColors.primary
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.isHidden = true
+        btn.addTarget(self, action: #selector(audioNoteCancelTapped), for: .touchUpInside)
         return btn
     }()
 
@@ -370,6 +408,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         ])
         // Dot is a subview of the hint label (clips within its rounded pill bounds)
         audioRecordingHintLabel.addSubview(lockedRecordingDot)
+
+        // Inline "Cancel" text button for locked audio-note mode.
+        messageInputBar.contentView.addSubview(audioNoteCancelTextBtn)
+        NSLayoutConstraint.activate([
+            audioNoteCancelTextBtn.centerXAnchor.constraint(equalTo: audioRecordingHintLabel.centerXAnchor),
+            audioNoteCancelTextBtn.centerYAnchor.constraint(equalTo: messageInputBar.contentView.centerYAnchor),
+        ])
 
         view.addGestureRecognizer(performReplyOnOpeningSwipeActionsGestureRecognizer)
 
@@ -1818,7 +1863,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 // location(in: nil) returns screen coordinates, matching the overlay's
                 // frame which was computed from convert(_:to: nil) screen coordinates.
                 let location = gesture.location(in: nil)
-                let (shouldCancel, shouldLock) = overlay.updateDrag(location: location)
+                let (shouldCancel, shouldLock, _) = overlay.updateDrag(location: location)
                 if shouldLock {
                     enterLockedRecordingMode()
                 } else if shouldCancel {
@@ -1901,8 +1946,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     private func updateAudioHintTime() {
-        let elapsed = audioNoteStartDate.map { Date().timeIntervalSince($0) } ?? (audioNoteRecorder?.currentTime ?? 0)
+        let elapsed = (audioNoteStartDate.map { Date().timeIntervalSince($0) } ?? (audioNoteRecorder?.currentTime ?? 0)) + audioNoteSegmentsDuration
         updateRecordingOverlayTimer(elapsed: elapsed, locked: audioNoteLocked)
+
+        // Feed the blob with the current microphone level (pre-lock only; blob is removed on lock).
+        if !audioNoteLocked, let recorder = audioNoteRecorder {
+            recorder.updateMeters()
+            let power = recorder.averagePower(forChannel: 0)
+            // Map dBFS range −60…0 linearly to 0…1.
+            let level = Float(max(0, (power + 60) / 60))
+            voiceBlobView?.setLevel(level)
+        }
     }
 
     /// Shared timer display logic for both audio and video recording.
@@ -1913,20 +1967,61 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let ss = Int(elapsed) % 60
         let timeStr = String(format: "%d:%02d", mm, ss)
         if locked {
-            let remaining = VideoNoteRecorderView.maxDuration - elapsed
-            let isAlmostDone = remaining <= 5
-            let displayStr = isAlmostDone ? "\(timeStr)  ⚠️ \(Int(ceil(remaining)))s" : timeStr
-            audioRecordingHintLabel.text = displayStr
-            audioRecordingHintLabel.textColor = isAlmostDone ? .systemRed : DcColors.defaultTextColor
-            guard audioRecordingHintLabel.bounds.width > 0 else { return }
-            let font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
-            let textW = (displayStr as NSString).size(withAttributes: [.font: font]).width
-            let midX = audioRecordingHintLabel.bounds.midX
-            let dotX = max(4, midX - textW / 2 - 16)  // 10pt dot + 6pt gap
-            let dotY = (audioRecordingHintLabel.bounds.height - 10) / 2
-            lockedRecordingDot.frame = CGRect(x: dotX, y: dotY, width: 10, height: 10)
+            switch rightBtnMode {
+            case .audioNote:
+                // Locked: dot pinned at left edge, timer indented to align with pre-lock style.
+                // Warn with remaining time when < 5 s of the total limit is left.
+                let remaining = Self.maxAudioNoteDuration - elapsed
+                let isAlmostDone = remaining <= 5
+                let displayStr = isAlmostDone ? "\(timeStr)  ⚠️ \(Int(ceil(remaining)))s" : timeStr
+                let textColor: UIColor = isAlmostDone ? .systemRed : DcColors.defaultTextColor
+                let timerStyle = NSMutableParagraphStyle()
+                timerStyle.firstLineHeadIndent = 28  // 12pt left margin + 10pt dot + 6pt gap
+                audioRecordingHintLabel.attributedText = NSAttributedString(
+                    string: displayStr,
+                    attributes: [
+                        .font: UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular),
+                        .foregroundColor: textColor,
+                        .paragraphStyle: timerStyle,
+                    ]
+                )
+                guard audioRecordingHintLabel.bounds.height > 0 else { return }
+                let dotY = (audioRecordingHintLabel.bounds.height - 10) / 2
+                lockedRecordingDot.frame = CGRect(x: 12, y: dotY, width: 10, height: 10)
+            case .videoNote:
+                let remaining = VideoNoteRecorderView.maxDuration - elapsed
+                let isAlmostDone = remaining <= 5
+                let displayStr = isAlmostDone ? "\(timeStr)  ⚠️ \(Int(ceil(remaining)))s" : timeStr
+                audioRecordingHintLabel.text = displayStr
+                audioRecordingHintLabel.textColor = isAlmostDone ? .systemRed : DcColors.defaultTextColor
+                guard audioRecordingHintLabel.bounds.width > 0 else { return }
+                let font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+                let textW = (displayStr as NSString).size(withAttributes: [.font: font]).width
+                let midX = audioRecordingHintLabel.bounds.midX
+                let dotX = max(4, midX - textW / 2 - 16)
+                let dotY = (audioRecordingHintLabel.bounds.height - 10) / 2
+                lockedRecordingDot.frame = CGRect(x: dotX, y: dotY, width: 10, height: 10)
+            }
         } else {
-            audioNoteOverlay?.updateTimerText(timeStr)
+            switch rightBtnMode {
+            case .audioNote:
+                // Pre-lock: timer at extreme left, identical to locked mode — no visual jump.
+                let timerStyle = NSMutableParagraphStyle()
+                timerStyle.firstLineHeadIndent = 28  // 12pt margin + 10pt dot + 6pt gap
+                audioRecordingHintLabel.attributedText = NSAttributedString(
+                    string: timeStr,
+                    attributes: [
+                        .font: UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular),
+                        .foregroundColor: DcColors.defaultTextColor,
+                        .paragraphStyle: timerStyle,
+                    ]
+                )
+                guard audioRecordingHintLabel.bounds.height > 0 else { return }
+                let dotY = (audioRecordingHintLabel.bounds.height - 10) / 2
+                lockedRecordingDot.frame = CGRect(x: 12, y: dotY, width: 10, height: 10)
+            case .videoNote:
+                audioNoteOverlay?.updateTimerText(timeStr)
+            }
         }
     }
 
@@ -1945,6 +2040,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         UIView.animate(withDuration: 0.2) { self.rightMediaBtn?.transform = .identity }
 
+        // Blob: kept alive for audio note locked (moves to send button); removed for video note.
+
         // Cancel the long-press gesture so the user can lift their finger freely.
         if let btn = rightMediaBtn {
             for gr in btn.gestureRecognizers ?? [] where gr is UILongPressGestureRecognizer {
@@ -1953,23 +2050,89 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
 
-        // Animate padlock closing, then dismiss the pre-lock overlay.
-        if let overlay = audioNoteOverlay {
-            audioNoteOverlay = nil
-            overlay.animateLockClosing { overlay.dismiss(animated: true) }
+        // Animate padlock closing, then:
+        // - Audio note: transition to pause button (overlay stays; user taps to preview).
+        // - Video note: dismiss the overlay.
+        switch rightBtnMode {
+        case .audioNote:
+            audioNoteOverlay?.animateLockClosing { [weak self] in
+                self?.audioNoteOverlay?.transitionToPause { [weak self] in
+                    self?.audioNoteStopForPreviewTapped()
+                }
+            }
+        case .videoNote:
+            if let overlay = audioNoteOverlay {
+                audioNoteOverlay = nil
+                overlay.animateLockClosing { overlay.dismiss(animated: true) }
+            }
+            // Blob not needed in video locked mode.
+            voiceBlobView?.stopAnimating()
+            voiceBlobView?.removeFromSuperview()
+            voiceBlobView = nil
         }
 
-        messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
-        messageInputBar.setStackViewItems([audioNoteCancelBtn], forStack: .left, animated: true)
-        messageInputBar.setStackViewItems([audioNoteSendBtn], forStack: .right, animated: true)
+        // Audio note locked: send (↑) on right; no left button; Cancel inline.
+        // Video note locked: cancel (×) on left; send (↑) on right; pill hint.
+        switch rightBtnMode {
+        case .audioNote:
+            messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
+            messageInputBar.setStackViewItems([], forStack: .left, animated: true)
+            messageInputBar.setStackViewItems([audioNoteSendBtn], forStack: .right, animated: true)
 
-        messageInputBar.inputTextView.isHidden = true
-        hintNormalLeading.isActive = false
-        hintLockedLeading.isActive = true
-        audioRecordingHintLabel.textAlignment = .center
-        audioRecordingHintLabel.font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
-        audioRecordingHintLabel.isHidden = false
-        messageInputBar.contentView.bringSubviewToFront(audioRecordingHintLabel)
+            // Match input field visual style in locked mode too.
+            audioRecordingHintLabel.backgroundColor = DcColors.inputFieldColor
+            audioRecordingHintLabel.layer.cornerRadius = 13
+            audioRecordingHintLabel.layer.borderColor = DcColors.colorDisabled.cgColor
+            audioRecordingHintLabel.layer.borderWidth = 1.0
+            audioRecordingHintLabel.text = nil
+            messageInputBar.inputTextView.isHidden = true
+            hintNormalLeading.isActive = true
+            hintLockedLeading.isActive = false
+            audioRecordingHintLabel.textAlignment = .left
+            audioRecordingHintLabel.font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+            audioRecordingHintLabel.textColor = DcColors.defaultTextColor
+            audioRecordingHintLabel.isHidden = false
+            messageInputBar.contentView.bringSubviewToFront(audioRecordingHintLabel)
+            // Switch "← Slide to cancel" → "Cancel" (green) on lock.
+            audioNoteCancelTextBtn.setTitle(String.localized("cancel"), for: .normal)
+            audioNoteCancelTextBtn.tintColor = DcColors.primary
+            audioNoteCancelTextBtn.isHidden = false
+            messageInputBar.contentView.bringSubviewToFront(audioNoteCancelTextBtn)
+
+            // Move the blob to sit behind the send (↑) button, matching Telegram locked style.
+            if let blob = voiceBlobView {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                    guard let self else { return }
+                    let sendFrame = self.audioNoteSendBtn.convert(self.audioNoteSendBtn.bounds, to: nil)
+                    let sendCenter = CGPoint(x: sendFrame.midX, y: sendFrame.midY)
+                    let blobSize: CGFloat = 220
+                    UIView.animate(withDuration: 0.3) {
+                        blob.frame = CGRect(
+                            x: sendCenter.x - blobSize / 2,
+                            y: sendCenter.y - blobSize / 2,
+                            width: blobSize,
+                            height: blobSize
+                        )
+                    }
+                }
+            }
+
+        case .videoNote:
+            messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
+            messageInputBar.setStackViewItems([audioNoteCancelBtn], forStack: .left, animated: true)
+            messageInputBar.setStackViewItems([audioNoteSendBtn], forStack: .right, animated: true)
+
+            audioRecordingHintLabel.backgroundColor = DcColors.systemMessageBackgroundColor
+            audioRecordingHintLabel.layer.cornerRadius = 10
+            audioRecordingHintLabel.text = nil
+            messageInputBar.inputTextView.isHidden = true
+            hintNormalLeading.isActive = false
+            hintLockedLeading.isActive = true
+            audioRecordingHintLabel.textAlignment = .center
+            audioRecordingHintLabel.font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+            audioRecordingHintLabel.isHidden = false
+            messageInputBar.contentView.bringSubviewToFront(audioRecordingHintLabel)
+        }
 
         lockedRecordingDot.isHidden = false
         let dotPulse = CABasicAnimation(keyPath: "transform.scale")
@@ -2041,10 +2204,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func handleAudioNoteLongPress(_ gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
-            UIView.animate(withDuration: 0.15, delay: 0,
-                           usingSpringWithDamping: 0.5, initialSpringVelocity: 4) {
-                self.rightMediaBtn?.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-            }
+            // Telegram style: mic button does NOT scale up.
             audioNoteCancelled = false
             audioNoteAutoStopped = false
             audioNoteStopRequested = false
@@ -2076,7 +2236,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             guard !audioNoteLocked else { return }
             guard let overlay = audioNoteOverlay else { return }
             let location = gesture.location(in: nil)
-            let (shouldCancel, shouldLock) = overlay.updateDrag(location: location)
+            let (shouldCancel, shouldLock, hintFade) = overlay.updateDrag(location: location)
+            audioRecordingHintLabel.alpha = hintFade
             if shouldLock {
                 enterLockedRecordingMode()
             } else if shouldCancel {
@@ -2111,26 +2272,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             return
         }
 
-        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent("audionote_\(Int(Date().timeIntervalSince1970)).m4a")
-        audioNoteURL = tmpURL
-
-        let settings: [String: Any] = [
-            AVFormatIDKey: kAudioFormatMPEG4AAC,
-            AVSampleRateKey: 44100.0,
-            AVEncoderBitRateKey: 32000,
-            AVNumberOfChannelsKey: 1
-        ]
         do {
-            try AVAudioSession.sharedInstance().setCategory(.record, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-            let recorder = try AVAudioRecorder(url: tmpURL, settings: settings)
-            recorder.isMeteringEnabled = true
-            recorder.delegate = self
-            recorder.prepareToRecord()
-            recorder.record(forDuration: 30)
-            audioNoteRecorder = recorder
-            audioNoteStartDate = Date()
+            try startAudioNoteRecorder(remainingTime: Self.maxAudioNoteDuration)
         } catch {
             logger.error("Cannot start audio note recording: \(error)")
             UIView.animate(withDuration: 0.2) { self.rightMediaBtn?.transform = .identity }
@@ -2156,6 +2299,55 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         audioNoteOverlay = overlay
         overlay.show(micButtonCenter: micCenter, inputBarFrame: inputBarFrameInScreen)
 
+        // Audio note: hide the overlay's recording strip — the input bar transforms in place
+        // (Telegram style). The overlay is only needed for the padlock animation above.
+        overlay.hideRecordingControls()
+
+        // Telegram-style pre-lock: transform the input bar in place.
+        // Hide the text view and paperclip; show dot + timer + hint inside the content area.
+        messageInputBar.setStackViewItems([], forStack: .left, animated: true)
+        messageInputBar.inputTextView.isHidden = true
+
+        hintNormalLeading.isActive = true
+        hintLockedLeading.isActive = false
+        // Match the input text field's visual style so no gap is visible.
+        audioRecordingHintLabel.backgroundColor = DcColors.inputFieldColor
+        audioRecordingHintLabel.layer.cornerRadius = 13
+        audioRecordingHintLabel.layer.borderColor = DcColors.colorDisabled.cgColor
+        audioRecordingHintLabel.layer.borderWidth = 1.0
+        audioRecordingHintLabel.textAlignment = .left
+        audioRecordingHintLabel.font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        audioRecordingHintLabel.textColor = DcColors.defaultTextColor
+        audioRecordingHintLabel.isHidden = false
+        messageInputBar.contentView.bringSubviewToFront(audioRecordingHintLabel)
+        // "← Slide to cancel" centred; tapping it also cancels (same as Telegram).
+        audioNoteCancelTextBtn.setTitle("← " + String.localized("chat_record_slide_to_cancel"), for: .normal)
+        audioNoteCancelTextBtn.tintColor = DcColors.defaultTextColor
+        audioNoteCancelTextBtn.isHidden = false
+        messageInputBar.contentView.bringSubviewToFront(audioNoteCancelTextBtn)
+
+        lockedRecordingDot.isHidden = false
+        let preLockPulse = CABasicAnimation(keyPath: "transform.scale")
+        preLockPulse.fromValue = 1.0
+        preLockPulse.toValue = 1.5
+        preLockPulse.duration = 0.55
+        preLockPulse.autoreverses = true
+        preLockPulse.repeatCount = .infinity
+        preLockPulse.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        lockedRecordingDot.layer.add(preLockPulse, forKey: "dotPulse")
+
+        // Blob: add to keyboard window ON TOP of overlay so it's fully visible.
+        let blobSize: CGFloat = 220
+        let blob = VoiceBlobView(frame: CGRect(
+            x: micCenter.x - blobSize / 2,
+            y: micCenter.y - blobSize / 2,
+            width: blobSize,
+            height: blobSize
+        ))
+        kbWindow.addSubview(blob)  // above overlay — nothing covers the mic button area
+        voiceBlobView = blob
+        blob.startAnimating()
+
         audioNoteTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.updateAudioHintTime()
         }
@@ -2176,20 +2368,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         recorder.stop()
         audioNoteRecorder = nil
 
-        // Restore audio session to playback
-        try? AVAudioSession.sharedInstance().setCategory(.soloAmbient)
+        // Restore audio session to .playback so AudioController can re-activate in the correct
+        // category. Using .soloAmbient caused silence on some iOS/hardware combos because
+        // AudioController only calls setActive(true) and never re-sets the category itself.
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
 
         // Minimum sendable duration: 1 second (per spec)
-        guard send, duration >= 1.0, let url = audioNoteURL else {
-            if let url = audioNoteURL {
-                FileHelper.deleteFileAsync(atPath: url.relativePath)
-            }
+        let totalDuration = (audioNoteSegmentsDuration > 0 ? audioNoteSegmentsDuration : 0) + duration
+        guard send, totalDuration >= 1.0, let url = audioNoteURL else {
+            if let url = audioNoteURL { FileHelper.deleteFileAsync(atPath: url.relativePath) }
+            audioNoteSegments.forEach { FileHelper.deleteFileAsync(atPath: $0.relativePath) }
+            audioNoteSegments = []
+            audioNoteSegmentsDuration = 0
             audioNoteURL = nil
             return
         }
         audioNoteURL = nil
-        sendAudioNote(url: url)
+        if !audioNoteSegments.isEmpty {
+            let allURLs = audioNoteSegments + [url]
+            audioNoteSegments = []
+            audioNoteSegmentsDuration = 0
+            mergeAudioSegments(allURLs) { [weak self] mergedURL in
+                allURLs.forEach { FileHelper.deleteFileAsync(atPath: $0.relativePath) }
+                guard let mergedURL else { self?.showMergeFailedAlert(); return }
+                self?.sendAudioNote(url: mergedURL)
+            }
+        } else {
+            sendAudioNote(url: url)
+        }
     }
 
     /// Restores the input bar to its normal state after audio note recording ends.
@@ -2200,11 +2407,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         audioNoteLocked = false
         audioNoteCancelled = false
 
+        voiceBlobView?.stopAnimating()
+        voiceBlobView?.removeFromSuperview()
+        voiceBlobView = nil
+
+        audioNoteCancelTextBtn.isHidden = true
+        audioNoteCancelTextBtn.setTitle(String.localized("cancel"), for: .normal)
+        audioNoteCancelTextBtn.tintColor = DcColors.primary
+        audioRecordingHintLabel.alpha = 1
+
         lockedRecordingDot.layer.removeAllAnimations()
         lockedRecordingDot.isHidden = true
         audioRecordingHintLabel.text = nil
         audioRecordingHintLabel.isHidden = true
-        // Restore leading to full content-view width for next pre-lock phase
+        audioRecordingHintLabel.text = nil
+        audioRecordingHintLabel.attributedText = nil
+        // Restore default style for next recording session.
+        audioRecordingHintLabel.backgroundColor = DcColors.systemMessageBackgroundColor
+        audioRecordingHintLabel.layer.cornerRadius = 10
+        audioRecordingHintLabel.layer.borderWidth = 0
         hintLockedLeading.isActive = false
         hintNormalLeading.isActive = true
         messageInputBar.inputTextView.isHidden = false
@@ -2223,9 +2444,152 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @objc private func audioNoteSendTapped() {
+        // Only video note uses this path now; audio note locked stop is handled by audioNoteStopForPreviewTapped.
         switch rightBtnMode {
         case .audioNote: stopInlineAudioRecording(send: true)
         case .videoNote: stopVideoNoteRecording(send: true)
+        }
+    }
+
+    /// Stops a locked audio-note recording and opens the preview panel instead of sending immediately.
+    @objc private func audioNoteStopForPreviewTapped() {
+        audioNoteStopRequested = true
+        audioNoteTimer?.invalidate()
+        audioNoteTimer = nil
+
+        guard let recorder = audioNoteRecorder else {
+            exitAudioNoteMode()
+            return
+        }
+        let duration = audioNoteStartDate.map { Date().timeIntervalSince($0) } ?? recorder.currentTime
+        audioNoteStartDate = nil
+        recorder.stop()
+        audioNoteRecorder = nil
+
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+
+        guard audioNoteSegmentsDuration + duration >= 1.0, let url = audioNoteURL else {
+            if let url = audioNoteURL { FileHelper.deleteFileAsync(atPath: url.relativePath) }
+            audioNoteURL = nil
+            exitAudioNoteMode()
+            return
+        }
+        audioNoteURL = nil
+
+        // If there are previous segments, merge everything into one file before showing preview
+        // so the waveform and duration represent the full recording so far.
+        if !audioNoteSegments.isEmpty {
+            let allURLs = audioNoteSegments + [url]
+            let totalDuration = audioNoteSegmentsDuration + duration
+            audioNoteSegments = []
+            audioNoteSegmentsDuration = 0
+            exitAudioNoteMode()
+            mergeAudioSegments(allURLs) { [weak self] mergedURL in
+                allURLs.forEach { FileHelper.deleteFileAsync(atPath: $0.relativePath) }
+                guard let mergedURL else { self?.showMergeFailedAlert(); return }
+                self?.showAudioNotePreview(url: mergedURL, duration: totalDuration)
+            }
+        } else {
+            showAudioNotePreview(url: url, duration: duration)
+        }
+    }
+
+    /// Presents the pre-send waveform preview panel (Telegram-style).
+    private func showAudioNotePreview(url: URL, duration: TimeInterval) {
+        // Restore the input bar to its base state, then hide the content that
+        // would otherwise show through the transparent preview bar.
+        exitAudioNoteMode()
+        messageInputBar.inputTextView.isHidden = true
+        messageInputBar.setStackViewItems([], forStack: .left, animated: false)
+        messageInputBar.setStackViewItems([], forStack: .right, animated: false)
+        // Collapse right-stack width to 0 so nothing leaks behind the preview's send button.
+        messageInputBar.setRightStackViewWidthConstant(to: 0, animated: false)
+
+        let preview = AudioNotePreviewBar(frame: .zero)
+        preview.translatesAutoresizingMaskIntoConstraints = false
+        preview.configure(url: url, duration: duration)
+
+        preview.deleteAction = { [weak self] in
+            self?.dismissAudioNotePreview(url: url, send: false)
+        }
+        preview.sendAction = { [weak self] in
+            self?.dismissAudioNotePreview(url: url, send: true)
+        }
+        // resumeAction is triggered by the window-level mic button via previewMicResumeTapped().
+        preview.resumeAction = { [weak self] in
+            self?.resumeAudioNoteFromPreview(currentURL: url, segmentDuration: duration)
+        }
+
+        messageInputBar.contentView.addSubview(preview)
+        NSLayoutConstraint.activate([
+            preview.leadingAnchor.constraint(equalTo: messageInputBar.contentView.leadingAnchor),
+            preview.trailingAnchor.constraint(equalTo: messageInputBar.contentView.trailingAnchor),
+            preview.topAnchor.constraint(equalTo: messageInputBar.contentView.topAnchor),
+            preview.bottomAnchor.constraint(equalTo: messageInputBar.contentView.bottomAnchor),
+        ])
+        audioNotePreviewBar = preview
+
+        // Mic-resume button: window-level (same pattern as lockContainer in AudioNoteRecordingOverlay)
+        // so hitTest works correctly outside the preview bar's bounds.
+        if let kbWindow = messageInputBar.window {
+            let micBtn = UIButton(type: .system)
+            let conf = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+            micBtn.setImage(UIImage(systemName: "microphone.fill", withConfiguration: conf), for: .normal)
+            micBtn.tintColor = .white
+            micBtn.backgroundColor = DcColors.systemMessageBackgroundColor
+            micBtn.layer.cornerRadius = 22
+            micBtn.addTarget(self, action: #selector(previewMicResumeTapped), for: .touchUpInside)
+            kbWindow.addSubview(micBtn)
+            audioNoteMicResumeBtn = micBtn
+
+            // Position after layout: above the preview bar's send button (right edge, lock-icon height).
+            DispatchQueue.main.async { [weak self, weak preview] in
+                guard let self, let preview else { return }
+                if let sendFrame = preview.sendButtonWindowFrame {
+                    let btnSize: CGFloat = 44
+                    micBtn.frame = CGRect(
+                        x: sendFrame.midX - btnSize / 2,
+                        y: sendFrame.minY - 48 - btnSize,
+                        width: btnSize, height: btnSize
+                    )
+                }
+            }
+        }
+    }
+
+    /// Dismisses the preview bar; sends the note or discards the file.
+    private func dismissAudioNotePreview(url: URL, send: Bool) {
+        audioNotePreviewBar?.removeFromSuperview()
+        audioNotePreviewBar = nil
+        audioNoteMicResumeBtn?.removeFromSuperview()
+        audioNoteMicResumeBtn = nil
+        // Restore input bar content hidden by showAudioNotePreview.
+        messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
+        messageInputBar.inputTextView.isHidden = false
+        if let attachBtn = attachButton {
+            messageInputBar.setStackViewItems([attachBtn], forStack: .left, animated: false)
+        }
+        evaluateInputBar(draft: draft)
+        if send {
+            if !audioNoteSegments.isEmpty {
+                // Merge all segments + this final URL into one file before sending.
+                let allURLs = audioNoteSegments + [url]
+                audioNoteSegments = []
+                audioNoteSegmentsDuration = 0
+                mergeAudioSegments(allURLs) { [weak self] mergedURL in
+                    allURLs.forEach { FileHelper.deleteFileAsync(atPath: $0.relativePath) }
+                    guard let mergedURL else { self?.showMergeFailedAlert(); return }
+                    self?.sendAudioNote(url: mergedURL)
+                }
+            } else {
+                sendAudioNote(url: url)
+            }
+        } else {
+            audioNoteSegments.forEach { FileHelper.deleteFileAsync(atPath: $0.relativePath) }
+            audioNoteSegments = []
+            audioNoteSegmentsDuration = 0
+            FileHelper.deleteFileAsync(atPath: url.relativePath)
         }
     }
 
@@ -2237,6 +2601,202 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.dcContext.sendMessage(chatId: self.chatId, message: msg)
             FileHelper.deleteFileAsync(atPath: url.relativePath)
         }
+    }
+
+    // MARK: - Resume recording after preview
+
+    @objc private func previewMicResumeTapped() {
+        // The window-level mic button needs to know which URL/duration to resume from.
+        // We store the pending preview state in the audioNotePreviewBar (via its configure values)
+        // but it's simpler to read them from the stored segments state.
+        // resumeAudioNoteFromPreview is called with the pending URL captured at show-time.
+        // We trigger via the stored action closure on the preview bar if available,
+        // otherwise directly from the pending URL property.
+        audioNotePreviewBar?.resumeAction?()
+    }
+
+    private func resumeAudioNoteFromPreview(currentURL: URL, segmentDuration: Double) {
+        audioNoteSegments.append(currentURL)
+        audioNoteSegmentsDuration += segmentDuration
+
+        audioNotePreviewBar?.removeFromSuperview()
+        audioNotePreviewBar = nil
+        audioNoteMicResumeBtn?.removeFromSuperview()
+        audioNoteMicResumeBtn = nil
+
+        // Restore locked-style recording UI (same as enterLockedRecordingMode for audioNote).
+        messageInputBar.setRightStackViewWidthConstant(to: 40, animated: false)
+        messageInputBar.setStackViewItems([], forStack: .left, animated: false)
+        messageInputBar.setStackViewItems([audioNoteSendBtn], forStack: .right, animated: false)
+
+        audioRecordingHintLabel.backgroundColor = DcColors.inputFieldColor
+        audioRecordingHintLabel.layer.cornerRadius = 13
+        audioRecordingHintLabel.layer.borderColor = DcColors.colorDisabled.cgColor
+        audioRecordingHintLabel.layer.borderWidth = 1.0
+        audioRecordingHintLabel.text = nil
+        audioRecordingHintLabel.attributedText = nil
+        messageInputBar.inputTextView.isHidden = true
+        hintNormalLeading.isActive = true
+        hintLockedLeading.isActive = false
+        audioRecordingHintLabel.textAlignment = .left
+        audioRecordingHintLabel.font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        audioRecordingHintLabel.textColor = DcColors.defaultTextColor
+        audioRecordingHintLabel.isHidden = false
+        messageInputBar.contentView.bringSubviewToFront(audioRecordingHintLabel)
+
+        audioNoteCancelTextBtn.setTitle(String.localized("cancel"), for: .normal)
+        audioNoteCancelTextBtn.tintColor = DcColors.primary
+        audioNoteCancelTextBtn.isHidden = false
+        messageInputBar.contentView.bringSubviewToFront(audioNoteCancelTextBtn)
+
+        lockedRecordingDot.isHidden = false
+        let pulse = CABasicAnimation(keyPath: "transform.scale")
+        pulse.fromValue = 1.0; pulse.toValue = 1.5; pulse.duration = 0.55
+        pulse.autoreverses = true; pulse.repeatCount = .infinity
+        pulse.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        lockedRecordingDot.layer.add(pulse, forKey: "dotPulse")
+
+        audioNoteLocked = true
+        audioNoteStopRequested = false
+
+        let remaining = max(1.0, Self.maxAudioNoteDuration - audioNoteSegmentsDuration)
+        do {
+            try startAudioNoteRecorder(remainingTime: remaining)
+        } catch {
+            logger.error("resumeAudioNoteFromPreview: cannot start recorder: \(error)")
+            audioNoteSegments.forEach { FileHelper.deleteFileAsync(atPath: $0.relativePath) }
+            audioNoteSegments = []
+            audioNoteSegmentsDuration = 0
+            exitAudioNoteMode()
+            return
+        }
+
+        audioNoteTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            self?.updateAudioHintTime()
+        }
+
+        // VoiceBlobView — same as locked recording mode: add to window, position behind send button.
+        if let kbWindow = messageInputBar.window {
+            let blobSize: CGFloat = 220
+            let blob = VoiceBlobView(frame: CGRect(x: -blobSize, y: -blobSize,
+                                                   width: blobSize, height: blobSize))
+            kbWindow.addSubview(blob)
+            voiceBlobView = blob
+            blob.startAnimating()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                guard let self else { return }
+                let f = self.audioNoteSendBtn.convert(self.audioNoteSendBtn.bounds, to: nil)
+                blob.frame = CGRect(x: f.midX - blobSize / 2, y: f.midY - blobSize / 2,
+                                    width: blobSize, height: blobSize)
+            }
+        }
+
+        // Reuse AudioNoteRecordingOverlay shown directly in pause state (no padlock animation).
+        // Defer until next run loop so setStackViewItems layout has settled and frame coords are valid.
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let kbWindow = self.messageInputBar.window else { return }
+            let sendFrame = self.audioNoteSendBtn.convert(self.audioNoteSendBtn.bounds, to: nil)
+            let sendCenter = CGPoint(x: sendFrame.midX, y: sendFrame.midY)
+            let inputBarFrame = self.messageInputBar.convert(self.messageInputBar.bounds, to: nil)
+            let overlayFrame = CGRect(
+                x: 0,
+                y: inputBarFrame.minY - AudioNoteRecordingOverlay.lockAreaHeight,
+                width: kbWindow.bounds.width,
+                height: AudioNoteRecordingOverlay.lockAreaHeight + inputBarFrame.height
+            )
+            let overlay = AudioNoteRecordingOverlay(frame: overlayFrame)
+            kbWindow.addSubview(overlay)
+            self.audioNoteOverlay = overlay
+            overlay.showAsPause(sendButtonCenter: sendCenter, inputBarFrame: inputBarFrame) { [weak self] in
+                self?.audioNoteStopForPreviewTapped()
+            }
+        }
+    }
+
+    /// Configures and starts a new AVAudioRecorder segment into a fresh temp file.
+    /// Sets `audioNoteURL`, `audioNoteRecorder`, and `audioNoteStartDate`.
+    /// - Parameter remainingTime: Maximum duration for this segment.
+    /// - Throws: If the audio session or recorder cannot be configured.
+    private func startAudioNoteRecorder(remainingTime: TimeInterval) throws {
+        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("audionote_\(Int(Date().timeIntervalSince1970)).m4a")
+        audioNoteURL = tmpURL
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatMPEG4AAC,
+            AVSampleRateKey: 44100.0,
+            AVEncoderBitRateKey: 32000,
+            AVNumberOfChannelsKey: 1,
+        ]
+        try AVAudioSession.sharedInstance().setCategory(.record, mode: .default)
+        try AVAudioSession.sharedInstance().setActive(true)
+        let recorder = try AVAudioRecorder(url: tmpURL, settings: settings)
+        recorder.isMeteringEnabled = true
+        recorder.delegate = self
+        recorder.prepareToRecord()
+        recorder.record(forDuration: max(1.0, remainingTime))
+        audioNoteRecorder = recorder
+        audioNoteStartDate = Date()
+    }
+
+    private func mergeAudioSegments(_ urls: [URL], completion: @escaping (URL?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let composition = AVMutableComposition()
+            guard let track = composition.addMutableTrack(withMediaType: .audio,
+                                                          preferredTrackID: kCMPersistentTrackID_Invalid) else {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+            var cursor = CMTime.zero
+            for url in urls {
+                let asset = AVURLAsset(url: url)
+                // AVURLAsset.tracks is a lazy synchronous accessor that may return an empty array
+                // for freshly-recorded files before iOS has indexed the track metadata.
+                // Force-load both properties via a semaphore (safe on this background thread).
+                let semaphore = DispatchSemaphore(value: 0)
+                asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { semaphore.signal() }
+                semaphore.wait()
+                guard asset.statusOfValue(forKey: "tracks", error: nil) == .loaded,
+                      asset.statusOfValue(forKey: "duration", error: nil) == .loaded else {
+                    logger.error("mergeAudioSegments: failed to load asset for \(url.lastPathComponent)")
+                    continue
+                }
+                let duration = asset.duration
+                guard duration.isValid, duration > .zero,
+                      let srcTrack = asset.tracks(withMediaType: .audio).first else { continue }
+                let range = CMTimeRange(start: .zero, duration: duration)
+                do {
+                    try track.insertTimeRange(range, of: srcTrack, at: cursor)
+                    cursor = CMTimeAdd(cursor, duration)
+                } catch {
+                    logger.error("mergeAudioSegments: insert failed: \(error)")
+                }
+            }
+            guard CMTimeGetSeconds(cursor) > 0 else {
+                logger.error("mergeAudioSegments: no valid segments inserted")
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+            let outputURL = URL(fileURLWithPath: NSTemporaryDirectory())
+                .appendingPathComponent("audionote_merged_\(Int(Date().timeIntervalSince1970)).m4a")
+            guard let exporter = AVAssetExportSession(asset: composition,
+                                                      presetName: AVAssetExportPresetAppleM4A) else {
+                DispatchQueue.main.async { completion(nil) }
+                return
+            }
+            exporter.outputURL = outputURL
+            exporter.outputFileType = .m4a
+            exporter.exportAsynchronously {
+                DispatchQueue.main.async {
+                    completion(exporter.status == .completed ? outputURL : nil)
+                }
+            }
+        }
+    }
+
+    private func showMergeFailedAlert() {
+        let alert = UIAlertController(title: nil, message: "Recording could not be processed.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String.localized("ok"), style: .default))
+        present(alert, animated: true)
     }
 
     private func showCameraPermissionAlert() {
