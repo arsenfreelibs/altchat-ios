@@ -267,6 +267,8 @@
 		F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */; };
 		AA112233445566770011AA01 /* VoiceBlobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011AA00 /* VoiceBlobView.swift */; };
 		AA112233445566770011BB01 /* AudioNotePreviewBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011BB00 /* AudioNotePreviewBar.swift */; };
+		AA112233445566770011CC01 /* VideoNoteCirclePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011CC00 /* VideoNoteCirclePlayerView.swift */; };
+		AA112233445566770011DD01 /* VideoNotePreviewBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011DD00 /* VideoNotePreviewBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -731,6 +733,8 @@
 		F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNoteRecordingOverlay.swift; sourceTree = "<group>"; };
 		AA112233445566770011AA00 /* VoiceBlobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBlobView.swift; sourceTree = "<group>"; };
 		AA112233445566770011BB00 /* AudioNotePreviewBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNotePreviewBar.swift; sourceTree = "<group>"; };
+		AA112233445566770011CC00 /* VideoNoteCirclePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteCirclePlayerView.swift; sourceTree = "<group>"; };
+		AA112233445566770011DD00 /* VideoNotePreviewBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNotePreviewBar.swift; sourceTree = "<group>"; };
 		FCEAC85C8C41D57193C24E9A /* Pods_deltachat_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_deltachat_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -972,6 +976,8 @@
 				F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */,
 				AA112233445566770011AA00 /* VoiceBlobView.swift */,
 				AA112233445566770011BB00 /* AudioNotePreviewBar.swift */,
+				AA112233445566770011CC00 /* VideoNoteCirclePlayerView.swift */,
+				AA112233445566770011DD00 /* VideoNotePreviewBar.swift */,
 				D8FB03FE2B4F0CE500A355F8 /* Reactions */,
 				30FDB6B624D193DD0066C48D /* Cells */,
 				302D544F268B6B2300A8B271 /* StatusView.swift */,
@@ -1995,6 +2001,8 @@
 				F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */,
 				AA112233445566770011AA01 /* VoiceBlobView.swift in Sources */,
 				AA112233445566770011BB01 /* AudioNotePreviewBar.swift in Sources */,
+				AA112233445566770011CC01 /* VideoNoteCirclePlayerView.swift in Sources */,
+				AA112233445566770011DD01 /* VideoNotePreviewBar.swift in Sources */,
 				305962102346154D00C80F33 /* String+Extension.swift in Sources */,
 				789E879621D6CB58003ED1C5 /* QrCodeReaderController.swift in Sources */,
 				64D049A02EC890840093A0A8 /* PiPVideoView.swift in Sources */,

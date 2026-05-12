@@ -21,7 +21,8 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
     private let sessionQueue = DispatchQueue(label: "VideoNoteRecorderView.sessionQueue")
 
     private var progressTimer: Timer?
-    private var elapsedTime: TimeInterval = 0
+    private(set) var elapsedTime: TimeInterval = 0
+    private var maxRecordingSeconds: TimeInterval = VideoNoteRecorderView.maxDuration
     private var cancelled = false
 
     // MARK: - Subviews
@@ -128,7 +129,7 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
         if captureSession.canAddOutput(movieOutput) {
             captureSession.addOutput(movieOutput)
             movieOutput.maxRecordedDuration = CMTime(
-                seconds: VideoNoteRecorderView.maxDuration,
+                seconds: maxRecordingSeconds,
                 preferredTimescale: 600
             )
         }
@@ -143,9 +144,10 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
 
     // MARK: - Recording
 
-    func startRecording() {
+    func startRecording(remainingTime: TimeInterval = VideoNoteRecorderView.maxDuration) {
         cancelled = false
         elapsedTime = 0
+        maxRecordingSeconds = min(remainingTime, VideoNoteRecorderView.maxDuration)
 
         NotificationCenter.default.addObserver(
             self,
@@ -195,7 +197,7 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
         progressTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
             guard let self else { return }
             self.elapsedTime += 0.05
-            let progress = self.elapsedTime / VideoNoteRecorderView.maxDuration
+            let progress = self.elapsedTime / self.maxRecordingSeconds
             self.progressFillLayer.strokeEnd = CGFloat(min(progress, 1.0))
         }
     }
