@@ -403,6 +403,7 @@
 "attachment_failed_to_load" = "Asali n imeddayen ur yeddi ara";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Sekkeṛ asekles";
+"audio_note_processing_failed" = "Ur izmir ara ad yettwaselkem usekles.";
 // mailing lists
 "mailing_list" = "Tabdart n tnezwit";
 // webxdc

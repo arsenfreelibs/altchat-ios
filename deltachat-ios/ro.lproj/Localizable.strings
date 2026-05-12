@@ -278,6 +278,7 @@
 "attachment_failed_to_load" = "Nu s-a reușit încărcarea atașamentului";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Blocarea înregistrării";
+"audio_note_processing_failed" = "Înregistrarea nu a putut fi procesată.";
 // mailing lists
 "mailing_list" = "Lista de corespondență";
 // webxdc

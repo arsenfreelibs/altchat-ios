@@ -424,6 +424,7 @@
 "attachment_failed_to_load" = "De bijlage kan niet worden geladen";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Opname vergrendelen";
+"audio_note_processing_failed" = "Opname kon niet worden verwerkt.";
 // mailing lists
 "mailing_list" = "Mailinglijst";
 // webxdc

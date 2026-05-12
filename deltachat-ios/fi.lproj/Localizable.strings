@@ -301,6 +301,7 @@
 "attachment_failed_to_load" = "Liitteiden lataaminen epäonnistui";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Lukitse äänitys";
+"audio_note_processing_failed" = "Äänitystä ei voitu käsitellä.";
 // mailing lists
 "mailing_list" = "Sähköpostilista";
 // webxdc

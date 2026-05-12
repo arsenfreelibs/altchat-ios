@@ -416,6 +416,7 @@
 "attachment_failed_to_load" = "Impossibile caricare l\'allegato";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Blocca Registrazione";
+"audio_note_processing_failed" = "Impossibile elaborare la registrazione.";
 // mailing lists
 "mailing_list" = "Elenco di Distribuzione";
 // webxdc

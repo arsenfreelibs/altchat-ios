@@ -414,6 +414,7 @@
 "attachment_failed_to_load" = "Bilagan kunde inte visas";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Lås inspelning";
+"audio_note_processing_failed" = "Inspelningen kunde inte behandlas.";
 // mailing lists
 "mailing_list" = "Mejllista";
 // webxdc

@@ -390,6 +390,7 @@
 "attachment_failed_to_load" = "Nem sikerült betölteni a mellékletet";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Felvétel zárolása";
+"audio_note_processing_failed" = "A felvételt nem sikerült feldolgozni.";
 // mailing lists
 "mailing_list" = "Levelezőlista";
 // webxdc

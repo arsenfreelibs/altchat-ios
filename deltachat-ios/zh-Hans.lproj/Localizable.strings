@@ -424,6 +424,7 @@
 "attachment_failed_to_load" = "加载附件失败";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "锁定录音";
+"audio_note_processing_failed" = "无法处理录音。";
 // mailing lists
 "mailing_list" = "邮件列表";
 // webxdc

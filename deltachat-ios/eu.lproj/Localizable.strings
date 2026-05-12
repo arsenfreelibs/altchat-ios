@@ -405,6 +405,7 @@
 "attachment_failed_to_load" = "Eranskina kargatzean huts egin du";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Blokeatu grabazioa";
+"audio_note_processing_failed" = "Grabazioa ezin izan da prozesatu.";
 // mailing lists
 "mailing_list" = "Mailin zerrenda";
 // webxdc

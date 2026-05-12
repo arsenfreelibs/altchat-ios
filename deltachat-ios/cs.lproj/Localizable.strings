@@ -390,6 +390,7 @@
 "attachment_failed_to_load" = "Načtení přílohy se nezdařilo";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Uzamknout nahrávání";
+"audio_note_processing_failed" = "Nahrávku se nepodařilo zpracovat.";
 // mailing lists
 "mailing_list" = "E-mailový seznam";
 // webxdc

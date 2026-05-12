@@ -416,6 +416,7 @@
 "attachment_failed_to_load" = "İlişiği yükleme başarısız";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Kaydı Kilitle";
+"audio_note_processing_failed" = "Kayıt işlenemedi.";
 // mailing lists
 "mailing_list" = "Posta Listesi";
 // webxdc

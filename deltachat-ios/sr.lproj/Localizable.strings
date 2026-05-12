@@ -318,6 +318,7 @@
 "attachment_failed_to_load" = "Учитавање прилога је неуспешно";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Закључај снимање";
+"audio_note_processing_failed" = "Снимак није могао да се обради.";
 // mailing lists
 "mailing_list" = "Списак имејл адреса";
 // webxdc

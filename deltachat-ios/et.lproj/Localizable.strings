@@ -416,6 +416,7 @@
 "attachment_failed_to_load" = "Manuse laadimine ei õnnestunud";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Jätka salvestamist";
+"audio_note_processing_failed" = "Salvestust ei saanud töödelda.";
 // mailing lists
 "mailing_list" = "Postiloend";
 // webxdc

@@ -406,6 +406,7 @@
 "attachment_failed_to_load" = "Échec du chargement de la pièce jointe";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Maintenir l\'enregistrement";
+"audio_note_processing_failed" = "Impossible de traiter l\'enregistrement.";
 // mailing lists
 "mailing_list" = "Liste de diffusion";
 // webxdc

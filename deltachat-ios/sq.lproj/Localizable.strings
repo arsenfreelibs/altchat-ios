@@ -419,6 +419,7 @@
 "attachment_failed_to_load" = "S’u arrit të ngarkohet bashkëngjitje";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Kyçe Incizimin";
+"audio_note_processing_failed" = "Incizimi nuk mund të përpunohej.";
 // mailing lists
 "mailing_list" = "Listë Postimesh";
 // webxdc

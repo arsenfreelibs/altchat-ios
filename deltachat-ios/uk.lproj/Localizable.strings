@@ -424,6 +424,7 @@
 "attachment_failed_to_load" = "Не вдалося завантажити вкладення";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Заблокувати запис";
+"audio_note_processing_failed" = "Не вдалося обробити запис.";
 // mailing lists
 "mailing_list" = "Список адресатів";
 // webxdc

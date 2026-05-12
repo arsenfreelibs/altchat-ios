@@ -424,6 +424,7 @@
 "attachment_failed_to_load" = "Kann Anhang nicht laden";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Aufnahme arretieren";
+"audio_note_processing_failed" = "Die Aufnahme konnte nicht verarbeitet werden.";
 // mailing lists
 "mailing_list" = "Mailingliste";
 // webxdc

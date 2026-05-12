@@ -272,6 +272,7 @@
 "attachment_failed_to_load" = "Αποτυχία φόρτωσης συνημμένου";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Κλείδωμα Εγγραφής";
+"audio_note_processing_failed" = "Η επεξεργασία της εγγραφής δεν ήταν δυνατή.";
 // mailing lists
 "mailing_list" = "Λίστα Αλληλογραφίας";
 // webxdc

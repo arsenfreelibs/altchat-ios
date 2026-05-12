@@ -290,6 +290,7 @@
 "attachment_failed_to_load" = "Falha ao carregar anexo";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Travar gravação";
+"audio_note_processing_failed" = "Não foi possível processar a gravação.";
 // mailing lists
 "mailing_list" = "Lista de e-mail";
 // webxdc

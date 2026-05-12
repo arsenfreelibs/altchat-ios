@@ -397,6 +397,7 @@
 "attachment_failed_to_load" = "ناموفق در بارگیری ضمیمه";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "قفل کردن ضبط کردن";
+"audio_note_processing_failed" = "ضبط صدا قابل پردازش نبود.";
 // mailing lists
 "mailing_list" = "فهرست پستی";
 // webxdc

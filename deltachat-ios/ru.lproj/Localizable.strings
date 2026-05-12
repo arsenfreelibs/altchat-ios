@@ -409,6 +409,7 @@
 "attachment_failed_to_load" = "Не удалось загрузить вложение";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Заблокировать запись";
+"audio_note_processing_failed" = "Не удалось обработать запись.";
 // mailing lists
 "mailing_list" = "Список рассылки";
 // webxdc

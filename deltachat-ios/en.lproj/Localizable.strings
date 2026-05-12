@@ -424,6 +424,8 @@
 "attachment_failed_to_load" = "Failed to load attachment";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Lock Recording";
+// Shown in an alert when a multi-segment voice note cannot be merged into a single file before sending.
+"audio_note_processing_failed" = "Recording could not be processed.";
 // mailing lists
 "mailing_list" = "Mailing List";
 // webxdc

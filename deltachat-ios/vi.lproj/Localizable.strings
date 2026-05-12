@@ -298,6 +298,7 @@
 "attachment_failed_to_load" = "Không tải được tệp đính kèm";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Khóa ghi âm";
+"audio_note_processing_failed" = "Không thể xử lý bản ghi âm.";
 // mailing lists
 "mailing_list" = "Danh sách gửi thư";
 // webxdc

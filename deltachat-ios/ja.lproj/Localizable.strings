@@ -243,6 +243,7 @@
 "attachment_failed_to_load" = "添付ファイルの読み込みに失敗しました";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "ずっと録音";
+"audio_note_processing_failed" = "録音を処理できませんでした。";
 // mailing lists
 "mailing_list" = "メーリングリスト";
 // punycode warning / labeled links

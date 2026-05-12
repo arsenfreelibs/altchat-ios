@@ -405,6 +405,7 @@
 "attachment_failed_to_load" = "La càrrega de l\'adjunt ha fallat";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Bloqueja la gravació";
+"audio_note_processing_failed" = "No s\'ha pogut processar la gravació.";
 // mailing lists
 "mailing_list" = "Llista de correu";
 // webxdc

@@ -426,6 +426,7 @@
 "attachment_failed_to_load" = "Nie udało się załadować załącznika";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Zablokuj nagrywanie";
+"audio_note_processing_failed" = "Nagrania nie można przetworzyć.";
 // mailing lists
 "mailing_list" = "Lista mailingowa";
 // webxdc
