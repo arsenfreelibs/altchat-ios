@@ -20,6 +20,7 @@ final class VideoNoteCirclePlayerView: UIView {
     private let circleSize: CGFloat = 220
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
+    private var bgLayer: CALayer?          // black circle; kept as property so layoutSubviews can resize it
     private var itemEndObserver: NSObjectProtocol?
     private var isMuted = true
 
@@ -76,13 +77,19 @@ final class VideoNoteCirclePlayerView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        // Keep bgLayer and playerLayer sized to bounds so they're correct
+        // whether laid out before or after configure(url:) is called.
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        bgLayer?.frame = bounds
+        bgLayer?.cornerRadius = bounds.width / 2
         playerLayer?.frame = bounds
-        // Clip the video layer to a circle via mask (keeps clipsToBounds = false for the ring).
         if let playerLayer {
             let mask = CAShapeLayer()
             mask.path = UIBezierPath(ovalIn: bounds).cgPath
             playerLayer.mask = mask
         }
+        CATransaction.commit()
         updateProgressRingPath()
     }
 
@@ -106,8 +113,16 @@ final class VideoNoteCirclePlayerView: UIView {
     // MARK: - Setup
 
     private func setupUI() {
-        clipsToBounds = false   // ring extends ~9pt outside; circle shape enforced by playerLayer.mask
+        clipsToBounds = false   // ring extends ~9pt outside; circle shape enforced by bgLayer mask + playerLayer mask
         backgroundColor = .clear
+
+        // Black background circle — created once here so it exists even before configure(url:).
+        let bg = CALayer()
+        bg.backgroundColor = UIColor.black.cgColor
+        bg.masksToBounds = true
+        // frame and cornerRadius are set in layoutSubviews once bounds are known
+        layer.addSublayer(bg)
+        bgLayer = bg
 
         layer.addSublayer(progressTrackLayer)
         layer.addSublayer(progressFillLayer)
@@ -133,25 +148,30 @@ final class VideoNoteCirclePlayerView: UIView {
         player?.pause()
         playerLayer?.removeFromSuperlayer()
 
-        // Black circle background (sits below the video; visible during buffering / black frames).
-        let bgLayer = CALayer()
-        bgLayer.backgroundColor = UIColor.black.cgColor
-        bgLayer.frame = bounds
-        bgLayer.cornerRadius = bounds.width / 2
-        bgLayer.masksToBounds = true
-        self.layer.insertSublayer(bgLayer, at: 0)
-
+        // bgLayer is already in the hierarchy (created in setupUI); no need to re-add it.
+        // playerLayer goes above bgLayer (index 1).
         let item = AVPlayerItem(url: url)
         let newPlayer = AVPlayer(playerItem: item)
         newPlayer.volume = 0  // muted by default
         isMuted = true
         updateMuteIcon()
 
-        let layer = AVPlayerLayer(player: newPlayer)
-        layer.videoGravity = .resizeAspectFill
-        layer.frame = bounds
-        self.layer.insertSublayer(layer, at: 1)
-        playerLayer = layer
+        let newPlayerLayer = AVPlayerLayer(player: newPlayer)
+        newPlayerLayer.videoGravity = .resizeAspectFill
+        newPlayerLayer.frame = bounds
+        // Apply circle mask immediately — layoutSubviews may not fire again after we insert
+        // this layer, so the video would appear square without the mask being set here.
+        if bounds != .zero {
+            let circleMask = CAShapeLayer()
+            circleMask.path = UIBezierPath(ovalIn: bounds).cgPath
+            newPlayerLayer.mask = circleMask
+        }
+        if let bg = bgLayer {
+            layer.insertSublayer(newPlayerLayer, above: bg)
+        } else {
+            layer.insertSublayer(newPlayerLayer, at: 0)
+        }
+        playerLayer = newPlayerLayer
         player = newPlayer
 
         itemEndObserver = NotificationCenter.default.addObserver(

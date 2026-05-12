@@ -108,7 +108,9 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
     private func configureCaptureSession() {
         // Must be called on sessionQueue
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = .hd1280x720
+        // Video notes display in a 220pt circle — 640×480 is more than sufficient and keeps
+        // file sizes small enough to send over SMTP (typically < 5 MB for a 30 s note).
+        captureSession.sessionPreset = .vga640x480
 
         guard
             let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
@@ -136,7 +138,11 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
 
         if let connection = movieOutput.connection(with: .video),
            connection.isVideoMirroringSupported {
-            connection.isVideoMirrored = true
+            // Do NOT mirror the movieOutput connection — it bakes mirroring into the file,
+            // so Android/other recipients would see a flipped video.
+            // The preview layer is mirrored in addPreviewLayer() for the selfie-view effect.
+            connection.automaticallyAdjustsVideoMirroring = false
+            connection.isVideoMirrored = false
         }
 
         captureSession.commitConfiguration()
@@ -179,6 +185,12 @@ final class VideoNoteRecorderView: UIView, AVCaptureFileOutputRecordingDelegate 
         let preview = AVCaptureVideoPreviewLayer(session: captureSession)
         preview.videoGravity = .resizeAspectFill
         preview.frame = circleContainer.bounds
+        // Mirror only the live preview so the sender sees a natural selfie view.
+        // This does NOT affect the recorded file.
+        if let connection = preview.connection, connection.isVideoMirroringSupported {
+            connection.automaticallyAdjustsVideoMirroring = false
+            connection.isVideoMirrored = true
+        }
         circleContainer.layer.insertSublayer(preview, at: 0)
         previewLayer = preview
     }

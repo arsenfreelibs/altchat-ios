@@ -108,6 +108,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.register(ContactCardCell.self, forCellReuseIdentifier: ContactCardCell.reuseIdentifier)
         tableView.register(VideoNoteCell.self, forCellReuseIdentifier: VideoNoteCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 80
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .interactive
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -1228,9 +1229,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         guard !tableView.isEditing else {
             return refreshMessagesAfterEditing = true
         }
+        let wasAtBottom = isLastMessageVisible()
         messages = dcContext.getChatMsgsAndTimestamps(chatId: chatId, flags: DC_GCM_ADDDAYMARKER).reversed()
         reloadData()
         showEmptyStateView(messages.isEmpty)
+        if wasAtBottom {
+            scrollToBottom(animated: false)
+        }
     }
 
     private func reloadData() {
@@ -2248,11 +2253,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         videoNoteStopRequested = true
         videoNoteTimer?.invalidate()
         videoNoteTimer = nil
+        // Show empty circle immediately — gives instant visual feedback while the recording
+        // file is being finalised (and possibly merged across segments).
+        showVideoNoteCirclePlaceholder()
         guard let recorder = videoNoteRecorderView else {
             exitVideoNoteMode()
             return
         }
         recorder.stopRecording(cancel: false)
+    }
+
+    /// Adds the circle view to the keyboard window right away, before the video URL is ready.
+    /// `showVideoNotePreview` reuses this view and populates it once the URL is available.
+    private func showVideoNoteCirclePlaceholder() {
+        guard videoNoteCirclePlayer == nil, let kbWindow = messageInputBar.window else { return }
+        let circleSize: CGFloat = 220
+        let circle = VideoNoteCirclePlayerView(frame: .zero)
+        circle.alpha = 0
+        videoNoteCirclePlayer = circle
+        kbWindow.addSubview(circle)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let center = self.view.convert(
+                CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY - 20), to: nil)
+            circle.frame = CGRect(
+                x: center.x - circleSize / 2,
+                y: center.y - circleSize / 2,
+                width: circleSize, height: circleSize)
+            UIView.animate(withDuration: 0.15) { circle.alpha = 1 }
+        }
     }
 
     /// Creates and presents the circle player + filmstrip preview bar.
@@ -2263,32 +2292,29 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageInputBar.setStackViewItems([], forStack: .right, animated: false)
         messageInputBar.setRightStackViewWidthConstant(to: 0, animated: false)
 
-        // Circle player — added to the keyboard window (same window as messageInputBar) so its
-        // position can be computed from the input bar frame without crossing view hierarchies.
-        // Constraints between self.view (app window) and messageInputBar (keyboard window) crash.
+        // Circle player — reuse the placeholder if already shown (i.e. pause was tapped in locked
+        // mode), otherwise create and add it now (non-locked path or fallback).
         let circleSize: CGFloat = 220
-        let circle = VideoNoteCirclePlayerView(frame: .zero)
-        circle.alpha = 0
-        videoNoteCirclePlayer = circle
-
-        if let kbWindow = messageInputBar.window {
-            kbWindow.addSubview(circle)
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                // Match the recorder circle position exactly: it's centered at (midX, midY-20) of self.view.
-                // Convert from app window coords to screen coords (both windows share the same origin).
-                let recorderCircleCenter = self.view.convert(
-                    CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY - 20),
-                    to: nil
-                )
-                circle.frame = CGRect(
-                    x: recorderCircleCenter.x - circleSize / 2,
-                    y: recorderCircleCenter.y - circleSize / 2,
-                    width: circleSize,
-                    height: circleSize
-                )
-                circle.configure(url: url)
-                UIView.animate(withDuration: 0.2) { circle.alpha = 1 }
+        if let existing = videoNoteCirclePlayer {
+            // Placeholder already visible — just load the video into it.
+            existing.configure(url: url)
+        } else {
+            let circle = VideoNoteCirclePlayerView(frame: .zero)
+            circle.alpha = 0
+            videoNoteCirclePlayer = circle
+            if let kbWindow = messageInputBar.window {
+                kbWindow.addSubview(circle)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    let center = self.view.convert(
+                        CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY - 20), to: nil)
+                    circle.frame = CGRect(
+                        x: center.x - circleSize / 2,
+                        y: center.y - circleSize / 2,
+                        width: circleSize, height: circleSize)
+                    circle.configure(url: url)
+                    UIView.animate(withDuration: 0.2) { circle.alpha = 1 }
+                }
             }
         }
 
@@ -2320,8 +2346,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         videoNotePreviewBar = bar
 
         // Progress timer — updates position indicator and ring at 20 Hz.
-        videoNotePreviewTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self, weak bar, weak circle] _ in
-            guard let circle, let bar, duration > 0 else { return }
+        videoNotePreviewTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self, weak bar] _ in
+            guard let self, let circle = self.videoNoteCirclePlayer, let bar, duration > 0 else { return }
             let progress = Float(circle.currentTimeSeconds / duration)
             bar.setProgress(progress)
             circle.setProgress(progress)
@@ -2541,8 +2567,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             let outputURL = URL(fileURLWithPath: NSTemporaryDirectory())
                 .appendingPathComponent("videonote_merged_\(Int(Date().timeIntervalSince1970)).mp4")
+            // 640×480 export compresses the merged output — raw capture at vga already matches
+            // this resolution, so there is no quality loss but file sizes stay well under SMTP limits.
             guard let exporter = AVAssetExportSession(asset: composition,
-                                                      presetName: AVAssetExportPresetHighestQuality) else {
+                                                      presetName: AVAssetExportPreset640x480) else {
                 DispatchQueue.main.async { completion(nil) }
                 return
             }
