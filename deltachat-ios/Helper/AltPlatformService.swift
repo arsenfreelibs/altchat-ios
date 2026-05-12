@@ -218,16 +218,6 @@ private struct RegisterRequest: Encodable {
     let publicKey: String
     let fingerprint: String
     let encryptedPrivateKey: String
-
-    enum CodingKeys: String, CodingKey {
-        case username
-        case email
-        case addr
-        case displayName = "name"
-        case publicKey = "public_key"
-        case fingerprint
-        case encryptedPrivateKey = "encrypted_private_key"
-    }
 }
 
 private struct RegisterResponse: Decodable {
