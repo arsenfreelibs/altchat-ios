@@ -262,6 +262,7 @@
 		F5B675E72F72FE5700C440F3 /* RemoteUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E62F72FE5700C440F3 /* RemoteUser.swift */; };
 		F5B675EA2F72FEB200C440F3 /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E92F72FEB200C440F3 /* UserSearchService.swift */; };
 		F5B675EB2F72FEB200C440F3 /* AltPlatformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E82F72FEB200C440F3 /* AltPlatformService.swift */; };
+		AA998877665544332211CC01 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA998877665544332211CC00 /* AppUpdateChecker.swift */; };
 		F5B675ED2F72FF0A00C440F3 /* VideoNoteRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */; };
 		F5B675EF2F72FF1E00C440F3 /* VideoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */; };
 		F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */; };
@@ -728,6 +729,7 @@
 		F5B675E62F72FE5700C440F3 /* RemoteUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUser.swift; sourceTree = "<group>"; };
 		F5B675E82F72FEB200C440F3 /* AltPlatformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltPlatformService.swift; sourceTree = "<group>"; };
 		F5B675E92F72FEB200C440F3 /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
+		AA998877665544332211CC00 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
 		F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteRecorderView.swift; sourceTree = "<group>"; };
 		F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteCell.swift; sourceTree = "<group>"; };
 		F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNoteRecordingOverlay.swift; sourceTree = "<group>"; };
@@ -1207,6 +1209,7 @@
 			children = (
 				F5B675E82F72FEB200C440F3 /* AltPlatformService.swift */,
 				F5B675E92F72FEB200C440F3 /* UserSearchService.swift */,
+				AA998877665544332211CC00 /* AppUpdateChecker.swift */,
 				F5B675DC2F72FB0100C440F3 /* TypingManager.swift */,
 				30238CFE28A5554C00EF14AC /* FileHelper.swift */,
 				3067AAC52667F3FE00525036 /* ImageFormat.swift */,
@@ -2019,6 +2022,7 @@
 				304F769525DD237B0094B5E2 /* WebViewViewController.swift in Sources */,
 				F5B675EA2F72FEB200C440F3 /* UserSearchService.swift in Sources */,
 				F5B675EB2F72FEB200C440F3 /* AltPlatformService.swift in Sources */,
+				AA998877665544332211CC01 /* AppUpdateChecker.swift in Sources */,
 				304F769925DD23D70094B5E2 /* FullMessageViewController.swift in Sources */,
 				AE0AA952247800E700D42A7F /* GalleryCell.swift in Sources */,
 				D83227002D3AC9BF00C239C5 /* AppPickerViewController.swift in Sources */,

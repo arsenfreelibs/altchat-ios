@@ -27,6 +27,7 @@ internal final class SettingsViewController: UITableViewController {
         case allAppsAndMedia
         case connectivity
         case inviteFriends
+        case updateAvailable
     }
 
     private var dcContext: DcContext
@@ -98,6 +99,39 @@ internal final class SettingsViewController: UITableViewController {
         return cell
     }()
 
+    private lazy var updateAvailableCell: UITableViewCell = {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.tag = CellTags.updateAvailable.rawValue
+        cell.textLabel?.text = String.localized("update_available")
+        cell.textLabel?.textColor = .systemOrange
+        let icon = UIImage(systemName: "arrow.up.circle.fill")?.withRenderingMode(.alwaysTemplate)
+        cell.imageView?.image = icon
+        cell.imageView?.tintColor = .systemOrange
+
+        // Pulsing scale animation on the icon
+        let pulse = CABasicAnimation(keyPath: "transform.scale")
+        pulse.fromValue = 1.0
+        pulse.toValue = 1.25
+        pulse.duration = 0.7
+        pulse.autoreverses = true
+        pulse.repeatCount = .infinity
+        pulse.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        cell.imageView?.layer.add(pulse, forKey: "pulse")
+
+        // "!" badge on the right
+        let badgeLabel = UILabel()
+        badgeLabel.text = "!"
+        badgeLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        badgeLabel.textColor = .white
+        badgeLabel.textAlignment = .center
+        badgeLabel.backgroundColor = .systemRed
+        badgeLabel.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+        badgeLabel.layer.cornerRadius = 11
+        badgeLabel.layer.masksToBounds = true
+        cell.accessoryView = badgeLabel
+        return cell
+    }()
+
     private lazy var helpCell: UITableViewCell = {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         cell.tag = CellTags.help.rawValue
@@ -152,7 +186,12 @@ internal final class SettingsViewController: UITableViewController {
             footerTitle: appNameAndVersion,
             cells: [inviteFriendsCell, helpCell]
         )
-        return [profileSection, preferencesSection, listsSection, helpSection]
+        var result: [SectionConfigs] = [profileSection]
+        if AppUpdateChecker.shared.isUpdateAvailable {
+            result.append(SectionConfigs(cells: [updateAvailableCell]))
+        }
+        result.append(contentsOf: [preferencesSection, listsSection, helpSection])
+        return result
     }
 
     init(dcAccounts: DcAccounts) {
@@ -164,6 +203,7 @@ internal final class SettingsViewController: UITableViewController {
         // otherwise, we may miss events and the label is not correct.
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.handleConnectivityChanged(_:)), name: Event.connectivityChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.handleUpdateCheckCompleted(_:)), name: AppUpdateChecker.updateCheckCompletedNotification, object: nil)
     }
 
     required init?(coder _: NSCoder) {
@@ -194,6 +234,7 @@ internal final class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         sections = buildSections()
         tableView.reloadData()
+        updateTabBadge()
         notificationCell.detailTextLabel?.text = " " // nil does not reserve space for the warning calculated in background
         updateCells()
     }
@@ -242,6 +283,7 @@ internal final class SettingsViewController: UITableViewController {
         case .connectivity: showConnectivity()
         case .selectBackground: selectBackground()
         case .inviteFriends: inviteFriends()
+        case .updateAvailable: openAppStore()
         }
     }
 
@@ -254,6 +296,12 @@ internal final class SettingsViewController: UITableViewController {
     }
 
     // MARK: - Notifications
+    @objc private func handleUpdateCheckCompleted(_ notification: Notification) {
+        sections = buildSections()
+        tableView.reloadData()
+        updateTabBadge()
+    }
+
     @objc private func handleConnectivityChanged(_ notification: Notification) {
         guard dcContext.id == notification.userInfo?["account_id"] as? Int else { return }
 
@@ -337,6 +385,19 @@ internal final class SettingsViewController: UITableViewController {
 
     private func selectBackground() {
         navigationController?.pushViewController(WallpaperViewController(dcContext: dcContext), animated: true)
+    }
+
+    private func updateTabBadge() {
+        let item = navigationController?.tabBarItem ?? tabBarItem
+        item?.badgeValue = AppUpdateChecker.shared.isUpdateAvailable ? "!" : nil
+    }
+
+    private func openAppStore() {
+        AppUpdateChecker.shared.isUpdateAvailable = false
+        sections = buildSections()
+        tableView.reloadData()
+        updateTabBadge()
+        UIApplication.shared.open(AppUpdateChecker.shared.appStoreURL)
     }
 
     private func inviteFriends() {
