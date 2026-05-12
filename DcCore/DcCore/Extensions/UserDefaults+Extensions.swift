@@ -9,6 +9,7 @@ public extension UserDefaults {
     static var incomingCallPayloadKey = "incomingCallPayload"
     static var appPickerUrl = "appPickerUrl"
     static var defaultAppPickerUrlString = "https://webxdc.org/apps/"
+    static var firstLaunchDateKey = "pref_first_launch_date"
 
     static var shared: UserDefaults? {
         return UserDefaults(suiteName: "group.me.alt.chat")

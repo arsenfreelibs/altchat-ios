@@ -315,6 +315,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         applicationInForeground = true
         NotificationManager.updateBadgeCounters()
         AppUpdateChecker.shared.checkForUpdate()
+        ReviewRequester.shared.requestReviewIfEligible()
         if dcAccounts.getSelected().isConfigured() {
             // This supports the case that app clips stay installed and
             // keep handling i.delta.chat links instead of the main app which

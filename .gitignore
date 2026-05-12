@@ -42,3 +42,6 @@ xcuserdata/
 # End of https://www.gitignore.io/api/xcode
 
 deltachat-ios/libraries/libdeltachat.a
+
+# StoreKit local testing configuration
+*.storekit
