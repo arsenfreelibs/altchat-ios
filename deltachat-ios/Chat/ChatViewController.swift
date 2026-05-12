@@ -78,6 +78,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var videoNoteSegments: [URL] = []
     private var videoNoteSegmentsDuration: Double = 0
     private var videoNoteShowPreviewAfterStop = false
+    private var videoNoteLoadingSpinner: UIActivityIndicatorView?
     private var videoNoteRemainingTime: TimeInterval = VideoNoteRecorderView.maxDuration
     /// Pre-built leading constraints for the recording hint pill; swapped on lock/unlock.
     private var hintNormalLeading: NSLayoutConstraint!
@@ -2272,6 +2273,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         circle.alpha = 0
         videoNoteCirclePlayer = circle
         kbWindow.addSubview(circle)
+
+        // Spinner — shown immediately so the user knows the file is being processed.
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .white
+        let spinnerSize: CGFloat = 40
+        spinner.frame = CGRect(
+            x: circleSize / 2 - spinnerSize / 2,
+            y: circleSize / 2 - spinnerSize / 2,
+            width: spinnerSize, height: spinnerSize)
+        circle.addSubview(spinner)
+        spinner.startAnimating()
+        videoNoteLoadingSpinner = spinner
+
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let center = self.view.convert(
@@ -2296,7 +2310,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // mode), otherwise create and add it now (non-locked path or fallback).
         let circleSize: CGFloat = 220
         if let existing = videoNoteCirclePlayer {
-            // Placeholder already visible — just load the video into it.
+            // Placeholder already visible — remove loading spinner and start playback.
+            UIView.animate(withDuration: 0.2) { self.videoNoteLoadingSpinner?.alpha = 0 } completion: { _ in
+                self.videoNoteLoadingSpinner?.removeFromSuperview()
+                self.videoNoteLoadingSpinner = nil
+            }
             existing.configure(url: url)
         } else {
             let circle = VideoNoteCirclePlayerView(frame: .zero)

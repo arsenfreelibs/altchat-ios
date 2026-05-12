@@ -217,6 +217,16 @@ final class VideoNotePreviewBar: UIView {
             filmstripStack.addArrangedSubview(iv)
         }
 
+        // Pulse the filmstrip container so the user sees it's loading.
+        let pulse = CABasicAnimation(keyPath: "opacity")
+        pulse.fromValue = 0.35
+        pulse.toValue = 0.85
+        pulse.duration = 0.7
+        pulse.autoreverses = true
+        pulse.repeatCount = .infinity
+        pulse.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        filmstripContainer.layer.add(pulse, forKey: "filmstripPulse")
+
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
         generator.maximumSize = CGSize(width: 80, height: 80)
@@ -229,18 +239,24 @@ final class VideoNotePreviewBar: UIView {
         }
 
         var index = 0
+        var completedCount = 0
         generator.generateCGImagesAsynchronously(forTimes: times) { [weak self] _, cgImage, _, result, _ in
-            guard let self, result == .succeeded, let cgImage else {
-                index += 1
-                return
-            }
-            let image = UIImage(cgImage: cgImage)
+            guard let self else { return }
             let i = index
             index += 1
-            DispatchQueue.main.async {
-                guard i < self.filmstripStack.arrangedSubviews.count,
-                      let iv = self.filmstripStack.arrangedSubviews[i] as? UIImageView else { return }
-                iv.image = image
+            completedCount += 1
+            if result == .succeeded, let cgImage {
+                let image = UIImage(cgImage: cgImage)
+                DispatchQueue.main.async {
+                    guard i < self.filmstripStack.arrangedSubviews.count,
+                          let iv = self.filmstripStack.arrangedSubviews[i] as? UIImageView else { return }
+                    iv.image = image
+                }
+            }
+            if completedCount >= count {
+                DispatchQueue.main.async {
+                    self.filmstripContainer.layer.removeAnimation(forKey: "filmstripPulse")
+                }
             }
         }
     }
