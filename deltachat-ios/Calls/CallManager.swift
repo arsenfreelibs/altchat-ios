@@ -250,9 +250,11 @@ class CallManager: NSObject {
         }
     }
 
-    func answerIncomingCall(forMessage msgId: Int, chatId: Int, contextId: Int) {
-        guard currentCall?.messageId == msgId, currentCall?.chatId == chatId, currentCall?.contextId == contextId else { return }
+    @discardableResult
+    func answerIncomingCall(forMessage msgId: Int, chatId: Int, contextId: Int) -> Bool {
+        guard currentCall?.messageId == msgId, currentCall?.chatId == chatId, currentCall?.contextId == contextId else { return false }
         answerIncomingCall()
+        return true
     }
     func answerIncomingCall() {
         guard let currentCall else { return }

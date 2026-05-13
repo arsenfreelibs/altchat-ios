@@ -1051,7 +1051,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         case (DC_MSG_WEBXDC, _):
             showWebxdcViewFor(message: message)
         case (DC_MSG_CALL, _):
-            CallManager.shared.answerIncomingCall(forMessage: messageId, chatId: chatId, contextId: dcContext.id)
+            let answered = CallManager.shared.answerIncomingCall(forMessage: messageId, chatId: chatId, contextId: dcContext.id)
+            if !answered && !CallManager.shared.isCalling() {
+                CallManager.shared.placeOutgoingCall(dcContext: dcContext, dcChat: dcChat, hasVideoInitially: false)
+            }
         case (_, DC_INFO_WEBXDC_INFO_MESSAGE):
             if let parent = message.parent {
                 showWebxdcViewFor(message: parent, href: message.getWebxdcHref())
@@ -4112,7 +4115,10 @@ extension ChatViewController: BaseMessageCellDelegate {
         } else if message.type == DC_MSG_WEBXDC {
             showWebxdcViewFor(message: message)
         } else if message.type == DC_MSG_CALL {
-            CallManager.shared.answerIncomingCall(forMessage: message.id, chatId: chatId, contextId: dcContext.id)
+            let answered = CallManager.shared.answerIncomingCall(forMessage: message.id, chatId: chatId, contextId: dcContext.id)
+            if !answered && !CallManager.shared.isCalling() {
+                CallManager.shared.placeOutgoingCall(dcContext: dcContext, dcChat: dcChat, hasVideoInitially: false)
+            }
         }
     }
 
