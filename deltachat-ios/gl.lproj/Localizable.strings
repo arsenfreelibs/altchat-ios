@@ -944,3 +944,4 @@
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "Conectando";
 "update_available" = "Update Available";
+"search_results_local" = "Atopado localmente";

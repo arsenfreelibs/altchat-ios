@@ -772,3 +772,4 @@
 "perm_enable_bg_reminder_title" = "Додирните овде да би примали поруке када је alt.chat у позадини.";
 "perm_enable_bg_already_done" = "Ви сте већ омогућили alt.chat-у достављање порука у позадини.\n\nАко поруке и даље не стижу у позадини, погледајте поставке у оперативном систему.";
 "update_available" = "Update Available";
+"search_results_local" = "Пронађено локально";

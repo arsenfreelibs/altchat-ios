@@ -212,3 +212,4 @@
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "இணைக்கிறது";
 "update_available" = "Update Available";
+"search_results_local" = "உள்ளூரில் காணப்பட்டது";

@@ -1051,3 +1051,4 @@ Desactiva este ajuste solo si has eliminado este perfil de todos tus demás disp
 // device messages for updates
 "update_2_0" = "¿Qué hay de nuevo?\n\n💯 El cifrado de extremo a extremo es fiable y para siempre. ¡Se acabaron los candados 🔒!\n\n✉️ El correo electrónico clásico sin cifrado de extremo a extremo es marcado con un símbolo de carta.\n\n😻 Nueva pantalla de perfil mejorada para todos tus contactos.\n\n🔲 Nuevo botón para acceder rápidamente a las apps usadas en el chat.\n\n❤️ Dona para ayudarnos a mantener nuestra independencia y seguir mejorando: %1$@";
 "update_available" = "Update Available";
+"search_results_local" = "Encontrado localmente";

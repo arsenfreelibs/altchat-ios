@@ -1071,3 +1071,4 @@
 // device messages for updates
 "update_2_0" = "Ne yeni?\n\n💯 Uçtan uca şifreleme artık güvenilir ve sonsuza kadar geçerli. Asma kilitlerle 🔒 anlaşılabilir!\n\n✉️ Uçtan uca şifrelemeli olmayan klasik e-posta bir mektup sembolü olarak işaretlenir\n\n😻 Tüm kişileriniz için yeni geliştirilen profil ekranı\n\n🔲 Bir sohbette kullanılan uygulamalara hızlı erişim için yeni düğme\n\n❤️ Bağımsız kalmamız ve yeni geliştirmeler getirmemiz için lütfen bize yardım edin: %1$@";
 "update_available" = "Update Available";
+"search_results_local" = "Yerel olarak bulundu";

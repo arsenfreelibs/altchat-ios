@@ -204,3 +204,4 @@
 // Status text shown on the call screen while the connection is being established
 "call_status_connecting" = "కనెక్ట్ అవుతోంది";
 "update_available" = "Update Available";
+"search_results_local" = "స్థానికంగా కనుగొనబడింది";

@@ -1069,3 +1069,4 @@
 // device messages for updates
 "update_2_0" = "Vad är nytt?\n\n💯 Totalsträckskryptering är pålitlig och för alltid nu. Hänglås 🔒 är borta!\n\n✉️ Klassisk e-post utan Totalsträckskryptering är markerad med en bokstavssymbol\n\n😻 Ny förbättrad profilskärm för alla dina kontakter\n\n🔲 Ny knapp för snabb åtkomst till appar som används i en chatt\n\n❤️ Vänligen donera för att hjälpa oss att förbli oberoende och fortsätta att göra förbättringar: %1$@";
 "update_available" = "Update Available";
+"search_results_local" = "Hittad lokalt";

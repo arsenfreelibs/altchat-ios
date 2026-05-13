@@ -1007,3 +1007,4 @@
 // device messages for updates
 "update_2_0" = "Újdonságok:\n\n💯 A végpontok közötti titkosítás most már megbízható és örökre megmarad. A lakatok 🔒 eltűntek!\n\n✉️ A végpontok közötti titkosítás nélküli klasszikus e-mailek betűszimbólummal vannak jelölve\n\n😻 Új, továbbfejlesztett profilképernyő az összes névjegyhez\n\n🔲 Új gomb a csevegésben használt alkalmazások gyors eléréséhez\n\n❤️ Ha teheti, adományozzon nekünk, hogy függetlenek maradhassunk és továbbra is fejlesztéseket tudjunk végrehajtani: %1$@";
 "update_available" = "Update Available";
+"search_results_local" = "Helyileg találva";

@@ -1056,3 +1056,4 @@
 // device messages for updates
 "update_2_0" = "Quoi de neuf ?\n\n💯 Le chiffrement de bout en bout est maintenant fiable et pérenne. 🔒Fini les cadenas !\n\n✉️ Les courriels sans chiffrement de bout en bout sont maintenant marqués par une icône enveloppe \n\n😻 Nouvelle fenêtre de profil améliorée pour tous les contacts \n\n🔲 Nouveau bouton pour l\'accès rapide aux applis utilisées dans une discussion\n\n❤️ Merci d\'envisager de faire un don afin que nous restions indépendants et continuions à améliorer alt.chat : %1$@";
 "update_available" = "Update Available";
+"search_results_local" = "Trouvé localement";
