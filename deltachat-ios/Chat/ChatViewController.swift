@@ -3794,7 +3794,7 @@ extension ChatViewController {
 
                 if message.isFromCurrentSender && message.hasText && !message.hasHtml && !message.isMarkerOrInfo && dcChat.canSend {
                     children.append(
-                        UIAction.menuAction(localizationKey: "global_menu_edit_desktop", systemImageName: "pencil", with: messageId, action: editSentMessage)
+                        UIAction.menuAction(localizationKey: "global_menu_edit_desktop", systemImageName: "square.and.pencil", with: messageId, action: editSentMessage)
                     )
                 }
 

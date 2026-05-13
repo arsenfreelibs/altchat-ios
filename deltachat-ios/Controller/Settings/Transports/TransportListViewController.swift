@@ -184,7 +184,7 @@ extension TransportListViewController {
         }
         editAction.backgroundColor = .lightGray
         editAction.accessibilityLabel = String.localized("edit_transport")
-        editAction.image = UIImage(systemName: "pencil")
+        editAction.image = UIImage(systemName: "square.and.pencil")
         actions.append(editAction)
 
         let actionsConfiguration = UISwipeActionsConfiguration(actions: actions)
@@ -203,7 +203,7 @@ extension TransportListViewController {
                 guard let transport = transports.get(at: indexPath.row) else { return nil }
                 var children: [UIMenuElement] = []
 
-                children.append(UIAction.menuAction(localizationKey: "edit_transport", systemImageName: "pencil", with: indexPath, action: editTransport))
+                children.append(UIAction.menuAction(localizationKey: "edit_transport", systemImageName: "square.and.pencil", with: indexPath, action: editTransport))
                 if !transport.param.isDefault(dcContext) {
                     children.append(UIAction.menuAction(localizationKey: "remove_transport", attributes: [.destructive], systemImageName: "trash", with: indexPath, action: deleteTransport))
                 }
