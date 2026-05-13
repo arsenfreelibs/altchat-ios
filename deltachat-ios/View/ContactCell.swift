@@ -208,6 +208,7 @@ class ContactCell: UITableViewCell {
         selectedBackgroundView = UIView()
         selectedBackgroundView?.backgroundColor = DcColors.selectBackground
         isAccessibilityElement = true
+        separatorInset = UIEdgeInsets(top: 0, left: badgeSize / 4 + badgeSize + margin, bottom: 0, right: 0)
 
         avatar.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(avatar)
