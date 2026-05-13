@@ -169,10 +169,28 @@ class ContactsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let showRemote = isFiltering && (searchText?.count ?? 0) >= 2
+        if section == sectionContacts && showRemote && !filteredContactIds.isEmpty {
+            return String.localized("search_results_local")
+        }
         if section == sectionRemoteResults && !remoteResults.isEmpty {
             return String.localized("search_results_on_server")
         }
         return nil
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == sectionInviteFriends && isFiltering {
+            return .leastNonzeroMagnitude
+        }
+        return UITableView.automaticDimension
+    }
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == sectionInviteFriends && isFiltering {
+            return .leastNonzeroMagnitude
+        }
+        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -214,6 +232,10 @@ class ContactsViewController: UITableViewController {
         let contactId = contactIdByRow(indexPath.row)
         let viewModel = ContactCellViewModel.make(contactId: contactId, searchText: searchText, dcContext: dcContext)
         cell.updateCell(cellViewModel: viewModel)
+        // Show @username derived from email instead of raw email address
+        let contact = dcContext.getContact(id: contactId)
+        cell.subtitleLabel.text = "@" + usernameFromEmail(contact.email)
+        cell.subtitleLabel.isHidden = false
         // Overlay online status from TypingManager (mutual opt-in: only visible if we also have it enabled)
         if UserDefaults.standard.bool(forKey: UserDefaults.onlineStatusEnabledKey) {
             cell.avatar.setRecentlySeen(TypingManager.shared.isOnline(contactId: contactId))
@@ -276,6 +298,17 @@ class ContactsViewController: UITableViewController {
 
     private func contactIdByRow(_ row: Int) -> Int {
         return isFiltering ? filteredContactIds[row] : contactIds[row]
+    }
+
+    private func usernameFromEmail(_ email: String) -> String {
+        let local = email.components(separatedBy: "@").first ?? email
+        let allowed = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789_")
+        var result = local.lowercased()
+            .unicodeScalars
+            .map { allowed.contains($0) ? String($0) : "_" }
+            .joined()
+        while result.contains("__") { result = result.replacingOccurrences(of: "__", with: "_") }
+        return result.trimmingCharacters(in: CharacterSet(charactersIn: "_"))
     }
 
     private func showChatAt(row: Int) {
