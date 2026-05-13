@@ -296,6 +296,7 @@ class InstantOnboardingViewController: UIViewController {
     }
 
     private func handleCreateSuccess() {
+        storeImageAndName()
         let dcCtx = dcContext
         let displayName = dcCtx.displayname ?? ""
         DispatchQueue.global().async {
