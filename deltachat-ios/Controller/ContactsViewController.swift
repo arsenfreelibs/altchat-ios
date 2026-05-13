@@ -251,7 +251,7 @@ class ContactsViewController: UITableViewController {
             }
             done(true)
         }
-        profileAction.backgroundColor = .systemBlue
+        profileAction.backgroundColor = DcColors.primary
         profileAction.image = UIImage(systemName: "person.crop.circle")
 
         let deleteAction = UIContextualAction(style: .destructive, title: String.localized("delete")) { [weak self] _, _, done in
