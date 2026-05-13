@@ -4,16 +4,29 @@ import DcCore
 class ContactsViewController: UITableViewController {
 
     private let dcContext: DcContext
-    private let dcAccounts: DcAccounts
 
-    private let sectionInviteFriends = 0
-    private let sectionContacts = 1
-    private let sectionRemoteResults = 2
+    private enum Reuse {
+        static let remoteContact = "RemoteContactCell"
+    }
 
-    private var contactIds: [Int] = []
+    private static let remoteAvatarColors: [UIColor] = [
+        .systemBlue, .systemPurple, .systemOrange, .systemPink, .systemTeal, DcColors.primary
+    ]
+
+    private var contactGroups: [(letter: String, ids: [Int])] = []
     private var filteredContactIds: [Int] = []
     private var remoteResults: [RemoteUser] = []
     private var isRemoteSearchPending = false
+
+    private var firstContactSection: Int { isFiltering ? 0 : 1 }
+    private var numberOfContactSections: Int {
+        isFiltering ? (filteredContactIds.isEmpty ? 0 : 1) : contactGroups.count
+    }
+    private var showRemote: Bool { isFiltering && (searchText?.count ?? 0) >= 2 }
+    private var remoteSection: Int { firstContactSection + numberOfContactSections }
+    private func isContactSection(_ section: Int) -> Bool {
+        section >= firstContactSection && section < remoteSection
+    }
 
     private lazy var searchService = UserSearchService(dcContext: dcContext)
 
@@ -42,16 +55,13 @@ class ContactsViewController: UITableViewController {
         return label
     }()
 
-    private lazy var emptySearchStateLabelWidthConstraint: NSLayoutConstraint? = {
-        return emptySearchStateLabel.widthAnchor.constraint(equalTo: tableView.widthAnchor)
-    }()
+    private var emptySearchStateLabelWidthConstraint: NSLayoutConstraint?
 
     // MARK: - init
 
     init(dcContext: DcContext, dcAccounts: DcAccounts) {
         self.dcContext = dcContext
-        self.dcAccounts = dcAccounts
-        super.init(style: .insetGrouped)
+        super.init(style: .plain)
     }
 
     required init?(coder: NSCoder) {
@@ -68,9 +78,11 @@ class ContactsViewController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
 
+        tableView.separatorStyle = .none
         tableView.register(ActionCell.self, forCellReuseIdentifier: ActionCell.reuseIdentifier)
         tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.reuseIdentifier)
-        tableView.register(ContactCell.self, forCellReuseIdentifier: "RemoteContactCell")
+        tableView.register(ContactCell.self, forCellReuseIdentifier: Reuse.remoteContact)
+        emptySearchStateLabelWidthConstraint = emptySearchStateLabel.widthAnchor.constraint(equalTo: tableView.widthAnchor)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
@@ -79,11 +91,14 @@ class ContactsViewController: UITableViewController {
         )
 
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        contactIds = dcContext.getContacts(flags: DC_GCL_ADD_SELF)
+        buildGroups(from: dcContext.getContacts(flags: DC_GCL_ADD_SELF))
         tableView.reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(handleOnlineStatusChanged),
                                                name: TypingManager.onlineStatusChangedNotification, object: nil)
@@ -116,10 +131,9 @@ class ContactsViewController: UITableViewController {
     @objc private func handleOnlineStatusChanged() {
         let showOnline = UserDefaults.standard.bool(forKey: UserDefaults.onlineStatusEnabledKey)
         for indexPath in tableView.indexPathsForVisibleRows ?? [] {
-            guard indexPath.section != sectionInviteFriends,
-                  indexPath.section != sectionRemoteResults,
+            guard isContactSection(indexPath.section),
                   let cell = tableView.cellForRow(at: indexPath) as? ContactCell else { continue }
-            let contactId = contactIdByRow(indexPath.row)
+            let contactId = contactIdAt(indexPath)
             // When showOnline is false the badge is explicitly cleared, not just skipped.
             let isOnline = showOnline && TypingManager.shared.isOnline(contactId: contactId)
             cell.avatar.setRecentlySeen(isOnline)
@@ -155,53 +169,43 @@ class ContactsViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        let showRemote = isFiltering && (searchText?.count ?? 0) >= 2
-        return showRemote ? 3 : 2
+        return isFiltering ? numberOfContactSections + (showRemote ? 1 : 0)
+                           : 1 + numberOfContactSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == sectionInviteFriends {
-            return isFiltering ? 0 : 1
-        } else if section == sectionRemoteResults {
-            return remoteResults.count
-        }
-        return isFiltering ? filteredContactIds.count : contactIds.count
+        if !isFiltering && section == 0 { return 1 }
+        if showRemote && section == remoteSection { return remoteResults.count }
+        if isFiltering { return filteredContactIds.count }
+        let groupIndex = section - firstContactSection
+        guard groupIndex >= 0 && groupIndex < contactGroups.count else { return 0 }
+        return contactGroups[groupIndex].ids.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let showRemote = isFiltering && (searchText?.count ?? 0) >= 2
-        if section == sectionContacts && showRemote && !filteredContactIds.isEmpty {
-            return String.localized("search_results_local")
-        }
-        if section == sectionRemoteResults && !remoteResults.isEmpty {
-            return String.localized("search_results_on_server")
-        }
-        return nil
+        if !isFiltering && section == 0 { return nil }
+        if showRemote && section == remoteSection { return String.localized("search_results_on_server") }
+        if isFiltering { return filteredContactIds.isEmpty ? nil : String.localized("search_results_local") }
+        let groupIndex = section - firstContactSection
+        guard groupIndex >= 0 && groupIndex < contactGroups.count else { return nil }
+        return contactGroups[groupIndex].letter
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == sectionInviteFriends && isFiltering {
-            return .leastNonzeroMagnitude
-        }
         return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == sectionInviteFriends && isFiltering {
-            return .leastNonzeroMagnitude
-        }
-        return UITableView.automaticDimension
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == sectionInviteFriends {
-            return UITableView.automaticDimension
-        }
+        if !isFiltering && indexPath.section == 0 { return UITableView.automaticDimension }
         return ContactCell.cellHeight
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == sectionInviteFriends {
+        if !isFiltering && indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ActionCell.reuseIdentifier, for: indexPath) as? ActionCell else {
                 fatalError("ActionCell expected")
             }
@@ -209,8 +213,8 @@ class ContactsViewController: UITableViewController {
             cell.actionTitle = String.localized("invite_friends")
             return cell
         }
-        if indexPath.section == sectionRemoteResults {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "RemoteContactCell") as? ContactCell else {
+        if showRemote && indexPath.section == remoteSection {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Reuse.remoteContact) as? ContactCell else {
                 fatalError("ContactCell expected")
             }
             let user = remoteResults[indexPath.row]
@@ -219,9 +223,8 @@ class ContactsViewController: UITableViewController {
             cell.titleLabel.font = UIFont.preferredFont(for: .body, weight: .regular)
             cell.subtitleLabel.text = "@\(user.username)"
             cell.subtitleLabel.textColor = DcColors.middleGray
-            let avatarColors: [UIColor] = [.systemBlue, .systemPurple, .systemOrange, .systemPink, .systemTeal, DcColors.primary]
-            let colorIndex = abs(displayName.hashValue) % avatarColors.count
-            cell.setBackupImage(name: displayName, color: avatarColors[colorIndex])
+            let colorIndex = abs(displayName.hashValue) % Self.remoteAvatarColors.count
+            cell.setBackupImage(name: displayName, color: Self.remoteAvatarColors[colorIndex])
             cell.avatar.setRecentlySeen(false)
             cell.setTimeLabel(nil)
             return cell
@@ -229,7 +232,7 @@ class ContactsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.reuseIdentifier, for: indexPath) as? ContactCell else {
             fatalError("ContactCell expected")
         }
-        let contactId = contactIdByRow(indexPath.row)
+        let contactId = contactIdAt(indexPath)
         let viewModel = ContactCellViewModel.make(contactId: contactId, searchText: searchText, dcContext: dcContext)
         cell.updateCell(cellViewModel: viewModel)
         // Show @username derived from email instead of raw email address
@@ -245,13 +248,13 @@ class ContactsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        if indexPath.section == sectionInviteFriends {
+        if !isFiltering && indexPath.section == 0 {
             if let cell = tableView.cellForRow(at: indexPath) {
                 inviteFriends(sourceView: cell)
             }
             return
         }
-        if indexPath.section == sectionRemoteResults {
+        if showRemote && indexPath.section == remoteSection {
             let user = remoteResults[indexPath.row]
             guard let email = user.addr.first else { return }
             let contactId = dcContext.importContactWithKey(name: user.name, email: email, publicKey: user.publicKey)
@@ -264,12 +267,12 @@ class ContactsViewController: UITableViewController {
             }
             return
         }
-        showChatAt(row: indexPath.row)
+        showChatAt(indexPath: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard indexPath.section == sectionContacts else { return nil }
-        let contactId = contactIdByRow(indexPath.row)
+        guard isContactSection(indexPath.section) else { return nil }
+        let contactId = contactIdAt(indexPath)
 
         let profileAction = UIContextualAction(style: .normal, title: String.localized("profile")) { [weak self] _, _, done in
             guard let self else { return }
@@ -296,23 +299,78 @@ class ContactsViewController: UITableViewController {
 
     // MARK: - helpers
 
-    private func contactIdByRow(_ row: Int) -> Int {
-        return isFiltering ? filteredContactIds[row] : contactIds[row]
+    private func contactIdAt(_ indexPath: IndexPath) -> Int {
+        if isFiltering {
+            guard filteredContactIds.indices.contains(indexPath.row) else {
+                assertionFailure("contactIdAt: filteredContactIds index out of bounds \(indexPath)")
+                return 0
+            }
+            return filteredContactIds[indexPath.row]
+        }
+        let groupIndex = indexPath.section - firstContactSection
+        guard contactGroups.indices.contains(groupIndex),
+              contactGroups[groupIndex].ids.indices.contains(indexPath.row) else {
+            assertionFailure("contactIdAt: index out of bounds \(indexPath)")
+            return 0
+        }
+        return contactGroups[groupIndex].ids[indexPath.row]
     }
+
+    private func buildGroups(from ids: [Int]) {
+        // Fetch all names in one pass to avoid repeated DB calls in the sort comparator.
+        let pairs: [(id: Int, name: String)] = ids.map {
+            (id: $0, name: dcContext.getContact(id: $0).displayName)
+        }
+        let sorted = pairs.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+        }
+        var groups: [(String, [Int])] = []
+        var currentLetter = ""
+        var currentIds: [Int] = []
+        for pair in sorted {
+            let letter = pair.name.first.flatMap { $0.isLetter ? String($0).uppercased() : nil } ?? "#"
+            if letter == currentLetter {
+                currentIds.append(pair.id)
+            } else {
+                if !currentIds.isEmpty { groups.append((currentLetter, currentIds)) }
+                currentLetter = letter
+                currentIds = [pair.id]
+            }
+        }
+        if !currentIds.isEmpty { groups.append((currentLetter, currentIds)) }
+        contactGroups = groups
+    }
+
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        guard !isFiltering else { return nil }
+        return [UITableView.indexSearch] + contactGroups.map { $0.letter }
+    }
+
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        if index == 0 {
+            tableView.setContentOffset(CGPoint(x: 0, y: -tableView.adjustedContentInset.top), animated: false)
+            return NSNotFound
+        }
+        return firstContactSection + index - 1
+    }
+
+    private static let usernameAllowedChars = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789_")
 
     private func usernameFromEmail(_ email: String) -> String {
         let local = email.components(separatedBy: "@").first ?? email
-        let allowed = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789_")
-        var result = local.lowercased()
+        let allowed = Self.usernameAllowedChars
+        let result = local.lowercased()
             .unicodeScalars
             .map { allowed.contains($0) ? String($0) : "_" }
             .joined()
-        while result.contains("__") { result = result.replacingOccurrences(of: "__", with: "_") }
-        return result.trimmingCharacters(in: CharacterSet(charactersIn: "_"))
+        // Collapse consecutive underscores in a single pass using regex
+        let collapsed = result.replacingOccurrences(of: "_+", with: "_", options: .regularExpression)
+        return collapsed.trimmingCharacters(in: CharacterSet(charactersIn: "_"))
     }
 
-    private func showChatAt(row: Int) {
-        let contactId = contactIdByRow(row)
+
+    private func showChatAt(indexPath: IndexPath) {
+        let contactId = contactIdAt(indexPath)
         if searchController.isActive {
             searchController.dismiss(animated: false) { [weak self] in
                 self?.openChat(contactId: contactId)
@@ -395,11 +453,11 @@ extension ContactsViewController {
         alert.addAction(UIAlertAction(title: String.localized("delete"), style: .destructive) { [weak self] _ in
             guard let self else { return }
             if self.dcContext.deleteContact(contactId: contactId) {
-                self.contactIds = self.dcContext.getContacts(flags: DC_GCL_ADD_SELF)
+                self.buildGroups(from: self.dcContext.getContacts(flags: DC_GCL_ADD_SELF))
                 if self.isFiltering {
                     self.filteredContactIds = self.dcContext.getContacts(flags: DC_GCL_ADD_SELF, queryString: self.searchText)
                 }
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.tableView.reloadData()
             }
             didDelete?()
         })
