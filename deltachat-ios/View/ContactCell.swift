@@ -57,7 +57,7 @@ class ContactCell: UITableViewCell {
         let label = UILabel()
         label.lineBreakMode = .byTruncatingTail
         label.textColor = DcColors.defaultTextColor
-        label.font = UIFont.preferredFont(for: .body, weight: .medium)
+        label.font = UIFont.preferredFont(for: .body, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
         label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1), for: .horizontal)
         label.isAccessibilityElement = false
@@ -199,8 +199,8 @@ class ContactCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
         subtitleLabel.isHidden = false
+        titleLabel.font = UIFont.preferredFont(for: .body, weight: .regular)
     }
 
     private func setupSubviews() {
@@ -237,6 +237,7 @@ class ContactCell: UITableViewCell {
         verticalStackView.constraintCenterYTo(avatar, priority: .required).isActive = true
         verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -margin).isActive = true
         verticalStackView.axis = .vertical
+        verticalStackView.spacing = 2
 
         toplineStackView.addConstraints([
             pinnedIndicator.constraintHeightTo(titleLabel.font.pointSize * 1.2),
@@ -271,7 +272,7 @@ class ContactCell: UITableViewCell {
     }
 
     private func setStatusIndicators(unreadCount: Int, status: Int, visibility: Int32, isLocationStreaming: Bool, isChatMuted: Bool = false, isAccountMuted: Bool = false, isContactRequest: Bool, isArchiveLink: Bool) {
-        unreadMessageCounter.backgroundColor = isChatMuted || isAccountMuted || isArchiveLink  ? DcColors.unreadBadgeMuted : DcColors.unreadBadge
+        unreadMessageCounter.backgroundColor = isChatMuted || isAccountMuted || isArchiveLink  ? DcColors.unreadBadgeMuted : DcColors.primary
 
         if isLargeText {
             unreadMessageCounter.setCount(unreadCount)
@@ -318,6 +319,9 @@ class ContactCell: UITableViewCell {
         contactRequest.isHidden = !isContactRequest
         mutedIndicator.isHidden = !isChatMuted
         locationStreamingIndicator.isHidden = !isLocationStreaming
+
+        let hasUnread = unreadCount > 0 && !isContactRequest && !isArchiveLink
+        timeLabel.textColor = hasUnread ? DcColors.primary : DcColors.middleGray
     }
 
     func setTimeLabel(_ timestamp: Int64?) {
@@ -359,8 +363,10 @@ class ContactCell: UITableViewCell {
                 bottomlineStackView.removeArrangedSubview(unreadMessageCounter)
                 toplineStackView.addArrangedSubview(unreadMessageCounter)
             } else if chatData.unreadMessages > 0 {
+                titleLabel.font = UIFont.preferredFont(for: .body, weight: .semibold)
                 titleLabel.attributedText = cellViewModel.title.bold(fontSize: titleLabel.font.pointSize)
             } else {
+                titleLabel.font = UIFont.preferredFont(for: .body, weight: .regular)
                 titleLabel.attributedText = cellViewModel.title.boldAt(indexes: cellViewModel.titleHighlightIndexes, fontSize: titleLabel.font.pointSize)
             }
             if visibility == DC_CHAT_VISIBILITY_PINNED {
