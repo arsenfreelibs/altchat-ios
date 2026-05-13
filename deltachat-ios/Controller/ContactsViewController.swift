@@ -70,6 +70,7 @@ class ContactsViewController: UITableViewController {
 
         tableView.register(ActionCell.self, forCellReuseIdentifier: ActionCell.reuseIdentifier)
         tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.reuseIdentifier)
+        tableView.register(ContactCell.self, forCellReuseIdentifier: "RemoteContactCell")
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
@@ -191,12 +192,20 @@ class ContactsViewController: UITableViewController {
             return cell
         }
         if indexPath.section == sectionRemoteResults {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RemoteUserCell")
-                ?? UITableViewCell(style: .subtitle, reuseIdentifier: "RemoteUserCell")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "RemoteContactCell") as? ContactCell else {
+                fatalError("ContactCell expected")
+            }
             let user = remoteResults[indexPath.row]
-            cell.textLabel?.text = user.name.isEmpty ? user.username : user.name
-            cell.detailTextLabel?.text = "@\(user.username) · \(user.addr.first ?? "")"
-            cell.detailTextLabel?.textColor = DcColors.middleGray
+            let displayName = user.name.isEmpty ? user.username : user.name
+            cell.titleLabel.text = displayName
+            cell.titleLabel.font = UIFont.preferredFont(for: .body, weight: .regular)
+            cell.subtitleLabel.text = "@\(user.username)"
+            cell.subtitleLabel.textColor = DcColors.middleGray
+            let avatarColors: [UIColor] = [.systemBlue, .systemPurple, .systemOrange, .systemPink, .systemTeal, DcColors.primary]
+            let colorIndex = abs(displayName.hashValue) % avatarColors.count
+            cell.setBackupImage(name: displayName, color: avatarColors[colorIndex])
+            cell.avatar.setRecentlySeen(false)
+            cell.setTimeLabel(nil)
             return cell
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactCell.reuseIdentifier, for: indexPath) as? ContactCell else {
