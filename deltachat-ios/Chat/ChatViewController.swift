@@ -1212,8 +1212,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     || (!dcChat.isMultiUser && chatContactIds.count >= 1 && TypingManager.shared.isOnline(contactId: chatContactIds[0]))
                 titleView.initialsBadge.setRecentlySeen(recentlySeen)
 
-                if !dcChat.isMultiUser && dcChat.canSend && UserDefaults.standard.bool(forKey: "pref_calls_enabled"),
-                   let dcContact, dcContact.isKeyContact {
+                if !dcChat.isMultiUser && dcChat.canSend, let dcContact, dcContact.isKeyContact {
                     rightBarButtonItems.append(callButton)
                 }
             } else {
