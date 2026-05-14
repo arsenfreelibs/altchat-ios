@@ -11,8 +11,15 @@ final class AppUpdateChecker {
     var isUpdateAvailable = false
 
     func checkForUpdate(completion: ((Bool) -> Void)? = nil) {
-        let url = URL(string: "https://itunes.apple.com/lookup?id=6763624908")!
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let country: String
+        if #available(iOS 16, *) {
+            country = Locale.current.region?.identifier.lowercased() ?? "ua"
+        } else {
+            country = Locale.current.regionCode?.lowercased() ?? "ua"
+        }
+        let cacheBuster = Int(Date().timeIntervalSince1970)
+        let url = URL(string: "https://itunes.apple.com/lookup?id=6763624908&country=\(country)&t=\(cacheBuster)")!
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10)
         request.httpMethod = "GET"
 
         URLSession.shared.dataTask(with: request) { [weak self] data, _, _ in
