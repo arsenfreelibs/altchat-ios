@@ -589,6 +589,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                                                name: TypingManager.onlineStatusChangedNotification, object: nil)
         TypingManager.shared.joinChat(chatId: chatId, dcContext: dcContext)
         updateTitle()
+
+        // Re-check input bar visibility after the navigation transition completes.
+        // If a contact was verified (e.g. securejoin finishing) while the push animation
+        // was in progress, handleContactsChanged may have called becomeFirstResponder()
+        // too early — canBecomeFirstResponder returns false while topViewController != self.
+        // viewDidAppear fires after the animation, so the retry always succeeds.
+        dcChat = dcContext.getChat(chatId: chatId)
+        checkInputBarVisibility()
+        if dcChat.canSend && !isFirstResponder {
+            becomeFirstResponder()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
