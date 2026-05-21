@@ -1742,7 +1742,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func askToForwardMessage() {
         let chat = dcContext.getChat(chatId: chatId)
         confirmationAlert(
-            title: String.localizedStringWithFormat(String.localized("ask_forward"), chat.name),
+            title: String.localized(stringID: "ask_forward_messages", parameter: RelayHelper.shared.forwardIdsCount(), chat.name),
             actionTitle: String.localized("forward"),
             actionHandler: { [weak self] _ in
                 guard let self else { return }
@@ -3484,7 +3484,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func sendSticker(_ image: UIImage) {
         DispatchQueue.global().async { [weak self] in
             // stickers may be huge when drag'n'dropped from photo-recognition, scale down to a reasonable size
-            let image = image.scaleDownImage(toMax: 300) ?? image
+            let image = image.sd_isAnimated ? image : image.scaleDownImage(toMax: 300) ?? image
 
             guard let self, let path = ImageFormat.saveImage(image: image, directory: .cachesDirectory) else { return }
 

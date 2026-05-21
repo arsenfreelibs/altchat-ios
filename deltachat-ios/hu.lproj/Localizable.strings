@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "OK";
 "cancel" = "Mégse";
 "clear_search" = "Keresés kiürítése";
@@ -14,7 +14,6 @@
 "off" = "Kikapcsolva";
 "def" = "Alapértelmezett";
 "default_value" = "Alapértelmezett (%1$@)";
-"default_value_as_above" = "Alapértelmezett (ugyanaz, mint fentebb)";
 "custom" = "Egyéni";
 "none" = "Semmi";
 "automatic" = "Automatikus";
@@ -32,8 +31,6 @@
 "update" = "Frissítés";
 "emoji" = "Emodzsi";
 "attachment" = "Melléklet";
-// the placeholder will be replaced by the name of the image or file to attach
-"ask_attach" = "Mellékeli a következőt: „%1$@”?";
 "back" = "Vissza";
 "close" = "Bezárás";
 "close_window" = "Ablak bezárása";
@@ -60,7 +57,9 @@
 "media" = "Média";
 "apps_and_media" = "Alkalmazások & média";
 "profile" = "Profil";
+// deprecated
 "all_profiles" = "Összes profil";
+// deprecated
 "current_profile" = "Jelenlegi profil";
 "main_menu" = "Főmenü";
 "start_chat" = "Csevegés indítása";
@@ -81,6 +80,7 @@
 "always" = "Mindig";
 "always_load_remote_images" = "Mindig töltse be a távoli képeket";
 "once" = "Azonnal";
+// deprecated
 "show_warning" = "Figyelmeztetés megjelenítése";
 "not_now" = "Most nem";
 "never" = "Soha";
@@ -149,6 +149,7 @@
 "camera" = "Kamera";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Rögzítés";
+// Switch eg. from front to back camera
 "switch_camera" = "Kameraváltás";
 "toggle_fullscreen" = "Váltás teljes képernyős módra";
 "location" = "Hely";
@@ -237,7 +238,7 @@
 "share_invite_link_explain" = "Ezen a hivatkozáson keresztül bárki megtekintheti az Ön profilját, és csevegést kezdeményezhet Önnel. Csak olyan emberekkel ossza meg, akikben megbízik.";
 "invite_friends" = "Partnerek meghívása";
 // %1$s is replaced by the user's invitation link ("https://i.delta.chat/...")
-"invite_friends_text" = "Lépjen kapcsolatba velem a alt.chaten:\n%1$@";
+"invite_friends_text" = "Lépjen kapcsolatba velem a Delta Chaten:\n%1$@";
 "menu_copy_selection_to_clipboard" = "Kiválasztott(ak) másolása";
 "menu_copy_link_to_clipboard" = "Hívatkozás másolása";
 "menu_copy_text_to_clipboard" = "Szöveg másolása";
@@ -252,7 +253,7 @@
 "menu_export_attachment" = "Melléklet exportálása";
 "menu_export_attachments" = "Mellékletek exportálása";
 "menu_all_media" = "Összes média";
-"all_apps_and_media" = "Osszes fajl & media";
+"all_apps_and_media" = "Összes alkalmazás & média";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Megjelenítés a csevegésben";
 "show_app_in_chat" = "Alkalmazás megjelenítése a csevegésben";
@@ -287,8 +288,6 @@
 "menu_more_options" = "További beállítások";
 "menu_learn_spelling" = "Helyesírás tanulása";
 "jump_to_message" = "Ugrás az üzenetre";
-"jump_to_original_message" = "Ugrás az eredeti üzenetre";
-"copy_json" = "JSON másolása";
 "replace_draft" = "Piszkozat cseréje";
 "title_share_location" = "Hely megosztása a csoport összes tagjával";
 "device_talk" = "Eszközüzenetek";
@@ -310,12 +309,13 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Hozzáadás a kezdőképernyőhöz";
 "donate" = "Adományozás";
-"donate_device_msg" = "❤️ Úgy tűnik, hogy tetszik önnek a alt.chat!\n\nFontolja meg az adományozást, hogy a alt.chat mindenki számára ingyenes maradhasson.\n\nUgyan a alt.chat szabadon használható és nyílt forráskódú, de a fejlesztés pénzbe kerül. Segítsen nekünk, hogy a alt.chat független maradhasson, és a jövőben még fantasztikusabbá váljon.\n\nhttps://alt-chat.me/donate";
+"donate_device_msg" = "❤️ Úgy tűnik, hogy tetszik önnek a Delta Chat!\n\nFontolja meg az adományozást, hogy a Delta Chat mindenki számára ingyenes maradhasson.\n\nUgyan a Delta Chat szabadon használható és nyílt forráskódú, de a fejlesztés pénzbe kerül. Segítsen nekünk, hogy a Delta Chat független maradhasson, és a jövőben még fantasztikusabbá váljon.\n\nhttps://delta.chat/donate";
 "mute_for_one_hour" = "Némítás 1 órára";
 "mute_for_eight_hours" = "Némítás 8 órára";
 "mute_for_one_day" = "Némítás 1 napra";
 "mute_for_seven_days" = "Némítás 7 napra";
 "mute_forever" = "Némítás örökre";
+// deprecated
 "share_location_for_5_minutes" = "5 percre";
 "share_location_for_30_minutes" = "30 percre";
 "share_location_for_one_hour" = "1 órára";
@@ -326,10 +326,6 @@
 "start_call" = "Hívás";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Fogadás";
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Csörög";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Csatlakozás";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Elutasítás";
 "declined_call" = "Elutasított hívás";
@@ -340,6 +336,7 @@
 "ask_leave_group" = "Biztosan elhagyja a csatornát?";
 "ask_delete_named_chat" = "Törli a(z) „%1$@” nevű csevegést az összes eszközén?";
 "ask_delete_message" = "Törli ezt az üzenetet az összes eszközén?";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Továbbítja az üzenetet „%1$@” számára?";
 "ask_forward_multiple" = "Továbbítja az üzenetet a következő csevegésbe: %1$d?";
 "ask_export_attachment" = "A mellékletek exportálása lehetővé teszi, hogy más alkalmazások is hozzáférjenek azokhoz az eszközön.\n\nFolytatja?";
@@ -384,13 +381,12 @@
 "saved_messages_explain" = "• Üzenetek továbbítása az egyszerű hozzáférés érdekében\n\n• Jegyzetek vagy hangjegyzetek készítése\n\n• Médiaanyagok mellékelése a mentéshez";
 // Should match "Saved" from "Saved messages"
 "saved" = "Mentett";
-"save_as" = "Mentés  mint";
+"save_as" = "Mentés mint";
 "retry_send" = "Üzenet újraküldése";
 "cannot_display_unsuported_file_type" = "Ezt a fájltípust nem lehet megjeleníteni: %1$@";
 "attachment_failed_to_load" = "Nem sikerült betölteni a mellékletet";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Felvétel zárolása";
-"audio_note_processing_failed" = "A felvételt nem sikerült feldolgozni.";
 // mailing lists
 "mailing_list" = "Levelezőlista";
 // webxdc
@@ -402,15 +398,7 @@
 "send_file_to" = "„%1$@” küldése…";
 // title shown above a list contacts where one should be selected (eg. when a webxdc attempts to send a message to a chat)
 "send_message_to" = "Üzenet küldése…";
-"enable_realtime" = "Valós idejű alkalmazások";
-"enable_realtime_explain" = "Valós idejű kapcsolatok engedélyezése a csevegésekhez mellékelt alkalmazások számára. Ha engedélyezve van, a csevegési partnerei képesek lehetnek felfedezni az Ön IP-címét, amikor elindít egy alkalmazást.";
-// map
-"filter_map_on_time" = "Helyek megjelenítése időkeretben";
-"show_location_traces" = "Nyomvonalak megjelenítése";
-"add_poi" = "Érdekes hely megosztása";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "Ne kérdezzen rá újra a következőre: %1$@";
 "puny_code_warning_header" = "Gyanús hivatkozás észlelve";
 // placeholder contains the hostname converted to ascii
 "puny_code_warning_question" = "Biztosan meglátogatja a következőt: %1$@?";
@@ -464,15 +452,15 @@
 "multidevice_title" = "Második eszköz hozzáadása";
 "multidevice_same_network_hint" = "Győződjön meg arról, hogy mindkét eszköz ugyanazon a Wi-Fi-n vagy hálózaton van-e";
 "multidevice_this_creates_a_qr_code" = "Ez létrehoz egy QR-kódot, amit a második eszközön beolvashat a profil másolásához.\n\nÜgyeljen arra, hogy egy nem kívánatos megfigyelő vagy kamera ne láthassa a következő képernyőt.";
-"multidevice_install_dc_on_other_device" = "Telepítse a alt.chatet a másik eszközére (https://alt-chat.me/app/)";
+"multidevice_install_dc_on_other_device" = "Telepítse a Delta Chatet a másik eszközére (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
-"multidevice_tap_scan_on_other_device" = "Indítsa el a alt.chatet, koppintson a „Már van profilom / Hozzáadás második eszközként” lehetőségre, és olvassa be az itt megjelenő QR-kódot.";
+"multidevice_tap_scan_on_other_device" = "Indítsa el a Delta Chatet, koppintson a „Már van profilom / Hozzáadás második eszközként” lehetőségre, és olvassa be az itt megjelenő QR-kódot.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
 "multidevice_qr_subtitle" = "QR-kód beolvasása a második eszköz beállításához „%1$@” számára";
 "multidevice_receiver_title" = "Hozzáadás második eszközként";
 "multidevice_open_settings_on_other_device" = "Az első eszközön lépjen a „Beállítások / Második eszköz hozzáadása” menüpontra, és olvassa be az ott megjelenő QR-kódot.";
 "multidevice_receiver_scanning_ask" = "Átmásolja a profilt a másik eszközről erre az eszközre?";
-"multidevice_receiver_needs_update" = "Az importálni kívánt profil egy újabb alt.chat verzióból származik.\n\nA második eszköz beállításának folytatásához frissítse ezt az eszközt a alt.chat legújabb verziójára.";
+"multidevice_receiver_needs_update" = "Az importálni kívánt profil egy újabb Delta Chat verzióból származik.\n\nA második eszköz beállításának folytatásához frissítse ezt az eszközt a Delta Chat legújabb verziójára.";
 "multidevice_abort" = "A második eszköz beállításának megszakítása?";
 "multidevice_abort_will_invalidate_copied_qr" = "Ez érvényteleníti a vágólapra másolt QR-kódot.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ A profil átkerül az Ön második eszközére.";
@@ -579,7 +567,7 @@
 "move_to_top" = "Feljebb mozgatás";
 "delete_account" = "Profil törlése";
 "delete_account_ask" = "Biztosan törölni szeretné a profiladatait?";
-"delete_account_explain_with_name" = "A(z) „%1$@” nevű profilhoz tartozó mindet adat ezen az eszközön törölve lesz,  beleértve a végpontok közötti titkosítás beállításait, a névjegyeket, a csevegéseket, az üzeneteket és a médiát. Ez a művelet nem vonható vissza. ";
+"delete_account_explain_with_name" = "A(z) „%1$@” nevű profilhoz tartozó mindet adat ezen az eszközön törölve lesz, beleértve a végpontok közötti titkosítás beállításait, a névjegyeket, a csevegéseket, az üzeneteket és a médiát. Ez a művelet nem vonható vissza. ";
 "unconfigured_account" = "Konfigurálatlan profil";
 "unconfigured_account_hint" = "Nyissa meg a profilt a konfiguráláshoz.";
 "try_connect_now" = "Próbáljon meg most kapcsolódni";
@@ -622,6 +610,7 @@
 "pref_notifications_priority" = "Prioritás";
 "pref_notifications_explain" = "Rendszerértesítések engedélyezése az új üzenetekről";
 "pref_show_notification_content" = "Üzenet tartalmának megjelenítése az értesítésben";
+// deprecated
 "pref_show_notification_content_explain" = "Az értesítésekben megjelenik az üzenet feladója és első szavai";
 "pref_led_color" = "Értesítésjelző-fény színe";
 "pref_sound" = "Hang";
@@ -662,12 +651,19 @@
 "pref_background" = "Háttérkép";
 "pref_background_btn_default" = "Alapértelemezett kép használata";
 "pref_background_btn_gallery" = "Kiválasztás a galériából";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Ha megváltoztatja ezt a beállítást, győződjön meg arról, hogy a kiszolgálója és a többi kliense is ennek megfelelően van beállítva.\n\nMáskülönben előfordulhat, hogy a dolgok egyáltalán nem fognak működni.";
-"pref_auto_folder_moves" = "Automatikus áthelyezés a alt.chat nevű mappába";
-"pref_only_fetch_mvbox_title" = "Csak a alt.chat nevű mappából történjen lekérdezés";
+// deprecated
+"pref_auto_folder_moves" = "Automatikus áthelyezés a DeltaChat nevű mappába";
+// deprecated
+"pref_only_fetch_mvbox_title" = "Csak a DeltaChat nevű mappából történjen lekérdezés";
+// deprecated
 "pref_show_emails" = "Klasszikus e-mailek megjelenítése";
+// deprecated
 "pref_show_emails_no" = "Nem, csak csevegések";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Elfogadott partnerek számára";
+// deprecated
 "pref_show_emails_all" = "Összes";
 "pref_experimental_features" = "Kísérleti funkciók";
 "pref_on_demand_location_streaming" = "On-Demand folyamatos helymegosztás";
@@ -687,9 +683,7 @@
 "profile_image_delete" = "Profilkép törlése";
 "pref_show_tray_icon" = "Tálcaikon megjelenítése";
 "pref_edit_profile" = "Profil szerkesztése";
-"disable_imap_idle" = "IMAP IDLE letiltása";
-"disable_imap_idle_explain" = "Ne használja az IMAP IDLE kiterjesztést, még akkor sem, ha a kiszolgáló támogatja azt. A beállítás engedélyezése késlelteti az üzenetek lekérdezését, csak tesztelés céljából engedélyezze.";
-"send_stats_to_devs" = "Statisztikák küldése a alt.chat fejlesztőinek";
+"send_stats_to_devs" = "Statisztikák küldése a Delta Chat fejlesztőinek";
 // Emoji picker and categories
 "emoji_search_results" = "Keresési eredmények";
 "emoji_not_found" = "Nem található emodzsi";
@@ -713,14 +707,17 @@
 // automatically delete message
 "delete_old_messages" = "Régi üzenetek törlése";
 "autodel_device_title" = "Üzenetek törlése az eszközről a letöltést követően";
+// deprecated
 "autodel_server_title" = "Üzenetek törlése a kiszolgálóról a letöltést követően";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "Szeretné törölni a %1$d üzenetet most és az összes újonnan érkező üzenetet a jövőben ekkor: „%2$@”?\n\n• Ez magában foglalja az összes médiát is\n\n• Az üzenetek törlésre kerülnek, akár látták őket, akár nem\n\n• A „Mentett üzenetek” nem kerülnek törlésre a helyi törlésből.";
-// %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
+// deprecated
 "autodel_server_ask" = "Biztosan törölni szeretne %1$d üzenetet most, és a jövőben minden újonnan lekérdezett „%2$@” üzenetet?\n\n⚠️ Ez magába foglalja az e-maileket, a médiatartalmakat és a „Mentett üzeneteket” az összes kiszolgálómappában.\n\n⚠️ Ne használja ezt a funkciót, ha meg akarja tartani az adatokat a kiszolgálón, vagy ha klasszikus e-mail-klienseket is használ.";
-// shown below enabled autodel_server-option, should be a summary of autodel_server_ask and remind about the impact
+// deprecated
 "autodel_server_enabled_hint" = "Ez magába foglalja az e-maileket, a médiatartalmakat és a „Mentett üzeneteket” az összes kiszolgálómappában. Ne használja ezt a funkciót, ha meg akarja tartani az adatokat a kiszolgálón, vagy ha klasszikus e-mail-klienseket is használ.";
+// deprecated
 "autodel_server_warn_multi_device_title" = "A „Törlés a letöltés után azonnal” bekapcsolása";
+// deprecated
 "autodel_server_warn_multi_device" = "Ha a „Törlés a letöltés után azonnal” engedélyezve van, akkor nem használhatja ezt a profilt több eszközről.";
 "autodel_confirm" = "Értem, törölje ezeket az üzeneteket";
 // "At once" in the meaning of "Immediately", without any intervening time.
@@ -807,11 +804,11 @@
 "invalid_unencrypted_explanation" = "A végpontok közötti titkosítás létrehozásához személyesen is találkozhat a partnereivel, és a QR-kódjukat beolvasva bemutathatja őket.";
 "learn_more" = "Tudjon meg többet";
 "devicemsg_self_deleted" = "Ön törölte a „Mentett üzenetek” csevegést.\n\nℹ️ A „Mentett üzenetek” funkció újbóli használatához hozzon létre egy új csevegést önmagával.";
-// %1$s will be replaced by the amount of storage already used, sth. as '500 MB'. If you want to use a percentage sign, type in two of them, eg. %1$s %%
-"devicemsg_storage_exceeding" = "⚠️ Az e-mail-szolgáltatójától kapott tárhelye hamarosan megtelik: %1$@%% már felhasználásra került.\n\n\nElképzelhető, hogy nem tud üzeneteket fogadni, ha a tárhelye megtelt.\n\n👉 Ellenőrizze, hogy a szolgáltatója webes felületén tudja-e törölni a alt.chat-mappából az üzeneteket, és fontolja meg a „Beállítások / Csevegések és média / Üzenetek törlése a kiszolgálóról” engedélyezését. Az aktuális tárhelyhasználatot bármikor ellenőrizheti a „Beállítások / Tárhely” menüpontban.";
+// deprecated
+"devicemsg_storage_exceeding" = "⚠️ Az e-mail-szolgáltatójától kapott tárhelye hamarosan megtelik: %1$@%% már felhasználásra került.\n\n\nElképzelhető, hogy nem tud üzeneteket fogadni, ha a tárhelye megtelt.\n\n👉 Ellenőrizze, hogy a szolgáltatója webes felületén tudja-e törölni a DeltaChat-mappából az üzeneteket, és fontolja meg a „Beállítások / Csevegések és média / Üzenetek törlése a kiszolgálóról” engedélyezését. Az aktuális tárhelyhasználatot bármikor ellenőrizheti a „Beállítások / Tárhely” menüpontban.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Az eszközén lévő dátum vagy idő pontatlannak tűnik (%1$@).\n\nJavítsa meg az órát ⏰🔧 az üzenetek helyes fogadásának biztosítása érdekében.";
-"devicemsg_update_reminder" = "⚠️ Lehet, hogy a alt.chat verziója elavult.\n\nEz problémákat okozhat, mivel a partnerei újabb verziókat használnak - továbbá hiányoznak a legújabb funkciók 😳\nEllenőrizze a https://alt-chat.me/app/ oldalon vagy az alkalmazásboltban a frissítéseket.";
+"devicemsg_update_reminder" = "⚠️ Lehet, hogy a Delta Chat verziója elavult.\n\nEz problémákat okozhat, mivel a partnerei újabb verziókat használnak - továbbá hiányoznak a legújabb funkciók 😳\nEllenőrizze a https://get.delta.chat oldalon vagy az alkalmazásboltban a frissítéseket.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Feloldás a folytatáshoz";
 // qr code stuff
@@ -882,12 +879,12 @@
 // permissions
 "perm_required_title" = "Engedély szükséges";
 "perm_continue" = "Folytatás";
-"perm_explain_access_to_camera_denied" = "A fényképek-, videók- vagy QR-kódok rögzítéséhez lépjen a rendszer beállításaiba, válassza ki a „Alkalmazások és értesítések” menüpontot, válassza ki az alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Kamerához”.";
+"perm_explain_access_to_camera_denied" = "A fényképek-, videók- vagy QR-kódok rögzítéséhez lépjen a rendszer beállításaiba, válassza ki a „Alkalmazások és értesítések” menüpontot, válassza ki az DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Kamerához”.";
 // give the user an idea where to find the "Microphone" option. the hint is only shown if access was initially denied by the user. pick up wordings really used on the systems, but do not be overly precise: things shift around often and there are too many system we support to track every detail and click path
-"perm_explain_access_to_mic_denied" = "A hangüzenetek küldéséhez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Mikrofonhoz”.";
-"perm_explain_access_to_storage_denied" = "A fájlok fogadásához vagy küldéséhez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Tárhelyhez”.";
-"perm_explain_access_to_location_denied" = "A hely mellékeléséhez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Helyadatokhoz”.";
-"perm_explain_access_to_notifications_denied" = "Az értesítések fogadásához lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Értesítésekhez”.";
+"perm_explain_access_to_mic_denied" = "A hangüzenetek küldéséhez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Mikrofonhoz”.";
+"perm_explain_access_to_storage_denied" = "A fájlok fogadásához vagy küldéséhez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Tárhelyhez”.";
+"perm_explain_access_to_location_denied" = "A hely mellékeléséhez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Helyadatokhoz”.";
+"perm_explain_access_to_notifications_denied" = "Az értesítések fogadásához lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Értesítésekhez”.";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Rajzoljon bárhová az elmosódáshoz";
 "ImageEditorHud_add_text" = "Szöveg hozzáadása";
@@ -897,10 +894,7 @@
 "ImageEditorHud_crop" = "Kivágás";
 "ImageEditorHud_flip" = "Tükrözés";
 "ImageEditorHud_rotate" = "Forgatás";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Ez a hivatalos alt.chat Desktop alkalmazás.";
-"about_licensed_under_desktop" = "Ez a szoftver a GNU GPLv3 licenc alatt áll és a forráskód elérhető a GitHubon.";
-"welcome_desktop" = "Üdvözöljük a alt.chatben!";
+"welcome_desktop" = "Üdvözöljük a Delta Chatben!";
 "global_menu_preferences_language_desktop" = "Válasszon nyelvet…";
 "global_menu_file_desktop" = "Fájl";
 "global_menu_file_quit_desktop" = "Kilépés";
@@ -915,11 +909,11 @@
 "global_menu_view_developer_desktop" = "Fejlesztő";
 "global_menu_view_developer_tools_desktop" = "Fejlesztői eszközök";
 "global_menu_help_desktop" = "Súgó";
-"delta_chat_homepage" = "A alt.chat weboldala";
+"delta_chat_homepage" = "A Delta Chat weboldala";
 "contribute" = "Közreműködés";
 "global_menu_help_report_desktop" = "Jelentsen egy problémát";
-"global_menu_help_about_desktop" = "A alt.chatről";
-"global_menu_file_open_desktop" = "alt.chat megnyitása";
+"global_menu_help_about_desktop" = "A Delta Chatről";
+"global_menu_file_open_desktop" = "Delta Chat megnyitása";
 "global_menu_minimize_to_tray" = "Kicsinyítés";
 "no_chat_selected_suggestion_desktop" = "Válasszon ki egy csevegést vagy indítson egy újat";
 "write_message_desktop" = "Írjon üzenetet";
@@ -938,7 +932,8 @@
 "message_detail_received_desktop" = "érkezett";
 "menu.view.developer.open.log.folder" = "Naplófájlok mappájának megnyitása";
 "menu.view.developer.open.current.log.file" = "Jelenlegi naplófájl megnyitása";
-"explain_desktop_minimized_disabled_tray_pref" = "A tálca ikonja nem kapcsolható ki, mivel a alt.chat a --minimized kapcsolóval indult.";
+"explain_desktop_minimized_disabled_tray_pref" = "A tálca ikonja nem kapcsolható ki, mivel a Delta Chat a --minimized kapcsolóval indult.";
+// deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Nem találhatók helyesírási javaslatok.";
 "show_window" = "Ablak megjelenítése";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
@@ -969,13 +964,13 @@
 "share_account_not_configured" = "A profil nincs konfigurálva.";
 "cannot_play_audio_file" = "A hangfájl nem játszható le.";
 // iOS camera permission alert
-"perm_ios_explain_access_to_camera_denied" = "A fényképek-, videók- vagy QR-kódok rögzítéséhez lépjen a rendszer beállításaiba, válassza ki a „Alkalmazások és értesítések” menüpontot, válassza ki az alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Kamerához”.";
+"perm_ios_explain_access_to_camera_denied" = "A fényképek-, videók- vagy QR-kódok rögzítéséhez lépjen a rendszer beállításaiba, válassza ki a „Alkalmazások és értesítések” menüpontot, válassza ki az DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Kamerához”.";
 "open_settings" = "Beállítások megnyitása";
 // iOS device contact alert
 "import_device_contacts" = "Eszköz névjegyeinek importálása";
-"import_device_contacts_hint" = "Az eszközén lévő névjegyekkel való csevegéshez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a alt.chat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Névjegyekhez”.";
+"import_device_contacts_hint" = "Az eszközén lévő névjegyekkel való csevegéshez lépjen a rendszer beállításaiba, válassza ki az „Alkalmazások és értesítések” menüpontot, válassza ki a DeltaChat alkalmazást, majd koppintson az „Engedélyek” menüpontra, és engedélyezze a hozzáférést a „Névjegyekhez”.";
 // iOS notification settings
-"disabled_in_dc" = "Letiltva a alt.chatben";
+"disabled_in_dc" = "Letiltva a Delta Chatben";
 "disabled_in_system_settings" = "Letilva a rendszerbeállításokban";
 "bg_app_refresh_disabled" = "„Háttérfrissítések” letiltva a rendszerbeállításokban";
 "notifications_avg_minutes" = "Átlagosan %1$d percenként";
@@ -988,7 +983,7 @@
 // use the same translation for "Shortcuts" as the system is using, often the term "Shortcut" stays untranslated; check eg. how the "Shortcuts" system app is called in your locale
 "shortcuts_widget_title" = "Parancsikonok";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
-"shortcuts_widget_description" = "Használja a alt.chat „Hozzáadás modulhoz” funkcióját az elemek hozzáadásához";
+"shortcuts_widget_description" = "Használja a Delta Chat „Hozzáadás modulhoz” funkcióját az elemek hozzáadásához";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
 "remove_from_widget" = "Eltávolítás a modulból";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
@@ -1000,11 +995,9 @@
 "pref_background_notifications_explain" = "Mellőzött akkumulátor-optimalizációt igényel, akkor használja, ha a Push szolgáltatás nem érhető el";
 "pref_reliable_service" = "Kényszerített háttérkapcsolat";
 "pref_reliable_service_explain" = "Egy állandó értesítést jelenít meg";
-"pref_background_notifications_rationale" = "Az e-mail-kiszolgálóval való kapcsolat fenntartásához és az üzenetek háttérben történő fogadásához mellőzze az akkumulátor-optimalizálást a következő lépésben.\n\nA alt.chat kevés erőforrást használ, és ügyel arra, hogy ne merítse az akkumulátort.";
+"pref_background_notifications_rationale" = "Az e-mail-kiszolgálóval való kapcsolat fenntartásához és az üzenetek háttérben történő fogadásához mellőzze az akkumulátor-optimalizálást a következő lépésben.\n\nA Delta Chat kevés erőforrást használ, és ügyel arra, hogy ne merítse az akkumulátort.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
-"perm_enable_bg_reminder_title" = "Koppintson ide az üzenetek fogadásához, miközben a alt.chat a háttérben fut.";
-"perm_enable_bg_already_done" = "Már engedélyezve van a alt.chat számára, hogy a háttérben üzeneteket fogadjon.\n\nHa az üzenetek még mindig nem érkeznek meg a háttérben, ellenőrizze a rendszerbeállításokat is.";
+"perm_enable_bg_reminder_title" = "Koppintson ide az üzenetek fogadásához, miközben a Delta Chat a háttérben fut.";
+"perm_enable_bg_already_done" = "Már engedélyezve van a Delta Chat számára, hogy a háttérben üzeneteket fogadjon.\n\nHa az üzenetek még mindig nem érkeznek meg a háttérben, ellenőrizze a rendszerbeállításokat is.";
 // device messages for updates
 "update_2_0" = "Újdonságok:\n\n💯 A végpontok közötti titkosítás most már megbízható és örökre megmarad. A lakatok 🔒 eltűntek!\n\n✉️ A végpontok közötti titkosítás nélküli klasszikus e-mailek betűszimbólummal vannak jelölve\n\n😻 Új, továbbfejlesztett profilképernyő az összes névjegyhez\n\n🔲 Új gomb a csevegésben használt alkalmazások gyors eléréséhez\n\n❤️ Ha teheti, adományozzon nekünk, hogy függetlenek maradhassunk és továbbra is fejlesztéseket tudjunk végrehajtani: %1$@";
-"update_available" = "Update Available";
-"search_results_local" = "Helyileg találva";

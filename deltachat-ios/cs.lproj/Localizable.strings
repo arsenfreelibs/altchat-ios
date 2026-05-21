@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "OK";
 "cancel" = "Zrušit";
 "clear_search" = "Vyčistit vyhledávání";
@@ -14,7 +14,6 @@
 "off" = "Vypnuto";
 "def" = "Výchozí";
 "default_value" = "Výchozí (%1$@)";
-"default_value_as_above" = "Výchozí (jako výše)";
 "custom" = "Vlastní";
 "none" = "Žádný";
 "automatic" = "Automaticky";
@@ -24,6 +23,8 @@
 "downloading" = "Stahování...";
 "open_attachment" = "Otevřít přílohu";
 "join" = "Připojit se";
+"join_group" = "Připojit se ke skupině";
+"join_channel" = "Připojte se ke kanálu";
 "rejoin" = "Znovu se připojit";
 "delete" = "Smazat";
 "delete_for_me" = "Smazat pro mě";
@@ -32,8 +33,6 @@
 "update" = "Aktualizovat";
 "emoji" = "Emoji";
 "attachment" = "Příloha";
-// the placeholder will be replaced by the name of the image or file to attach
-"ask_attach" = "Připojit \"%1$@\"?";
 "back" = "Zpět";
 "close" = "Zavřít";
 "close_window" = "Zavřít okno";
@@ -54,13 +53,15 @@
 // Adjective "smth is muted". used to describe a muted or silenced chat, that e.g. does not make noise or cause notifications
 "muted" = "Ztlumeno";
 "ephemeral_messages" = "Mizející zprávy";
-"ephemeral_messages_hint" = "Volba platí pro všechny členy tohoto chatu, kteří používají alt.chat; stále ale mohou kopírovat, ukládat a přeposílat zprávy nebo používat jiné e-mailové klienty, které tuto volbu nerespektují.";
+"ephemeral_messages_hint" = "Volba platí pro všechny členy tohoto chatu, kteří používají Delta Chat; stále ale mohou kopírovat, ukládat a přeposílat zprávy nebo používat jiné e-mailové klienty, které tuto volbu nerespektují.";
 "save" = "Uložit";
 "chat" = "Chat";
 "media" = "Multimédia";
 "apps_and_media" = "Aplikace a multimédia";
 "profile" = "Profil";
+// deprecated
 "all_profiles" = "Všechny profily";
+// deprecated
 "current_profile" = "Aktuální profil";
 "main_menu" = "Hlavní nabídka";
 "start_chat" = "Začít chatovat";
@@ -71,6 +72,10 @@
 "mark_as_read" = "Označit jako přečtené";
 // Used beside an icon with very few space. Shortest text for "Mark as being read". In english, this could be "Read" (past tense of "to read"), in german, this could be "Gelesen".
 "mark_as_read_short" = "Přečteno";
+// Used as an menu entry or button
+"mark_as_unread" = "Označit jako nepřečtené";
+// Used beside an icon with very few space. Shortest text for "Mark as being unread". In english, this could be "Unread" (past tense of "to unread"), in german, this could be "Ungelesen".
+"mark_as_unread_short" = "Nepřečtené";
 // Placeholder text when something is loading
 "loading" = "Načítání...";
 "hide" = "Skrýt";
@@ -81,6 +86,7 @@
 "always" = "Vždy";
 "always_load_remote_images" = "Vždy načítat vzdálené obrázky";
 "once" = "Jednou";
+// deprecated
 "show_warning" = "Zobrazovat varování";
 "not_now" = "Teď ne";
 "never" = "Nikdy";
@@ -90,6 +96,7 @@
 "offline" = "Offline";
 // For the next view or as "continue". Should be as short as possible.
 "next" = "Další";
+"warning" = "Varování";
 "error" = "Chyba";
 "error_x" = "Chyba: %1$@";
 "no_app_to_handle_data" = "Aplikace pro tento typ dat nenalezena.";
@@ -117,10 +124,14 @@
 // Refers to the time a contact was last seen. Shown below contact name in the profile. The placeholder will be replaced by a relative point in time as "3 minutes ago" (see https://momentjs.com for more examples and languages)
 "last_seen_relative" = "Naposledy viděni %1$@";
 "last_seen_unknown" = "Naposledy viděno: Neznámý";
+// Call duration as shown in the call bubbles. There is some risk to mix with the sending time, so the word "Duration" may be helpful. Might also be "Duration: %d minutes", "%d-minute duration", "%d-minute length" or "%d-minute call"
+// Call duration as shown in the call bubbles in case the call is less than one minute. If the context is not clear enough, one may want to add the word "Duration".
+"call_duration_less_than_a_minute" = "Méně než 1 minuta";
 // Shown beside messages that are "N minutes old". Prefer short strings, or well-known abbreviations.
 // Shown beside messages that are "N hours old". Prefer short strings, or well-known abbreviations.
 // Short form for "N Items Selected"
 "selected_colon" = "Vybráno:";
+"selected" = "Vybráno";
 "self" = "Já";
 "draft" = "Rozepsané";
 "image" = "Obrázek";
@@ -134,6 +145,9 @@
 "add_stickers_instructions" = "Přejete-li si přidat nálepky, klepněte na „Otevřít složku nálepek“, vytvořte podsložku pro balíček nálepek a přetáhněte do ní soubory obrázků a nálepek";
 // deprecated
 "open_sticker_folder" = "Otevřít složku nálepek";
+"ask_add_sticker_to_collection" = "Přidat tuto nálepku do své sbírky?";
+"ask_delete_sticker" = "Smazat tuto nálepku?";
+"sticker_picker_empty_hint" = "Klepnutím na nálepku ji sem přidáte.";
 "images" = "Obrázky";
 // a noun, used for "Music" and other "Audio" files
 "audio" = "Zvukové záznamy";
@@ -149,6 +163,7 @@
 "camera" = "Fotoaparát";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Spoušť";
+// Switch eg. from front to back camera
 "switch_camera" = "Přepnout kameru";
 "toggle_fullscreen" = "Přepnout režim celé obrazovky";
 "location" = "Poloha";
@@ -237,7 +252,7 @@
 "share_invite_link_explain" = "Kdokoli s tímto odkazem si může zobrazit váš profil a začít s vámi chatovat. Sdílejte jej pouze s lidmi, kterým důvěřujete.";
 "invite_friends" = "Pozvat přátele";
 // %1$s is replaced by the user's invitation link ("https://i.delta.chat/...")
-"invite_friends_text" = "Kontaktujte mě na alt.chatu:\n%1$@";
+"invite_friends_text" = "Kontaktujte mě na Delta Chatu:\n%1$@";
 "menu_copy_selection_to_clipboard" = "Kopírovat výběr";
 "menu_copy_link_to_clipboard" = "Kopírovat odkaz";
 "menu_copy_text_to_clipboard" = "Kopírovat text";
@@ -252,7 +267,7 @@
 "menu_export_attachment" = "Exportovat přílohu";
 "menu_export_attachments" = "Exportovat přílohy";
 "menu_all_media" = "Všechna multimédia";
-"all_apps_and_media" = "Vsechny soubory a multimedia";
+"all_apps_and_media" = "Všechny aplikace a multimédia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Ukázat v chatu";
 "show_app_in_chat" = "Zobrazit aplikaci v chatu";
@@ -287,8 +302,6 @@
 "menu_more_options" = "Další možnosti";
 "menu_learn_spelling" = "Naučte se pravopis";
 "jump_to_message" = "Přejít na zprávu";
-"jump_to_original_message" = "Přejít na původní zprávu";
-"copy_json" = "Kopírovat JSON";
 "replace_draft" = "Nahradit rozepsanou zprávu";
 "title_share_location" = "Sdílet polohu se všemi členy skupiny";
 "device_talk" = "Zprávy v zařízení";
@@ -310,12 +323,13 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Přidat na domovskou obrazovku";
 "donate" = "Darovat";
-"donate_device_msg" = "❤️ Vypadá to, že se vám alt.chat líbí! \n\n Prosím, zvažte možnost darování, abyste pomohli zajistit, že alt.chat zůstane zdarma pro všechny. \n\n Ačkoli je alt.chat zdarma a má otevřený zdrojový kód, vývoj stojí peníze. Pomozte nám udržet alt.chat nezávislý a v budoucnu jej udělat ještě úžasnějším. \n\n https://alt-chat.me/donate";
+"donate_device_msg" = "❤️ Vypadá to, že se vám Delta Chat líbí! \n\n Prosím, zvažte možnost darování, abyste pomohli zajistit, že Delta Chat zůstane zdarma pro všechny. \n\n Ačkoli je Delta Chat zdarma a má otevřený zdrojový kód, vývoj stojí peníze. Pomozte nám udržet Delta Chat nezávislý a v budoucnu jej udělat ještě úžasnějším. \n\n https://delta.chat/donate";
 "mute_for_one_hour" = "Ztlumit na 1 hodinu";
 "mute_for_eight_hours" = "Ztlumit na 8 hodin";
 "mute_for_one_day" = "Ztlumit na 1 den";
 "mute_for_seven_days" = "Ztlumit na 7 dní";
 "mute_forever" = "Ztlumit navždy";
+// deprecated
 "share_location_for_5_minutes" = "Na 5 minut";
 "share_location_for_30_minutes" = "Na 30 minut";
 "share_location_for_one_hour" = "Na 1 hodinu";
@@ -326,10 +340,6 @@
 "start_call" = "Hovor";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Zvedni";
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Vyzvání";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Připojování";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Pokles";
 "declined_call" = "Odmítnutý hovor";
@@ -340,6 +350,7 @@
 "ask_leave_group" = "Jste si jistý, že chcete odejít?";
 "ask_delete_named_chat" = "Smazat chat \"%1$@\" ze všech vašich zařízení?";
 "ask_delete_message" = "Smazat tuto zprávu ze všech vašich zařízení?";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Přejete si přeposlat zprávy do chatu %1$@?";
 "ask_forward_multiple" = "Přejete si přeposlat zprávy do %1$d chatů?";
 "ask_export_attachment" = "Uložením příloh je zpřístupníte ostatním aplikacím na tomto zařízení.\n\nPřejete si pokračovat?";
@@ -390,7 +401,6 @@
 "attachment_failed_to_load" = "Načtení přílohy se nezdařilo";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Uzamknout nahrávání";
-"audio_note_processing_failed" = "Nahrávku se nepodařilo zpracovat.";
 // mailing lists
 "mailing_list" = "E-mailový seznam";
 // webxdc
@@ -402,15 +412,7 @@
 "send_file_to" = "Odeslat \"%1$@\"...";
 // title shown above a list contacts where one should be selected (eg. when a webxdc attempts to send a message to a chat)
 "send_message_to" = "Odeslat zprávu...";
-"enable_realtime" = "Real-time aplikace";
-"enable_realtime_explain" = "Umožnit aplikacím sdíleným v chatech, aby navazovaly spojení v reálném čase. Tato volba umožní vašim kontaktům zjistit vaši IP adresu, když nějakou aplikaci spustíte.";
-// map
-"filter_map_on_time" = "Zobrazit polohy v časovém úseku";
-"show_location_traces" = "Zobrazit trasy";
-"add_poi" = "Odeslat bod zájmu";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "U %1$@ se již znovu neptat";
 "puny_code_warning_header" = "Byl nalezen podezřelý odkaz";
 // placeholder contains the hostname converted to ascii
 "puny_code_warning_question" = "Opravdu si přejete navštívit stránku %1$@?";
@@ -464,15 +466,15 @@
 "multidevice_title" = "Přidat další zařízení";
 "multidevice_same_network_hint" = "Ujistěte se, že jsou obě zařízení na stejné Wi-Fi či síti";
 "multidevice_this_creates_a_qr_code" = "Tímto bude vytvořen QR kód, který můžete naskenovat dalším zařízením ke zkopírování profilu.\n\nUjistěte se, že následující obrazovku neuvidí žádný nechtěný přihlížející či kamera.";
-"multidevice_install_dc_on_other_device" = "Nainstalujte si alt.chat do druhého zařízení (https://alt-chat.me/app/)";
+"multidevice_install_dc_on_other_device" = "Nainstalujte si Delta Chat do druhého zařízení (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
-"multidevice_tap_scan_on_other_device" = "Spusťte alt.chat, klepněte na „Již mám svůj profil / Přidat jako další zařízení“ a naskenujte následující kód";
+"multidevice_tap_scan_on_other_device" = "Spusťte Delta Chat, klepněte na „Již mám svůj profil / Přidat jako další zařízení“ a naskenujte následující kód";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
 "multidevice_qr_subtitle" = "Pro připojení zařízení k %1$@ naskenujte";
 "multidevice_receiver_title" = "Přidat jako další zařízení";
 "multidevice_open_settings_on_other_device" = "Na hlavním zařízení, otevřete \"Nastavení / Přidat další zařízení\" a naskenujte kód, který se na něm zobrazí";
 "multidevice_receiver_scanning_ask" = "Přejete si zkopírovat profil z jiného zařízení na toto?";
-"multidevice_receiver_needs_update" = "Profil, který se chystáte importovat, je z novější verze aplikace alt.chat.\n\nAby bylo možné pokračovat v nastavování tohoto zařízení, aktualizujte na něm prosím alt.chat na nejnovější verzi.";
+"multidevice_receiver_needs_update" = "Profil, který se chystáte importovat, je z novější verze aplikace Delta Chat.\n\nAby bylo možné pokračovat v nastavování tohoto zařízení, aktualizujte na něm prosím Delta Chat na nejnovější verzi.";
 "multidevice_abort" = "Přerušit nastavování dalšího zařízení?";
 "multidevice_abort_will_invalidate_copied_qr" = "Tímto bude zneplatněn QR kód zkopírovaný ve schránce.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ Profil byl přenesen na další zařízení.";
@@ -566,8 +568,6 @@
 // shown if a QR code was scanned that can be used as a relay
 "confirm_add_transport" = "Přidat toto vysílání?";
 "invalid_transport_qr" = "Naskenovaný kód QR neobsahuje platné vysílání.";
-// placeholder will be replaced by a relay server name
-"confirm_remove_transport" = "Odstranit vysílání \"%1$@\"? \n\n Vaše kontakty se s vámi spojí pouze tehdy, pokud jste je předtím kontaktovali prostřednictvím jiného vysílání. \n\n Pokud máte pochybnosti, odstraňte spojení později.";
 "login_certificate_checks" = "Kontroly certifikátu";
 "login_error_mail" = "Prosím, zadejte platnou e-mailovou adresu";
 "login_error_server" = "Prosím, zadejte platný server / IP adresu";
@@ -633,6 +633,7 @@
 "pref_notifications_priority" = "Priorita";
 "pref_notifications_explain" = "Povolit systémová oznámení nových zpráv";
 "pref_show_notification_content" = "Zobrazit obsah zprávy uvnitř oznámení";
+// deprecated
 "pref_show_notification_content_explain" = "Zobrazit odesílatele a první slova zprávy uvnitř oznámení";
 "pref_led_color" = "Barva diody";
 "pref_sound" = "Zvuk";
@@ -673,16 +674,23 @@
 "pref_background" = "Pozadí";
 "pref_background_btn_default" = "Použít výchozí obrázek";
 "pref_background_btn_gallery" = "Vybrat z galerie";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Při změně této volby se ujistěte, že váš server a ostatní klientské aplikace mají odpovídající nastavení.\n\nJinak může vše přestat fungovat.";
 // No need to be literal here, you can also use "Use Multiple Devices", "Support Multiple Devices" or other fitting terms. However, it should fit to the wording or your language at https://delta.chat/help
 "pref_multidevice" = "Režim pro více zařízení";
 "pref_multidevice_explain" = "Synchronizujte zprávy s ostatními zařízeními. Automaticky povoleno při přidání druhého zařízení";
 "pref_multidevice_change_warn" = "Při použití stejného profilu na více zařízeních musí být povolen \"režim více zařízení\". Toto nastavení zakažte pouze v případě, že jste tento profil odstranili ze všech ostatních zařízení. \n\n Zakázání režimu \"režim více zařízení\" při používání profilu na více zařízeních bude mít za následek zmeškané zprávy a další problémy.";
-"pref_auto_folder_moves" = "Automaticky přesouvat do složky alt.chat ";
-"pref_only_fetch_mvbox_title" = "Načítat pouze ze složky alt.chat";
+// deprecated
+"pref_auto_folder_moves" = "Automaticky přesouvat do složky DeltaChat ";
+// deprecated
+"pref_only_fetch_mvbox_title" = "Načítat pouze ze složky DeltaChat";
+// deprecated
 "pref_show_emails" = "Zobrazovat běžné e-maily";
+// deprecated
 "pref_show_emails_no" = "Ne, pouze chaty";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Pro přijaté kontakty";
+// deprecated
 "pref_show_emails_all" = "Vše";
 "pref_experimental_features" = "Experimentální funkce ";
 "pref_experimental_features_explain" = "Tyto funkce mohou být nestabilní a mohou být změněny nebo odstraněny.";
@@ -703,10 +711,8 @@
 "profile_image_delete" = "Smazat profilový obrázek";
 "pref_show_tray_icon" = "Zobrazit ikonu v oznamovací oblasti";
 "pref_edit_profile" = "Upravit profil";
-"disable_imap_idle" = "Zakázat IMAP IDLE";
-"disable_imap_idle_explain" = "Nepoužívat rozšíření IMAP IDLE ani když jej server podporuje. Zapnutí této volby zvýší prodlevu při získávání zpráv, použijte ji jen pro testování.";
-"send_stats_to_devs" = "Odeslat statistiky vývojářům alt.chatu";
-"stats_msg_body" = "Příloha obsahuje anonymní statistiky používání, které nám pomáhají zlepšovat službu alt.chat. Děkujeme vám!";
+"send_stats_to_devs" = "Odeslat statistiky vývojářům Delta Chatu";
+"stats_msg_body" = "Příloha obsahuje anonymní statistiky používání, které nám pomáhají zlepšovat službu Delta Chat. Děkujeme vám!";
 // Emoji picker and categories
 "emoji_search_results" = "Výsledky hledání";
 "emoji_not_found" = "Emoji nenalezeno";
@@ -730,14 +736,17 @@
 // automatically delete message
 "delete_old_messages" = "Mazat staré zprávy";
 "autodel_device_title" = "Mazat zprávy ze zařízení";
+// deprecated
 "autodel_server_title" = "Mazat zprávy ze serveru";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "Skutečně smazat %1$d zpráv a všechny v budoucnu stažené zprávy \"%2$@\"?\n\n• Toto zahrnuje všechna multimédia\n\n• Zprávy budou smazány bez ohledu na jejich přečtení\n\n• \"Uložené zprávy\" budou ponechány";
-// %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
-"autodel_server_ask" = "Skutečně smazat %1$d zprávy a všechny v budoucnu stažené zprávy \"%2$@\"?\n\n⚠️ Toto zahrnuje e-maily, multimédia a \"Uložené zprávy\" ve všech složkách na serveru\n\n⚠️ Nepoužívejte tuto funkci, pokud si přejete ponechat data na serveru\n\n⚠️ Nepoužívejte tuto funkci, pokud používáte i jiné e-mailové klienty mimo alt.chat";
-// shown below enabled autodel_server-option, should be a summary of autodel_server_ask and remind about the impact
-"autodel_server_enabled_hint" = "Toto zahrnuje e-maily, multimédia a \"Uložené zprávy\" ve všech složkách na serveru. Nepoužívejte tuto funkci, pokud chcete ponechat data na serveru, nebo pokud používáte i jiné e-mailové programy mimo alt.chat";
+// deprecated
+"autodel_server_ask" = "Skutečně smazat %1$d zprávy a všechny v budoucnu stažené zprávy \"%2$@\"?\n\n⚠️ Toto zahrnuje e-maily, multimédia a \"Uložené zprávy\" ve všech složkách na serveru\n\n⚠️ Nepoužívejte tuto funkci, pokud si přejete ponechat data na serveru\n\n⚠️ Nepoužívejte tuto funkci, pokud používáte i jiné e-mailové klienty mimo Delta Chat";
+// deprecated
+"autodel_server_enabled_hint" = "Toto zahrnuje e-maily, multimédia a \"Uložené zprávy\" ve všech složkách na serveru. Nepoužívejte tuto funkci, pokud chcete ponechat data na serveru, nebo pokud používáte i jiné e-mailové programy mimo Delta Chat";
+// deprecated
 "autodel_server_warn_multi_device_title" = "Zapnout okamžité mazání";
+// deprecated
 "autodel_server_warn_multi_device" = "Pokud zapnete okamžité mazání, nemůžete tento profil používat na více zařízeních.";
 "autodel_confirm" = "Rozumím. Smazat všechny tyto zprávy";
 // "At once" in the meaning of "Immediately", without any intervening time.
@@ -825,11 +834,11 @@
 "invalid_unencrypted_explanation" = "Pro navázání koncově šifrovaného spojení se můžete se svými kontakty setkat osobně a naskenovat jejich QR kódy.";
 "learn_more" = "Další informace";
 "devicemsg_self_deleted" = "Smazali jste chat „Uložené zprávy“.\n\nℹ️ Chcete-li znovu použít funkci „Uložené zprávy“, založte nový chat sami se sebou.";
-// %1$s will be replaced by the amount of storage already used, sth. as '500 MB'. If you want to use a percentage sign, type in two of them, eg. %1$s %%
+// deprecated
 "devicemsg_storage_exceeding" = "⚠️ Úložiště u vašeho poskytovatele je téměř vyčerpané: %1$@ %% je již využito.\n\nPokud se úložiště zaplní, nebudete moci přijímat zprávy.\n\n👉 Zkuste smazat stará data ve webovém prostředí poskytovatele a zvažte povolení volby \"Nastavení / Chaty a multimédia / Mazat staré zprávy\". Aktuální využití úložiště můžete kdykoliv zkontrolovat v \"Nastavení / Připojení\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Datum a čas na vašem zařízení se zdají být nepřesné (%1$@).\n\nUpravte si čas ⏰🔧, abyste mohli přijímat své zprávy.";
-"devicemsg_update_reminder" = "⚠️ Vaše verze alt.chatu může být zastaralá.\n\nTo může způsobit problémy, protože vaši partneři v chatu používají novější verze – a vám chybí nejnovější funkce 😳\nAktualizace najdete na https://alt-chat.me/app/ nebo v obchodě s aplikacemi.";
+"devicemsg_update_reminder" = "⚠️ Vaše verze Delta Chatu může být zastaralá.\n\nTo může způsobit problémy, protože vaši partneři v chatu používají novější verze – a vám chybí nejnovější funkce 😳\nAktualizace najdete na https://get.delta.chat nebo v obchodě s aplikacemi.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Pro pokračování odemkněte";
 // qr code stuff
@@ -909,7 +918,7 @@
 "perm_explain_access_to_mic_denied" = "Pro posílání zvukových zpráv přejděte do nastavení aplikace, vyberte \"Oprávnění\" a povolte oprávnění \"Mikrofon\".";
 "perm_explain_access_to_storage_denied" = "Pro příjem a posílání souborů přejděte do nastavení aplikace, vyberte \"Oprávnění\" a povolte oprávnění \"Fotky a videa\".";
 "perm_explain_access_to_location_denied" = "Pro posílání polohy přejděte do nastavení aplikace, vyberte \"Oprávnění\" a povolte oprávnění \"Poloha\".";
-"perm_explain_access_to_notifications_denied" = "Chcete-li dostávat oznámení, přejděte na „Nastavení systému / Aplikace / alt.chat“ a povolte „Oznámení“.";
+"perm_explain_access_to_notifications_denied" = "Chcete-li dostávat oznámení, přejděte na „Nastavení systému / Aplikace / Delta Chat“ a povolte „Oznámení“.";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Kreslením rozmazávejte";
 "ImageEditorHud_add_text" = "Přidat text";
@@ -919,10 +928,7 @@
 "ImageEditorHud_crop" = "Ořez";
 "ImageEditorHud_flip" = "Zrcadlení";
 "ImageEditorHud_rotate" = "Otočení";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Toto je oficiální aplikace alt.chat Desktop.";
-"about_licensed_under_desktop" = "Tento software je distribuován pod licencí GNU GPL verze 3 a jeho zdrojový kód je k dispozici na GitHubu.";
-"welcome_desktop" = "Vítejte v aplikaci alt.chat";
+"welcome_desktop" = "Vítejte v aplikaci Delta Chat";
 "global_menu_preferences_language_desktop" = "Jazyk";
 "global_menu_file_desktop" = "Soubor";
 "global_menu_file_quit_desktop" = "Ukončit";
@@ -937,11 +943,11 @@
 "global_menu_view_developer_desktop" = "Vývoj";
 "global_menu_view_developer_tools_desktop" = "Nástroje pro vývojáře";
 "global_menu_help_desktop" = "Nápověda";
-"delta_chat_homepage" = "Domovská stránka alt.chat";
+"delta_chat_homepage" = "Domovská stránka Delta Chat";
 "contribute" = "Přispět";
 "global_menu_help_report_desktop" = "Nahlásit problém";
-"global_menu_help_about_desktop" = "O aplikaci alt.chat";
-"global_menu_file_open_desktop" = "Otevřít alt.chat";
+"global_menu_help_about_desktop" = "O aplikaci Delta Chat";
+"global_menu_file_open_desktop" = "Otevřít Delta Chat";
 "global_menu_minimize_to_tray" = "Minimalizovat";
 "no_chat_selected_suggestion_desktop" = "Vybrat chat nebo vytvořit nový";
 "write_message_desktop" = "Napište zprávu";
@@ -960,7 +966,8 @@
 "message_detail_received_desktop" = "přijato";
 "menu.view.developer.open.log.folder" = "Otevřít složku protokolu";
 "menu.view.developer.open.current.log.file" = "Otevřít stávající soubor s protokolem";
-"explain_desktop_minimized_disabled_tray_pref" = "Ikonu na panelu nelze deaktivovat, protože alt.chat byl spuštěn s volbou --minimized.";
+"explain_desktop_minimized_disabled_tray_pref" = "Ikonu na panelu nelze deaktivovat, protože Delta Chat byl spuštěn s volbou --minimized.";
+// deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Žádné pravopisné návrhy.";
 "show_window" = "Zobrazit okno";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
@@ -997,7 +1004,7 @@
 "import_device_contacts" = "Importovat kontakty ze zařízení";
 "import_device_contacts_hint" = "Chcete-li chatovat s kontakty ze svého zařízení, otevřete Nastavení a povolte „Kontakty“.";
 // iOS notification settings
-"disabled_in_dc" = "Zakázáno aplikací alt.chat";
+"disabled_in_dc" = "Zakázáno aplikací Delta Chat";
 "disabled_in_system_settings" = "Zakázáno v systémovém nastavení";
 "bg_app_refresh_disabled" = "\"Aktualizace aplikací na pozadí\" jsou vypnuty v systémovém nastavení";
 "notifications_avg_minutes" = "Průměrně jednou za %1$d minut";
@@ -1010,7 +1017,7 @@
 // use the same translation for "Shortcuts" as the system is using, often the term "Shortcut" stays untranslated; check eg. how the "Shortcuts" system app is called in your locale
 "shortcuts_widget_title" = "Zkratky";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
-"shortcuts_widget_description" = "K přidání položek použijte volbu \"Přidat na widget\" v aplikaci alt.chat";
+"shortcuts_widget_description" = "K přidání položek použijte volbu \"Přidat na widget\" v aplikaci Delta Chat";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
 "remove_from_widget" = "Odstranit z widgetu";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
@@ -1022,11 +1029,9 @@
 "pref_background_notifications_explain" = "Vyžaduje vypnutí optimalizací baterie; použijte, pokud oznámení nechodí včas";
 "pref_reliable_service" = "Vynutit připojení na pozadí";
 "pref_reliable_service_explain" = "Zobrazí stálé oznámení";
-"pref_background_notifications_rationale" = "K udržení spojení s e-mailovým serverem a přijímání zpráv na pozadí v následujícím kroku zvolte, aby byly ignorovány optimalizace baterie.\n\nalt.chat používá jen málo zdrojů a snaží se neplýtvat baterií.";
+"pref_background_notifications_rationale" = "K udržení spojení s e-mailovým serverem a přijímání zpráv na pozadí v následujícím kroku zvolte, aby byly ignorovány optimalizace baterie.\n\nDelta Chat používá jen málo zdrojů a snaží se neplýtvat baterií.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
-"perm_enable_bg_reminder_title" = "Stiskem nastavíte přijímání zpráv, když je aplikace alt.chat na pozadí.";
-"perm_enable_bg_already_done" = "Přijímání zpráv na pozadí jste již aplikaci alt.chat povolili.\n\nV případě, že vám zprávy na pozadí stále nechodí, prosím zkontrolujte svá systémová nastavení.";
+"perm_enable_bg_reminder_title" = "Stiskem nastavíte přijímání zpráv, když je aplikace Delta Chat na pozadí.";
+"perm_enable_bg_already_done" = "Přijímání zpráv na pozadí jste již aplikaci Delta Chat povolili.\n\nV případě, že vám zprávy na pozadí stále nechodí, prosím zkontrolujte svá systémová nastavení.";
 // device messages for updates
 "update_2_0" = "Co je nového? \n\n💯 Koncové šifrování je nyní spolehlivé a navždy. Visací zámky 🔒 jsou pryč! \n\n✉️ Klasické e-maily bez koncového šifrování jsou označeny symbolem písmene \n\n😻 Nová vylepšená profilová obrazovka pro všechny kontakty \n\n🔲 Nové tlačítko pro rychlý přístup k aplikacím používaným v chatu \n\n❤️ Přispějte nám, abychom zůstali nezávislí a mohli pokračovat ve vylepšování: %1$@";
-"update_available" = "Update Available";
-"search_results_local" = "Nalezeno lokálně";

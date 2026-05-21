@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "Ados";
 "cancel" = "Utzi";
 "clear_search" = "Garbitu bilaketa";
@@ -14,7 +14,6 @@
 "off" = "Ez";
 "def" = "Lehenetsia";
 "default_value" = "Lehenetsia (%1$@)";
-"default_value_as_above" = "Lehenetsia (aurreko bera)";
 "custom" = "Pertsonalizatua";
 "none" = "Bat ere ez";
 "automatic" = "Automatikoa";
@@ -32,8 +31,6 @@
 "update" = "Eguneratu";
 "emoji" = "Emojia";
 "attachment" = "Eranskina";
-// the placeholder will be replaced by the name of the image or file to attach
-"ask_attach" = "Erantsi \"%1$@\"?";
 "back" = "Atzera";
 "close" = "Itxi";
 "close_window" = "Leihoa itxi";
@@ -43,7 +40,7 @@
 "later" = "Geroago";
 // "Resend" means "Sending the selected message(s) again to the same chat". The string is used in a menu and should be as short as possible. Resending may be needed after failures or to repost old messages to new members.
 "resend" = "Berriro bidali";
-"edited" = "Editatu egin da";
+"edited" = "Editatu egin da:";
 "edit_message" = "Mezua editatu";
 // Verb "to archive", as in "put a chat in the archive", not a noun "The Archive".
 "archive" = "Artxibatu";
@@ -60,7 +57,9 @@
 "media" = "Multimedia";
 "apps_and_media" = "Aplikazioak eta multimedia";
 "profile" = "Kontua";
+// deprecated
 "all_profiles" = "Kontu guztiak";
+// deprecated
 "current_profile" = "Oraingo kontua";
 "main_menu" = "Menu nagusia";
 "start_chat" = "Hasi txata";
@@ -83,6 +82,7 @@
 "always" = "Beti";
 "always_load_remote_images" = "Kargatu urrutiko irudiak beti";
 "once" = "Behin";
+// deprecated
 "show_warning" = "Erakutsi abisua";
 "not_now" = "Orain ez";
 "never" = "Inoiz ez";
@@ -119,10 +119,14 @@
 // Refers to the time a contact was last seen. Shown below contact name in the profile. The placeholder will be replaced by a relative point in time as "3 minutes ago" (see https://momentjs.com for more examples and languages)
 "last_seen_relative" = "Azken aldiz begiratua %1$@";
 "last_seen_unknown" = "Azken aldiz begiratzea: ezezaguna";
+// Call duration as shown in the call bubbles. There is some risk to mix with the sending time, so the word "Duration" may be helpful. Might also be "Duration: %d minutes", "%d-minute duration", "%d-minute length" or "%d-minute call"
+// Call duration as shown in the call bubbles in case the call is less than one minute. If the context is not clear enough, one may want to add the word "Duration".
+"call_duration_less_than_a_minute" = "Minutu 1 baino gutxiago";
 // Shown beside messages that are "N minutes old". Prefer short strings, or well-known abbreviations.
 // Shown beside messages that are "N hours old". Prefer short strings, or well-known abbreviations.
 // Short form for "N Items Selected"
 "selected_colon" = "Hautaketa:";
+"selected" = "Hautatua";
 "self" = "Ni";
 "draft" = "Zirriborroa";
 "image" = "Irudia";
@@ -132,11 +136,13 @@
 // "Stickers" as known from other messengers; in some languages, the English "Sticker" is fine.
 "sticker" = "Stickerra";
 "add_to_sticker_collection" = "Gehitu Sticker bildumara";
-"add_stickers_instructions" = "Stickerretara gehitzeko, klik egin \"Ireki sticker karpeta\"  aukeran, sortu azpikarpeta bat zure sticker multzoarentzat eta arrastatu irudi eta sticker fitxategiak bertara.";
 // deprecated, use sticker_picker_empty_hint instead
 "add_stickers_instructions" = "Stickerretara gehitzeko, klik egin \"Ireki sticker karpeta\" aukeran, sortu azpikarpeta bat zure sticker multzoarentzat eta arrastatu irudi eta sticker fitxategiak bertara.";
 // deprecated
 "open_sticker_folder" = "Ireki sticker karpeta";
+"ask_add_sticker_to_collection" = "Gehitu eranskailu hau zure bildumara?";
+"ask_delete_sticker" = "Ezabatu eranskailu hau?";
+"sticker_picker_empty_hint" = "Sakatu eranskailu bat hemen gehitzeko";
 "images" = "Irudiak";
 // a noun, used for "Music" and other "Audio" files
 "audio" = "Audioa";
@@ -152,6 +158,7 @@
 "camera" = "Kamera";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Harrapatu";
+// Switch eg. from front to back camera
 "switch_camera" = "Aldatu kamera";
 "toggle_fullscreen" = "Aldatu pantaila osoa modua";
 "location" = "Kokalekua";
@@ -214,6 +221,7 @@
 "new_channel" = "Kanal berria";
 // consider keeping the term "channel" as in WhatsApp or Telegram
 "channel_name" = "Kanalaren izena";
+// The number of times a message is shown in channels. Use what other messengers are using here, smth. as "N-times seen" or "1 Aufruf" (german) work as well, where "1 impression" or "1 hit" may sound too formal and may be more marketing slang.
 "email" = "Posta elektronikoa";
 // "New" as in "Create New Email"; shown together with "New Group" and "New Channel"
 "new_email" = "Posta elektroniko berria";
@@ -227,8 +235,9 @@
 "menu_archive_chat" = "Artxibatu txata";
 "menu_unarchive_chat" = "Berreskuratu txata artxibotik";
 "menu_add_attachment" = "Gehitu eranskina";
-"menu_leave_group" = "Atera taldetik";
+"menu_leave_group" = "Utzi taldea";
 "menu_leave_channel" = "Utzi kanala";
+"menu_leave_and_delete" = "Utzi eta ezabatu niretzat";
 "menu_delete_chat" = "Ezabatu txata";
 // Command to delete all messages in a chat. The chat itself will not be deleted but will be empty afterwards, so make sure to be different from "Delete Chat" here. "Clear" is a verb here, "Empty Chat" would also be fine (eg. in German "Chat leeren")
 "clear_chat" = "Garbitu txata";
@@ -240,7 +249,7 @@
 "share_invite_link_explain" = "Esteka hau duen edonork ikus dezake zure profila eta txat bat hasi zurekin. Partekatu konfiantzazko pertsonekin bakarrik.";
 "invite_friends" = "Gonbidatu lagunak";
 // %1$s is replaced by the user's invitation link ("https://i.delta.chat/...")
-"invite_friends_text" = "Jarri nirekin harremanetan alt.chat bidez:\n%1$@";
+"invite_friends_text" = "Jarri nirekin harremanetan Delta Chat bidez:\n%1$@";
 "menu_copy_selection_to_clipboard" = "Kopiatu hautaketa";
 "menu_copy_link_to_clipboard" = "Kopiatu esteka";
 "menu_copy_text_to_clipboard" = "Kopiatu testua";
@@ -255,7 +264,7 @@
 "menu_export_attachment" = "Esportatu eranskina";
 "menu_export_attachments" = "Esportatu eranskinak";
 "menu_all_media" = "Multimedia guztia";
-"all_apps_and_media" = "Fitxategi guztiak eta multimedia";
+"all_apps_and_media" = "Aplikazio guztiak eta multimedia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Erakutsi txatean";
 "show_app_in_chat" = "Erakutsi aplikazioa txatean";
@@ -290,13 +299,11 @@
 "menu_more_options" = "Aukera gehiago";
 "menu_learn_spelling" = "Ikasi ortografia";
 "jump_to_message" = "Joan mezura";
-"jump_to_original_message" = "Joan jatorrizko mezura";
-"copy_json" = "Kopiatu JSON";
 "replace_draft" = "Ordeztu zirriborroa";
-"title_share_location" = "Partekatu kokalekua taldeko kide guztiak";
+"title_share_location" = "Partekatu kokalekua kide guztiekin";
 "device_talk" = "Gailuaren mezuak";
 "device_talk_subtitle" = "Lokalki sortutako mezuak";
-"device_talk_explain" = "Txat honetako mezuak zure alt.chat aplikazioak sortu ditu lokalki. Egileek aplikazioaren eguneraketei buruz eta erabileran arazoei buruz informatzeko erabiltzen dute.";
+"device_talk_explain" = "Txat honetako mezuak zure Delta Chat aplikazioak sortu ditu lokalki. Egileek aplikazioaren eguneraketei buruz eta erabileran arazoei buruz informatzeko erabiltzen dute.";
 "device_talk_welcome_message2" = "Jarri harremanetan!\n\n🙌 Sakatu \"QR kodea\" bi gailuen pantaila nagusian. Hautatu \"Eskaneatu QR kodea\" gailu batean eta zuzendu bestera\n\n🌍 Gela berean ez bazaudete, eskaneatu bideo-dei baten bidez edo partekatu gonbidapen-esteka bat \"Eskaneatu QR kodea\" ataletik\n\nOndoren: Gozatu mezulari deszentralizatuaren esperientziaz. Ezagunagoak diren beste aplikazio batzuek ez bezala, kontrol zentralik gabe eta zu, zure lagunak, lankideak edo familia erakunde handiei jarraitu edo saldu gabe.";
 "edit_contact" = "Editatu kontaktua";
 // Verb "to pin", making something sticky, not a noun or abbreviation for "pin number".
@@ -313,15 +320,16 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Gehitu hasierako pantailan";
 "donate" = "Egin dohaintza";
-"donate_device_msg" = "❤️ Badirudi alt.chat-ekin gozatzen ari zarela!\n\nMesedez, pentsatu dohaintza bat egitea alt.chat guztiontzat doakoa izan dadin laguntzeko.\n\nalt.chat-en erabilera doakoa eta kode irekikoa den arren, garapenak dirua balio du. Lagundu iezaguzu alt.chat independente mantentzen eta etorkizunean are hobea egiten.\n\nhttps://alt-chat.me/donate";
+"donate_device_msg" = "❤️ Badirudi Delta Chat-ekin gozatzen ari zarela!\n\nMesedez, pentsatu dohaintza bat egitea Delta Chat guztiontzat doakoa izan dadin laguntzeko.\n\nDelta Chat-en erabilera doakoa eta kode irekikoa den arren, garapenak dirua balio du. Lagundu iezaguzu Delta Chat independente mantentzen eta etorkizunean are hobea egiten.\n\nhttps://delta.chat/donate";
 "mute_for_one_hour" = "Mututu ordubete";
 "mute_for_eight_hours" = "Mututu 8 ordu";
 "mute_for_one_day" = "Mututu egun bat";
 "mute_for_seven_days" = "Mututu 7 egun";
 "mute_forever" = "Mututu betirako";
+// deprecated
 "share_location_for_5_minutes" = "5 minutuz";
 "share_location_for_30_minutes" = "30 minutuz";
-"share_location_for_one_hour" = "Ordu 1";
+"share_location_for_one_hour" = "Ordubetez";
 "share_location_for_two_hours" = "2 orduz";
 "share_location_for_six_hours" = "6 orduz";
 "file_saved_to" = "Fitxategia \"%1$@\" helbidean gordeta";
@@ -331,14 +339,20 @@
 "start_audio_call" = "Audio deia";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Bideo deia";
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Deitzen";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Konektatzen";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Erantzun";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Ukatu";
+// Used in call bubbles, summaries, notifications
+"audio_call" = "Audio deia";
+// Used in call bubbles, summaries, notifications
+"video_call" = "Bideo deia";
+"call_initializing" = "Abiarazten…";
+"call_incoming" = "Sarrerako deia";
+"call_ringing" = "Jotzen...";
+"call_reconnecting" = "Berriz konektatzen...";
+"call_ended" = "Deia amaitu da";
+"call_failed" = "Deiak huts egin du";
 // deprecated, use "Audio call" instead
 "outgoing_audio_call" = "Irteerako audio deia";
 // deprecated, use "Video call" instead
@@ -350,11 +364,13 @@
 "declined_call" = "Ukatutako deia";
 "canceled_call" = "Bertan behera utzitako deia";
 "missed_call" = "Galdutako deia";
+"already_in_call" = "Dei batean dagoeneko";
 // get confirmations
 // confirmation for leaving groups or channels. If a subject is needed, "Are you sure you want to leave the chat?" would work as well
 "ask_leave_group" = "Ziur irten nahi duzula?";
 "ask_delete_named_chat" = "Ezabatu \"%1$@\" txata?";
 "ask_delete_message" = "Ezabatu mezu hau?";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Birbidali mezuak %1$@ erabiltzaileari?";
 "ask_forward_multiple" = "Bidali mezuak %1$d txatetara?";
 "ask_export_attachment" = "Esportatu eranskina? Eranskinak esportatzeak zure beste gailuko beste aplikazioek atzitzea ahalbidetuko du.\n\nJarraitu?";
@@ -380,7 +396,7 @@
 "chat_new_one_to_one_hint" = "Bidali mezu bat %1$@(r)i.";
 // consider keeping the term "channel" as in WhatsApp or Telegram
 "chat_new_channel_hint" = "Kanalak zure mezuak jende askori aldi berean helarazteko tresnak dira.";
-"chat_new_group_hint" = "Idatzi lehen mezua, besteek taldera erantzutea baimenduz\n\n• Ez du axola denek ez badute alt.chat erabiltzen.\n\n• Lehen mezua bidaltzeko denbora bat behar daiteke.";
+"chat_new_group_hint" = "Idatzi lehen mezua, besteek taldera erantzutea baimenduz\n\n• Ez du axola denek ez badute Delta Chat erabiltzen.\n\n• Lehen mezua bidaltzeko denbora bat behar daiteke.";
 "chat_record_slide_to_cancel" = "Irristatu ezeztatzeko";
 "chat_record_explain" = "Sakatu eta mantendu ahots-mezu bat grabatzeko, askatu bidaltzeko.";
 "chat_no_chats_yet_title" = "Sarrera-ontzi hutsa.\nSakatu \"+\" txat berria hasteko.";
@@ -405,7 +421,6 @@
 "attachment_failed_to_load" = "Eranskina kargatzean huts egin du";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Blokeatu grabazioa";
-"audio_note_processing_failed" = "Grabazioa ezin izan da prozesatu.";
 // mailing lists
 "mailing_list" = "Mailin zerrenda";
 // webxdc
@@ -417,15 +432,7 @@
 "send_file_to" = "Bidali \"%1$@\" honi...";
 // title shown above a list contacts where one should be selected (eg. when a webxdc attempts to send a message to a chat)
 "send_message_to" = "Bidali mezua honi...";
-"enable_realtime" = "Denbora errealeko aplikazioak";
-"enable_realtime_explain" = "Gaitu denbora errealeko konexioak txatei atxikitako aplikazioentzat. Gaituz gero, baliteke txat-kideek zure IP helbidea ezagutu ahal izatea aplikazio bat abiarazten duzunean.";
-// map
-"filter_map_on_time" = "Erakutsi kokalekuak denbora markoan";
-"show_location_traces" = "Erakutsi lorratzak";
-"add_poi" = "Bidali interesezko puntua";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "Ez galdetu berriro honengatik: %1$@";
 "puny_code_warning_header" = "Esteka susmagarria atzeman da";
 // placeholder contains the hostname converted to ascii
 "puny_code_warning_question" = "Ziur zaude %1$@ bisitatu nahi duzula?";
@@ -479,15 +486,15 @@
 "multidevice_title" = "Gehitu bigarren gailua";
 "multidevice_same_network_hint" = "Ziurtatu gailu biak Wi-Fi edo sare berera konektatuta daudela.";
 "multidevice_this_creates_a_qr_code" = "Honek QR kode bat sortuko du, bigarren gailuak eskaneatu eta profila kopiatu dezan.\n\nZiurtatu zuk nahi ez duzun inork ez ezein kamerak ezin duela ondorengo pantaila ikusi.";
-"multidevice_install_dc_on_other_device" = "Instalatu alt.chat zure beste gailuan (https://alt-chat.me/app/)";
+"multidevice_install_dc_on_other_device" = "Instalatu Delta Chat zure beste gailuan (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
-"multidevice_tap_scan_on_other_device" = "Abiarazi alt.chat, sakatu “Badut profil bat / Gehitu bigarren gailu gisa” eta eskaneatu hemen agertzen den kodea.";
+"multidevice_tap_scan_on_other_device" = "Abiarazi Delta Chat, sakatu “Badut profil bat / Gehitu bigarren gailu gisa” eta eskaneatu hemen agertzen den kodea.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
 "multidevice_qr_subtitle" = "Eskaneatu %1$@(r)entzat bigarren gailu bat konfiguratzeko";
 "multidevice_receiver_title" = "Gehitu bigarren gailu gisa";
-"multidevice_open_settings_on_other_device" = "Lehenengo gailuan, abiarazi alt.chat, joan hona: “Ezarpenak / Gehitu bigarren gailua“, eta eskaneatu bertan agertzen den kodea.";
+"multidevice_open_settings_on_other_device" = "Lehenengo gailuan, abiarazi Delta Chat, joan hona: “Ezarpenak / Gehitu bigarren gailua“, eta eskaneatu bertan agertzen den kodea.";
 "multidevice_receiver_scanning_ask" = "Kopiatu kontua beste gailutik gailu honetara?";
-"multidevice_receiver_needs_update" = "Inportatu nahi duzun kontua alt.chat-en bertsio berriago batena da.\n\nBigarren gailua konfiguratzen jarraitzeko, mesedez, eguneratu gailu hau alt.chat-en azken bertsiora.";
+"multidevice_receiver_needs_update" = "Inportatu nahi duzun kontua Delta Chat-en bertsio berriago batena da.\n\nBigarren gailua konfiguratzen jarraitzeko, mesedez, eguneratu gailu hau Delta Chat-en azken bertsiora.";
 "multidevice_abort" = "Bertan behera utzi bigarren gailuaren konfigurazioa?";
 "multidevice_abort_will_invalidate_copied_qr" = "Honek arbelean kopiatutako QR kodea baliogabetuko du.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ Kontua zure bigarren gailura transferitu da.";
@@ -587,14 +594,14 @@
 "confirm_add_transport" = "Gehitu errelea?";
 "invalid_transport_qr" = "Eskaneatutako QR kodeak ez dauka baliozko errelerik.";
 // placeholder will be replaced by a relay server name
-"confirm_remove_transport" = "\"%1$@\" errelea kendu?\n\nZure kontaktuak soilik jar daitezke zurekin harremanetan aurretik beste errele baten bidez haiekin harremanetan jarri bazara.\n\nZalantzarik baduzu, kendu errelea geroago.";
+"confirm_remove_or_hide_transport_x" = "Ezabatu \"%1$@\" errelea?\n\nErrele hau bakarrik ezagutzen duten kontaktuak ezin izango dira zurekin harremanetan jarri zuk mezu bat berriro bidali arte.\n\nZalantzarik baduzu, hobe da ezkutatzea ezabatzea baino.";
 "login_certificate_checks" = "Ziurtagiri-egiaztaketak";
 "login_error_mail" = "Sartu baliozko e-mail helbide bat";
 "login_error_server" = "Sartu baliozko zerbitzari / IP helbide bat";
-"login_error_port" = "Sartu baliozko ataka bat  (1–65535)";
+"login_error_port" = "Sartu baliozko ataka bat (1–65535)";
 "login_error_required_fields" = "Sartu baliozko e-mail helbidea eta pasahitza";
 "import_backup_title" = "Inportatu babeskopia";
-"import_backup_ask" = "Babeskopia aurkitu da:  \"%1$@\".\n\nInportatu nahi duzu eta bertako datu eta ezarpenak erabili?";
+"import_backup_ask" = "Babeskopia aurkitu da: \"%1$@\".\n\nInportatu nahi duzu eta bertako datu eta ezarpenak erabili?";
 "import_backup_no_backup_found" = "Ez da babeskopiarik aurkitu.\n\nKopiatu babeskopia \"%1$@\" karpetan eta saiatu berriro.";
 // %1$s will be replaced by the failing address
 "login_error_cannot_login" = "Ezin da \"%1$@\" bezala saioa hasi. Egiaztatu E-mail helbidea eta pasahitza zuzenak diren.";
@@ -640,6 +647,7 @@
 "pref_enter_sends" = "Enter teklarekin bidali";
 "pref_enter_sends_explain" = "Enter tekla sakatzeak mezua bidaliko du";
 "pref_outgoing_media_quality" = "Bidalitako multimediaren kalitatea";
+"pref_outgoing_media_quality_hint" = "Jatorrizko kalitatean bidaltzeko, erantsi multimedia \"Fitxategi\" gisa. Honek datu askoz gehiago kontsumitzen du zuretzat eta jasotzaileentzat.";
 "pref_outgoing_balanced" = "Orekatua";
 "pref_outgoing_worse" = "Kalitate txarragoa, tamaina txikia";
 "pref_vibrate" = "Bibratu";
@@ -650,10 +658,15 @@
 "pref_notifications" = "Jakinarazpenak";
 "pref_mention_notifications" = "Aipamenak";
 "pref_mention_notifications_explain" = "Mutututako taldeetan, jaso zuretzat diren mezuen jakinarazpenak, hala nola erantzunak edo erreakzioak";
+// Title for the "Calls" notification setting. This is a plural noun, not a verb.
+"pref_calls" = "Deiak";
+// Details about what the "Calls" notification setting does
+"pref_calls_explain" = "Erakutsi dei-pantaila deiak jasotzean";
 "pref_notifications_show" = "Erakutsi";
 "pref_notifications_priority" = "Lehentasuna";
 "pref_notifications_explain" = "Gaitu sistemaren jakinarazpenak mezu berrientzat";
 "pref_show_notification_content" = "Erakutsi mezuaren edukia jakinarazpenean";
+// deprecated
 "pref_show_notification_content_explain" = "Erakutsi bidaltzailea eta mezuaren lehen hitza jakinarazpenetan";
 "pref_led_color" = "LED kolorea";
 "pref_sound" = "Soinua";
@@ -694,16 +707,23 @@
 "pref_background" = "Atzealdea";
 "pref_background_btn_default" = "Erabili irudi lehenetsia";
 "pref_background_btn_gallery" = "Hautatu galeriatik";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Aukera hau desaktibatuz gero, egiaztatu zure zerbitzaria eta beste bezeroen konfigurazioa bat datorrela.\n\nBestela agian gauzak ez dabiltza.";
 // No need to be literal here, you can also use "Use Multiple Devices", "Support Multiple Devices" or other fitting terms. However, it should fit to the wording or your language at https://delta.chat/help
 "pref_multidevice" = "Gailu anitzeko modua";
 "pref_multidevice_explain" = "Sinkronizatu zure mezuak zure beste gailuekin. Automatikoki gaitzen da bigarren gailu bat gehitzean.";
 "pref_multidevice_change_warn" = "Gailu anitzeko moduak gaituta egon behar du kontu bera hainbat gailutan erabiltzean. Desaktibatu ezarpen hau soilik kontu hau beste gailu guztietatik kendu baduzu.\n\nGailu anitzeko modua desaktibatzeak kontua hainbat gailutan erabiltzen ari den bitartean, mezuak galtzea eta bestelako arazoak eragingo ditu.";
-"pref_auto_folder_moves" = "Automatikoki mugitzen du alt.chat karpetara";
-"pref_only_fetch_mvbox_title" = "alt.chat karpetatik soilik berreskuratu";
+// deprecated
+"pref_auto_folder_moves" = "Automatikoki mugitzen du DeltaChat karpetara";
+// deprecated
+"pref_only_fetch_mvbox_title" = "Delta Chat karpetatik soilik berreskuratu";
+// deprecated
 "pref_show_emails" = "Erakutsi ohiko e-mailak";
+// deprecated
 "pref_show_emails_no" = "Ez, txatak besterik ez";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Onartutako kontaktuena";
+// deprecated
 "pref_show_emails_all" = "Denak";
 "pref_experimental_features" = "Ezaugarri esperimentalak";
 "pref_experimental_features_explain" = "Baliteke ezaugarri hauek ezegonkorrak izatea eta gerora aldatzea edo kentzea.";
@@ -724,16 +744,14 @@
 "profile_image_delete" = "Ezabatu abatarra";
 "pref_show_tray_icon" = "Erakutsi sistema-erretilu ikonoa";
 "pref_edit_profile" = "Editatu kontua";
-"disable_imap_idle" = "Desgaitu IMAP IDLE";
-"disable_imap_idle_explain" = "Ez erabili IMAP IDLE luzapena, zerbitzariak onartzen badu ere. Aukera hau gaitzeak mezuen berreskuratzea atzeratuko du, gaitu ezazu probak egiteko soilik.";
-"send_stats_to_devs" = "Bidali estatistikak alt.chat-eko garatzaileei";
-"stats_device_message" = "alt.chat hobetzen lagundu eta ikerketa babestu nahi duzu astero erabilera-estatistika anonimoak bidalita?\n\n👉 Sakatu hemen… 👈";
-"stats_confirmation_dialog" = "alt.chat hobetzen lagundu eta ikerketa babestu nahi duzu astero erabilera-estatistika anonimoak bidalita?";
-"stats_thanks" = "Eskerrik asko! Bidalketa edozein unetan desgaitu dezakezu \"Ezarpenak -> Aurreratua\" atalean.\n\nBestalde, alt.chat-en segurtasunari buruzko ikerketa zientifiko batean parte hartzeko 5 minutu dituzu?";
+"send_stats_to_devs" = "Bidali estatistikak Delta Chat-eko garatzaileei";
+"stats_device_message" = "Delta Chat hobetzen lagundu eta ikerketa babestu nahi duzu astero erabilera-estatistika anonimoak bidalita?\n\n👉 Sakatu hemen… 👈";
+"stats_confirmation_dialog" = "Delta Chat hobetzen lagundu eta ikerketa babestu nahi duzu astero erabilera-estatistika anonimoak bidalita?";
+"stats_thanks" = "Eskerrik asko! Bidalketa edozein unetan desgaitu dezakezu \"Ezarpenak -> Aurreratua\" atalean.\n\nBestalde, Delta Chat-en segurtasunari buruzko ikerketa zientifiko batean parte hartzeko 5 minutu dituzu?";
 "stats_disable_dialog" = "Estatistiken bidalketa gaituta dago jada.\n\nDesaktibatu nahi duzu?";
 "disable" = "Desgaitu";
 "stats_keep_sending" = "Bidaltzen jarraitu";
-"stats_msg_body" = "Eranskinak erabilera-estatistika anonimoak ditu, alt.chat hobetzen laguntzen digutenak. Ikusi https://alt-chat.me/help#statssending informazio gehiago lortzeko. Eskerrik asko!";
+"stats_msg_body" = "Eranskinak erabilera-estatistika anonimoak ditu, Delta Chat hobetzen laguntzen digutenak. Ikusi https://delta.chat/help#statssending informazio gehiago lortzeko. Eskerrik asko!";
 // Emoji picker and categories
 "emoji_search_results" = "Bilatu emaitzak";
 "emoji_not_found" = "Ez da emojirik aurkitu";
@@ -757,14 +775,17 @@
 // automatically delete message
 "delete_old_messages" = "Ezabatu mezu zaharrak";
 "autodel_device_title" = "Ezabatu mezuak gailutik";
+// deprecated
 "autodel_server_title" = "Ezabatu mezuak zerbitzaritik";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "%1$d mezu ezabatu nahi dituzu orain eta \"%2$@\" etorkizunean jasotako mezuak ere?\n\n• Honek multimedia ere barne hartzen du\n\n• Mezuak ikusi ala ez ezabatuko dira\n\n• \"Gordetako mezuak\" ez dira lokalki ezabatuko";
-// %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
+// deprecated
 "autodel_server_ask" = "%1$d mezu ezabatu nahi dituzu orain eta \"%2$@\" etorkizunean jasotako mezuak ere?\n\n⚠️ Honek mezu elektronikoak, multimedia eta \"Gordetako mezuak\" barne hartzen ditu zerbitzariko karpeta guztietan\n\n⚠️ Ez erabili funtzio hau datuak zerbitzarian gorde nahi badituzu edo posta bezero klasikoak ere erabiltzen badituzu";
-// shown below enabled autodel_server-option, should be a summary of autodel_server_ask and remind about the impact
+// deprecated
 "autodel_server_enabled_hint" = "Honek barne hartzen ditu mezu elektronikoak, multimedia eta \"Gordetako mezuak\" zerbitzariko karpeta guztietan. Ez erabili funtzio hau datuak zerbitzarian gorde nahi badituzu edo mezu elektronikoen bezero klasikoak ere erabiltzen badituzu.";
+// deprecated
 "autodel_server_warn_multi_device_title" = "Berehalako ezabatzea aktibatu";
+// deprecated
 "autodel_server_warn_multi_device" = "Berehalako ezabaketa gaitzen baduzu, ezin izango dituzu gailu anitz erabili profil honetan.";
 "autodel_confirm" = "Ulertzen dut, ezabatu mezuk guzti hauek";
 // "At once" in the meaning of "Immediately", without any intervening time.
@@ -849,17 +870,18 @@
 // %1$s will be replaced by the number of weeks (always >1) the timer is set to, %2$s will be replaced by name of the contact
 "ephemeral_timer_weeks_by_other" = "%2$@(e)k mezuen desagerpen-denbora %1$@ astekoa dela ezarri du.";
 "chat_unencrypted_explanation" = "Txat honetako mezuek ohiko eposta helbidea erabiltzen dute eta ez daude muturretik muturrera zifratuta.";
+"messages_are_e2ee" = "Mezuak muturretik muturrera zifratuta daude.";
 "chat_protection_enabled_tap_to_learn_more" = "Mezuak muturretik muturrera zifratuta daude. Sakatu gehiago jakiteko.";
 "chat_protection_enabled_explanation" = "Txat honetako mezu guztiak muturretik muturrera zifratuta daude.\n\nMuturretik muturrera zifratzeak mezuak pribatu mantentzen ditu zure eta zure txat kideen artean. Zerbitzariek, hornitzaileek edo erreleek ere ezin dituzte irakurri.";
 "invalid_unencrypted_tap_to_learn_more" = "⚠️ %1$@(e)k muturretik muturrera zifratzea behar du, eta txat honetan oraindik ez dago konfiguratuta. Sakatu gehiago jakiteko.";
 "invalid_unencrypted_explanation" = "Muturretik muturrera zifratzeko, kontaktuekin aurrez aurre elkartu zaitezke eta haien QR kodea eskaneatu dezakezu elkar egiaztatzeko.";
 "learn_more" = "Ikasi gehiago";
 "devicemsg_self_deleted" = "\"Gordetako mezuak\" txata ezabatu duzu.\n\nℹ️ \"Gordetako mezuak\" funtzioa berriro erabiltzeko, sortu txat berri bat zure buruarekin.";
-// %1$s will be replaced by the amount of storage already used, sth. as '500 MB'. If you want to use a percentage sign, type in two of them, eg. %1$s %%
+// deprecated
 "devicemsg_storage_exceeding" = "⚠️ Zure hornitzailearen biltegiratzea agortzear dago: %%-tik %1$@ erabili dituzu dagoeneko.\n\nLitekeena da mezuak jaso ezin izatea biltegiratzea beteta badago.\n\n👉 Mesedez, egiaztatu datu zaharrak hornitzailearen web-interfazean ezaba ditzakezun eta kontuan hartu \"Ezarpenak / Txatak / Ezabatu mezu zaharrak\" aukera aktibatzea. Zure uneko biltegiratze-erabilera edozein unetan egiaztatu dezakezu \"Ezarpenak / Konektibitatea\" atalean.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Zure gailuko data edo ordua okerra dela dirudi (%1$@).\n\nEgokitu zure erlojua ⏰🔧 zure mezuak zuzen jasotzen direla ziurtatzeko.";
-"devicemsg_update_reminder" = "⚠️ Zure alt.chat bertsioa zaharkituta egon daiteke.\n\nHorrek arazoak sor ditzake zure txat-kideek bertsio berriagoak erabiltzen dituztelako - eta azken funtzioak falta dituzulako 😳\nMesedez, egiaztatu https://alt-chat.me/app/ edo zure aplikazio-denda eguneratzeak ikusteko.";
+"devicemsg_update_reminder" = "⚠️ Zure Delta Chat bertsioa zaharkituta egon daiteke.\n\nHorrek arazoak sor ditzake zure txat-kideek bertsio berriagoak erabiltzen dituztelako - eta azken funtzioak falta dituzulako 😳\nMesedez, egiaztatu https://get.delta.chat edo zure aplikazio-denda eguneratzeak ikusteko.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Desblokeatu jarraitzeko";
 // qr code stuff
@@ -935,12 +957,12 @@
 // permissions
 "perm_required_title" = "Baimena behar da";
 "perm_continue" = "Jarraitu";
-"perm_explain_access_to_camera_denied" = "alt.chat-ek kamerara sarbidea behar du argazkiak edo bideoak ateratzeko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpen menura, hautatu \"Baimenak\" eta gaitu \"Kamera\".";
+"perm_explain_access_to_camera_denied" = "Delta Chat-ek kamerara sarbidea behar du argazkiak edo bideoak ateratzeko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpen menura, hautatu \"Baimenak\" eta gaitu \"Kamera\".";
 // give the user an idea where to find the "Microphone" option. the hint is only shown if access was initially denied by the user. pick up wordings really used on the systems, but do not be overly precise: things shift around often and there are too many system we support to track every detail and click path
-"perm_explain_access_to_mic_denied" = "alt.chat-ek mikrofonoa erabiltzeko baimena behar du ahots-mezuak bidali ahal izateko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpenetara, hautatu \"Baimenak\" eta gaitu \"Mikrofonoa\".";
-"perm_explain_access_to_storage_denied" = "alt.chat-ek biltegiratze baimena behar du argazkiak, bideoak edo audioa erantsi edo esportatzeko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpen menura, hautatu \"baimenak\", eta gaitu \"Biltegiratzea\"";
-"perm_explain_access_to_location_denied" = "alt.chat-ek kokaleku aatzitzeko baimena behar du kokalekua eransteko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpen menura, hautatu \"baimenak\", eta gaitu \"Kokalekua\".";
-"perm_explain_access_to_notifications_denied" = "Jakinarazpenak jasotzeko, hona jo \"Sistemaren ezarpenak / Aplikazioak / alt.chat\" eta gaitu \"Jakinarazpenak\".";
+"perm_explain_access_to_mic_denied" = "Delta Chat-ek mikrofonoa erabiltzeko baimena behar du ahots-mezuak bidali ahal izateko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpenetara, hautatu \"Baimenak\" eta gaitu \"Mikrofonoa\".";
+"perm_explain_access_to_storage_denied" = "Delta Chat-ek biltegiratze baimena behar du argazkiak, bideoak edo audioa erantsi edo esportatzeko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpen menura, hautatu \"baimenak\", eta gaitu \"Biltegiratzea\"";
+"perm_explain_access_to_location_denied" = "Delta Chat-ek kokaleku aatzitzeko baimena behar du kokalekua eransteko, baina behin betiko ukatu zaio. Joan aplikazioaren ezarpen menura, hautatu \"baimenak\", eta gaitu \"Kokalekua\".";
+"perm_explain_access_to_notifications_denied" = "Jakinarazpenak jasotzeko, hona jo \"Sistemaren ezarpenak / Aplikazioak / Delta Chat\" eta gaitu \"Jakinarazpenak\".";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Marraztu edonon lausotzeko";
 "ImageEditorHud_add_text" = "Gehitu testua";
@@ -950,10 +972,7 @@
 "ImageEditorHud_crop" = "Ezabatu";
 "ImageEditorHud_flip" = "Irauli";
 "ImageEditorHud_rotate" = "Biratu";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Hau alt.chat Desktop aplikazio ofiziala da.";
-"about_licensed_under_desktop" = "Software honek GNU GPL 3 bertsioaren lizentziapean dago eta iturburu-kodea GitHub-en dago eskuragarri.";
-"welcome_desktop" = "Ongi etorri alt.chat-era";
+"welcome_desktop" = "Ongi etorri Delta Chat-era";
 "global_menu_preferences_language_desktop" = "Hautatu hizkuntza...";
 "global_menu_file_desktop" = "Fitxategia";
 "global_menu_file_quit_desktop" = "Irten";
@@ -968,11 +987,11 @@
 "global_menu_view_developer_desktop" = "Garatzailea";
 "global_menu_view_developer_tools_desktop" = "Garatzaile-tresnak";
 "global_menu_help_desktop" = "Laguntza";
-"delta_chat_homepage" = "alt.chat-en hasiera orria";
+"delta_chat_homepage" = "Delta Chat-en hasiera orria";
 "contribute" = "Lagundu";
 "global_menu_help_report_desktop" = "Eman arazo baten berri";
-"global_menu_help_about_desktop" = "alt.chat-i buruz";
-"global_menu_file_open_desktop" = "Ireki alt.chat";
+"global_menu_help_about_desktop" = "Delta Chat-i buruz";
+"global_menu_file_open_desktop" = "Ireki Delta Chat";
 "global_menu_minimize_to_tray" = "Txikitu";
 "no_chat_selected_suggestion_desktop" = "Hautatu txat bat edo sortu txat berri bat";
 "write_message_desktop" = "Idatzi mezu bat";
@@ -991,7 +1010,8 @@
 "message_detail_received_desktop" = "jasota";
 "menu.view.developer.open.log.folder" = "Ireki egunkarien karpeta";
 "menu.view.developer.open.current.log.file" = "Ireki uneko egunkari-fitxategia";
-"explain_desktop_minimized_disabled_tray_pref" = "Erretiluko ikonoa ezin da desgaitu, alt.chat --minimized aukerarekin abiarazi baita.";
+"explain_desktop_minimized_disabled_tray_pref" = "Erretiluko ikonoa ezin da desgaitu, Delta Chat --minimized aukerarekin abiarazi baita.";
+// deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Ez dago ortografia-iradokizunik.";
 "show_window" = "Erakutsi leihoa";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
@@ -1028,7 +1048,7 @@
 "import_device_contacts" = "Inportatu gailuko kontaktuak";
 "import_device_contacts_hint" = "Zure gailuko kontaktuekin txateatzeko, ireki ezarpenak eta gaitu \"Kontaktuak\".";
 // iOS notification settings
-"disabled_in_dc" = "Desgaitu alt.chat-en";
+"disabled_in_dc" = "Desgaitu Delta Chat-en";
 "disabled_in_system_settings" = "Desgaitu sistemaren ezarpenetan";
 "bg_app_refresh_disabled" = "\"Atzeko planoko aplikazioak freskatzea\" desgaituta dago sistemaren ezarpenetan";
 "notifications_avg_minutes" = "Batez beste, %1$d minutuan behin";
@@ -1041,7 +1061,7 @@
 // use the same translation for "Shortcuts" as the system is using, often the term "Shortcut" stays untranslated; check eg. how the "Shortcuts" system app is called in your locale
 "shortcuts_widget_title" = "Lasterbideak";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
-"shortcuts_widget_description" = "Erabili alt.chat-en \"Gehitu widget-era\" elementuak gehitzeko";
+"shortcuts_widget_description" = "Erabili Delta Chat-en \"Gehitu widget-era\" elementuak gehitzeko";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
 "remove_from_widget" = "Kendu widget-etik";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
@@ -1053,11 +1073,9 @@
 "pref_background_notifications_explain" = "Bateriaren optimizazioa alde batera utziko du. Erabili hau jakinarazpenak garaiz iristen ez badira.";
 "pref_reliable_service" = "Behartu atzeko planoko konexioa";
 "pref_reliable_service_explain" = "Jakinarazpen iraunkorra sortzen du";
-"pref_background_notifications_rationale" = "Konexioari eutsi eta mezuak atzeko planoan jasotzeko, baztertu bateriaren optimizazioak hurrengo urratsean.\n\nalt.chat-ek baliabide gutxi erabiltzen ditu eta kontu handiz jokatzen du bateria ez agortzeko.";
+"pref_background_notifications_rationale" = "Konexioari eutsi eta mezuak atzeko planoan jasotzeko, baztertu bateriaren optimizazioak hurrengo urratsean.\n\nDelta Chat-ek baliabide gutxi erabiltzen ditu eta kontu handiz jokatzen du bateria ez agortzeko.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
-"perm_enable_bg_reminder_title" = "Sakatu hemen mezuak jasotzeko alt.chat bigarren planoan dagoenean.";
-"perm_enable_bg_already_done" = "Dagoeneko baimendu diozu alt.chat aplikazioari bigarren planoan mezuak jasotzea,\n\nOraindik ere mezuak heltzen ez badira, egiaztatu ere zure sistemaren ezarpenak.";
+"perm_enable_bg_reminder_title" = "Sakatu hemen mezuak jasotzeko Delta Chat bigarren planoan dagoenean.";
+"perm_enable_bg_already_done" = "Dagoeneko baimendu diozu Delta Chat aplikazioari bigarren planoan mezuak jasotzea,\n\nOraindik ere mezuak heltzen ez badira, egiaztatu ere zure sistemaren ezarpenak.";
 // device messages for updates
 "update_2_0" = "Zer berri?\n\n💯 Muturretik muturrerako zifratze fidagarria eta betirakoa da orain. Sarrailak 🔒 joan dira!\n\n✉️ Muturretik muturrerako zifratzerik gabeko posta elektroniko klasikoa gutun-azal ikur batekin markatuta dago\n\n😻 Profil-bistaratze berri hobetua zure kontaktu guztientzat\n\n🔲 Txat batean erabilitako aplikazioetara azkar sartzeko botoi berria\n\n❤️ Mesedez, egin dohaintza independente jarraitzen laguntzeko eta hobekuntzak ekartzen jarraitzeko: %1$@";
-"update_available" = "Update Available";
-"search_results_local" = "Lokalean aurkitua";

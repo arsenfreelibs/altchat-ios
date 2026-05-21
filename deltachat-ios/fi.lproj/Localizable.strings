@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "OK";
 "cancel" = "Peruuta";
 "clear_search" = "Tyhjennä haku";
@@ -10,7 +10,6 @@
 "off" = "Pois";
 "def" = "Oletus";
 "default_value" = "Oletus (%1$@)";
-"default_value_as_above" = "Oletus (sama kuin yllä)";
 "custom" = "Mukautettu";
 "none" = "Ei mitään";
 "automatic" = "Automaattinen";
@@ -41,7 +40,7 @@
 // Verb "to mute". used to mute a chat, so that it is silenced e.g. does not make noise or cause notifications
 "mute" = "Mykistä";
 "ephemeral_messages" = "Katoavat viestit";
-"ephemeral_messages_hint" = "Nämä asetukset pätevät kaikkiin alt.chat -käyttäjiin. He voivat kuitenkin kopioida, tallentaa ja välittää viestejä tai käyttää toisia sähköpostisovelluksia.";
+"ephemeral_messages_hint" = "Nämä asetukset pätevät kaikkiin Delta Chat -käyttäjiin. He voivat kuitenkin kopioida, tallentaa ja välittää viestejä tai käyttää toisia sähköpostisovelluksia.";
 "save" = "Tallenna";
 "chat" = "Keskustelu";
 "media" = "Media";
@@ -63,6 +62,7 @@
 "always" = "Aina";
 "always_load_remote_images" = "Lataa aina kuvat verkosta";
 "once" = "Kerran";
+// deprecated
 "show_warning" = "Näytä varoitus";
 "not_now" = "Ei nyt";
 "never" = "Ei koskaan";
@@ -127,6 +127,7 @@
 "camera" = "Kamera";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Kuvaa";
+// Switch eg. from front to back camera
 "switch_camera" = "Vaihda kameraa";
 "toggle_fullscreen" = "Koko näytön tila";
 "location" = "Sijainti";
@@ -223,12 +224,11 @@
 "menu_more_options" = "Lisää asetuksia";
 "menu_learn_spelling" = "Opi tavaus";
 "jump_to_message" = "Siirry viestiin";
-"copy_json" = "Kopioi JSON";
 "replace_draft" = "Korvaa luonnos";
 "title_share_location" = "Jaa sijainti kaikille ryhmän jäsenille";
 "device_talk" = "Laitteen viestit";
 "device_talk_subtitle" = "Paikallisesti luodut viestit";
-"device_talk_explain" = "Viestit tässä keskustelussa luodaan paikallisesti alt.chat -sovelluksessa. Kehittäjät ilmoittavat niiden avulla sovelluksen päivityksistä ja mahdollisista ongelmista.";
+"device_talk_explain" = "Viestit tässä keskustelussa luodaan paikallisesti Delta Chat -sovelluksessa. Kehittäjät ilmoittavat niiden avulla sovelluksen päivityksistä ja mahdollisista ongelmista.";
 "device_talk_welcome_message2" = "Aloita keskustelu!\n\n🙌 Täppää \"QR koodi\" päänäkymässä molemmilla laitteilla. Valitse \"Skannaa QR koodi\" toisella laitteella, ja osoita sillä toista\n\n🌍 Jos ette ole samassa huoneessa, skannaa vaikkapa videopuhelun yli tai jaa kutsulinkki \"Skannaa QR koodi\" -sivulta\n\nSitten voit nauttia pikaviestittelystä suurimmassa hajautetussa sosiaalisessa verkostossa mitä on koskaan ollut olemassa: eli sähköpostissa. Kontrastina toisiin suosittuihin sovelluksiin, ilman keskitettyä tahoa kontrolloimassa, keräämässä massadataa tai myymässä sinua, ystäviäsi, kollegojasi tai perhettäsi suurille organisaatioille.";
 "edit_contact" = "Muokkaa yhteystietoa";
 // Verb "to pin", making something sticky, not a noun or abbreviation for "pin number".
@@ -250,12 +250,14 @@
 "mute_for_one_day" = "Mykistä 1 päiväksi";
 "mute_for_seven_days" = "Mykistä 7 päiväksi";
 "mute_forever" = "Mykistä ikuisesti";
+// deprecated
 "share_location_for_5_minutes" = "5 minuutiksi";
 "share_location_for_30_minutes" = "30 minuutiksi";
 "share_location_for_one_hour" = "1 tunniksi";
 "share_location_for_two_hours" = "2 tunniksi";
 "share_location_for_six_hours" = "6 tunniksi";
 "file_saved_to" = "Tiedosto tallennettu \"%1$@\".";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Välitä viestit yhteystiedolle %1$@?";
 "ask_forward_multiple" = "Välitä viestit %1$d keskustelulle?";
 "ask_export_attachment" = "Liitteiden vieminen antaa muille laitteen sovelluksille mahdollisuuden lukea niitä.\n\nJatka?";
@@ -276,7 +278,7 @@
 "chat_camera_unavailable" = "Kamera ei saatavilla.";
 "chat_unable_to_record_audio" = "Äänen tallentaminen ei onnistunut.";
 // The placeholder will be replaced by the name of the recipient in a one-to-one chat.
-"chat_new_one_to_one_hint" = "Lähetä viesti. Ei haittaa, vaikka %1$@ ei käyttäisi alt.chatia.";
+"chat_new_one_to_one_hint" = "Lähetä viesti. Ei haittaa, vaikka %1$@ ei käyttäisi Delta Chatia.";
 "chat_new_group_hint" = "Muut näkevät ryhmän vasta, kun lähetät ensimmäisen viestin.";
 "chat_record_slide_to_cancel" = "Pyyhkäise peruuttaaksesi";
 "chat_record_explain" = "Pidä painettuna nauhoittaaksesi ääniviestin, irrota lähettääksesi";
@@ -301,7 +303,6 @@
 "attachment_failed_to_load" = "Liitteiden lataaminen epäonnistui";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Lukitse äänitys";
-"audio_note_processing_failed" = "Äänitystä ei voitu käsitellä.";
 // mailing lists
 "mailing_list" = "Sähköpostilista";
 // webxdc
@@ -313,13 +314,7 @@
 "send_file_to" = "Lähetä \"%1$@\" kohteeseen...";
 // title shown above a list contacts where one should be selected (eg. when a webxdc attempts to send a message to a chat)
 "send_message_to" = "Lähetä viesti kohteeseen...";
-// map
-"filter_map_on_time" = "Näytä sijainnit aikajanalla";
-"show_location_traces" = "Näytä jäljet";
-"add_poi" = "Lähetä erikseen valittu piste";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "Älä kysy enää osoitteelle %1$@";
 "puny_code_warning_header" = "Epäilyttävä linkki havaittu";
 // placeholder contains the hostname converted to ascii
 "puny_code_warning_question" = "Haluatko varmasti vierailla osoitteessa %1$@?";
@@ -368,9 +363,9 @@
 "multidevice_title" = "Lisää toinen laite";
 "multidevice_same_network_hint" = "Varmista että molemmat laitteet ovat samassa Wi-Fi verkossa";
 "multidevice_this_creates_a_qr_code" = "Tämä luo QR koodin, jolla toinen laite saa ladattua kopion profiilista.";
-"multidevice_install_dc_on_other_device" = "Lataa alt.chat toiselle laitteellesi (https://alt-chat.me/app/)";
+"multidevice_install_dc_on_other_device" = "Lataa Delta Chat toiselle laitteellesi (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
-"multidevice_tap_scan_on_other_device" = "Avaa alt.chat, valitse \"Minulla on jo profiili / Lisää toiseksi laitteeksi\" ja skannaa täällä näkyvä koodi";
+"multidevice_tap_scan_on_other_device" = "Avaa Delta Chat, valitse \"Minulla on jo profiili / Lisää toiseksi laitteeksi\" ja skannaa täällä näkyvä koodi";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
 "multidevice_qr_subtitle" = "Lisää toiseksi laitteeksi profiilille %1$@";
 "multidevice_receiver_title" = "Lisää toiseksi laitteeksi";
@@ -499,6 +494,7 @@
 "pref_notifications_priority" = "Prioriteetti";
 "pref_notifications_explain" = "Ota järjestelmäilmoitukset käyttöön uusista viesteistä";
 "pref_show_notification_content" = "Näytä viestien sisältö ilmoituksissa";
+// deprecated
 "pref_show_notification_content_explain" = "Näytä lähettäjä ja viestin ensimmäiset sanat ilmoituksissa";
 "pref_led_color" = "LEDin väri";
 "pref_sound" = "Ääni";
@@ -537,12 +533,19 @@
 "pref_background" = "Taustakuva";
 "pref_background_btn_default" = "Käytä oletuskuvaa";
 "pref_background_btn_gallery" = "Valitse galleriasta";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Jos muutat tätä asetusta, varmista että palvelimesi ja muut päätelaitteesi ovat määritetty vastaavasti.\n\nMuutoin ne eivät ehkä toimi lainkaan.";
-"pref_auto_folder_moves" = "Siirrä automaattisesti alt.chat -kansioon";
-"pref_only_fetch_mvbox_title" = "Hae vain alt.chat -kansiosta";
+// deprecated
+"pref_auto_folder_moves" = "Siirrä automaattisesti DeltaChat -kansioon";
+// deprecated
+"pref_only_fetch_mvbox_title" = "Hae vain DeltaChat -kansiosta";
+// deprecated
 "pref_show_emails" = "Näytä tavanomaiset sähköpostiviestit";
+// deprecated
 "pref_show_emails_no" = "Ei, vain pikaviestit";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Hyväksytyille yhteystiedoille";
+// deprecated
 "pref_show_emails_all" = "Kaikki";
 "pref_experimental_features" = "Kokeelliset ominaisuudet";
 "pref_on_demand_location_streaming" = "Tarvittaessa sijainnin jatkuva jakaminen";
@@ -562,9 +565,7 @@
 "profile_image_delete" = "Poista profiilikuva";
 "pref_show_tray_icon" = "Näytä työkalupalkin kuvake";
 "pref_edit_profile" = "Muokkaa profiilia";
-"disable_imap_idle" = "Poista IMAP IDLE käytöstä";
-"disable_imap_idle_explain" = "Älä käytä IMAP IDLE -laajennusta vaikka palvelin tukisi sitä. Toiminnon käyttöönotto hidastaa viestien hakua, käytä vain testaamiseen.";
-"send_stats_to_devs" = "Lähetä tilastotietoja alt.chatin kehittäjille";
+"send_stats_to_devs" = "Lähetä tilastotietoja Delta Chatin kehittäjille";
 // Emoji picker and categories
 "emoji_search_results" = "Hakutulokset";
 "emoji_not_found" = "Emojeja ei löytynyt";
@@ -588,13 +589,14 @@
 // automatically delete message
 "delete_old_messages" = "Poista vanhat viestit";
 "autodel_device_title" = "Poista viestit laitteelta";
+// deprecated
 "autodel_server_title" = "Poista viestit palvelimelta";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "Haluatko poistaa %1$d viestiä heti ja kaikki uudet viestit \"%2$@\" jatkossa?\n\n• Tämä sisältää kaiken median\n\n• Viestit poistetaan riippumatta siitä onko ne nähty vai ei\n\n• \"Tallennetut viestit\" jätetään paikalliselle laitteelle";
-// %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
-"autodel_server_ask" = "Haluatko poistaa %1$d viestiä heti ja kaikki uudet viestit \"%2$@\" jatkossa?\n\n⚠️ Tämä sisältää sähköpostiviestit, median ja kaikki \"Tallennetut viestit\" kaikissa palvelimen kansioissa\n\n⚠️ Älä käytä tätä toimintoa, jos haluat säilyttää tiedot palvelimella\n\n⚠️ Älä käytä tätä toimintoa, jos käytät muita sähköpostisovelluksia alt.chatin lisäksi";
-// shown below enabled autodel_server-option, should be a summary of autodel_server_ask and remind about the impact
-"autodel_server_enabled_hint" = "Tämä sisältää sähköpostit, median ja \"Tallennetut viestit\" kaikissa palvelimen kansioissa. Älä käytä tätä toimintoa, jos haluat pitää tietosi palvelimella tai jos käytät muita sähköpostisovelluksia alt.chatin lisäksi.";
+// deprecated
+"autodel_server_ask" = "Haluatko poistaa %1$d viestiä heti ja kaikki uudet viestit \"%2$@\" jatkossa?\n\n⚠️ Tämä sisältää sähköpostiviestit, median ja kaikki \"Tallennetut viestit\" kaikissa palvelimen kansioissa\n\n⚠️ Älä käytä tätä toimintoa, jos haluat säilyttää tiedot palvelimella\n\n⚠️ Älä käytä tätä toimintoa, jos käytät muita sähköpostisovelluksia Delta Chatin lisäksi";
+// deprecated
+"autodel_server_enabled_hint" = "Tämä sisältää sähköpostit, median ja \"Tallennetut viestit\" kaikissa palvelimen kansioissa. Älä käytä tätä toimintoa, jos haluat pitää tietosi palvelimella tai jos käytät muita sähköpostisovelluksia Delta Chatin lisäksi.";
 "autodel_confirm" = "Ymmärrän, poista kaikki nämä viestit";
 // "At once" in the meaning of "Immediately", without any intervening time.
 "autodel_at_once" = "Heti";
@@ -672,11 +674,11 @@
 "invalid_unencrypted_explanation" = "Päästä-päähän salauksen saat käyttöön tapaamalla yhteystietosi ja skannaamalla hänen QR -koodinsa.";
 "learn_more" = "Lue lisää";
 "devicemsg_self_deleted" = "Poistit \"Tallennetut viestit\" -keskustelun.\n\nℹ️ Aloita uusi keskustelu itsesi kanssa, niin voit jälleen käyttää \"Tallennetut viestit\" -ominaisuutta.";
-// %1$s will be replaced by the amount of storage already used, sth. as '500 MB'. If you want to use a percentage sign, type in two of them, eg. %1$s %%
+// deprecated
 "devicemsg_storage_exceeding" = "⚠️ Palveluntarjoajasi tallennuskiintiö ylitetään pian, käytössä on jo %1$@ / %%.\n\nEt välttämättä enää voi vastaanottaa viestejäsi, kun 100 %% on käytössä.\n\n👉 Kokeile poistaa viestejä palveluntarjoajasi internetkäyttöliittymästä. Kannattaa myös ehkä kytkeä päälle \"Asetukset / Poista vanhat viestit\". Voit tarkistaa tämän hetkisen tallennustilan käytön \"Asetukset / Yhteys\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ Laitteesi päivämäärä tai aika vaikuttaa olevan väärässä (%1$@).\n\nAseta kellonaika ⏰🔧 varmistaaksesi, että viestin vastaanottaminen onnistuu.";
-"devicemsg_update_reminder" = "⚠️ alt.chat -versio saattaa olla vanhentunut.\n\nTämä saattaa aiheuttaa ongelmia, koska muut käyttävät uudempia versioita - ja saatat jäädä paitsi uusista ominaisuuksista. 😳\nTarkista uudet päivitykset sovelluskaupastasi tai https://alt-chat.me/app/";
+"devicemsg_update_reminder" = "⚠️ Delta Chat -versio saattaa olla vanhentunut.\n\nTämä saattaa aiheuttaa ongelmia, koska muut käyttävät uudempia versioita - ja saatat jäädä paitsi uusista ominaisuuksista. 😳\nTarkista uudet päivitykset sovelluskaupastasi tai https://get.delta.chat";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Avaa lukitus jatkaaksesi";
 // qr code stuff
@@ -749,7 +751,7 @@
 "perm_explain_access_to_mic_denied" = "Lähettääksesi ääniviestin mene sovelluksen asetuksiin, valitse \"Käyttöluvat\" ja kytke päälle \"Mikrofoni\".";
 "perm_explain_access_to_storage_denied" = "Lähettääksesi tai vastaanottaaksesi tiedostoja mene sovelluksen asetuksiin, valitse \"Käyttöluvat\" ja kytke päälle \"Tallennustila\".";
 "perm_explain_access_to_location_denied" = "Jakaaksesi sijaintisi mene sovelluksen asetuksiin, valitse \"Käyttöluvat\" ja kytke päälle \"Sijainti\".";
-"perm_explain_access_to_notifications_denied" = "Voit ottaa \"Ilmoitukset\" käyttöön navigoimalla kohteeseen \"Järjestelmäasetukset / Sovellukset / alt.chat\"";
+"perm_explain_access_to_notifications_denied" = "Voit ottaa \"Ilmoitukset\" käyttöön navigoimalla kohteeseen \"Järjestelmäasetukset / Sovellukset / Delta Chat\"";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Piirrää sumentaaksesi";
 "ImageEditorHud_add_text" = "Lisää teksti";
@@ -759,10 +761,7 @@
 "ImageEditorHud_crop" = "Rajaa";
 "ImageEditorHud_flip" = "Käännä";
 "ImageEditorHud_rotate" = "Pyöritä";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Tämä on virallinen alt.chat -työpöytäsovellus.";
-"about_licensed_under_desktop" = "Tämä ohjelmisto on GNU GPL v3 -lisensoitu, ja lähdekoodi on saatavilla GitHubissa.";
-"welcome_desktop" = "Tervetuloa alt.chatiin";
+"welcome_desktop" = "Tervetuloa Delta Chatiin";
 "global_menu_preferences_language_desktop" = "Kieli";
 "global_menu_file_desktop" = "Tiedosto";
 "global_menu_file_quit_desktop" = "Sulje";
@@ -778,8 +777,8 @@
 "global_menu_view_developer_tools_desktop" = "Kehittäjätyökalut";
 "global_menu_help_desktop" = "Ohje";
 "global_menu_help_report_desktop" = "Ilmoita ongelma";
-"global_menu_help_about_desktop" = "Tietoja alt.chatista";
-"global_menu_file_open_desktop" = "Avaa alt.chat";
+"global_menu_help_about_desktop" = "Tietoja Delta Chatista";
+"global_menu_file_open_desktop" = "Avaa Delta Chat";
 "global_menu_minimize_to_tray" = "Pienennä";
 "no_chat_selected_suggestion_desktop" = "Valitse tai luo keskustelu";
 "write_message_desktop" = "Kirjoita viesti";
@@ -796,7 +795,8 @@
 "message_detail_received_desktop" = "vastaanotettu";
 "menu.view.developer.open.log.folder" = "Avaa lokikansio";
 "menu.view.developer.open.current.log.file" = "Avaa nykyinen lokitiedosto";
-"explain_desktop_minimized_disabled_tray_pref" = "Työkalupalkin kuvaketta ei voida poistaa, koska alt.chat käynnistettiin \"Käynnistä pienennettynä\" -valinnalla.";
+"explain_desktop_minimized_disabled_tray_pref" = "Työkalupalkin kuvaketta ei voida poistaa, koska Delta Chat käynnistettiin \"Käynnistä pienennettynä\" -valinnalla.";
+// deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Oikeinkirjoitusehdotusta ei löydy.";
 "show_window" = "Näytä ikkuna";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
@@ -833,7 +833,7 @@
 "import_device_contacts" = "Tuo laitteen yhteystiedot";
 "import_device_contacts_hint" = "Avaa asetukset ja kytke päälle \"Yhteystiedot\" viestiäksesi laitteen yhteystietojen kanssa.";
 // iOS notification settings
-"disabled_in_dc" = "Kytketty pois alt.chatissa";
+"disabled_in_dc" = "Kytketty pois Delta Chatissa";
 "disabled_in_system_settings" = "Kytketty pois järjestelmäasetuksissa";
 "bg_app_refresh_disabled" = "Taustasovelluksen päivitys kytketty pois järjestelmäasetuksissa";
 "notifications_avg_minutes" = "Keskimäärin%1$d minuutin välein";
@@ -846,14 +846,7 @@
 "pref_background_notifications_explain" = "Vaatii akun optimoinnin käytöstä poistoa, käytä jos push -palvelu ei ole saatavilla";
 "pref_reliable_service" = "Pakota yhteys taustalla";
 "pref_reliable_service_explain" = "Aiheuttaa pysyvän ilmoituksen";
-"pref_background_notifications_rationale" = "Yhteyden ylläpitämiseksi sähköpostipalvelimen kanssa ja viestien vastaanottamiseksi taustalla, poista akun käytön optimointi käytöstä seuraavassa vaiheessa.\n\nalt.chat käyttää vain vähän laitteen suorituskyvystä, eikä juurikaan kuluta akkua.";
+"pref_background_notifications_rationale" = "Yhteyden ylläpitämiseksi sähköpostipalvelimen kanssa ja viestien vastaanottamiseksi taustalla, poista akun käytön optimointi käytöstä seuraavassa vaiheessa.\n\nDelta Chat käyttää vain vähän laitteen suorituskyvystä, eikä juurikaan kuluta akkua.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
-"perm_enable_bg_reminder_title" = "Napauta vastaanottaaksesi viestejä, kun alt.chat on taustalla.";
+"perm_enable_bg_reminder_title" = "Napauta vastaanottaaksesi viestejä, kun Delta Chat on taustalla.";
 "perm_enable_bg_already_done" = "Annoit jo luvan viestien vastaanottamiselle taustalla.\n\nJos et saa viestejä taustalla, tarkista myös järjestelmäasetukset.";
-
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Soi";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Yhdistää";
-"update_available" = "Update Available";
-"search_results_local" = "Löytyi paikallisesti";

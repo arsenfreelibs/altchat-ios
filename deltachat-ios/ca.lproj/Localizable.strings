@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "D\'acord";
 "cancel" = "Cancel·la";
 "clear_search" = "Neteja la cerca";
@@ -14,7 +14,6 @@
 "off" = "Desactivat";
 "def" = "Per defecte";
 "default_value" = "Per defecte (%1$@)";
-"default_value_as_above" = "Per defecte (igual que a dalt)";
 "custom" = "Personalitzat";
 "none" = "Cap";
 "automatic" = "Automàtic";
@@ -32,8 +31,6 @@
 "update" = "Actualitza";
 "emoji" = "Emojis";
 "attachment" = "Adjunt";
-// the placeholder will be replaced by the name of the image or file to attach
-"ask_attach" = "Voleu adjuntar \"%1$@\"?";
 "back" = "Enrere";
 "close" = "Tanca";
 "close_window" = "Tanca la finestra";
@@ -54,13 +51,15 @@
 // Adjective "smth is muted". used to describe a muted or silenced chat, that e.g. does not make noise or cause notifications
 "muted" = "Silenciat";
 "ephemeral_messages" = "Missatges efímers";
-"ephemeral_messages_hint" = "Aquestes opcions s\'apliquen a tots els integrants del xat que utiltizen alt.chat. Tot i així, poden copiar, desar o reenviar missatges o utilitzar altres clients de correu.";
+"ephemeral_messages_hint" = "Aquestes opcions s\'apliquen a tots els integrants del xat que utiltizen Delta Chat. Tot i així, poden copiar, desar o reenviar missatges o utilitzar altres clients de correu.";
 "save" = "Desa";
 "chat" = "Xat";
 "media" = "Multimèdia";
 "apps_and_media" = "Apps & Multimèdia";
 "profile" = "Perfil";
+// deprecated
 "all_profiles" = "Tots els Perfils";
+// deprecated
 "current_profile" = "Perfil Actual";
 "main_menu" = "Menú principal";
 "start_chat" = "Inicia un xat";
@@ -83,6 +82,7 @@
 "always" = "Sempre";
 "always_load_remote_images" = "Carrega sempre les imatges remotes";
 "once" = "Una vegada";
+// deprecated
 "show_warning" = "Mostra l\'advertiment";
 "not_now" = "Ara no";
 "never" = "Mai";
@@ -104,7 +104,7 @@
 "email_address" = "Adreça de correu electrònic";
 "bad_email_address" = "Adreça de correu electrònic errònia.";
 "password" = "Contrasenya";
-"existing_password" = "Ja existeix aquesta contrasenya";
+"existing_password" = "Contrasenya existent";
 "now" = "Ara";
 // Headline for destructive actions with no undo. Could also be "Caution" or "Warning".
 "danger" = "Perill";
@@ -119,10 +119,14 @@
 // Refers to the time a contact was last seen. Shown below contact name in the profile. The placeholder will be replaced by a relative point in time as "3 minutes ago" (see https://momentjs.com for more examples and languages)
 "last_seen_relative" = "Vist per darrer cop: %1$@";
 "last_seen_unknown" = "Vist per darrer cop: desconegut";
+// Call duration as shown in the call bubbles. There is some risk to mix with the sending time, so the word "Duration" may be helpful. Might also be "Duration: %d minutes", "%d-minute duration", "%d-minute length" or "%d-minute call"
+// Call duration as shown in the call bubbles in case the call is less than one minute. If the context is not clear enough, one may want to add the word "Duration".
+"call_duration_less_than_a_minute" = "Menys d\'1 minut";
 // Shown beside messages that are "N minutes old". Prefer short strings, or well-known abbreviations.
 // Shown beside messages that are "N hours old". Prefer short strings, or well-known abbreviations.
 // Short form for "N Items Selected"
 "selected_colon" = "Seleccionat:";
+"selected" = "Seleccionat";
 "self" = "Jo";
 "draft" = "Esborrany";
 "image" = "Imatge";
@@ -136,6 +140,9 @@
 "add_stickers_instructions" = "Per a afegir adhesius: premeu \"Obre la carpeta d\'adhesius\", creeu una subcarpeta per a la vostra col·lecció d\'adhesius i arrossegueu-hi la imatge i els fitxers d\'adhesius.";
 // deprecated
 "open_sticker_folder" = "Obre la carpeta d\'adhesius";
+"ask_add_sticker_to_collection" = "Afegir l\'adhesiu a la col·lecció?";
+"ask_delete_sticker" = "Esborrar l\'adhesiu?";
+"sticker_picker_empty_hint" = "Prem un adhesiu per afegir-lo aquí.";
 "images" = "Imatges";
 // a noun, used for "Music" and other "Audio" files
 "audio" = "Àudio";
@@ -151,6 +158,7 @@
 "camera" = "Càmera";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Captura";
+// Switch eg. from front to back camera
 "switch_camera" = "Canvia la càmera";
 "toggle_fullscreen" = "Alterna el mode de pantalla completa";
 "location" = "Ubicació";
@@ -229,6 +237,7 @@
 "menu_add_attachment" = "Afegeix un adjunt";
 "menu_leave_group" = "Deixa el grup";
 "menu_leave_channel" = "Sortir del Canal";
+"menu_leave_and_delete" = "Sortir i esborrar per a mi";
 "menu_delete_chat" = "Esborra el xat";
 // Command to delete all messages in a chat. The chat itself will not be deleted but will be empty afterwards, so make sure to be different from "Delete Chat" here. "Clear" is a verb here, "Empty Chat" would also be fine (eg. in German "Chat leeren")
 "clear_chat" = "Buida el xat";
@@ -240,7 +249,7 @@
 "share_invite_link_explain" = "Qualsevol amb aquest enllaç pot veure el vostre perfil i començar un xat amb vós. Compartiu-lo només amb qui tingueu confiança.";
 "invite_friends" = "Convida amics";
 // %1$s is replaced by the user's invitation link ("https://i.delta.chat/...")
-"invite_friends_text" = "Contacta\'m a alt.chat:\n%1$@";
+"invite_friends_text" = "Contacta\'m a Delta Chat:\n%1$@";
 "menu_copy_selection_to_clipboard" = "Copia la selecció";
 "menu_copy_link_to_clipboard" = "Copia l\'enllaç";
 "menu_copy_text_to_clipboard" = "Copia el text";
@@ -255,7 +264,7 @@
 "menu_export_attachment" = "Exporta l\'adjunt";
 "menu_export_attachments" = "Exporta els adjunts";
 "menu_all_media" = "Tots els multimèdia";
-"all_apps_and_media" = "Tots els fitxers & Multimedia";
+"all_apps_and_media" = "Totes les Apps & Multimèdia";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Mostra al xat";
 "show_app_in_chat" = "Mostra l\'aplicació al xat";
@@ -280,7 +289,7 @@
 // The placeholder will be replaced by the name the contact gave themself
 "edit_name_explain" = "Indiqueu un sobrenom que se us mostrarà en comptes de «%1$@». Deixeu-ho buit per a usar el nom triat pel contacte.";
 // The placeholder will be replaced by the name the contact gave themself
-"edit_name_placeholder" = "Sobrenom per a  «%1$@»";
+"edit_name_placeholder" = "Sobrenom per a «%1$@»";
 "menu_settings" = "Preferències";
 "menu_advanced" = "Avançat";
 "menu_view_profile" = "Veure el perfil";
@@ -290,14 +299,12 @@
 "menu_more_options" = "Més opcions";
 "menu_learn_spelling" = "Aprèn l\'ortografia";
 "jump_to_message" = "Ves al missatge";
-"jump_to_original_message" = "Vés al Missatge Original";
-"copy_json" = "Copia el JSON";
 "replace_draft" = "Substitueix l\'esborrany";
 "title_share_location" = "Comparteix la ubicació amb tots els membres del grup";
 "device_talk" = "Missatges del dispositiu";
 "device_talk_subtitle" = "Missatges generats localment";
 "device_talk_explain" = "Els missatges d\'aquest xat són generats en el vostre dispositiu per a informar-vos sobre actualitzacions de l\'aplicació o de problemes durant el seu ús.";
-"device_talk_welcome_message2" = "Esteu en contacte!\n\n🙌 Toqueu «Codi QR» en la finestra principal d\'ambdós dispositius. Trieu «Escaneja codi QR» en un dispositiu, i apunteu cap a l\'altre\n\n🌍 Si no esteu en la mateixa sala, podeu escanejar o compartir un enllaç d\'invitació des de «Escaneja codi QR»\n\nDesprés: gaudiu de l\'experiència de missatgeria sobre la xarxa descentralitzada més gran que ha existit mai: el correu electrònic. I, en contrast amb altres aplicacions populars, sense control central, seguiment ni comercialització de vós, amics, col·legues o familiars amb grans organitzacions.";
+"device_talk_welcome_message2" = "Esteu en contacte!\n\n🙌 Prem «Codi QR» a la finestra principal d\'ambdós dispositius. Tria «Escaneja codi QR» en un dispositiu, i apunta cap a l\'altre\n\n🌍 Si no esteu a la mateixa sala, podeu escanejar o compartir un enllaç d\'invitació des de \"Escaneja codi QR\"\n\nLlavors: gaudiu de l\'experiència de missatgeria sobre la xarxa descentralitzada més gran que ha existit mai: el correu electrònic. I, en comparació amb altres aplicacions populars, sense control central, sense seguiment ni tampóc comercialització per part de grans companyies de tu i els teus amics, col·legues o familiars.";
 "edit_contact" = "Edita el contacte";
 // Verb "to pin", making something sticky, not a noun or abbreviation for "pin number".
 "pin_chat" = "Fixa el xat";
@@ -313,12 +320,13 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Afegeix a la pantalla d\'inici";
 "donate" = "Feu un donatiu";
-"donate_device_msg" = "❤️ Sembla que estàs gaudint de alt.chat!\n\nConsidera fer una donació per ajudar a garantir que alt.chat segueixi sent gratuït per a tothom.\n\nTot i que alt.chat és gratuït i de codi obert, el desenvolupament té un cost.\n\nAjuda’ns a mantenir alt.chat independent i a fer-lo encara millor en el futur.\n\nhttps://alt-chat.me/donate";
+"donate_device_msg" = "❤️ Sembla que estàs gaudint de Delta Chat!\n\nConsidera fer una donació per ajudar a garantir que Delta Chat segueixi sent gratuït per a tothom.\n\nTot i que Delta Chat és gratuït i de codi obert, el desenvolupament té un cost.\n\nAjuda’ns a mantenir Delta Chat independent i a fer-lo encara millor en el futur.\n\nhttps://delta.chat/donate";
 "mute_for_one_hour" = "Silencia 1 hora";
 "mute_for_eight_hours" = "Silencia 8 hores";
 "mute_for_one_day" = "Silencia 1 dia";
 "mute_for_seven_days" = "Silencia 7 dies";
 "mute_forever" = "Sempre silenciat";
+// deprecated
 "share_location_for_5_minutes" = "Durant 5 minuts";
 "share_location_for_30_minutes" = "Durant 30 minuts";
 "share_location_for_one_hour" = "Durant 1 hora";
@@ -331,14 +339,20 @@
 "start_audio_call" = "Trucada de veu";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Videotrucada";
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Trucant";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Connectant";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Respon";
 // the action "to decline" a call, not: "the decline"
 "end_call" = "Rebutja";
+// Used in call bubbles, summaries, notifications
+"audio_call" = "Trucada de veu";
+// Used in call bubbles, summaries, notifications
+"video_call" = "Video trucada";
+"call_initializing" = "Inicialitzant...";
+"call_incoming" = "Et truquen";
+"call_ringing" = "Trucant...";
+"call_reconnecting" = "Reconnectant...";
+"call_ended" = "Trucada finalitzada";
+"call_failed" = "Trucada fallida";
 // deprecated, use "Audio call" instead
 "outgoing_audio_call" = "Trucada de veu sortint";
 // deprecated, use "Video call" instead
@@ -350,11 +364,13 @@
 "declined_call" = "Trucada rebutjada";
 "canceled_call" = "Trucada cancel·lada";
 "missed_call" = "Trucada perduda";
+"already_in_call" = "En una trucada";
 // get confirmations
 // confirmation for leaving groups or channels. If a subject is needed, "Are you sure you want to leave the chat?" would work as well
 "ask_leave_group" = "Segur que vols sortir?";
 "ask_delete_named_chat" = "¿Esborrar xat \"%1$@\" de tots els teus dispositius?";
 "ask_delete_message" = "¿Esborra aquest missatge de tots els teus dispositius?";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Reenvia missatges a %1$@?";
 "ask_forward_multiple" = "Voleu reenviar els missatges a %1$d xats?";
 "ask_export_attachment" = "En exportar els adjunts permetreu que altres aplicacions del dispositiu hi puguin accedir.\n\nVoleu continuar?";
@@ -405,7 +421,6 @@
 "attachment_failed_to_load" = "La càrrega de l\'adjunt ha fallat";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Bloqueja la gravació";
-"audio_note_processing_failed" = "No s\'ha pogut processar la gravació.";
 // mailing lists
 "mailing_list" = "Llista de correu";
 // webxdc
@@ -417,15 +432,7 @@
 "send_file_to" = "Envia \"%1$@\" a…";
 // title shown above a list contacts where one should be selected (eg. when a webxdc attempts to send a message to a chat)
 "send_message_to" = "Envia el missatge a...";
-"enable_realtime" = "Aplicacions en temps real";
-"enable_realtime_explain" = "Activa connexions en temps real per a aplicacions compartides als xats. Si està activada, els companys de xat poden descobrir la vostra IP en iniciar una aplicació.";
-// map
-"filter_map_on_time" = "Mostra les ubicacions al llarg del temps";
-"show_location_traces" = "Mostra el rastre";
-"add_poi" = "Envia el punt d\'interès";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "No em tornis a demanar per %1$@";
 "puny_code_warning_header" = "S\'ha detectat un enllaç sospitós";
 // placeholder contains the hostname converted to ascii
 "puny_code_warning_question" = "Esteu segur de voler visitar %1$@?";
@@ -479,15 +486,15 @@
 "multidevice_title" = "Afegeix un segon dispositiu";
 "multidevice_same_network_hint" = "Assegureu-vos que els dos dispositius estan a la mateixa Wi-Fi o xarxa";
 "multidevice_this_creates_a_qr_code" = "Això crea un codi QR que es pot escanejar en un segon dispositiu per a copiar el perfil.";
-"multidevice_install_dc_on_other_device" = "Instal·leu alt.chat en el vostre altre dispositiu (https://alt-chat.me/app/)";
+"multidevice_install_dc_on_other_device" = "Instal·leu Delta Chat en el vostre altre dispositiu (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
-"multidevice_tap_scan_on_other_device" = "Inicieu alt.chat, toqueu  «Ja tinc un perfil / Afegeix un segon dispositiu» i escanegeu el codi que es mostra aquí.";
+"multidevice_tap_scan_on_other_device" = "Inicieu Delta Chat, toqueu «Ja tinc un perfil / Afegeix un segon dispositiu» i escanegeu el codi que es mostra aquí.";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
 "multidevice_qr_subtitle" = "Escanegeu-lo per configurar un segon dispositiu per a %1$@";
 "multidevice_receiver_title" = "Afegeix com a segon dispositiu";
 "multidevice_open_settings_on_other_device" = "En el primer dispositiu, aneu a «Configuració / Afegeix un segon dispositiu» i escanegeu el codi que es mostra allà.";
 "multidevice_receiver_scanning_ask" = "Voleu copiar el perfil de l\'altre dispositiu en aquest?";
-"multidevice_receiver_needs_update" = "El perfil que vols importar prové d\'una versió més recent de alt.chat.\n\nPer continuar configurant el segon dispositiu, actualitza aquest dispositiu a l\'última versió de alt.chat.";
+"multidevice_receiver_needs_update" = "El perfil que vols importar prové d\'una versió més recent de Delta Chat.\n\nPer continuar configurant el segon dispositiu, actualitza aquest dispositiu a l\'última versió de Delta Chat.";
 "multidevice_abort" = "Voleu cancel·lar la configuració d\'un segon dispositiu?";
 "multidevice_abort_will_invalidate_copied_qr" = "Això invalidarà el codi QR copiat al porta-retalls.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ El perfil s\'ha transferit al segon dispositiu.";
@@ -523,7 +530,7 @@
 // Secondary button on the welcome screen, allows to "Add as Second Device", "Restore from Backup"
 "onboarding_alternative_logins" = "Ja tinc un perfil";
 // This is a button and a title, allowing to use existing, classic email, setting ports, passwords and so on
-"manual_account_setup_option" = "Inici de sessió correu-e clàssic";
+"manual_account_setup_option" = "Utilitza correu-e clàssic com a retransmissor";
 // Instant onboarding title (there is not more to do than to set name and avatar)
 "instant_onboarding_title" = "El vostre perfil";
 // The placeholder will be replaced by the default onboarding server
@@ -574,19 +581,24 @@
 "proxy_enabled" = "Servidor intermediari activat";
 "proxy_enabled_hint" = "Esteu fent servir un servidor intermediari. Si teniu problemes per a connectar-vos, proveu un servidor intermediari diferent.";
 // "Relay" refers to the relay servers used; please chose a common term in your language, no need to be literal. If in doubt, stay with "Relay"
-"transports" = "Relés";
-"add_transport" = "Afegir Relé";
-"remove_transport" = "Elimina Relé";
-"edit_transport" = "Edita Relé";
+"transports" = "Retransmissors";
+"add_transport" = "Afegir Retransmissor";
+"remove_transport" = "Elimina Retransmissors";
+"edit_transport" = "Edita Retransmissor";
+"used_for_sending" = "Utilitzat per enviar";
+"hide_from_contacts" = "Amagar als contactes";
+"hidden_from_contacts" = "Amagat als contactes";
+// Hint for the list of relays
+"transport_list_hint" = "Els missatges es reben en tots els retransmissors.  ⚠️ Si canvies qualsevol cosa aquí, assegura\'t que tots els teus dispositius funcionin com a mínim amb la versió 2.47.0. Sinó, els dispositius més antics podrien no rebre els missatges.";
 // shown if a QR code was scanned that can be used as a relay
-"confirm_add_transport" = "Afegeix aquest relé?";
-"invalid_transport_qr" = "El codi QR escanejat no conté un relé vàlid.";
+"confirm_add_transport" = "Afegir aquest retransmissor?";
+"invalid_transport_qr" = "El codi QR escanejat no conté un retransmissor vàlid.";
 // placeholder will be replaced by a relay server name
-"confirm_remove_transport" = "Eliminar relé \"%1$@\"?\n\nEls teus contactes només poden contactar amb tu si ja els has contactat prèviament a través d\'un altre relé.\n\nSi dubtes, elimina el relé més tard.";
+"confirm_remove_or_hide_transport_x" = "Esborrar el retransmissor \"%1$@\"?\n\nEls contactes que només coneixen aquest retransmissor no et podran contactar fins que els escriguis de nou.\n\nSi no ho tens clar, amaga\'l enlloc d\'esborrar-lo.";
 "login_certificate_checks" = "El certificat coincideix";
 "login_error_mail" = "Si us plau poseu una adreça d\'email vàlida";
 "login_error_server" = "Si us plau poseu un servidor / adreça IP vàlida";
-"login_error_port" = "Si us plau poseu un  port vàlid (1-65535)";
+"login_error_port" = "Si us plau poseu un port vàlid (1-65535)";
 "login_error_required_fields" = "Si us plau poseu una adreça i contrasenya vàlids";
 "import_backup_title" = "Importa una còpia de seguretat";
 "import_backup_ask" = "S\'ha trobat una còpia de seguretat a \"%1$@\".\n\nVoleu importar-la i fer-ne servir les dades i els paràmetres de configuració?";
@@ -626,7 +638,7 @@
 "pref_profile_photo" = "Fotografia de perfil";
 "pref_blocked_contacts" = "Contactes bloquejats";
 "blocked_empty_hint" = "Els contactes blocats apareixeran aquí.";
-"pref_who_can_see_profile_explain" = "La vostra imatge de perfil, nom i biografia s\'enviaran amb juntament els missatges que escriviu quant us comuniqueu amb altres usuaris.";
+"pref_who_can_see_profile_explain" = "La vostra imatge de perfil, nom i signatura s\'enviaran juntament amb els missatges que escriviu quant us comuniqueu amb altres usuaris.";
 "pref_your_name" = "El vostre nom";
 // Label of the Bio/Signature/Status/Motto field
 "pref_default_status_label" = "Signatura";
@@ -635,6 +647,7 @@
 "pref_enter_sends" = "La tecla «Retorn» envia";
 "pref_enter_sends_explain" = "Els missatges s\'enviaran prement la tecla «Retorn»";
 "pref_outgoing_media_quality" = "Qualitat del contingut multimèdia sortint";
+"pref_outgoing_media_quality_hint" = "Per enviar sense comprimir, adjunta-ho com a \"Fitxer\". Això consumeix més dades, tant les teves, com les dels destinataris.";
 "pref_outgoing_balanced" = "Balancejat";
 "pref_outgoing_worse" = "Pitjor qualitat, mida petita";
 "pref_vibrate" = "Vibració";
@@ -645,10 +658,15 @@
 "pref_notifications" = "Notificacions";
 "pref_mention_notifications" = "Mencions";
 "pref_mention_notifications_explain" = "En els grups silenciats, notifica els missatges dirigits a vós, com ara respostes i reaccions";
+// Title for the "Calls" notification setting. This is a plural noun, not a verb.
+"pref_calls" = "Trucades";
+// Details about what the "Calls" notification setting does
+"pref_calls_explain" = "Mostrar la pantalla de trucada quan reps una trucada";
 "pref_notifications_show" = "Mostra";
 "pref_notifications_priority" = "Prioritat";
 "pref_notifications_explain" = "Habilita les notificacions del sistema per als missatges nous";
 "pref_show_notification_content" = "Mostra el contingut del missatge a la notificació";
+// deprecated
 "pref_show_notification_content_explain" = "Mostra el remitent i les primeres paraules del missatge en les notificacions";
 "pref_led_color" = "Color LED";
 "pref_sound" = "So";
@@ -689,16 +707,23 @@
 "pref_background" = "Fons";
 "pref_background_btn_default" = "Usa la imatge per defecte";
 "pref_background_btn_gallery" = "Trieu de la galeria";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Si desactiveu aquesta opció, assegureu-vos que el vostre servidor i els altres programes estiguin configurats de la mateixa manera.\n\nAltrament podeu tenir problemes de funcionament.";
 // No need to be literal here, you can also use "Use Multiple Devices", "Support Multiple Devices" or other fitting terms. However, it should fit to the wording or your language at https://delta.chat/help
 "pref_multidevice" = "Mode multidispositiu";
 "pref_multidevice_explain" = "Sincronitza els vostres missatges amb els vostres altres dispositius. Activat automàticament quan s\'afegeix un segon dispositiu.";
 "pref_multidevice_change_warn" = "El mode multidispositiu ha d\'estar habilitat quan feu servir el mateix perfil des de diferents dispositius. Desactiva aquesta opció només si has esborrat aquest perfil de tots els altres dispositius.\n\nDesactivar aquesta opció mentre es fa servir el mateix perfil en múltiples dispositius farà que es perdin missatges i hi hagi altres problemes.";
-"pref_auto_folder_moves" = "Moure automàticament a la carpeta de alt.chat";
-"pref_only_fetch_mvbox_title" = "Agafa només de la carpeta de alt.chat";
+// deprecated
+"pref_auto_folder_moves" = "Moure automàticament a la carpeta de Delta Chat";
+// deprecated
+"pref_only_fetch_mvbox_title" = "Agafa només de la carpeta de DeltaChat";
+// deprecated
 "pref_show_emails" = "Mostra els correus clàssics";
+// deprecated
 "pref_show_emails_no" = "No, només xats";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Per a contactes acceptats";
+// deprecated
 "pref_show_emails_all" = "Tot";
 "pref_experimental_features" = "Funcionalitats experimentals";
 "pref_experimental_features_explain" = "Aquestes funcionalitats poden ser inestables i poden canviar o ser suprimides";
@@ -719,16 +744,14 @@
 "profile_image_delete" = "Esborra la imatge del perfil";
 "pref_show_tray_icon" = "Mostra la icona de la safata";
 "pref_edit_profile" = "Edita el perfil";
-"disable_imap_idle" = "Desactiva IMAP IDLE";
-"disable_imap_idle_explain" = "No usis l\'extensió IMAP IDLE encara que el servidor la permeti. Activar aquesta opció endarreria l\'obtenció de missatges, activeu-ho només per a proves.";
-"send_stats_to_devs" = "Envia estadístiques als desenvolupadors del alt.chat";
-"stats_device_message" = "Voleu ajudar a millorar alt.chat i donar suport a la recerca enviant estadístiques d\'ús anònimes setmanalment?\n\n👉 Feu clic aquí… 👈";
-"stats_confirmation_dialog" = "Voleu ajudar a millorar alt.chat i donar suport a la recerca enviant estadístiques d\'ús anònimes setmanalment?";
-"stats_thanks" = "Moltes gràcies! Sempre podeu desactivar l\'enviament a «Preferències -> Avançat».\n\nTeniu 5 minuts addicionals per a participar en un estudi científic sobre alt.chat?";
+"send_stats_to_devs" = "Envia estadístiques als desenvolupadors del Delta Chat";
+"stats_device_message" = "Voleu ajudar a millorar Delta Chat i donar suport a la recerca enviant estadístiques d\'ús anònimes setmanalment?\n\n👉 Feu clic aquí… 👈";
+"stats_confirmation_dialog" = "Voleu ajudar a millorar Delta Chat i donar suport a la recerca enviant estadístiques d\'ús anònimes setmanalment?";
+"stats_thanks" = "Moltes gràcies! Sempre podeu desactivar l\'enviament a «Preferències -> Avançat».\n\nTeniu 5 minuts addicionals per a participar en un estudi científic sobre Delta Chat?";
 "stats_disable_dialog" = "L\'enviament d\'estadístiques ja està activat.\n\nVoleu desactivar-lo?";
 "disable" = "Desactiva";
 "stats_keep_sending" = "Continua enviant";
-"stats_msg_body" = "El fitxer adjunt conté estadístiques d\'ús anònimes que ens ajuden a millorar el alt.chat. Veieu https://alt-chat.me/help#statssending per a més informació. Gràcies!";
+"stats_msg_body" = "El fitxer adjunt conté estadístiques d\'ús anònimes que ens ajuden a millorar el Delta Chat. Veieu https://delta.chat/help#statssending per a més informació. Gràcies!";
 // Emoji picker and categories
 "emoji_search_results" = "Resultats de la cerca";
 "emoji_not_found" = "No s\'ha trobat cap emoji";
@@ -752,14 +775,17 @@
 // automatically delete message
 "delete_old_messages" = "Esborra els missatges antics";
 "autodel_device_title" = "Esborra els missatges del dispositiu";
+// deprecated
 "autodel_server_title" = "Esborra els missatges del servidor";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "Voleu esborrar ara %1$d missatges i tots els missatges \"%2$@\" futurs?\n\n• Això inclou tot el contingut multimèdia\n\n• S\'esborraran els missatges fins i tot si no s\'han llegit\n\n• Els \"Missatges desats\" no s\'esborraran de l\'emmagatzematge local";
-// %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
-"autodel_server_ask" = "Voleu esborrar ara %1$d missatges i tots els missatges nous \"%2$@\" futurs?\n\n⚠️ Això inclou els correus, contingut multimèdia i \"Missatges desats\" a totes les carpetes del servidor\n\n⚠️ No utilitzeu aquesta funció si voleu conservar les dades al servidor\n\n⚠️ No utilitzeu aquesta funció si feu servir un client de correu diferent a alt.chat";
-// shown below enabled autodel_server-option, should be a summary of autodel_server_ask and remind about the impact
-"autodel_server_enabled_hint" = "Això inclou els correus electrònics, contingut multimèdia i «Missatges desats» en totes les carpetes del servidor. No useu aquesta funció si voleu conservar dades al servidor o si useu altres clients de correu més enllà de alt.chat.";
+// deprecated
+"autodel_server_ask" = "Voleu esborrar ara %1$d missatges i tots els missatges nous \"%2$@\" futurs?\n\n⚠️ Això inclou els correus, contingut multimèdia i \"Missatges desats\" a totes les carpetes del servidor\n\n⚠️ No utilitzeu aquesta funció si voleu conservar les dades al servidor\n\n⚠️ No utilitzeu aquesta funció si feu servir un client de correu diferent a Delta Chat";
+// deprecated
+"autodel_server_enabled_hint" = "Això inclou els correus electrònics, contingut multimèdia i «Missatges desats» en totes les carpetes del servidor. No useu aquesta funció si voleu conservar dades al servidor o si useu altres clients de correu més enllà de Delta Chat.";
+// deprecated
 "autodel_server_warn_multi_device_title" = "Activa l\'esborrament immediat";
+// deprecated
 "autodel_server_warn_multi_device" = "Si habiliteu l\'esborrament immediat no podeu usar múltiples dispositius en aquest perfil.";
 "autodel_confirm" = "Ho entenc, esborra tots aquests missatges";
 // "At once" in the meaning of "Immediately", without any intervening time.
@@ -774,7 +800,7 @@
 "systemmsg_subject_for_new_contact" = "Missatge de %1$@";
 "systemmsg_failed_sending_to" = "No s\'ha pogut enviar el missatge a %1$@.";
 // %1$s will be replaced by the old group name, %2$s will be replaced by the new group name
-"group_name_changed_by_you" = "Heu canviat el nom del grup de «%1$@»  a «%2$@».";
+"group_name_changed_by_you" = "Heu canviat el nom del grup de «%1$@» a «%2$@».";
 // %1$s will be replaced by the old group name, %2$s will be replaced by the new group name, %3$s will be replaced by name and address of the contact who did the action.
 "group_name_changed_by_other" = "Nom del grup \"%1$@\" canviat a \"%2$@\" per %3$@.";
 "group_image_changed_by_you" = "Heu canviat la imatge de grup.";
@@ -844,17 +870,18 @@
 // %1$s will be replaced by the number of weeks (always >1) the timer is set to, %2$s will be replaced by name of the contact
 "ephemeral_timer_weeks_by_other" = "%2$@ ha definit el temporitzador dels missatges efímers a %1$@ setmanes.";
 "chat_unencrypted_explanation" = "Els missatges en aquest xat fan servir el correu electrònic tradicional i no estan xifrats d\'extrem a extrem.";
+"messages_are_e2ee" = "Els missatges són xifrats d\'extrem a extrem";
 "chat_protection_enabled_tap_to_learn_more" = "Us garantim que a partir d\'ara els missatges són xifrats d\'extrem a extrem. Toqueu per a obtenir més informació.";
-"chat_protection_enabled_explanation" = "Ara es garanteix que tots els missatges d\'aquest xat són xifrats d\'extrem a extrem.\n\nEl xifratge d\'extrem a extrem manté privats els missatges entre vós i els companys de xat. Ni tan sols el vostre proveïdor de correu electrònic pot llegir-los.";
+"chat_protection_enabled_explanation" = "Tots els missatges en aquest xat estan xifrats d\'extrem a extrem. El xifrat d\'extrem a extrem manté els missatges privats entre tu i els destinataris. Ni tan sols els servidors, els proveïdors o els retransmissors els poden llegir.";
 "invalid_unencrypted_tap_to_learn_more" = "%1$@requereix xifratge d\'extrem a extrem, que encara no s\'ha configurat per a aquest xat. Toqueu per a obtenir més informació.";
-"invalid_unencrypted_explanation" = "Per a establir xifratge d\'extrem a extrem, heu de trobar-vos amb els contactes en persona i escanejar el seu codi QR per a poder afegir-los.";
+"invalid_unencrypted_explanation" = "Per a establir xifratge d\'extrem a extrem, heu de trobar-vos amb els contactes en persona i escanejar el seu codi QR per a afegir-los.";
 "learn_more" = "Més informació";
 "devicemsg_self_deleted" = "Heu esborrat el xat «Missatges desats».\n\nℹ️ Per a usar altre cop la funcionalitat de «Missatges desats», creeu un xat nou amb vós mateix.";
-// %1$s will be replaced by the amount of storage already used, sth. as '500 MB'. If you want to use a percentage sign, type in two of them, eg. %1$s %%
+// deprecated
 "devicemsg_storage_exceeding" = "⚠️ Esteu a punt de quedar-vos sense espai d\'emmagatzematge al vostre proveïdor: ja esteu utilitzant %1$@%% .\n\nPodríeu deixar de rebre missatges si s\'emplena.\n\n👉 Reviseu a la interfície web del proveïdor si podeu esborrar dades antigues i considereu habilitar \"Preferències / Xats i multimèdia / Esborra els missatges antics\". Podeu veure sempre el nivell d\'ocupació a \"Preferències / Connectivitat\".";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ La data o l\'hora del vostre dispositiu no semblen correctes (%1$@).\n\nAdjusteu el rellotge ⏰🔧 per a assegurar que els missatges es reben correctament.";
-"devicemsg_update_reminder" = "⚠️ alt.chat podría no estar actualitzat.\n\n Això us podria causar problemes perquè els vostres companys de xat utilitzen versions més noves i no teniu les últimes funcionalitats 😳\nComproveu a https://alt-chat.me/app/ o a la vostra botiga d\'aplicacions si hi ha actualitzacions.";
+"devicemsg_update_reminder" = "⚠️ Delta Chat podría no estar actualitzat.\n\n Això us podria causar problemes perquè els vostres companys de xat utilitzen versions més noves i no teniu les últimes funcionalitats 😳\nComproveu a https://get.delta.chat o a la vostra botiga d\'aplicacions si hi ha actualitzacions.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Desbloca per a continuar";
 // qr code stuff
@@ -930,12 +957,12 @@
 // permissions
 "perm_required_title" = "Es requereix permís";
 "perm_continue" = "Continua";
-"perm_explain_access_to_camera_denied" = "alt.chat demana accés a la càmera per poder fer fotos o vídeos, però li ha estat denegat. Sisplau, vés al menú de configuració de l\'app, busca-hi els \"Permisos\" i habilita\'n la \"Càmera\".";
+"perm_explain_access_to_camera_denied" = "Delta Chat demana accés a la càmera per poder fer fotos o vídeos, però li ha estat denegat. Sisplau, vés al menú de configuració de l\'app, busca-hi els \"Permisos\" i habilita\'n la \"Càmera\".";
 // give the user an idea where to find the "Microphone" option. the hint is only shown if access was initially denied by the user. pick up wordings really used on the systems, but do not be overly precise: things shift around often and there are too many system we support to track every detail and click path
-"perm_explain_access_to_mic_denied" = "alt.chat demana accés al micròfon per poder enviar missatges d\'àudio, però li ha estat denegat. Sisplau, vés al menú de configuració de l\'app, busca-hi els \"Permisos\" i habilita\'n el \"Micròfon\".";
+"perm_explain_access_to_mic_denied" = "Delta Chat demana accés al micròfon per poder enviar missatges d\'àudio, però li ha estat denegat. Sisplau, vés al menú de configuració de l\'app, busca-hi els \"Permisos\" i habilita\'n el \"Micròfon\".";
 "perm_explain_access_to_storage_denied" = "Per a rebre o enviar fitxers, aneu a la configuració de l\'aplicació, seleccioneu «Permisos» i activeu «Emmagatzematge».";
 "perm_explain_access_to_location_denied" = "Per a adjuntar la ubicació, aneu a la configuració de l\'aplicació, trieu «Permisos» i activeu la «Ubicació».";
-"perm_explain_access_to_notifications_denied" = "Per a rebre les notificacions, aneu a «Configuració del sistema / Aplicacions / alt.chat» i activeu «Notificacions»";
+"perm_explain_access_to_notifications_denied" = "Per a rebre les notificacions, aneu a «Configuració del sistema / Aplicacions / Delta Chat» i activeu «Notificacions»";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Dibuixeu a qualsevol lloc per a difuminar-lo";
 "ImageEditorHud_add_text" = "Afegeix text";
@@ -945,10 +972,7 @@
 "ImageEditorHud_crop" = "Retalla";
 "ImageEditorHud_flip" = "Capgira";
 "ImageEditorHud_rotate" = "Gira";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Aquesta és l\'aplicació d\'escriptori oficial de alt.chat.";
-"about_licensed_under_desktop" = "Aquest programari és llicenciat amb la llicència GNU GPL versió 3 i el codi font és disponible a GitHub";
-"welcome_desktop" = "Us donem la benvinguda al alt.chat";
+"welcome_desktop" = "Us donem la benvinguda al Delta Chat";
 "global_menu_preferences_language_desktop" = "Trieu l\'idioma...";
 "global_menu_file_desktop" = "Arxiva";
 "global_menu_file_quit_desktop" = "Surt";
@@ -963,11 +987,11 @@
 "global_menu_view_developer_desktop" = "Desenvolupador";
 "global_menu_view_developer_tools_desktop" = "Eines de desenvolupador";
 "global_menu_help_desktop" = "Ajuda";
-"delta_chat_homepage" = "Lloc web de alt.chat";
+"delta_chat_homepage" = "Lloc web de Delta Chat";
 "contribute" = "Col·laboreu";
 "global_menu_help_report_desktop" = "Informa d\'un problema";
-"global_menu_help_about_desktop" = "Quant al alt.chat";
-"global_menu_file_open_desktop" = "Obre el alt.chat";
+"global_menu_help_about_desktop" = "Quant al Delta Chat";
+"global_menu_file_open_desktop" = "Obre el Delta Chat";
 "global_menu_minimize_to_tray" = "Minimitza";
 "no_chat_selected_suggestion_desktop" = "Trieu un xat o creeu-ne un de nou";
 "write_message_desktop" = "Escriu un missatge";
@@ -986,7 +1010,8 @@
 "message_detail_received_desktop" = "rebut";
 "menu.view.developer.open.log.folder" = "Obre la carpeta de registre";
 "menu.view.developer.open.current.log.file" = "Obre el fitxer de registre actual";
-"explain_desktop_minimized_disabled_tray_pref" = "La icona de la safata no es pot desactivar perquè alt.chat s\'ha iniciat amb l\'opció --minimized";
+"explain_desktop_minimized_disabled_tray_pref" = "La icona de la safata no es pot desactivar perquè Delta Chat s\'ha iniciat amb l\'opció --minimized";
+// deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "No s\'ha trobat cap suggeriment ortogràfic.";
 "show_window" = "Mostra la finestra";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
@@ -1023,7 +1048,7 @@
 "import_device_contacts" = "Importa els contactes del dispositiu";
 "import_device_contacts_hint" = "Per a xatejar amb contactes des del vostre dispositiu, obriu Configuració i activeu «Contactes».";
 // iOS notification settings
-"disabled_in_dc" = "Desactivat a alt.chat";
+"disabled_in_dc" = "Desactivat a Delta Chat";
 "disabled_in_system_settings" = "Desactivat a la configuració del sistema";
 "bg_app_refresh_disabled" = "El \"Refresc en segon pla d\'aplicacions\" està deshabilitat als paràmetres del sistema";
 "notifications_avg_minutes" = "De mitjana, cada %1$d minuts";
@@ -1036,7 +1061,7 @@
 // use the same translation for "Shortcuts" as the system is using, often the term "Shortcut" stays untranslated; check eg. how the "Shortcuts" system app is called in your locale
 "shortcuts_widget_title" = "Dreceres";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
-"shortcuts_widget_description" = "Useu «Afegeix al giny» de alt.chat per a afegir elements";
+"shortcuts_widget_description" = "Useu «Afegeix al giny» de Delta Chat per a afegir elements";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
 "remove_from_widget" = "Elimina del giny";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
@@ -1048,11 +1073,9 @@
 "pref_background_notifications_explain" = "Requereix optimitzacions de bateria que s\'han ignorat. Utilitzeu-les si les notificacions arriben tard";
 "pref_reliable_service" = "Força la connexió en segon pla";
 "pref_reliable_service_explain" = "Causa una notificació permanent";
-"pref_background_notifications_rationale" = "Per a mantenir la connexió amb el vostre servidor de correu i rebre missatges en segon pla, ignoreu les optimitzacions de bateria del següent pas.\n\nalt.chat utilitza pocs recursos i té cura de no buidar-vos la bateria.";
+"pref_background_notifications_rationale" = "Per a mantenir la connexió amb el vostre servidor de correu i rebre missatges en segon pla, ignoreu les optimitzacions de bateria del següent pas.\n\nDelta Chat utilitza pocs recursos i té cura de no buidar-vos la bateria.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
-"perm_enable_bg_reminder_title" = "Prem aquí per rebre missatges mentre alt.chat és en segon pla.";
-"perm_enable_bg_already_done" = "Ja heu autoritzat alt.chat a rebre missatges en segon pla.\n\nSi encara no us arriben els missatge, reviseu els paràmetres de sistema.";
+"perm_enable_bg_reminder_title" = "Prem aquí per rebre missatges mentre Delta Chat és en segon pla.";
+"perm_enable_bg_already_done" = "Ja heu autoritzat Delta Chat a rebre missatges en segon pla.\n\nSi encara no us arriben els missatge, reviseu els paràmetres de sistema.";
 // device messages for updates
 "update_2_0" = "Què hi ha de nou?\n\n💯 El xifrat d\'extrem a extrem és fiable i permanent. Els candaus 🔒 han desaparegut!\n\n✉️ El correu electrònic clàssic sense xifrar d\'extrem a extrem es mostra amb el símbol d\'un sobre.\n\n😻 Nova pantalla de perfil millorada per a tots els teus contactes.\n\n🔲 Nou botó per accedir ràpidament a les aplicacions utilitzades als xats.\n\n❤️ Si us plau, fes una donació per ajudar-nos a continuar independents i seguir aportant millores: %1$@";
-"update_available" = "Update Available";
-"search_results_local" = "Trobat localment";

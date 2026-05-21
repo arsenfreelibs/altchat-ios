@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "Oké";
 "cancel" = "Annuleren";
 "clear_search" = "Zoekopdracht wissen";
@@ -14,7 +14,6 @@
 "off" = "Uit";
 "def" = "Standaard";
 "default_value" = "Standaard (%1$@)";
-"default_value_as_above" = "Standaard (zoals hierboven)";
 "custom" = "Aangepast";
 "none" = "Geen";
 "automatic" = "Automatisch";
@@ -34,8 +33,6 @@
 "update" = "Bijwerken";
 "emoji" = "Emoji";
 "attachment" = "Bijlage";
-// the placeholder will be replaced by the name of the image or file to attach
-"ask_attach" = "Wil je ‘%1$@’ bijvoegen?";
 "back" = "Terug";
 "close" = "Sluiten";
 "close_window" = "Venster sluiten";
@@ -56,13 +53,15 @@
 // Adjective "smth is muted". used to describe a muted or silenced chat, that e.g. does not make noise or cause notifications
 "muted" = "Genegeerd";
 "ephemeral_messages" = "Verdwijnende berichten";
-"ephemeral_messages_hint" = "Deze instellingen zijn van toepassing op alle deelnemers die alt.chat gebruiken. Ze kunnen echter wél berichten kopiëren, opslaan of doorsturen middels andere e-mailapps.";
+"ephemeral_messages_hint" = "Deze instellingen zijn van toepassing op alle deelnemers. Ze kunnen berichten kopiëren, opslaan of doorsturen middels andere e-mailapps.";
 "save" = "Opslaan";
 "chat" = "Gesprek";
 "media" = "Media";
 "apps_and_media" = "Apps en media";
 "profile" = "Profiel";
+// deprecated
 "all_profiles" = "Alle profielen";
+// deprecated
 "current_profile" = "Huidig profiel";
 "main_menu" = "Hoofdmenu";
 "start_chat" = "Gesprek beginnen";
@@ -87,6 +86,7 @@
 "always" = "Altijd";
 "always_load_remote_images" = "Externe afbeeldingen altijd laden";
 "once" = "Eenmalig";
+// deprecated
 "show_warning" = "Waarschuwing tonen";
 "not_now" = "Niet nu";
 "never" = "Nooit";
@@ -131,6 +131,7 @@
 // Shown beside messages that are "N hours old". Prefer short strings, or well-known abbreviations.
 // Short form for "N Items Selected"
 "selected_colon" = "Gekozen:";
+"selected" = "Gekozen";
 "self" = "Ik";
 "draft" = "Concept";
 "image" = "Afbeelding";
@@ -162,6 +163,7 @@
 "camera" = "Camera";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Vastleggen";
+// Switch eg. from front to back camera
 "switch_camera" = "Andere camera";
 "toggle_fullscreen" = "Schermvullende weergave aan/uit";
 "location" = "Locatie";
@@ -252,7 +254,7 @@
 "share_invite_link_explain" = "Iedereen die deze link ontvangt kan je profiel bekijken en een gesprek met je starten. Deel hem daarom alleen met mensen die je vertrouwt.";
 "invite_friends" = "Vrienden uitnodigen";
 // %1$s is replaced by the user's invitation link ("https://i.delta.chat/...")
-"invite_friends_text" = "Neem contact met me op via alt.chat:\n%1$@";
+"invite_friends_text" = "Neem contact met me op via Delta Chat:\n%1$@";
 "menu_copy_selection_to_clipboard" = "Selectie kopiëren";
 "menu_copy_link_to_clipboard" = "Link kopiëren";
 "menu_copy_text_to_clipboard" = "Tekst kopiëren";
@@ -267,7 +269,7 @@
 "menu_export_attachment" = "Bijlage exporteren";
 "menu_export_attachments" = "Bijlagen exporteren";
 "menu_all_media" = "Alle media";
-"all_apps_and_media" = "Alle bestanden en media";
+"all_apps_and_media" = "Alle apps en media";
 // Command to jump to the original message corresponding to a gallery image or document
 "show_in_chat" = "Tonen in bijbehorend gesprek";
 "show_app_in_chat" = "App tonen in gesprek";
@@ -302,8 +304,6 @@
 "menu_more_options" = "Meer opties";
 "menu_learn_spelling" = "Spelling leren";
 "jump_to_message" = "Ga naar bericht";
-"jump_to_original_message" = "Ga naar oorspronkelijk bericht";
-"copy_json" = "Json-gegevens kopiëren";
 "replace_draft" = "Concept vervangen";
 "title_share_location" = "Locatie delen met alle groepsleden";
 "device_talk" = "Berichten op apparaat";
@@ -325,17 +325,19 @@
 // Menu item beside an app/chat that adds an icon to the system's home screen. If the user taps that icon, the app/chat is opened directly.
 "add_to_home_screen" = "Toevoegen aan startscherm";
 "donate" = "Doneren";
-"donate_device_msg" = "❤️ Het lijkt er op dat je blij bent met alt.chat!\n\nAls dat zo is, zouden we je vriendelijk willen vragen om een donatie, zodat alt.chat gratis beschikbaar kan blijven.\n\n Ook al is alt.chat gratis en opensource, de ontwikkeling ervan kost wél geld. Jouw donatie kan het verschil maken!\n\nhttps://alt-chat.me/donate";
+"donate_device_msg" = "❤️ Het lijkt er op dat je blij bent met Delta Chat!\n\nAls dat zo is, zouden we je vriendelijk willen vragen om een donatie, zodat Delta Chat gratis beschikbaar kan blijven.\n\n Ook al is Delta Chat gratis en opensource, de ontwikkeling ervan kost wél geld. Jouw donatie kan het verschil maken!\n\nhttps://delta.chat/donate";
 "mute_for_one_hour" = "1 uur lang uitschakelen";
 "mute_for_eight_hours" = "8 uur lang uitschakelen";
 "mute_for_one_day" = "1 dag lang uitschakelen";
 "mute_for_seven_days" = "7 dagen lang uitschakelen";
 "mute_forever" = "Permanent uitschakelen";
+// deprecated
 "share_location_for_5_minutes" = "5 minuten lang";
 "share_location_for_30_minutes" = "30 minuten lang";
 "share_location_for_one_hour" = "1 uur lang";
 "share_location_for_two_hours" = "2 uur lang";
 "share_location_for_six_hours" = "6 uur lang";
+"share_location_for_24_hours" = "24 uur lang";
 "file_saved_to" = "Het bestand is opgeslagen in ‘%1$@’.";
 // the action "to call someone", used as a tooltip for the "phone" icon. not: "the call"
 "start_call" = "Bellen";
@@ -343,10 +345,6 @@
 "start_audio_call" = "Audiogesprek";
 // Menu item to start a video call; verbs as "start" are probably superfluous in many translations
 "start_video_call" = "Videogesprek";
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Bellen";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Verbinden";
 // the action "to answer" or to "accept" or to "pick up" a call. not: "the answer"
 "answer_call" = "Aanvaarden";
 // the action "to decline" a call, not: "the decline"
@@ -355,6 +353,12 @@
 "audio_call" = "Audiogesprek";
 // Used in call bubbles, summaries, notifications
 "video_call" = "Videogesprek";
+"call_initializing" = "Bezig met alles opzetten…";
+"call_incoming" = "Inkomende oproep";
+"call_ringing" = "Bezig met oproep…";
+"call_reconnecting" = "Bezig met herverbinden…";
+"call_ended" = "Gesprek beëindigd";
+"call_failed" = "Gesprek mislukt";
 // deprecated, use "Audio call" instead
 "outgoing_audio_call" = "Uitgaand audiogesprek";
 // deprecated, use "Video call" instead
@@ -369,18 +373,23 @@
 "already_in_call" = "Reeds in gesprek";
 "call_answered_elsewhere" = "Er is opgenomen op een ander apparaat";
 "call_requires_mic_permission" = "Microfoontoegang is vereist om te kunnen bellen";
+// Used e.g. in a notifications to describe an ongoing call. "Call" is a noun here, in the meaning of "This is the call with ..." where the placeholder is replaced by the name of the contact.
+"call_with" = "Bellen met %1$@";
+// Use e.g. in a notifications during ringing. Placeholder is relaced by the name of the contact being called.
+"calling_person" = "Aan het bellen met %1$@…";
 // get confirmations
 // confirmation for leaving groups or channels. If a subject is needed, "Are you sure you want to leave the chat?" would work as well
 "ask_leave_group" = "Weet je zeker dat je dit kanaal wilt verlaten?";
 "ask_delete_named_chat" = "Wil je ‘%1$@’ verwijderen?";
 "ask_delete_message" = "Wil je dit bericht verwijderen?";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Wil je de berichten doorsturen aan %1$@?";
 "ask_forward_multiple" = "Wil je de berichten doorsturen naar %1$d gesprekken?";
 "ask_export_attachment" = "Als je de bijlage exporteert, geef je andere apps op je apparaat toegang om hem uit te lezen.\n\nWil je doorgaan?";
 "ask_block_contact" = "Wil je deze contactpersoon blokkeren? Hij/zij kan je geen berichten meer sturen.";
 "ask_unblock_contact" = "Wil je deze contactpersoon deblokkeren? Hij/zij kan je wederom berichten sturen.";
 "ask_delete_contacts" = "Wil je de geselecteerde contactpersonen permanent verwijderen?\n\nPersonen met actieve gesprekken en personen afkomstig uit je adresboek kunnen niet permanent worden verwijderd.";
-"ask_delete_contact" = "Wil je de contactpersoon %1$@ permanent verwijderen?\n\nPersonen met actieve gesprekken en personen afkomstig uit je adresboek kunnen niet permanent worden verwijderd.";
+"ask_delete_contact" = "Wil je ‘%1$@’ permanent verwijderen?\n\nPersonen met actieve gesprekken en personen afkomstig uit je adresboek kunnen niet permanent worden verwijderd.";
 "ask_start_chat_with" = "Wil je een gesprek voeren met %1$@?";
 // %1$s is replaced by a comma-separated list of names
 "ask_remove_members" = "Wil je %1$@ verwijderen uit de groep?";
@@ -424,7 +433,6 @@
 "attachment_failed_to_load" = "De bijlage kan niet worden geladen";
 // For recording Voice messages: Description for the "Lock" button allowing to lift the thumb from the record button while recording continues
 "lock_recording" = "Opname vergrendelen";
-"audio_note_processing_failed" = "Opname kon niet worden verwerkt.";
 // mailing lists
 "mailing_list" = "Mailinglijst";
 // webxdc
@@ -436,15 +444,7 @@
 "send_file_to" = "“%1$@” versturen naar…";
 // title shown above a list contacts where one should be selected (eg. when a webxdc attempts to send a message to a chat)
 "send_message_to" = "Bericht versturen naar…";
-"enable_realtime" = "Real-timeapps";
-"enable_realtime_explain" = "Laat apps een real-timeverbinding gebruiken in gedeelde gesprekken. Let op: gesprekspartners kunnen hierdoor mogelijk je ip-adres zien.";
-// map
-"filter_map_on_time" = "Locaties tonen in tijdsbeeld";
-"show_location_traces" = "Sporen tonen";
-"add_poi" = "Afspraaklocatie versturen";
 // punycode warning / labeled links
-// placeholder is domain/hostname that should be trusted
-"open_external_url_trust_domain" = "Niet meer vragen bij %1$@";
 "puny_code_warning_header" = "Verdachte link aangetroffen";
 // placeholder contains the hostname converted to ascii
 "puny_code_warning_question" = "Weet je zeker dat je %1$@ wilt openen?";
@@ -502,15 +502,15 @@
 "multidevice_title" = "Secundair apparaat toevoegen";
 "multidevice_same_network_hint" = "Zorg ervoor dat beide apparaten verbonden zijn met hetzelfde (wifi)netwerk";
 "multidevice_this_creates_a_qr_code" = "Hiermee wordt een QR-code samengesteld die door het tweede apparaat kan worden gescand om het account te kopiëren.\n\nZorg dat er geen vreemden meekijken, al dan niet door een camera.";
-"multidevice_install_dc_on_other_device" = "Installeer alt.chat op je andere apparaat (https://alt-chat.me/app/)";
+"multidevice_install_dc_on_other_device" = "Installeer Delta Chat op je andere apparaat (https://get.delta.chat)";
 // "I Already Have a Profile / Add as Second Device” should be the same text as defined by the keys onboarding_alternative_logins and multidevice_receiver_title
-"multidevice_tap_scan_on_other_device" = "Start alt.chat, druk op ‘Ik heb al een profiel → Toevoegen als secundair apparaat’ en scan de hier getoonde code";
+"multidevice_tap_scan_on_other_device" = "Start Delta Chat, druk op ‘Ik heb al een profiel → Toevoegen als secundair apparaat’ en scan de hier getoonde code";
 // Shown inside a "QR code card" with very limited space; please formulate the text as short as possible therefore. The placeholder will be replaced by the profile name eg. "Scan to set up second device for Alice"
 "multidevice_qr_subtitle" = "Scan om een secundair apparaat voor %1$@ in te stellen";
 "multidevice_receiver_title" = "Toevoegen als secundair apparaat";
 "multidevice_open_settings_on_other_device" = "Ga op het eerste apparaat naar ‘Instellingen → Secundair apparaat toevoegen’ en scan de hier getoonde code";
 "multidevice_receiver_scanning_ask" = "Wil je je account van het andere apparaat naar dit apparaat kopiëren?";
-"multidevice_receiver_needs_update" = "Het te importeren profiel is afkomstig uit een nieuwere alt.chat-versie.\n\nAls je het tweede apparaat wilt instellen, installeer dan de nieuwste versie van alt.chat.";
+"multidevice_receiver_needs_update" = "Het te importeren profiel is afkomstig uit een nieuwere Delta Chat-versie.\n\nAls je het tweede apparaat wilt instellen, installeer dan de nieuwste versie van Delta Chat.";
 "multidevice_abort" = "Wil je het instellen afbreken?";
 "multidevice_abort_will_invalidate_copied_qr" = "Hierdoor wordt de gekopieerde QR-code onbruikbaar gemaakt.";
 "multidevice_transfer_done_devicemsg" = "ℹ️ Het account is overgezet naar je tweede apparaat.";
@@ -601,11 +601,16 @@
 "add_transport" = "Server toevoegen";
 "remove_transport" = "Server verwijderen";
 "edit_transport" = "Server bewerken";
+"used_for_sending" = "Wordt gebruikt voor versturen";
+"hide_from_contacts" = "Verbergen op contactpersonenlijst";
+"hidden_from_contacts" = "Verborgen op contactpersonenlijst";
+// Hint for the list of relays
+"transport_list_hint" = "Berichten worden op alle relays ontvangen.\n\n⚠️ Als je hier iets wijzigt, doe dat dan alléén als ál je apparaten gebruikmaken van versie 2.47.0, anders kunnen er berichten ontbreken.";
 // shown if a QR code was scanned that can be used as a relay
 "confirm_add_transport" = "Wil je deze server toevoegen?";
 "invalid_transport_qr" = "De gescande QR-code bevat geen geldige overdrachtsserver.";
 // placeholder will be replaced by a relay server name
-"confirm_remove_transport" = "Weet je zeker dat je de overdrachtsserver ‘%1$@’ wilt verwijderen?\n\nJe contactpersonen kunnen dan alleen nog contact met je opnemen als je ze al eerder bericht hebt via een andere server.\n\nStel bij twijfel het verwijderen uit.";
+"confirm_remove_or_hide_transport_x" = "Wil je ‘%1$@’ verwijderen?\n\nContactpersonen die deze relay niet kennen, kunnen je zo niet bereiken.\n\nBij twijfel verbergen in plaats van verwijderen.";
 "login_certificate_checks" = "Certificaatcontrole";
 "login_error_mail" = "Voer een geldig e-mailadres in";
 "login_error_server" = "Voer een geldig(e) ip-adres/server in";
@@ -677,6 +682,7 @@
 "pref_notifications_priority" = "Prioriteit";
 "pref_notifications_explain" = "Systeemmeldingen tonen bij nieuwe berichten";
 "pref_show_notification_content" = "Berichtinhoud tonen op meldingen";
+// deprecated
 "pref_show_notification_content_explain" = "Toont de afzender en eerste regel van berichten op meldingen";
 "pref_led_color" = "Ledkleur";
 "pref_sound" = "Geluid";
@@ -719,16 +725,23 @@
 "pref_background" = "Achtergrond";
 "pref_background_btn_default" = "Standaardafbeelding gebruiken";
 "pref_background_btn_gallery" = "Kiezen uit galerij";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Als je deze optie uitschakelt, zorg er dan voor dat je server en overige clients goed ingesteld zijn.\n\nAls dat niet zo is, dan werkt het misschien helemaal niet.";
 // No need to be literal here, you can also use "Use Multiple Devices", "Support Multiple Devices" or other fitting terms. However, it should fit to the wording or your language at https://delta.chat/help
 "pref_multidevice" = "Meerdere apparaten";
 "pref_multidevice_explain" = "Synchroniseer berichten met andere apparaten. Dit wordt automatisch ingeschakeld na het toevoegen van een secundair apparaat.";
 "pref_multidevice_change_warn" = "Let op: deze modus moet op alle apparaten worden ingeschakeld op hetzelfde profiel. Schakel deze instelling alleen uit als je je profiel van alle andere apparaten hebt verwijderd.\n\nDoor deze modus uit te schakelen terwijl het profiel nog gebruikt wordt, gaan er berichten verloren en kunnen er andere problemen ontstaan.";
-"pref_auto_folder_moves" = "Automatisch verplaatsen naar alt.chat-map";
-"pref_only_fetch_mvbox_title" = "Alleen alt.chat-map controleren";
+// deprecated
+"pref_auto_folder_moves" = "Automatisch verplaatsen naar DeltaChat-map";
+// deprecated
+"pref_only_fetch_mvbox_title" = "Alleen DeltaChat-map controleren";
+// deprecated
 "pref_show_emails" = "Klassieke e-mails tonen";
+// deprecated
 "pref_show_emails_no" = "Nee, alleen gesprekken";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Van goedgekeurde contactpersonen";
+// deprecated
 "pref_show_emails_all" = "Alles";
 "pref_experimental_features" = "Experimentele functies";
 "pref_experimental_features_explain" = "Let op: deze functies zijn experimenteel en kunnen te allen tijde worden aangepast of verwijderd";
@@ -749,16 +762,14 @@
 "profile_image_delete" = "Profielfoto verwijderen";
 "pref_show_tray_icon" = "Systeemvakpictogram tonen";
 "pref_edit_profile" = "Profiel bewerken";
-"disable_imap_idle" = "IMAP IDLE uitschakelen";
-"disable_imap_idle_explain" = "Maak geen gebruik van IMAP IDLE, zelfs niet als de server het ondersteunt. Schakel deze optie in om het ophalen van berichten te vertragen. Let op: gebruik deze optie alleen voor testdoeleinden.";
-"send_stats_to_devs" = "Statistieken delen met alt.chat-ontwikkelaars";
-"stats_device_message" = "Wil je helpen alt.chat te verbeteren en voor onderzoeksdoeleinden iedere week volledig anonieme, automatische gebruiksstatistieken in te sturen?\n\n👉 Druk dan hier… 👈";
-"stats_confirmation_dialog" = "Wil je helpen alt.chat te verbeteren en voor onderzoeksdoeleinden iedere week volledig anonieme, automatische gebruiksstatistieken in te sturen?";
-"stats_thanks" = "Hartelijk dank! Je kunt deze instelling te allen tijde aanpassen via ‘Instellingen → Geavanceerd’.\n\nHeb je nog 5 minuutjes om deel te nemen aan een wetenschappelijk onderzoek aangaande beveiliging van alt.chat?";
+"send_stats_to_devs" = "Statistieken delen met Delta Chat-ontwikkelaars";
+"stats_device_message" = "Wil je helpen Delta Chat te verbeteren en voor onderzoeksdoeleinden iedere week volledig anonieme, automatische gebruiksstatistieken in te sturen?\n\n👉 Druk dan hier… 👈";
+"stats_confirmation_dialog" = "Wil je helpen Delta Chat te verbeteren en voor onderzoeksdoeleinden iedere week volledig anonieme, automatische gebruiksstatistieken in te sturen?";
+"stats_thanks" = "Hartelijk dank! Je kunt deze instelling te allen tijde aanpassen via ‘Instellingen → Geavanceerd’.\n\nHeb je nog 5 minuutjes om deel te nemen aan een wetenschappelijk onderzoek aangaande beveiliging van Delta Chat?";
 "stats_disable_dialog" = "Het insturen van statistieken is al ingeschakeld.\n\nWil je dit uitschakelen?";
 "disable" = "Uitschakelen";
 "stats_keep_sending" = "Niet uitschakelen";
-"stats_msg_body" = "De bijlage bevat anonieme gebruiksstatistieken die ons helpen alt.chat te verbeteren. Bij voorbaat dank!";
+"stats_msg_body" = "De bijlage bevat anonieme gebruiksstatistieken die ons helpen Delta Chat te verbeteren. Bij voorbaat dank!";
 // Emoji picker and categories
 "emoji_search_results" = "Zoekresultaten";
 "emoji_not_found" = "Geen emoji gevonden";
@@ -782,14 +793,17 @@
 // automatically delete message
 "delete_old_messages" = "Oude berichten verwijderen";
 "autodel_device_title" = "Berichten verwijderen van apparaat";
+// deprecated
 "autodel_server_title" = "Berichten verwijderen van server";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "Wil je nu %1$d berichten verwijderen en toekomstige berichten ‘%2$@’?\n\n• Dit omvat alle media\n\n• Berichten worden verwijderd, ongeacht of ze bekeken zijn\n\n• Het gesprek ‘Bewaarde berichten’ wordt overgeslagen.";
-// %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
+// deprecated
 "autodel_server_ask" = "Wil je nu %1$d berichten verwijderen en toekomstige berichten ‘%2$@’,?\n\n⚠️ Dit omvat alle berichten, media en het gesprek ‘Bewaarde berichten’.\n\n⚠️ Gebruik deze functie niet als je je gegevens wilt bewaren op de server\n\n⚠️ Gebruik deze functie niet als je ook andere e-mailclients gebruikt";
-// shown below enabled autodel_server-option, should be a summary of autodel_server_ask and remind about the impact
+// deprecated
 "autodel_server_enabled_hint" = "Dit omvat alle berichten, media en het gesprek ‘Bewaarde berichten’. Gebruik deze functie niet als je je gegevens wilt bewaren op de server of als je ook andere e-mailclients gebruikt.";
+// deprecated
 "autodel_server_warn_multi_device_title" = "Onmiddellijke verwijdering inschakelen";
+// deprecated
 "autodel_server_warn_multi_device" = "Let op: als je deze optie inschakelt, dan kun je geen meerdere apparaten tegelijk meer gebruiken met dit profiel.";
 "autodel_confirm" = "Ik begrijp het; verwijder alle berichten";
 // "At once" in the meaning of "Immediately", without any intervening time.
@@ -877,17 +891,18 @@
 // %1$s will be replaced by the number of weeks (always >1) the timer is set to, %2$s will be replaced by name of the contact
 "ephemeral_timer_weeks_by_other" = "De tijdklok van verdwijnende berichten is door %2$@ ingesteld op %1$@ weken.";
 "chat_unencrypted_explanation" = "Berichten in dit gesprek maken gebruik van traditionele e-mailcommunicatie - eind-tot-endversleuteling is daarom niet gegarandeerd.";
+"messages_are_e2ee" = "Berichten zijn van eind-tot-eindversleuteling voorzien.";
 "chat_protection_enabled_tap_to_learn_more" = "Berichten zijn gegarandeerd van eind-tot-eindversleuteling voorzien. Druk hier voor meer informatie.";
 "chat_protection_enabled_explanation" = "Alle berichten in dit gesprek zijn gegarandeerd van eind-tot-eindversleuteling voorzien.\n\nMet behulp van deze versleuteling blijven berichten tussen jou en je gesprekspartners geheim - zelfs je e-mailprovider kan ze niet uitlezen.";
 "invalid_unencrypted_tap_to_learn_more" = "⚠️ Voor %1$@ is eind-tot-eindversleuteling vereist, maar dit is nog niet ingesteld in het huidige gesprek. Druk voor meer informatie.";
 "invalid_unencrypted_explanation" = "Spreek met elkaar af en scan elkaars QR-code om eind-tot-eindversleuteling op te zetten.";
 "learn_more" = "Meer informatie";
 "devicemsg_self_deleted" = "Je hebt het gesprek ‘Bewaarde berichten’ verwijderd.\n\nℹ️ Als je weer gebruik wilt maken van deze functie, begin dan een nieuw gesprek met jezelf.";
-// %1$s will be replaced by the amount of storage already used, sth. as '500 MB'. If you want to use a percentage sign, type in two of them, eg. %1$s %%
+// deprecated
 "devicemsg_storage_exceeding" = "⚠️ De opslagruimte die je provider biedt is bijna overschreden. Momenteel heb je %1$@%% ervan in gebruik.\n\nAls je geen ruimte meer hebt, kun je mogelijk geen berichten meer ontvangen.\n\n👉 Kijk of je oude gegevens kunt verwijderen in de webclient van je provider. Overweeg ook ‘Instellingen → Oude berichten verwijderen’ in te schakelen. Je kunt je huidige gebruik te allen tijde bekijken via ‘Instellingen → Verbindingen’.";
 // %1%s will be replaced by date and time in some human-readable format
 "devicemsg_bad_time" = "⚠️ De datum en tijd van je apparaat lijken niet te kloppen (%1$@).\n\nVerzet je klok ⏰🔧 om er zeker van te zijn dat je berichten kunt ontvangen.";
-"devicemsg_update_reminder" = "⚠️ Je versie van alt.chat is mogelijk verouderd.\n\nDit kan problemen veroorzaken aangezien je gesprekspartners nieuwe versies gebruiken. Bovendien mis je hierdoor enkele nieuwe functies. 😳\nGa naar https://alt-chat.me/app/ of de appwinkel van je apparaat om te controleren op updates.";
+"devicemsg_update_reminder" = "⚠️ Je versie van Delta Chat is mogelijk verouderd.\n\nDit kan problemen veroorzaken aangezien je gesprekspartners nieuwe versies gebruiken. Bovendien mis je hierdoor enkele nieuwe functies. 😳\nGa naar https://get.delta.chat of de appwinkel van je apparaat om te controleren op updates.";
 // Some options as "Add Second Device" or "Backup" may require the system PIN/Fingerprint/Gesture/Etc. to be entered in a system dialog. This hint is added to the system dialog, below a title as "Add Second Device" or "Backup".
 "enter_system_secret_to_continue" = "Ontgrendelen om verder te gaan";
 // qr code stuff
@@ -963,19 +978,17 @@
 "new_messages_body" = "Je hebt nieuwe berichten";
 "n_messages_in_m_chats" = "%1$d berichten in %2$d gesprekken";
 // location streaming
-"location_streaming_channel_desc" = "Kanaal voor locatie delen op verzoek";
-"location_streaming_notification_title" = "Locatiedeling";
 "location_streaming_notification_text" = "Je deelt op dit moment je locatie";
 "location_rationale" = "Om je locatie live te kunnen blijven doorgeven aan andere deelnemers, is locatietoegang vereist.\n\nHiervoor is het ook nodig om je locatie op de achtergrond door te geven.";
 // permissions
 "perm_required_title" = "Recht vereist";
 "perm_continue" = "Doorgaan";
-"perm_explain_access_to_camera_denied" = "alt.chat wil foto\'s en video\'s kunnen maken. Ga naar de app-instellingen, kies ‘Rechten’ en schakel ‘Camera’ in.";
+"perm_explain_access_to_camera_denied" = "Delta Chat wil foto\'s en video\'s kunnen maken. Ga naar de app-instellingen, kies ‘Rechten’ en schakel ‘Camera’ in.";
 // give the user an idea where to find the "Microphone" option. the hint is only shown if access was initially denied by the user. pick up wordings really used on the systems, but do not be overly precise: things shift around often and there are too many system we support to track every detail and click path
-"perm_explain_access_to_mic_denied" = "alt.chat wil spraakberichten versturen. Ga naar de app-instellingen, kies ‘Rechten’ of ‘Privacy en beveiliging’ en schakel ‘Microfoon’ in.";
-"perm_explain_access_to_storage_denied" = "alt.chat wil bestanden kunnen ontvangen en versturen. Ga naar de app-instellingen, kies ‘Rechten’ en schakel ‘Opslag’ in.";
-"perm_explain_access_to_location_denied" = "alt.chat wil je locatie kunnen delen. Ga naar de app-instellingen, kies ‘Rechten’ en schakel ‘Locatie’ in.";
-"perm_explain_access_to_notifications_denied" = "Open Systeeminstellingen → Apps → alt.chat en schakel meldingen in.";
+"perm_explain_access_to_mic_denied" = "Delta Chat wil spraakberichten versturen. Ga naar de app-instellingen, kies ‘Rechten’ of ‘Privacy en beveiliging’ en schakel ‘Microfoon’ in.";
+"perm_explain_access_to_storage_denied" = "Delta Chat wil bestanden kunnen ontvangen en versturen. Ga naar de app-instellingen, kies ‘Rechten’ en schakel ‘Opslag’ in.";
+"perm_explain_access_to_location_denied" = "Delta Chat wil je locatie kunnen delen. Ga naar de app-instellingen, kies ‘Rechten’ en schakel ‘Locatie’ in.";
+"perm_explain_access_to_notifications_denied" = "Open Systeeminstellingen → Apps → Delta Chat en schakel meldingen in.";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Teken met je vinger om vervaging toe te passen";
 "ImageEditorHud_add_text" = "Tekst toevoegen";
@@ -985,10 +998,7 @@
 "ImageEditorHud_crop" = "Bijsnijden";
 "ImageEditorHud_flip" = "Spiegelen";
 "ImageEditorHud_rotate" = "Draaien";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Dit is de officiële alt.chat-computerapp.";
-"about_licensed_under_desktop" = "Deze software is vrijgegeven onder de GNU GPL versie 3 en de broncode is beschikbaar op GitHub.";
-"welcome_desktop" = "Welkom bij alt.chat";
+"welcome_desktop" = "Welkom bij Delta Chat";
 "global_menu_preferences_language_desktop" = "Taal";
 "global_menu_file_desktop" = "Bestand";
 "global_menu_file_quit_desktop" = "Afsluiten";
@@ -1003,11 +1013,11 @@
 "global_menu_view_developer_desktop" = "Ontwikkelaar";
 "global_menu_view_developer_tools_desktop" = "Ontwikkelaarshulpmiddelen";
 "global_menu_help_desktop" = "Hulp";
-"delta_chat_homepage" = "alt.chat-website";
+"delta_chat_homepage" = "Delta Chat-website";
 "contribute" = "Bijdragen";
 "global_menu_help_report_desktop" = "Meld een probleem";
-"global_menu_help_about_desktop" = "Over alt.chat";
-"global_menu_file_open_desktop" = "alt.chat openen";
+"global_menu_help_about_desktop" = "Over Delta Chat";
+"global_menu_file_open_desktop" = "Delta Chat openen";
 "global_menu_minimize_to_tray" = "Minimaliseren";
 "no_account_selected" = "Kies een profiel of maak een nieuw profiel aan";
 "no_chat_selected_suggestion_desktop" = "Kies een gesprek of begin een gesprek";
@@ -1027,10 +1037,11 @@
 "message_detail_received_desktop" = "Ontvangen";
 "menu.view.developer.open.log.folder" = "Map met logbestanden openen";
 "menu.view.developer.open.current.log.file" = "Huidig logbestand openen";
-"explain_desktop_minimized_disabled_tray_pref" = "Het systeemvakpictogram is uitgeschakeld omdat alt.chat is gestart met de optie --minimized";
+"explain_desktop_minimized_disabled_tray_pref" = "Het systeemvakpictogram is uitgeschakeld omdat Delta Chat is gestart met de optie --minimized";
+// deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Geen suggesties gevonden.";
 "show_window" = "Venster tonen";
-"data_found_other_installation_message" = "Profielen uit een andere alt.chat-installatie zijn niet beschikbaar, daar ze allen gebruikmaken van eigen opslaglocaties.\n\nWil je tóch bestaande profielen gebruiken, volg dan deze stappen:\n1. Sluit de app af\n2. Open de andere alt.chat-installatie en herinstalleer deze zonodig vanaf %1$@\n3. Maak een reservekopie van ieder profiel via ‘Instellingen → Gesprekken’\n4. Herstart deze versie\n5. Herstel de gesprekken door te kiezen voor ‘Ik heb al een profiel’\n\nWil je doorgaan zonder bestaande profielen?";
+"data_found_other_installation_message" = "Profielen uit een andere Delta Chat-installatie zijn niet beschikbaar, daar ze allen gebruikmaken van eigen opslaglocaties.\n\nWil je tóch bestaande profielen gebruiken, volg dan deze stappen:\n1. Sluit de app af\n2. Open de andere Delta Chat-installatie en herinstalleer deze zonodig vanaf %1$@\n3. Maak een reservekopie van ieder profiel via ‘Instellingen → Gesprekken’\n4. Herstart deze versie\n5. Herstel de gesprekken door te kiezen voor ‘Ik heb al een profiel’\n\nWil je doorgaan zonder bestaande profielen?";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
 "keybindings" = "Sneltoetsen";
 // subtitle in the "keybindings" dialog
@@ -1057,6 +1068,8 @@
 "a11y_message_context_menu_btn_label" = "Berichtacties";
 "a11y_background_preview_label" = "Achtergrondvoorbeeld";
 "a11y_disappearing_messages_activated" = "Verdwijnende berichten zijn ingeschakeld";
+// The placeholder will be replaced by a link, eg. "Open https://delta.chat". Used e.g. in for accessibility.
+"open_link" = "‘%1$@’ openen";
 // iOS specific strings, developers: please take care to remove strings that are no longer used!
 "stop_sharing_location" = "Stop locatiedeling";
 "a11y_voice_message_hint_ios" = "Dubbeltik op de opname om hem te versturen. Veeg met twee vingers van links naar rechts om de opname af te breken.";
@@ -1071,7 +1084,7 @@
 "import_device_contacts" = "Importeer lokale contactpersonen";
 "import_device_contacts_hint" = "Voor het voeren van gesprekken met contactpersonen is toegang vereist. Open de systeeminstellingen en verleen deze toegang.";
 // iOS notification settings
-"disabled_in_dc" = "Uitgeschakeld in alt.chat";
+"disabled_in_dc" = "Uitgeschakeld in Delta Chat";
 "disabled_in_system_settings" = "Uitgeschakeld in systeeminstellingen";
 "bg_app_refresh_disabled" = "App op de achtergrond vernieuwen is uitgeschakeld in de systeeminstellingen";
 "notifications_avg_minutes" = "Gemiddeld elke %1$d minuten";
@@ -1084,7 +1097,7 @@
 // use the same translation for "Shortcuts" as the system is using, often the term "Shortcut" stays untranslated; check eg. how the "Shortcuts" system app is called in your locale
 "shortcuts_widget_title" = "Opdrachten";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
-"shortcuts_widget_description" = "Gebruik alt.chats ‘Tonen op widget’ om items toe te voegen";
+"shortcuts_widget_description" = "Gebruik Delta Chats ‘Tonen op widget’ om items toe te voegen";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
 "remove_from_widget" = "Niet tonen op widget";
 // use the same translation for "Widget" as the system is using; often the term "Widget" stays untranslated
@@ -1096,11 +1109,9 @@
 "pref_background_notifications_explain" = "Hiervoor is het verplicht dat accu-optimalisering wordt uitgeschakeld. Let op: gebruik alleen indien de push-afleverdienst niet beschikbaar is.";
 "pref_reliable_service" = "Achtergrondverbinding afdwingen";
 "pref_reliable_service_explain" = "Toont een permanente melding";
-"pref_background_notifications_rationale" = "Om een achtergrondverbinding naar je server op te zetten, dien je in de volgende stap alle accu-optimalisaties te negeren.\n\nalt.chat gebruikt weinig systeembronnen en verhoogt je accuverbruik nauwelijks.";
+"pref_background_notifications_rationale" = "Om een achtergrondverbinding naar je server op te zetten, dien je in de volgende stap alle accu-optimalisaties te negeren.\n\nDelta Chat gebruikt weinig systeembronnen en verhoogt je accuverbruik nauwelijks.";
 // disabling "Reliable service" will hide a the maybe annoying permanent-notification with the drawback that new-message-notifications get potentially unreliable
-"perm_enable_bg_reminder_title" = "Druk hier om berichten te ontvangen als alt.chat niet geopend is.";
+"perm_enable_bg_reminder_title" = "Druk hier om berichten te ontvangen als Delta Chat niet geopend is.";
 "perm_enable_bg_already_done" = "Je hebt al toestemming gegeven voor het ophalen van berichten op de achtergrond.\n\nAls het nog steeds niet werkt, controleer dan de systeeminstellingen.";
 // device messages for updates
 "update_2_0" = "Wijzigingslog:\n\n💯 Eind-tot-eindversleuteling is voortaan betrouwbaarder én standaard. Slotjes 🔒 zijn verleden tijd!\n\n✉️ Klassieke e-mails zonder eind-tot-eindversleuteling worden voortaan gemarkeerd met een letter\n\n😻 Nieuwe, mooiere profielpagina\'s van al je contactpersonen\n\n🔲 Nieuwe knop voor snelle toegang tot apps in gesprekken\n\n❤️ Overweeg een donatie, zodat we onafhankelijk kunnen blijven en verbeteringen kunnen blijven aanbrengen: %1$@";
-"update_available" = "Update Available";
-"search_results_local" = "Lokaal gevonden";

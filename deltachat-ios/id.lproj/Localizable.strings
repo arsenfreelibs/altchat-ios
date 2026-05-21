@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "OK";
 "cancel" = "Batalkan";
 "clear_search" = "Hapus pencarian";
@@ -10,7 +10,6 @@
 "off" = "Mati";
 "def" = "Default";
 "default_value" = "Default (%1$@)";
-"default_value_as_above" = "Default (sama seperti di atas)";
 "custom" = "Menurut pesanan";
 "none" = "Tidak ada";
 "automatic" = "Otomatis";
@@ -39,7 +38,7 @@
 // Verb "to mute". used to mute a chat, so that it is silenced e.g. does not make noise or cause notifications
 "mute" = "Diam";
 "ephemeral_messages" = "Pesan yang berhilangan";
-"ephemeral_messages_hint" = "Pengaturan ini berlaku untuk semua peserta yang menggunakan alt.chat. Namun, mereka dapat menyalin, menyimpan, dan meneruskan pesan atau menggunakan klien email lainnya.";
+"ephemeral_messages_hint" = "Pengaturan ini berlaku untuk semua peserta yang menggunakan Delta Chat. Namun, mereka dapat menyalin, menyimpan, dan meneruskan pesan atau menggunakan klien email lainnya.";
 "save" = "Simpan";
 "chat" = "Chat";
 "media" = "Media";
@@ -58,6 +57,7 @@
 "load_remote_content" = "Memuat Gambar Jarak Jauh";
 "always" = "Selalu";
 "once" = "Sekali";
+// deprecated
 "show_warning" = "Tampilkan Peringatan";
 "not_now" = "Tidak sekarang";
 "never" = "Tidak pernah";
@@ -117,6 +117,7 @@
 "camera" = "Kamera";
 // As in "start a video recording" or "take a photo"; eg. the description of the "shutter button" in cameras
 "capture" = "Tangkap";
+// Switch eg. from front to back camera
 "switch_camera" = "Ganti kamera";
 "toggle_fullscreen" = "Beralih ke Mode Layar Penuh";
 "location" = "Lokasi";
@@ -205,11 +206,10 @@
 "menu_more_options" = "Opsi Lainnya";
 "menu_learn_spelling" = "Belajar Ejaan";
 "jump_to_message" = "Lompat ke Pesan";
-"copy_json" = "Salin JSON";
 "title_share_location" = "Bagikan lokasi kepada seluruh anggota grup";
 "device_talk" = "Pesan perangkat";
 "device_talk_subtitle" = "Pesan-pesan buatan lokal";
-"device_talk_explain" = "Pesan dalam obrolan ini dihasilkan dalam aplikasi alt.chat anda secara lokal. Para penciptanya memakai obrolan ini untuk memberi tahu aplikasi mutakhir dan masalah-masalah selama digunakan.";
+"device_talk_explain" = "Pesan dalam obrolan ini dihasilkan dalam aplikasi Delta Chat anda secara lokal. Para penciptanya memakai obrolan ini untuk memberi tahu aplikasi mutakhir dan masalah-masalah selama digunakan.";
 "edit_contact" = "Edit kontak";
 // Verb "to pin", making something sticky, not a noun or abbreviation for "pin number".
 "pin_chat" = "Pin obrolan";
@@ -226,12 +226,14 @@
 "mute_for_one_day" = "Diamkan untuk 1 hari";
 "mute_for_seven_days" = "Diamkan untuk 7 hari";
 "mute_forever" = "Diamkan seterusnya";
+// deprecated
 "share_location_for_5_minutes" = "untuk 5 menit";
 "share_location_for_30_minutes" = "untuk 30 menit";
 "share_location_for_one_hour" = "untuk 1 jam";
 "share_location_for_two_hours" = "untuk 2 jam";
 "share_location_for_six_hours" = "untuk 6 jam";
 "file_saved_to" = "Berkas disimpan ke \"%1$@\".";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Teruskan pesan ke %1$@?";
 "ask_export_attachment" = "Ekspor lampiran? Mengekspor lampiran akan membuat aplikasi lain di perangkat anda terakses.\n\nLanjut?";
 "ask_block_contact" = "Blokir kontak ini? Anda tak akan lagi menerima pesan dari kontak ini.";
@@ -250,7 +252,7 @@
 "chat_please_enter_message" = "Silakan masukkan pesan.";
 "chat_camera_unavailable" = "Kamera tak tersedia.";
 "chat_unable_to_record_audio" = "Tak bias merekam audio.";
-"chat_new_group_hint" = "Buat pesan pertama, perbolehkan yang lain untuk membalas dalam grup ini.\n\n• Tak masalah jika tidak semua anggota menggunakan alt.chat.\n\n• Mengirim pesan pertama membutuhkan waktu.";
+"chat_new_group_hint" = "Buat pesan pertama, perbolehkan yang lain untuk membalas dalam grup ini.\n\n• Tak masalah jika tidak semua anggota menggunakan Delta Chat.\n\n• Mengirim pesan pertama membutuhkan waktu.";
 "chat_record_slide_to_cancel" = "Geser untuk batalkan";
 "chat_record_explain" = "Ketuk dan tahan untuk merekam pesan suara, lepaskan untuk mengirim";
 "chat_no_chats_yet_title" = "Kosongkan inbox.\nTekan \"+\" untuk memulai obrolan baru.";
@@ -269,10 +271,6 @@
 "retry_send" = "Coba lagi mengirim pesan";
 "cannot_display_unsuported_file_type" = "Tidak dapat menampilkan tipe berkas ini: %1$@";
 "attachment_failed_to_load" = "Gagal memuat lampiran";
-// map
-"filter_map_on_time" = "Tunjukkan lokasi dalam jangka waktu";
-"show_location_traces" = "Tunjukkan jejak";
-"add_poi" = "Kirim titik menarik";
 // search
 "search" = "Cari";
 "search_explain" = "Mencari obrolan, kontak dan pesan";
@@ -356,6 +354,7 @@
 "pref_notifications" = "Notifikasi";
 "pref_notifications_show" = "Menunjukkan";
 "pref_notifications_priority" = "Prioritas";
+// deprecated
 "pref_show_notification_content_explain" = "Tampilkan pengirim dan kata-kata awal dari pesan di dalam notifikasi";
 "pref_led_color" = "Warna LED";
 "pref_sound" = "Suara";
@@ -387,10 +386,15 @@
 "pref_background" = "Latar belakang";
 "pref_background_btn_default" = "Menggunakan gambar default";
 "pref_background_btn_gallery" = "Pilih dari galeri";
-"pref_auto_folder_moves" = "Perpindahan otomatis ke berkas alt.chat";
+// deprecated
+"pref_auto_folder_moves" = "Perpindahan otomatis ke berkas DeltaChat";
+// deprecated
 "pref_show_emails" = "Tampilkan email klasik";
+// deprecated
 "pref_show_emails_no" = "Tidak, hanya obrolan saja";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Untuk kontak yang telah diterima";
+// deprecated
 "pref_show_emails_all" = "Semua";
 "pref_experimental_features" = "Fitur yang masih bersifat eksperimen";
 "pref_background_default" = "Latar belakang default";
@@ -409,6 +413,7 @@
 // automatically delete message
 "delete_old_messages" = "Hapus pesan-pesan lama";
 "autodel_device_title" = "Hapus pesarn dari perangkat";
+// deprecated
 "autodel_server_title" = "Hapus pesan dari server";
 "autodel_confirm" = "Saya mengerti, hapus semua pesan ini";
 // "At once" in the meaning of "Immediately", without any intervening time.
@@ -448,7 +453,7 @@
 "qrscan_title" = "Pindah kode QR";
 "qrscan_hint" = "Pegang kamera Anda di atas kode QR.";
 "qrscan_ask_join_group" = "Apakah anda ingin bergabung dengan grup \"%1$@\"?";
-"qrscan_contains_text" = "Kode QR yang dipindai  text:\n\n%1$@";
+"qrscan_contains_text" = "Kode QR yang dipindai text:\n\n%1$@";
 "qrscan_contains_url" = "Kode QR yang dipindai URL:\n\n%1$@";
 "qrscan_fingerprint_label" = "Sidik jari";
 "qrshow_title" = "Kode undangan QR";
@@ -484,10 +489,7 @@
 "perm_explain_access_to_location_denied" = "Untuk melampirkan lokasi, lihat pengaturan aplikasi, pilih \"Perizinan\", dan aktifkan \"Lokasi\".";
 // ImageEditorHud
 "ImageEditorHud_draw_anywhere_to_blur" = "Gambar di mana saja untuk diburamkan";
-// strings introduced on desktop. we want to share strings between the os, in general, please do not add generic strings here
-"about_offical_app_desktop" = "Ini adalah aplikasi resmi alt.chat Desktop.";
-"about_licensed_under_desktop" = "Perangkat lunak ini berlisensi di bawah GNU GPL versi 3 dan kode sumber tersedia di GitHub.";
-"welcome_desktop" = "Selamat Datang di alt.chat";
+"welcome_desktop" = "Selamat Datang di Delta Chat";
 "global_menu_preferences_language_desktop" = "Bahasa";
 "global_menu_file_desktop" = "Berkas";
 "global_menu_file_quit_desktop" = "Keluar";
@@ -502,7 +504,7 @@
 "global_menu_view_developer_tools_desktop" = "Alat pengembang";
 "global_menu_help_desktop" = "Bantuan";
 "global_menu_help_report_desktop" = "Laporkan masalah";
-"global_menu_help_about_desktop" = "Tentang alt.chat";
+"global_menu_help_about_desktop" = "Tentang Delta Chat";
 "no_chat_selected_suggestion_desktop" = "Pilih obrolan atau buat sebuah obrolan baru";
 "write_message_desktop" = "Tulis sebuah pesan";
 "encryption_info_title_desktop" = "Info enkripsi";
@@ -525,10 +527,3 @@
 "a11y_delivery_status_read" = "Status pengiriman: Dibaca";
 "a11y_delivery_status_invalid" = "Status pengiriman tidak valid";
 "a11y_background_preview_label" = "Pratampil latar belakang";
-
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Berdering";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Menghubungkan";
-"update_available" = "Update Available";
-"search_results_local" = "Ditemukan secara lokal";

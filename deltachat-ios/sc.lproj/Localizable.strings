@@ -1,5 +1,5 @@
 // common strings without special context
-"app_name" = "alt.chat";
+"app_name" = "Delta Chat";
 "ok" = "AB";
 "cancel" = "Annulla";
 "yes" = "Eja";
@@ -31,7 +31,7 @@
 // Verb "to mute". used to mute a chat, so that it is silenced e.g. does not make noise or cause notifications
 "mute" = "Boga su sonu";
 "ephemeral_messages" = "Messàgios chi isparessent";
-"ephemeral_messages_hint" = "Custas impostatziones s\'àplicant a totu sos partetzipantes chi impreant alt.chat. Nointames custu podent copiare, sarvare e torrare a imbiare messàgios o impreare àteros clientes de posta eletrònica.";
+"ephemeral_messages_hint" = "Custas impostatziones s\'àplicant a totu sos partetzipantes chi impreant Delta Chat. Nointames custu podent copiare, sarvare e torrare a imbiare messàgios o impreare àteros clientes de posta eletrònica.";
 "save" = "Sarva";
 "chat" = "Tzarrada";
 "media" = "Cuntenutu multimediale";
@@ -147,7 +147,7 @@
 "title_share_location" = "Cumpartzi sa positzione cun totu sos membros de su grupu";
 "device_talk" = "Messàgios de su dispositivu";
 "device_talk_subtitle" = "Messàgios ingendrados localmente";
-"device_talk_explain" = "Sos messàgios in custa tzarrada benint ingendrados localmente dae s\'aplicatzone alt.chat tua. Sos isvilupadores los impreant pro informare a pitzu de sos agiornamentos de s\'aplicatzione e de problemas durante s\'impreu.";
+"device_talk_explain" = "Sos messàgios in custa tzarrada benint ingendrados localmente dae s\'aplicatzone Delta Chat tua. Sos isvilupadores los impreant pro informare a pitzu de sos agiornamentos de s\'aplicatzione e de problemas durante s\'impreu.";
 "edit_contact" = "Modìfica su cuntatu";
 // Verb "to pin", making something sticky, not a noun or abbreviation for "pin number".
 "pin_chat" = "Apica sa tzarrada";
@@ -162,12 +162,14 @@
 "mute_for_one_day" = "A sa muda pro 1 die";
 "mute_for_seven_days" = "A sa muda pro 7 dies";
 "mute_forever" = "A sa muda pro semper";
+// deprecated
 "share_location_for_5_minutes" = "pro 5 minutos";
 "share_location_for_30_minutes" = "pro 30 minutos";
 "share_location_for_one_hour" = "pro 1 ora";
 "share_location_for_two_hours" = "pro 2 oras";
 "share_location_for_six_hours" = "pro 6 oras";
 "file_saved_to" = "Documentu sarvadu in \"%1$@\".";
+// deprecated, use ask_forward_messages
 "ask_forward" = "Inoltrare su messàgiu a %1$@?";
 "ask_forward_multiple" = "Inoltrare messàgios a %1$d tzarradas?";
 "ask_export_attachment" = "Esportare sos allegados? S\'esportatzione de sos allegados at a permìtere a cale si siat àtera aplicatzione in su dispositivu tuo de b\'atzèdere.\n\nSighire?";
@@ -187,7 +189,7 @@
 "chat_please_enter_message" = "Pro praghere inserta unu messàgiu.";
 "chat_camera_unavailable" = "Fotocàmera non disponìbile";
 "chat_unable_to_record_audio" = "Registratzione de su sonu fallida";
-"chat_new_group_hint" = "Imbia su primu messàgiu, permitende a sos àteros de ti rispòndere in intro de custu grupu.\n\n•Lu podes fàghere fintzas si non totu sos membros impreant alt.chat.Sa cunsinna de su primu messàgiu diat pòdere pigare un\'agigu de tempus.";
+"chat_new_group_hint" = "Imbia su primu messàgiu, permitende a sos àteros de ti rispòndere in intro de custu grupu.\n\n•Lu podes fàghere fintzas si non totu sos membros impreant Delta Chat.Sa cunsinna de su primu messàgiu diat pòdere pigare un\'agigu de tempus.";
 "chat_record_slide_to_cancel" = "Iscurre pro annulare";
 "chat_record_explain" = "Incarca e mantene incarcadu pro registrare unu messàgiu vocale, lassa pro imbiare";
 "chat_no_chats_yet_title" = "Cartella de intrada bòida.\nIncarca \"+\" pro abèrrere una tzarrada noa.";
@@ -326,11 +328,17 @@
 "pref_background" = "Isfundu";
 "pref_background_btn_default" = "Imprea s\'immàgine predefinida";
 "pref_background_btn_gallery" = "Ischerta dae sa galleria";
+// deprecated
 "pref_imap_folder_warn_disable_defaults" = "Si disabìlitas custa opztione assegura·ti chi su serbidore tuo e totu sos àteros clientes siant cunfigurados in sa matessi manera\n\nSi nono sas cosas diant pòdere non funtzionare pro nudda.";
-"pref_auto_folder_moves" = "Tramudòngios automàticos a sa cartella alt.chat";
+// deprecated
+"pref_auto_folder_moves" = "Tramudòngios automàticos a sa cartella DeltaChat";
+// deprecated
 "pref_show_emails" = "Ammustra sas lìteras traditzionales";
+// deprecated
 "pref_show_emails_no" = "Nono, tzarradas ebbia";
+// deprecated
 "pref_show_emails_accepted_contacts" = "Pro sos cuntatos atzetados";
+// deprecated
 "pref_show_emails_all" = "Totus";
 "pref_experimental_features" = "Funtzionalidades isperimentales";
 "pref_on_demand_location_streaming" = "Trasmissione de sa positzione suta dimanda";
@@ -348,6 +356,7 @@
 // automatically delete message
 "delete_old_messages" = "Iscantzella sos messàgios betzos";
 "autodel_device_title" = "Iscantzella sos messàgios dae su dispositivu";
+// deprecated
 "autodel_server_title" = "Iscantzella sos messàgios dae su servidore";
 // %1$d will be replaced by the number of messages, you can assume plural/lots here. %2$s will be replaced by a timespan option.
 "autodel_device_ask" = "Cheres iscantzellare%1$d messàgios como e totu sos messàgios arribados \"%2$@\" in su tempus benidore?\n\n• Custu at a incluire totu sos documentos multimediales\n\n• Sos messàgios ant a èssere iscantzellados fintzas si no ant a èssere istados lèghidos\n\n• Sos \"Messàgios sarvados\" ant a èssere esclùdidos dae s\'iscantzellamentu locale";
@@ -361,10 +370,3 @@
 "write_message_desktop" = "Iscrie unu messàgiu";
 "encryption_info_title_desktop" = "Informatziones de tzifradura";
 "more_info_desktop" = "Àteras informatziones";
-
-// Status text shown on the call screen while the outgoing call is ringing
-"call_status_ringing" = "Ringing";
-// Status text shown on the call screen while the connection is being established
-"call_status_connecting" = "Connecting";
-"update_available" = "Update Available";
-"search_results_local" = "Agattu in locale";
