@@ -49,7 +49,7 @@ final class AltPlatformService {
 
         // 2. Derive username from first address
         let email = addrs[0]
-        let username = deriveUsername(from: email)
+        let username = AltPlatformService.deriveUsername(from: email)
         logger.info("AltPlatformService: quickRegister email=\(email) username=\(username)")
 
         // 3. Obtain OpenPGP keys and fingerprint via RPC
@@ -129,7 +129,7 @@ final class AltPlatformService {
 
     // MARK: - Private helpers
 
-    private func deriveUsername(from addr: String) -> String {
+    static func deriveUsername(from addr: String) -> String {
         let local = addr.components(separatedBy: "@").first ?? addr
         var result = local.lowercased()
 

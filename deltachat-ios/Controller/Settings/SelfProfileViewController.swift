@@ -13,11 +13,11 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
     private let dcAccounts: DcAccounts
     private let dcContext: DcContext
 
-    lazy var doneButton: UIBarButtonItem = {
+    private lazy var doneButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonPressed))
     }()
 
-    lazy var cancelButton: UIBarButtonItem = {
+    private lazy var cancelButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
     }()
 
@@ -34,14 +34,99 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
         return cell
     }()
 
-    private lazy var avatarSelectionCell: AvatarSelectionCell = {
-        return AvatarSelectionCell(image: dcContext.getSelfAvatarImage())
-    }()
     private var changeAvatar: UIImage?
     private var deleteAvatar: Bool = false
+    private var cachedSelfAvatar: UIImage?
+
+    // MARK: - Avatar header
+
+    private lazy var avatarBadge: InitialsBadge = {
+        let badge = InitialsBadge(size: 100)
+        badge.translatesAutoresizingMaskIntoConstraints = false
+        badge.isUserInteractionEnabled = true
+        return badge
+    }()
+
+    private lazy var avatarPhotoLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: .callout)
+        label.textAlignment = .center
+        return label
+    }()
+
+    private lazy var avatarHeaderView: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+
+        container.addSubview(avatarBadge)
+        container.addSubview(avatarPhotoLabel)
+
+        NSLayoutConstraint.activate([
+            avatarBadge.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            avatarBadge.topAnchor.constraint(equalTo: container.topAnchor, constant: 24),
+            avatarBadge.widthAnchor.constraint(equalToConstant: 100),
+            avatarBadge.heightAnchor.constraint(equalToConstant: 100),
+
+            avatarPhotoLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            avatarPhotoLabel.topAnchor.constraint(equalTo: avatarBadge.bottomAnchor, constant: 8),
+            avatarPhotoLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -16),
+        ])
+
+        // Gesture recognizer added in viewDidLoad to avoid capturing self inside the lazy closure
+        return container
+    }()
+
+    private func setupAvatarHeader() {
+        cachedSelfAvatar = dcContext.getSelfAvatarImage()  // read from disk once, reuse the cache
+        if let image = cachedSelfAvatar {
+            avatarBadge.setImage(image)
+        } else {
+            avatarBadge.setName(dcContext.displayname ?? "")
+            avatarBadge.setColor(dcContext.getContact(id: Int(DC_CONTACT_ID_SELF)).color)
+        }
+        updateAvatarPhotoLabel(hasAvatar: cachedSelfAvatar != nil)
+    }
+
+    private func updateAvatarHeader(image: UIImage?) {
+        if let image {
+            avatarBadge.setImage(image)
+        } else {
+            avatarBadge.setImage(UIImage(named: "camera") ?? UIImage())
+            avatarBadge.setColor(UIColor.lightGray)
+        }
+        updateAvatarPhotoLabel(hasAvatar: image != nil)
+    }
+
+    private func updateAvatarPhotoLabel(hasAvatar: Bool) {
+        avatarPhotoLabel.text = hasAvatar ? "Change Photo" : "Set Photo"
+        avatarPhotoLabel.textColor = .systemBlue
+    }
+
+    private func isAvatarCurrentlySet() -> Bool {
+        if deleteAvatar { return false }
+        if changeAvatar != nil { return true }
+        return cachedSelfAvatar != nil
+    }
+
+    private lazy var usernameCell: UITableViewCell = {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        cell.textLabel?.text = "Username"
+        cell.detailTextLabel?.text = "@\(currentUsername())"
+        cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .default
+        return cell
+    }()
+
+    private func currentUsername() -> String {
+        if let stored = UserDefaults.shared?.string(forKey: "alt_username"), !stored.isEmpty {
+            return stored
+        }
+        return AltPlatformService.deriveUsername(from: dcContext.addr ?? "")
+    }
 
     private lazy var nameCell: TextFieldCell = {
-        let cell = TextFieldCell(description: String.localized("pref_your_name"), placeholder: String.localized("please_enter_name"))
+        let cell = TextFieldCell(description: "Display Name", placeholder: String.localized("please_enter_name"))
         cell.setText(text: dcContext.displayname)
         cell.textFieldDelegate = self
         cell.textField.returnKeyType = .default
@@ -59,7 +144,7 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
         let nameSection = SectionConfigs(
             headerTitle: nil,
             footerTitle: String.localized("pref_who_can_see_profile_explain"),
-            cells: [nameCell, avatarSelectionCell, statusCell]
+            cells: [nameCell, usernameCell, statusCell]
         )
         let deleteSection = SectionConfigs(
             headerTitle: nil,
@@ -85,16 +170,33 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = String.localized("pref_profile_info_headline")
-        avatarSelectionCell.onAvatarTapped = { [weak self] in
-            self?.onAvatarTapped()
-        }
+        setupAvatarHeader()
+
+        // Add tap here — keeps the lazy var closure free of strong self capture
+        let tap = UITapGestureRecognizer(target: self, action: #selector(avatarHeaderTapped))
+        avatarHeaderView.addGestureRecognizer(tap)
+
+        // Must add to tableView first so header and tableView share a common ancestor,
+        // then activate the width constraint, then measure and re-assign to commit the height.
+        let header = avatarHeaderView
+        tableView.tableHeaderView = header
+        header.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+        header.setNeedsLayout()
+        header.layoutIfNeeded()
+        header.frame.size.height = header.systemLayoutSizeFitting(
+            CGSize(width: tableView.bounds.width, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        tableView.tableHeaderView = header
+
         tableView.rowHeight = UITableView.automaticDimension
         navigationItem.rightBarButtonItem = doneButton
         navigationItem.leftBarButtonItem = cancelButton
         validateFields()
     }
 
-    func validateFields() {
+    private func validateFields() {
         doneButton.isEnabled = !(nameCell.textField.text?.isEmpty ?? true)
     }
 
@@ -121,22 +223,27 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 1 {
+        let cell = sections[indexPath.section].cells[indexPath.row]
+        if cell === usernameCell {
+            let alert = UIAlertController(title: "Coming Soon", message: "Username editing will be available in a future update.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: String.localized("ok"), style: .default))
+            present(alert, animated: true)
+        } else if indexPath.section == 1 {
             deleteCurrentAccount()
         }
     }
 
     // MARK: - Notifications
-    @objc func textDidChange(notification: Notification) {
+    @objc private func textDidChange(notification: Notification) {
         validateFields()
     }
 
     // MARK: - actions
-    @objc func cancelButtonPressed() {
+    @objc private func cancelButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
 
-    @objc func doneButtonPressed() {
+    @objc private func doneButtonPressed() {
         dcContext.selfstatus = statusCell.getText()
         dcContext.displayname = nameCell.getText()
         if let changeAvatar {
@@ -173,9 +280,13 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
         }
     }
 
+    @objc private func avatarHeaderTapped() {
+        onAvatarTapped()
+    }
+
     private func enlargeAvatarPressed(_ action: UIAlertAction) {
         // temporarily save to file as PreviewController uses QLPreviewItem which does not accept UIImage
-        guard let image = avatarSelectionCell.badge.getImage() else { return }
+        guard let image = avatarBadge.getImage() else { return }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("preview.png")
         guard let imageData = image.pngData() else { return }
         guard (try? imageData.write(to: url)) != nil else { return }
@@ -196,17 +307,17 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
     private func deleteProfileIconPressed(_ action: UIAlertAction) {
         changeAvatar = nil
         deleteAvatar = true
-        avatarSelectionCell.setAvatar(image: nil)
+        updateAvatarHeader(image: nil)
     }
 
     private func onAvatarTapped() {
         let alert = UIAlertController(title: String.localized("pref_profile_photo"), message: nil, preferredStyle: .safeActionSheet)
-        if avatarSelectionCell.isAvatarSet() {
+        if isAvatarCurrentlySet() {
             alert.addAction(UIAlertAction(title: String.localized("global_menu_view_desktop"), style: .default, handler: enlargeAvatarPressed(_:)))
         }
         alert.addAction(PhotoPickerAlertAction(title: String.localized("camera"), style: .default, handler: cameraButtonPressed(_:)))
         alert.addAction(PhotoPickerAlertAction(title: String.localized("gallery"), style: .default, handler: galleryButtonPressed(_:)))
-        if avatarSelectionCell.isAvatarSet() {
+        if isAvatarCurrentlySet() {
             alert.addAction(UIAlertAction(title: String.localized("delete"), style: .destructive, handler: deleteProfileIconPressed(_:)))
         }
         alert.addAction(UIAlertAction(title: String.localized("cancel"), style: .cancel, handler: nil))
@@ -217,7 +328,7 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
     func onImageSelected(image: UIImage) {
         changeAvatar = image
         deleteAvatar = false
-        avatarSelectionCell.setAvatar(image: image)
+        updateAvatarHeader(image: image)
     }
 }
 
