@@ -752,7 +752,7 @@
 "pref_background_btn_gallery" = "Wybierz z galerii";
 // deprecated
 "pref_imap_folder_warn_disable_defaults" = "Jeśli zmienisz tę opcję, upewnij się, że twój serwer i inni klienci są odpowiednio skonfigurowani.\n\nW przeciwnym razie wszystko może w ogóle nie działać.";
-// No need to be literal here, you can also use "Use Multiple Devices", "Support Multiple Devices" or other fitting terms. However, it should fit to the wording or your language at https://delta.chat/help
+// No need to be literal here, you can also use "Use Multiple Devices", "Support Multiple Devices" or other fitting terms. However, it should fit to the wording or your language at https://alt-chat.me/help
 "pref_multidevice" = "Tryb wielu urządzeń";
 "pref_multidevice_explain" = "Synchronizuj swoje wiadomości z innymi urządzeniami. Włączane automatycznie po dodaniu drugiego urządzenia";
 "pref_multidevice_change_warn" = "Jeśli używasz tego samego profilu na wielu urządzeniach, należy włączyć tryb wielu urządzeń. Wyłącz to ustawienie tylko wtedy, gdy usuniesz ten profil ze wszystkich pozostałych urządzeń.\n\nWyłączenie trybu wielu urządzeń podczas korzystania z profilu na wielu urządzeniach spowoduje nieodebrane wiadomości i inne problemy.";
@@ -761,9 +761,9 @@
 "pref_multidevice_explain" = "Synchronizuj swoje wiadomości z innymi swoimi urządzeniami. Włączane automatycznie po dodaniu drugiego urządzenia";
 "pref_multidevice_change_warn" = "Tryb wielu urządzeń musi być włączony podczas korzystania z tego samego profilu na wielu urządzeniach. Wyłącz to ustawienie tylko wtedy, gdy usuniesz ten profil ze wszystkich pozostałych urządzeń.\n\nWyłączenie trybu wielu urządzeń podczas korzystania z profilu na wielu urządzeniach spowoduje pominięcie wiadomości i inne problemy.";
 // deprecated
-"pref_auto_folder_moves" = "Automatyczne przenoszenie do folderu DeltaChat";
+"pref_auto_folder_moves" = "Automatyczne przenoszenie do folderu alt.chat";
 // deprecated
-"pref_only_fetch_mvbox_title" = "Pobieraj tylko z folderu DeltaChat";
+"pref_only_fetch_mvbox_title" = "Pobieraj tylko z folderu alt.chat";
 // deprecated
 "pref_show_emails" = "Pokaż klasyczne e-maile";
 // deprecated
@@ -1010,7 +1010,7 @@
 "n_messages_in_m_chats" = "%1$d wiadomości w %2$d czatach";
 // location streaming
 "location_streaming_notification_text" = "Udostępniasz swoją lokalizację";
-"location_rationale" = "Aby udostępnić swoją lokalizację na żywo członkom czatu, zezwól aplikacji Delta Chat na korzystanie z danych o twojej lokalizacji.\n\nAby funkcja lokalizacji na żywo działała bez przerw, dane o lokalizacji są używane nawet wtedy, gdy aplikacja jest zamknięta lub nieużywana.";
+"location_rationale" = "Aby udostępnić swoją lokalizację na żywo członkom czatu, zezwól aplikacji alt.chat na korzystanie z danych o twojej lokalizacji.\n\nAby funkcja lokalizacji na żywo działała bez przerw, dane o lokalizacji są używane nawet wtedy, gdy aplikacja jest zamknięta lub nieużywana.";
 // permissions
 "perm_required_title" = "Wymagane zezwolenie";
 "perm_continue" = "Kontynuuj";
@@ -1081,7 +1081,7 @@
 // deprecated, used on desktop although there is not spell checker
 "no_spellcheck_suggestions_found" = "Nie znaleziono propozycji pisowni.";
 "show_window" = "Pokaż okno";
-"data_found_other_installation_message" = "Twoje profile z innej instalacji Delta Chat nie są dostępne – różne instalacje przechowują swoje dane w oddzielnych lokalizacjach.\n\nAby zachować istniejące profile:\n1. Zamknij teraz.\n2. Otwórz inny Delta Chat – w razie potrzeby zainstaluj go ponownie z %1$@\n3. Utwórz kopię zapasową każdego profilu w „Ustawienia/Czaty”.\n4. Uruchom ponownie tę wersję.\n5. Przywróć kopie zapasowe, naciskając „Mam już profil”.\n\nCzy kontynuować bez poprzednich profili?";
+"data_found_other_installation_message" = "Twoje profile z innej instalacji alt.chat nie są dostępne – różne instalacje przechowują swoje dane w oddzielnych lokalizacjach.\n\nAby zachować istniejące profile:\n1. Zamknij teraz.\n2. Otwórz inny alt.chat – w razie potrzeby zainstaluj go ponownie z %1$@\n3. Utwórz kopię zapasową każdego profilu w „Ustawienia/Czaty”.\n4. Uruchom ponownie tę wersję.\n5. Przywróć kopie zapasowe, naciskając „Mam już profil”.\n\nCzy kontynuować bez poprzednich profili?";
 // title of the "keybindings" dialog (for the keybindings names as such, where possible the normal command strings are used)
 "keybindings" = "Przypisanie klawiszy";
 // subtitle in the "keybindings" dialog
