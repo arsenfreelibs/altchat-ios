@@ -38,9 +38,18 @@ class TransportListViewController: UITableViewController {
                 self?.addFromQrCode(continueQrScan)
             }
         }
+
+         NotificationCenter.default.addObserver(self, selector: #selector(handleTransportsModified(_:)), name: Event.transportsModified, object: nil)
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    @objc private func handleTransportsModified(_ notification: Notification) {
+        guard dcContext.id == notification.userInfo?["account_id"] as? Int else { return }
+        DispatchQueue.main.async { [weak self] in
+            self?.reloadTransports()
+        }
+    }
 
     private func reloadTransports() {
         transports = dcContext.listTransportsEx()

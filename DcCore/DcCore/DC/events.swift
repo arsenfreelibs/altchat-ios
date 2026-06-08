@@ -23,6 +23,7 @@ public enum Event {
     public static let configurationProgress = Notification.Name(rawValue: "configurationProgress")
 
     public static let connectivityChanged = Notification.Name(rawValue: "connectivityChanged")
+    public static let transportsModified = Notification.Name(rawValue: "transportsModified")
 
     // Webxdc
     public static let webxdcStatusUpdate = Notification.Name(rawValue: "webxdcStatusUpdate")
@@ -195,6 +196,10 @@ public class DcEventHandler {
         case DC_EVENT_CONNECTIVITY_CHANGED:
             logger.info("📡[\(accountId)] connectivity changed")
             NotificationCenter.default.post(name: Event.connectivityChanged, object: nil, userInfo: ["account_id": Int(accountId)])
+
+        case DC_EVENT_TRANSPORTS_MODIFIED:
+            logger.info("📡[\(accountId)] transports modified")
+            NotificationCenter.default.post(name: Event.transportsModified, object: nil, userInfo: ["account_id": Int(accountId)])
 
         case DC_EVENT_ACCOUNTS_BACKGROUND_FETCH_DONE:
             if let sem = dcAccounts.fetchSemaphore {

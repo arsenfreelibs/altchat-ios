@@ -231,7 +231,7 @@ class ChatListViewController: UITableViewController {
     @objc private func handleMessagesNoticed(_ notification: Notification) {
         refreshInBg()
         DispatchQueue.main.async { [weak self] in
-            self?.updateNextScreensBackButton()
+            self?.refreshUnreadIndicators()
         }
     }
 
@@ -774,6 +774,11 @@ class ChatListViewController: UITableViewController {
         return tableView.isEditing && editingConstraints != nil
     }
 
+    private func refreshUnreadIndicators() {
+        updateAccountButton()
+        updateNextScreensBackButton()
+    }
+
     private func updateAccountButton() {
         let unreadMessages = dcAccounts.getFreshMessagesCount(skipCurrent: true)
         accountButtonAvatar.setUnreadMessageCount(unreadMessages)
@@ -802,6 +807,9 @@ class ChatListViewController: UITableViewController {
 
     @objc private func accountButtonTapped() {
         let viewController = ProfileSwitchViewController(dcAccounts: dcAccounts)
+        viewController.onUnreadIndicatorsChanged = { [weak self] in
+            self?.refreshUnreadIndicators()
+        }
         let accountSwitchNavigationController = UINavigationController(rootViewController: viewController)
         if #available(iOS 15.0, *) {
             if let sheet = accountSwitchNavigationController.sheetPresentationController {

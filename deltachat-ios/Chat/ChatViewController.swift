@@ -1076,6 +1076,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             showInvalidUnencryptedDialog()
         case (_, DC_INFO_GROUP_DESCRIPTION_CHANGED):
             navigationController?.pushViewController(ProfileViewController(dcContext, chatId: chatId), animated: true)
+        case (_, DC_INFO_LOCATIONSTREAMING_ENABLED):
+            navigationController?.pushViewController(MapViewController(dcContext: dcContext, chatId: chatId), animated: true)
         default:
             if let contactId = message.infoContactId, contactId != DC_CONTACT_ID_SELF {
                 navigationController?.pushViewController(ProfileViewController(dcContext, contactId: contactId), animated: true)
@@ -3696,8 +3698,7 @@ extension ChatViewController {
         return preview
     }
 
-    private func appendReactionItems(to menuElements: inout [UIMenuElement], indexPath: IndexPath) {
-        let messageId = messages[indexPath.row].id
+    private func appendReactionItems(to menuElements: inout [UIMenuElement], messageId: Int) {
         let myReactions = getMyReactions(messageId: messageId)
         var myReactionChecked = false
 
@@ -3781,11 +3782,11 @@ extension ChatViewController {
 
                 if canReply(to: message) {
                     if #available(iOS 16.0, *) {
-                        appendReactionItems(to: &children, indexPath: indexPath)
+                        appendReactionItems(to: &children, messageId: messageId)
                         preferredElementSizeSmall = true
                     } else {
                         var items: [UIMenuElement] = []
-                        appendReactionItems(to: &items, indexPath: indexPath)
+                        appendReactionItems(to: &items, messageId: messageId)
                         children.append(UIMenu(title: String.localized("react"), image: UIImage(systemName: "face.smiling"), children: items))
                     }
                     children.append(

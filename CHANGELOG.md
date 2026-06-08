@@ -2,19 +2,51 @@
 
 ## Unreleased
 
+- You can now click on the Location streaming info message to bring up the map
+- Fix: Reactions could go to the wrong message if a new message was received while long pressing
+- Fix: update relay list when modified on other devices
+
+
+## v2.51.1
+2026-06
+
 - "Calls" and "Channels" are available by default and are no longer experimental
-- Remove legacy option that are useful for unsupported shared usage only
-- Your own video now shows as mirrored in a call
+- Resend the last 10 messages to new broadcast channel member
+- Enable PQC (Post-Quantum Cryptography) support. We do not generate PQC keys yet, this step is needed for forward compatibility
+- Add "Mark All as Read" to the profile switcher context menu
+- Improve avatar quality
+- Remove "Move to DeltaChat folder", in case you are using the option, a device message shows how to proceed
+- Remove "Only fetch from DeltaChat folder" option, the functionality is preserved for existing profiles
+- Remove "Delete Messages from Server" option, esp. for multi-device mode, the server knows better what to do
+- In single-device mode, encrypted messages are remoevd from the server immediately
+- Remove "Show Email" options, all messages are shown by default, account sharing is anyway not supported
+- Allow otherwise invalid TLS connections if the key is unchanged
+- Do not show "non delivered" notifications in broadcast channels
+- Adapt quota warning to automatic cleanup.
+- Add an option to process unencrypted messages to "Advanced / Relays / Edit / More Options". By default, only encrypted messages can be sent or received
+- Follow certificate check parameter in autoconfig
+- Show full message screen now uses the system font
+- Fix: Your own video now shows as mirrored in a call
+- Fix: Improve detection of stickers
 - Fix: Allow animated stickers
+- Fix: Reconnect when removing a relay
+- Fix: Ensure that message being sent is added to the bottom
+- Fix: Don't receive message if a deletion request was received before
+- Fix some text direction issues in "Show full message" view
+- Fix: Do not try to resolve proxy IPv6 addresses in square brackets.
+- Fix: Do not fail to receive post-message with status updates for deleted webxdc
+- Fix: Disabled new iOS 26 pop gesture in webxdc to align with older versions
+- Update core to 2.51.0
 
 
 ## v2.49.2
+2026-04
 
 - Configurable app picker url
 - When tapping an invite link, after app installation, offer corresponding chat
 - Fix: do not crash when swiping keyboard down
 - Update translations and local help
-- Usign core 2.49.0
+- Using core 2.49.0
 
 
 ## v2.49.0

@@ -37,12 +37,14 @@ class EditTransportViewController: UITableViewController {
         imapUserCell,
         imapServerCell,
         imapPortCell,
+        imapFolderCell,
         smtpSecurityCell,
         smtpUserCell,
         smtpPasswordCell,
         smtpServerCell,
         smtpPortCell,
         certCheckCell,
+        forceE2eeCell,
         viewLogCell
     ]
     private let editAddr: String?
@@ -136,6 +138,16 @@ class EditTransportViewController: UITableViewController {
         return cell
     }()
 
+    lazy var imapFolderCell: TextFieldCell = {
+        let cell = TextFieldCell(
+            description: "IMAP Folder",
+            placeholder: String.localized("automatic"),
+            delegate: self)
+        cell.textField.isUserInteractionEnabled = false
+        cell.textField.textColor = .gray
+        return cell
+    }()
+
     let imapSecurityValue = AccountSetupSecurityValue()
     lazy var imapSecurityCell: UITableViewCell = {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
@@ -211,6 +223,10 @@ class EditTransportViewController: UITableViewController {
         return cell
     }()
 
+    lazy var forceE2eeCell: SwitchCell = {
+        return SwitchCell(textLabel: String.localized("enforce_e2ee"), on: dcContext.getConfigBool("force_encryption"))
+    }()
+
     lazy var viewLogCell: UITableViewCell = {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         cell.textLabel?.text = String.localized("pref_view_log")
@@ -266,12 +282,17 @@ class EditTransportViewController: UITableViewController {
             }
         }
 
+        if loginParam?.imapFolder == nil {
+            advancedSectionCells.removeAll { $0 === imapFolderCell }
+        }
+
         // init text cells (selections are initialized at viewWillAppear)
         emailCell.setText(text: loginParam?.addr)
         passwordCell.setText(text: loginParam?.password)
         imapUserCell.setText(text: loginParam?.imapUser)
         imapServerCell.setText(text: loginParam?.imapServer)
         imapPortCell.setText(text: editablePort(port: loginParam?.imapPort))
+        imapFolderCell.setText(text: loginParam?.imapFolder)
         imapSecurityValue.value = loginParam?.imapSecurity ?? "automatic"
         smtpUserCell.setText(text: loginParam?.smtpUser)
         smtpPasswordCell.setText(text: loginParam?.smtpPassword)
@@ -419,6 +440,7 @@ class EditTransportViewController: UITableViewController {
         var loginParam = DcEnteredLoginParam(addr: emailAddress, password: passwordCell.getText() ?? "")
         loginParam.imapServer = imapServerCell.getText()
         loginParam.imapPort = imapPortCell.getText().flatMap { Int($0) }
+        loginParam.imapFolder = imapFolderCell.getText()
         loginParam.imapUser = imapUserCell.getText()
         loginParam.imapSecurity = imapSecurityValue.value
         loginParam.smtpServer = smtpServerCell.getText()
@@ -429,6 +451,7 @@ class EditTransportViewController: UITableViewController {
         loginParam.certificateChecks = certValue
 
         do {
+            dcContext.setConfigBool("force_encryption", forceE2eeCell.isOn)
             _ = try dcContext.addOrUpdateTransport(param: loginParam)
         } catch {
             progressAlertHandler.updateProgressAlert(error: error.localizedDescription)

@@ -460,6 +460,7 @@
 "connectivity_connected" = "Prisijungta";
 "sending" = "Siunčiama…";
 "last_msg_sent_successfully" = "Paskutinė žinutė sėkmingai išsiųsta.";
+// deprecated
 "not_supported_by_provider" = "Jūsų teikėjas nepalaiko šios ypatybės.";
 // Subtitle in quota context of "Connectivity" view. Should be be plural always, no number is prefixed.
 "messages" = "Žinutės";
@@ -492,7 +493,6 @@
 "welcome_chat_over_email" = "Saugūs decentralizuoti pokalbiai";
 "scan_invitation_code" = "Skenuoti pakvietimo kodą";
 "login_title" = "Prisijungti";
-"login_advanced_hint" = "Šis prisijungimas skirtas patyrusiems naudotojams:\n\n• Nenaudokite adreso, kurį naudojate kitoje programoje.\n\n• Klasikinis el. pašto serveris leidžia pokalbius be ištisinio šifravimo, pažymėtus voko piktograma.";
 "login_inbox" = "Gauta";
 "login_imap_login" = "IMAP prisijungimo vardas";
 "login_imap_server" = "IMAP serveris";
@@ -838,7 +838,7 @@
 "welcome_desktop" = "Sveiki atvykę į Delta Chat";
 "global_menu_preferences_language_desktop" = "Pasirinkti kalbą...";
 "global_menu_file_desktop" = "Failas";
-"global_menu_file_quit_desktop" = "Išeiti";
+"global_menu_file_quit_desktop" = "Išjungti";
 "global_menu_edit_desktop" = "Taisyti";
 "global_menu_edit_undo_desktop" = "Atšaukti";
 "global_menu_edit_redo_desktop" = "Grąžinti";
@@ -850,6 +850,8 @@
 "global_menu_view_developer_desktop" = "Plėtotojas";
 "global_menu_view_developer_tools_desktop" = "Plėtotojo įrankiai";
 "global_menu_help_desktop" = "Žinynas";
+"delta_chat_homepage" = "Delta Chat internetinė svetainė";
+"contribute" = "Talkinti";
 "global_menu_help_report_desktop" = "Pranešti apie klaidą";
 "global_menu_help_about_desktop" = "Apie Delta Chat";
 "global_menu_file_open_desktop" = "Atverti Delta Chat";
@@ -884,6 +886,8 @@
 "a11y_message_context_menu_btn_label" = "Veiksmai su žinute";
 "a11y_background_preview_label" = "Fono peržiūra";
 "a11y_disappearing_messages_activated" = "Išnykstančios žinutės aktyvuotos";
+// The placeholder will be replaced by a link, eg. "Open https://delta.chat". Used e.g. in for accessibility.
+"open_link" = "Atverti %1$@";
 "a11y_connectivity_hint" = "Bakstelėkite du kartus norėdami pamatyti išsamesnę informaciją apie jungiamumą.";
 "login_error_no_internet_connection" = "Nėra interneto ryšio, nepavyko prisijungti.";
 "share_account_not_configured" = "Paskyra nėra sukonfigūruota.";
