@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var appCoordinator: AppCoordinator!
     var locationManager: LocationManager!
     var notificationManager: NotificationManager!
+    var autoProxyManager: AutoProxyManager!
     var callManager: CallManager?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     var reachability: Reachability?
@@ -144,6 +145,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         notificationManager = NotificationManager(dcAccounts: dcAccounts)
         setStockTranslations()
         dcAccounts.startIo()
+        autoProxyManager = AutoProxyManager(dcAccounts: dcAccounts)
+        autoProxyManager.start()
 
         if let reachability {
             reachability.whenReachable = { reachability in
@@ -267,6 +270,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if reachability.connection != .unavailable {
                     self.dcAccounts.maybeNetwork()
                     self.probeAltTokenIfNeeded()
+                    self.autoProxyManager?.reevaluate()
                 }
             }
 

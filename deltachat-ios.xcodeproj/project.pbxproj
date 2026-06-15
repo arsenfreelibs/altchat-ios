@@ -180,6 +180,8 @@
 		AE9DAF0D22C1215D004C9591 /* EditContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9DAF0C22C1215D004C9591 /* EditContactController.swift */; };
 		AE9DAF0F22C278C6004C9591 /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9DAF0E22C278C6004C9591 /* ChatTitleView.swift */; };
 		AEACE2E31FB32B5C00DCDD78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEACE2E21FB32B5C00DCDD78 /* Constants.swift */; };
+		AC710001AAAA0000000000A1 /* AutoProxyConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC710001AAAA0000000000A0 /* AutoProxyConstants.swift */; };
+		AC710002AAAA0000000000B1 /* AutoProxyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC710002AAAA0000000000B0 /* AutoProxyManager.swift */; };
 		AEACE2E51FB32E1900DCDD78 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEACE2E41FB32E1900DCDD78 /* Utils.swift */; };
 		AEC67A1C241CE9E4007DDBE1 /* AppStateRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC67A1B241CE9E4007DDBE1 /* AppStateRestorer.swift */; };
 		AEC67A1E241FCFE0007DDBE1 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC67A1D241FCFE0007DDBE1 /* ChatListViewModel.swift */; };
@@ -576,6 +578,8 @@
 		AE9DAF0C22C1215D004C9591 /* EditContactController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactController.swift; sourceTree = "<group>"; };
 		AE9DAF0E22C278C6004C9591 /* ChatTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		AEACE2E21FB32B5C00DCDD78 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AC710001AAAA0000000000A0 /* AutoProxyConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoProxyConstants.swift; sourceTree = "<group>"; };
+		AC710002AAAA0000000000B0 /* AutoProxyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoProxyManager.swift; sourceTree = "<group>"; };
 		AEACE2E41FB32E1900DCDD78 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		AEC67A1B241CE9E4007DDBE1 /* AppStateRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateRestorer.swift; sourceTree = "<group>"; };
 		AEC67A1D241FCFE0007DDBE1 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
@@ -1216,6 +1220,8 @@
 				3067AAC52667F3FE00525036 /* ImageFormat.swift */,
 				305702A024C6453700D84EFC /* TypeAlias.swift */,
 				AEACE2E21FB32B5C00DCDD78 /* Constants.swift */,
+				AC710001AAAA0000000000A0 /* AutoProxyConstants.swift */,
+				AC710002AAAA0000000000B0 /* AutoProxyManager.swift */,
 				AEACE2E41FB32E1900DCDD78 /* Utils.swift */,
 				AE851AC4227C755A00ED86F0 /* Protocols.swift */,
 				3095A350237DD1F700AB07F7 /* MediaPicker.swift */,
@@ -2052,6 +2058,8 @@
 				D82AD24D2D27E47A009D6026 /* UIApplication+Orientation.swift in Sources */,
 				AECEF03E244F2D55006C90DA /* QrPageController.swift in Sources */,
 				AEACE2E31FB32B5C00DCDD78 /* Constants.swift in Sources */,
+				AC710001AAAA0000000000A1 /* AutoProxyConstants.swift in Sources */,
+				AC710002AAAA0000000000B1 /* AutoProxyManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
