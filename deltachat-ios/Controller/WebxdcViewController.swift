@@ -292,9 +292,13 @@ class WebxdcViewController: WebViewViewController {
         super.willMove(toParent: parent)
         let willBeRemoved = parent == nil
         navigationController?.interactivePopGestureRecognizer?.isEnabled = willBeRemoved
+        // `interactiveContentPopGestureRecognizer` only exists in the iOS 26 SDK (Xcode 26 / Swift 6.2+).
+        // Gate at compile time so older toolchains can still build; the runtime `#available` stays for Xcode 26.
+        #if compiler(>=6.2)
         if #available(iOS 26.0, *) {
             navigationController?.interactiveContentPopGestureRecognizer?.isEnabled = willBeRemoved
         }
+        #endif
     }
 
     func refreshWebxdcInfo() {
