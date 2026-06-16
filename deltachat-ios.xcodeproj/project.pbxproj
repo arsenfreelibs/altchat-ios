@@ -1450,6 +1450,7 @@
 				7A9FB13C1FB061E2001FEA36 /* Sources */,
 				7A9FB13D1FB061E2001FEA36 /* Frameworks */,
 				7A9FB13E1FB061E2001FEA36 /* Resources */,
+				AC710003AAAA0000000000C0 /* Obfuscate auto-proxy creds */,
 				7837B63821E54CB400CDE126 /* Run Script */,
 				7837B64621E5532B00CDE126 /* ShellScript */,
 				304219D4243F588600516852 /* Embed Frameworks */,
@@ -1812,6 +1813,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+			AC710003AAAA0000000000C0 /* Obfuscate auto-proxy creds */ = {
+				isa = PBXShellScriptBuildPhase;
+				alwaysOutOfDate = 1;
+				buildActionMask = 2147483647;
+				files = (
+				);
+				inputFileListPaths = (
+				);
+				inputPaths = (
+				);
+				name = "Obfuscate auto-proxy creds";
+				outputFileListPaths = (
+				);
+				outputPaths = (
+				);
+				runOnlyForDeploymentPostprocessing = 0;
+				shellPath = /bin/sh;
+				shellScript = "set -e\nINPUT=\"${SRCROOT}/Config/auto_proxy.local\"\nOUT_DIR=\"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\nmkdir -p \"${OUT_DIR}\"\nOUT=\"${OUT_DIR}/autoproxy.dat\"\nif [ -f \"${INPUT}\" ]; then\n  /usr/bin/python3 \"${SRCROOT}/scripts/gen_autoproxy_obf.py\" \"${INPUT}\" > \"${OUT}\"\nelse\n  : > \"${OUT}\"\nfi\n";
+				showEnvVarsInLog = 0;
+			};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */

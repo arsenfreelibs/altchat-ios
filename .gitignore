@@ -45,3 +45,6 @@ deltachat-ios/libraries/libdeltachat.a
 
 # StoreKit local testing configuration
 *.storekit
+
+# Auto-proxy credentials (plaintext) — never commit; only the .example template is tracked
+Config/auto_proxy.local
