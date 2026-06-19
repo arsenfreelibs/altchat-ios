@@ -19,6 +19,7 @@ class InstantOnboardingViewController: UIViewController {
 
     private var providerHostURL: URL
     private var qrCodeData: String?
+
     private lazy var menuButton: UIBarButtonItem = {
         let image = UIImage(systemName: "ellipsis.circle")
         return UIBarButtonItem(image: image, menu: moreButtonMenu())
@@ -91,6 +92,13 @@ class InstantOnboardingViewController: UIViewController {
         contentView.imageButton.addTarget(self, action: #selector(InstantOnboardingViewController.onAvatarTapped), for: .touchUpInside)
         contentView.privacyButton.addTarget(self, action: #selector(InstantOnboardingViewController.showPrivacy(_:)), for: .touchUpInside)
         contentView.otherOptionsButton.addTarget(self, action: #selector(InstantOnboardingViewController.showOtherOptions(_:)), for: .touchUpInside)
+        // "Other options" (custom server / manual third-party email setup) is only
+        // available in debug builds. App Store builds connect only to our chatmail server.
+        #if DEBUG
+        contentView.otherOptionsButton.isHidden = false
+        #else
+        contentView.otherOptionsButton.isHidden = true
+        #endif
 
         NotificationCenter.default.addObserver(
             self,
