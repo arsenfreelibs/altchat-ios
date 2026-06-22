@@ -1152,3 +1152,29 @@
 "call_failed" = "Call failed";
 "already_in_call" = "Already in a call";
 "update_available" = "Update Available";
+
+// Passcode Lock
+"passcode_title" = "Passcode Lock";
+"passcode_summary_on" = "On";
+"passcode_summary_off" = "Off";
+"passcode_change" = "Change Passcode";
+"passcode_fingerprint" = "Unlock with Face ID / Touch ID";
+"passcode_autolock" = "Auto-lock";
+"passcode_autolock_summary" = "Require passcode if away for some time.";
+"passcode_autolock_disabled" = "Disabled";
+"passcode_autolock_1min" = "in 1 minute";
+"passcode_autolock_5min" = "in 5 minutes";
+"passcode_autolock_1hour" = "in 1 hour";
+"passcode_autolock_5hours" = "in 5 hours";
+"passcode_turn_off" = "Turn Passcode Off";
+"passcode_turn_off_confirm" = "Are you sure you want to disable your passcode?";
+"passcode_create_title" = "Create a passcode";
+"passcode_create_subtitle" = "Please enter any 4 digits that you will use to unlock the app.";
+"passcode_confirm_title" = "Re-enter your passcode";
+"passcode_confirm_subtitle" = "If you forget your passcode, you'll need to clear the app data or reinstall the app.";
+"passcode_enter_old_title" = "Enter your current passcode";
+"passcode_mismatch" = "Passcodes don't match. Try again.";
+"passcode_locked_title" = "%@ Locked";
+"passcode_enter_hint" = "Enter your passcode";
+"passcode_wrong" = "Wrong passcode";
+"passcode_locked_out" = "Too many attempts. Try again in %@.";

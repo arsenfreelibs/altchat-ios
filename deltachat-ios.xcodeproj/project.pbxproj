@@ -122,6 +122,8 @@
 		30FDB70524D1C1000066C48D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FDB6F824D1C1000066C48D /* ChatViewController.swift */; };
 		30FDB71F24D8170E0066C48D /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FDB71E24D8170E0066C48D /* TextMessageCell.swift */; };
 		30FDB72124D838240066C48D /* BaseMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FDB72024D838240066C48D /* BaseMessageCell.swift */; };
+		32D8DA2D600A250FB5DB0D81 /* PasscodeSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D2FD833936E17233314148 /* PasscodeSetupViewController.swift */; };
+		4DBA6B7FD15BCD27527B0177 /* PasscodeDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F271029E058338C5ADCEFA /* PasscodeDotsView.swift */; };
 		5F153E9A2CC38BAA00871ABE /* GiveBackMyFirstResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F153E992CC38BAA00871ABE /* GiveBackMyFirstResponder.swift */; };
 		5F4945AB2D315E7000DCD50A /* UIPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4945AA2D315E7000DCD50A /* UIPasteboard.swift */; };
 		5F785F6E2CB9344F003FFFB9 /* ReusableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F785F6D2CB9344F003FFFB9 /* ReusableCellProtocol.swift */; };
@@ -138,6 +140,7 @@
 		64F9EBA02E117CD8007EE3D9 /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F9EB9F2E117CCF007EE3D9 /* UIView+Animations.swift */; };
 		7070FB9B2101ECBB000DC258 /* NewGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070FB9A2101ECBB000DC258 /* NewGroupController.swift */; };
 		70B8882E2091B8550074812E /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8882D2091B8550074812E /* ContactCell.swift */; };
+		732EE86A13CDB1BD8F0AE636 /* PasscodeLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC27DEC9F90483714DDAF3E6 /* PasscodeLockViewController.swift */; };
 		767CFF56D7ABED1C190A3A8B /* Pods_DcShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8DFC4D179F4CF1E83D78C9 /* Pods_DcShare.framework */; };
 		7837B64021E54DC600CDE126 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7837B63F21E54DC600CDE126 /* .swiftlint.yml */; };
 		785BE16821E247F1003BE98C /* MessageInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785BE16721E247F1003BE98C /* MessageInfoViewController.swift */; };
@@ -152,6 +155,7 @@
 		7A9FB14B1FB061E2001FEA36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9FB14A1FB061E2001FEA36 /* Assets.xcassets */; };
 		7A9FB14E1FB061E2001FEA36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9FB14C1FB061E2001FEA36 /* LaunchScreen.storyboard */; };
 		7AE0A5491FC42F65005ECB4B /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */; };
+		7C3A820E09439FF7FDD5210D /* PasscodeEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D945E92812B3E9A182D10 /* PasscodeEntryViewController.swift */; };
 		8A19190635E24C1DF7F0A35D /* Pods_deltachat_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEAC85C8C41D57193C24E9A /* Pods_deltachat_ios.framework */; };
 		AA112233445566770011AA01 /* VoiceBlobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011AA00 /* VoiceBlobView.swift */; };
 		AA112233445566770011BB01 /* AudioNotePreviewBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011BB00 /* AudioNotePreviewBar.swift */; };
@@ -200,6 +204,7 @@
 		AEE6EC482283045D00EDC689 /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE6EC472283045D00EDC689 /* SelfProfileViewController.swift */; };
 		AEF53BD5248904BF00D309C1 /* GalleryTimeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF53BD4248904BF00D309C1 /* GalleryTimeLabel.swift */; };
 		AEFBE22F23FEF23D0045327A /* ProviderInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFBE22E23FEF23D0045327A /* ProviderInfoCell.swift */; };
+		B1B8F62BCB611E0B6192D812 /* PasscodeLockWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B4313A11625E38058C3A0D /* PasscodeLockWindow.swift */; };
 		B20462E62440C99600367A57 /* AutodelOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20462E52440C99600367A57 /* AutodelOptionsViewController.swift */; };
 		B206C2AB2B7B8088003ACBE6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B206C2AA2B7B8088003ACBE6 /* MapViewController.swift */; };
 		B20A907B2D05112800F44463 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20A907A2D05112700F44463 /* NotificationsViewController.swift */; };
@@ -365,6 +370,7 @@
 /* Begin PBXFileReference section */
 		0B1D823B040BA95BD9B39A31 /* Pods-deltachat-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deltachat-ios.release.xcconfig"; path = "Target Support Files/Pods-deltachat-ios/Pods-deltachat-ios.release.xcconfig"; sourceTree = "<group>"; };
 		0EEC8C8D7C6F411BA7A449DE /* Pods-deltachat-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deltachat-ios.debug.xcconfig"; path = "Target Support Files/Pods-deltachat-ios/Pods-deltachat-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		10B4313A11625E38058C3A0D /* PasscodeLockWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeLockWindow.swift; sourceTree = "<group>"; };
 		21D544FF299415B9008B54D5 /* Character+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Extentions.swift"; sourceTree = "<group>"; };
 		21D6C9392606190600D0755A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3008CB7124F93EB900E6A617 /* AudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
@@ -551,6 +557,7 @@
 		7A9FB14D1FB061E2001FEA36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A9FB14F1FB061E2001FEA36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
+		81D2FD833936E17233314148 /* PasscodeSetupViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewController.swift; sourceTree = "<group>"; };
 		8B8CF840688B4C388C6E651F /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		AA112233445566770011AA00 /* VoiceBlobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBlobView.swift; sourceTree = "<group>"; };
 		AA112233445566770011BB00 /* AudioNotePreviewBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNotePreviewBar.swift; sourceTree = "<group>"; };
@@ -703,6 +710,7 @@
 		B2DF96302EE3368F0037F07F /* TransportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportCell.swift; sourceTree = "<group>"; };
 		B2F899E029F96A67003797D5 /* AllMediaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllMediaViewController.swift; sourceTree = "<group>"; };
 		BF8DFC4D179F4CF1E83D78C9 /* Pods_DcShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DcShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC27DEC9F90483714DDAF3E6 /* PasscodeLockViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeLockViewController.swift; sourceTree = "<group>"; };
 		D8083ACF2D14384F005DCB7D /* UserDefaults+Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Widgets.swift"; sourceTree = "<group>"; };
 		D80F62782B59D1CC00877059 /* DefaultReactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReactions.swift; sourceTree = "<group>"; };
 		D82AD24C2D27E47A009D6026 /* UIApplication+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Orientation.swift"; sourceTree = "<group>"; };
@@ -731,6 +739,8 @@
 		D8FB03FC2B4EF20700A355F8 /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
 		D8FB03FF2B4F0CF000A355F8 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		DCA000022CF72AA0009AF551 /* DcAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E13D945E92812B3E9A182D10 /* PasscodeEntryViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeEntryViewController.swift; sourceTree = "<group>"; };
+		E7F271029E058338C5ADCEFA /* PasscodeDotsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeDotsView.swift; sourceTree = "<group>"; };
 		F5B675DC2F72FB0100C440F3 /* TypingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingManager.swift; sourceTree = "<group>"; };
 		F5B675DE2F72FD4B00C440F3 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		F5B675E02F72FDF200C440F3 /* ChatFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFilter.swift; sourceTree = "<group>"; };
@@ -847,6 +857,11 @@
 			isa = PBXGroup;
 			children = (
 				429E35D48FB781C23C8EF938 /* PasscodeManager.swift */,
+				E7F271029E058338C5ADCEFA /* PasscodeDotsView.swift */,
+				E13D945E92812B3E9A182D10 /* PasscodeEntryViewController.swift */,
+				81D2FD833936E17233314148 /* PasscodeSetupViewController.swift */,
+				CC27DEC9F90483714DDAF3E6 /* PasscodeLockViewController.swift */,
+				10B4313A11625E38058C3A0D /* PasscodeLockWindow.swift */,
 			);
 			name = Passcode;
 			path = Passcode;
@@ -2096,6 +2111,11 @@
 				AC710001AAAA0000000000A1 /* AutoProxyConstants.swift in Sources */,
 				AC710002AAAA0000000000B1 /* AutoProxyManager.swift in Sources */,
 				D949858FC546F6F2A79DBAD1 /* PasscodeManager.swift in Sources */,
+				4DBA6B7FD15BCD27527B0177 /* PasscodeDotsView.swift in Sources */,
+				7C3A820E09439FF7FDD5210D /* PasscodeEntryViewController.swift in Sources */,
+				32D8DA2D600A250FB5DB0D81 /* PasscodeSetupViewController.swift in Sources */,
+				732EE86A13CDB1BD8F0AE636 /* PasscodeLockViewController.swift in Sources */,
+				B1B8F62BCB611E0B6192D812 /* PasscodeLockWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
