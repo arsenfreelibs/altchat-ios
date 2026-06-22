@@ -22,6 +22,7 @@ internal final class SettingsViewController: UITableViewController {
         case addAnotherDevice
         case notifications
         case selectBackground
+        case privacy
         case advanced
         case help
         case allAppsAndMedia
@@ -67,6 +68,15 @@ internal final class SettingsViewController: UITableViewController {
         cell.textLabel?.text = String.localized("multidevice_title")
         let imageName = if #available(iOS 15, *) { "ipad.and.iphone" } else { "rectangle.on.rectangle" }
         cell.imageView?.image = UIImage(systemName: imageName)
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }()
+
+    private lazy var privacyCell: UITableViewCell = {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        cell.tag = CellTags.privacy.rawValue
+        cell.textLabel?.text = String.localized("privacy_security_title")
+        cell.imageView?.image = UIImage(systemName: "lock.shield")
         cell.accessoryType = .disclosureIndicator
         return cell
     }()
@@ -173,7 +183,7 @@ internal final class SettingsViewController: UITableViewController {
             cells: [self.profileCell]
         )
         var preferencesCells: [UITableViewCell] = [
-            self.chatsAndMediaCell, self.notificationCell, self.selectBackgroundCell, self.addAnotherDeviceCell
+            self.chatsAndMediaCell, self.notificationCell, self.selectBackgroundCell, self.privacyCell, self.addAnotherDeviceCell
         ]
         if showDevOptions {
             preferencesCells.append(contentsOf: [self.connectivityCell, self.advancedCell])
@@ -277,6 +287,7 @@ internal final class SettingsViewController: UITableViewController {
         case .chatsAndMedia: showChatsAndMedia()
         case .addAnotherDevice: showBackupProviderViewController()
         case .notifications: showNotificationsViewController()
+        case .privacy: showPrivacy()
         case .advanced: showAdvanced()
         case .allAppsAndMedia: showAllAppsAndMedia()
         case .help: openHelp()
@@ -369,6 +380,10 @@ internal final class SettingsViewController: UITableViewController {
             }
         ))
         present(alert, animated: true)
+    }
+
+    private func showPrivacy() {
+        navigationController?.pushViewController(PrivacySettingsViewController(), animated: true)
     }
 
     private func showAdvanced() {

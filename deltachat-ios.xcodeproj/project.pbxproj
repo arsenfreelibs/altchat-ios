@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1963595E2C10475B99D881E7 /* AudioWaveformHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8853EA6C4432A35AE160 /* AudioWaveformHelper.swift */; };
+		1A882A842121403815DF1675 /* PrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41AE9316D479241F5D6B373 /* PrivacySettingsViewController.swift */; };
 		21D54500299415B9008B54D5 /* Character+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D544FF299415B9008B54D5 /* Character+Extentions.swift */; };
 		21D6C941260623F500D0755A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D6C9392606190600D0755A /* NotificationManager.swift */; };
 		3008CB7224F93EB900E6A617 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008CB7124F93EB900E6A617 /* AudioMessageCell.swift */; };
@@ -124,6 +125,7 @@
 		30FDB72124D838240066C48D /* BaseMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FDB72024D838240066C48D /* BaseMessageCell.swift */; };
 		32D8DA2D600A250FB5DB0D81 /* PasscodeSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D2FD833936E17233314148 /* PasscodeSetupViewController.swift */; };
 		4DBA6B7FD15BCD27527B0177 /* PasscodeDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F271029E058338C5ADCEFA /* PasscodeDotsView.swift */; };
+		50477461F4C6F600DCBA1BEC /* PasscodeAutoLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6CF097610BCAEE7AE25AF /* PasscodeAutoLockViewController.swift */; };
 		5F153E9A2CC38BAA00871ABE /* GiveBackMyFirstResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F153E992CC38BAA00871ABE /* GiveBackMyFirstResponder.swift */; };
 		5F4945AB2D315E7000DCD50A /* UIPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4945AA2D315E7000DCD50A /* UIPasteboard.swift */; };
 		5F785F6E2CB9344F003FFFB9 /* ReusableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F785F6D2CB9344F003FFFB9 /* ReusableCellProtocol.swift */; };
@@ -277,6 +279,7 @@
 		F5B675ED2F72FF0A00C440F3 /* VideoNoteRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */; };
 		F5B675EF2F72FF1E00C440F3 /* VideoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */; };
 		F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */; };
+		F62FEEE03E98C6AF3A16B53E /* PasscodeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEE62F6EC00DBC1150D84FF /* PasscodeSettingsViewController.swift */; };
 		FA1A2B3C4D5E6F7A8B9C0D1E /* MiniAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A2B3C4D5E6F7A8B9C0D1F /* MiniAudioPlayerView.swift */; };
 /* End PBXBuildFile section */
 
@@ -370,6 +373,7 @@
 /* Begin PBXFileReference section */
 		0B1D823B040BA95BD9B39A31 /* Pods-deltachat-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deltachat-ios.release.xcconfig"; path = "Target Support Files/Pods-deltachat-ios/Pods-deltachat-ios.release.xcconfig"; sourceTree = "<group>"; };
 		0EEC8C8D7C6F411BA7A449DE /* Pods-deltachat-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deltachat-ios.debug.xcconfig"; path = "Target Support Files/Pods-deltachat-ios/Pods-deltachat-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		0FEE62F6EC00DBC1150D84FF /* PasscodeSettingsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeSettingsViewController.swift; sourceTree = "<group>"; };
 		10B4313A11625E38058C3A0D /* PasscodeLockWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeLockWindow.swift; sourceTree = "<group>"; };
 		21D544FF299415B9008B54D5 /* Character+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Extentions.swift"; sourceTree = "<group>"; };
 		21D6C9392606190600D0755A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -710,7 +714,9 @@
 		B2DF96302EE3368F0037F07F /* TransportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportCell.swift; sourceTree = "<group>"; };
 		B2F899E029F96A67003797D5 /* AllMediaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllMediaViewController.swift; sourceTree = "<group>"; };
 		BF8DFC4D179F4CF1E83D78C9 /* Pods_DcShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DcShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4C6CF097610BCAEE7AE25AF /* PasscodeAutoLockViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeAutoLockViewController.swift; sourceTree = "<group>"; };
 		CC27DEC9F90483714DDAF3E6 /* PasscodeLockViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeLockViewController.swift; sourceTree = "<group>"; };
+		D41AE9316D479241F5D6B373 /* PrivacySettingsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewController.swift; sourceTree = "<group>"; };
 		D8083ACF2D14384F005DCB7D /* UserDefaults+Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Widgets.swift"; sourceTree = "<group>"; };
 		D80F62782B59D1CC00877059 /* DefaultReactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReactions.swift; sourceTree = "<group>"; };
 		D82AD24C2D27E47A009D6026 /* UIApplication+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Orientation.swift"; sourceTree = "<group>"; };
@@ -862,6 +868,9 @@
 				81D2FD833936E17233314148 /* PasscodeSetupViewController.swift */,
 				CC27DEC9F90483714DDAF3E6 /* PasscodeLockViewController.swift */,
 				10B4313A11625E38058C3A0D /* PasscodeLockWindow.swift */,
+				C4C6CF097610BCAEE7AE25AF /* PasscodeAutoLockViewController.swift */,
+				0FEE62F6EC00DBC1150D84FF /* PasscodeSettingsViewController.swift */,
+				D41AE9316D479241F5D6B373 /* PrivacySettingsViewController.swift */,
 			);
 			name = Passcode;
 			path = Passcode;
@@ -2116,6 +2125,9 @@
 				32D8DA2D600A250FB5DB0D81 /* PasscodeSetupViewController.swift in Sources */,
 				732EE86A13CDB1BD8F0AE636 /* PasscodeLockViewController.swift in Sources */,
 				B1B8F62BCB611E0B6192D812 /* PasscodeLockWindow.swift in Sources */,
+				50477461F4C6F600DCBA1BEC /* PasscodeAutoLockViewController.swift in Sources */,
+				F62FEEE03E98C6AF3A16B53E /* PasscodeSettingsViewController.swift in Sources */,
+				1A882A842121403815DF1675 /* PrivacySettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

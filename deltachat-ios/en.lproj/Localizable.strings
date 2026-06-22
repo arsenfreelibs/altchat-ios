@@ -1154,6 +1154,7 @@
 "update_available" = "Update Available";
 
 // Passcode Lock
+"privacy_security_title" = "Privacy and Security";
 "passcode_title" = "Passcode Lock";
 "passcode_summary_on" = "On";
 "passcode_summary_off" = "Off";
