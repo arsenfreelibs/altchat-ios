@@ -6,6 +6,11 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
 
     static let reuseIdentifier = "VideoNoteCell"
 
+    /// Posted (with the playing cell as `object`) when a video note starts inline
+    /// playback, so any other cell currently playing pauses itself — only one video
+    /// note plays at a time.
+    private static let didStartPlayingNotification = Notification.Name("VideoNoteCellDidStartPlaying")
+
     private static let noteSize: CGFloat = 200
 
     private var player: AVPlayer?
@@ -126,6 +131,20 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
         // Progress ring sits above all subviews in contentView
         contentView.layer.addSublayer(progressTrackLayer)
         contentView.layer.addSublayer(progressFillLayer)
+
+        // Pause our own playback when another video note starts, so only one plays at a time.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(otherVideoNoteStartedPlaying(_:)),
+            name: VideoNoteCell.didStartPlayingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func otherVideoNoteStartedPlaying(_ notification: Notification) {
+        // Ignore our own notification; pause if a different cell started.
+        guard (notification.object as? VideoNoteCell) !== self, isPlaying else { return }
+        pausePlayback()
     }
 
     // MARK: - Layout
@@ -246,14 +265,12 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
 
     @objc private func onVideoTapped() {
         if isPlaying {
-            player?.pause()
-            stopProgressTimer()
-            playIconView.isHidden = false
-            progressTrackLayer.isHidden = true
-            progressFillLayer.isHidden = true
-            isPlaying = false
+            pausePlayback()
         } else {
             guard let player else { return }
+
+            // Stop any other video note that is currently playing.
+            NotificationCenter.default.post(name: VideoNoteCell.didStartPlayingNotification, object: self)
 
             // Spring pop: briefly grows then snaps back to indicate playback start
             UIView.animate(withDuration: 0.10, delay: 0, options: .curveEaseOut) {
@@ -296,6 +313,15 @@ class VideoNoteCell: BaseMessageCell, ReusableCell {
             isPlaying = true
             startProgressTimer()
         }
+    }
+
+    private func pausePlayback() {
+        player?.pause()
+        stopProgressTimer()
+        playIconView.isHidden = false
+        progressTrackLayer.isHidden = true
+        progressFillLayer.isHidden = true
+        isPlaying = false
     }
 
     private func startProgressTimer() {
