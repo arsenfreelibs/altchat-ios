@@ -38,6 +38,15 @@ final class AutoProxyManager: NSObject {
 
     private static let engagedKey = "autoProxyEngaged"
 
+    /// A connection counts as "up" once the core reports `WORKING`, not only the
+    /// fully-idle `CONNECTED`. During a message send the core drops from
+    /// `CONNECTED` (4000) to `WORKING` (3000) and fires `connectivityChanged`;
+    /// treating that transient as "disconnected" would make us rotate proxies and
+    /// `restartIO()` mid-send, stalling the very message being sent.
+    private func relayIsUp(_ dcContext: DcContext) -> Bool {
+        dcContext.getConnectivity() >= DC_CONNECTIVITY_WORKING
+    }
+
     init(dcAccounts: DcAccounts) {
         self.dcAccounts = dcAccounts
         super.init()
@@ -93,7 +102,7 @@ final class AutoProxyManager: NSObject {
             return
         }
 
-        let connected = dcContext.getConnectivity() >= DC_CONNECTIVITY_CONNECTED
+        let connected = relayIsUp(dcContext)
 
         switch mode {
         case .direct:
@@ -158,7 +167,7 @@ final class AutoProxyManager: NSObject {
     private func graceExpired() {
         let dcContext = dcAccounts.getSelected()
         guard dcContext.isConfigured() else { mode = .direct; return }
-        guard dcContext.getConnectivity() < DC_CONNECTIVITY_CONNECTED else { return }
+        guard !relayIsUp(dcContext) else { return }
 
         // Relay still unreachable. Only engage a proxy if the internet itself works,
         // otherwise it's a general outage and proxies won't help.
@@ -210,7 +219,7 @@ final class AutoProxyManager: NSObject {
 
     private func proxyTryTimedOut() {
         let dcContext = dcAccounts.getSelected()
-        if dcContext.getConnectivity() >= DC_CONNECTIVITY_CONNECTED {
+        if relayIsUp(dcContext) {
             // Connected in the meantime.
             mode = .engaged
             triesInRound = 0
