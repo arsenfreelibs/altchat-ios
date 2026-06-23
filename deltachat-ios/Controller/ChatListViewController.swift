@@ -46,12 +46,6 @@ class ChatListViewController: UITableViewController {
         return button
     }()
 
-    private lazy var proxyShieldButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "checkmark.shield"), style: .plain, target: self, action: #selector(ChatListViewController.showProxySettings))
-        button.tintColor = DcColors.primary
-        return button
-    }()
-
     private lazy var lockButton: UIBarButtonItem = {
         let button = UIBarButtonItem(image: UIImage(systemName: "lock"), style: .plain, target: self, action: #selector(lockButtonPressed))
         button.tintColor = DcColors.primary
@@ -467,11 +461,6 @@ class ChatListViewController: UITableViewController {
         }
     }
 
-    @objc func showProxySettings() {
-        let proxySettingsViewController = ProxySettingsViewController(dcContext: dcContext, dcAccounts: dcAccounts)
-        navigationController?.pushViewController(proxySettingsViewController, animated: true)
-    }
-
     @objc func lockButtonPressed() {
         PasscodeManager.shared.lock()
         PasscodeLockWindow.shared.show()
@@ -809,14 +798,6 @@ class ChatListViewController: UITableViewController {
         }
     }
 
-    private func updateProxyButton() {
-        if dcContext.isProxyEnabled {
-            proxyShieldButton.image = UIImage(systemName: "checkmark.shield")
-        } else {
-            proxyShieldButton.image = UIImage(systemName: "shield")
-        }
-    }
-
     @objc private func accountButtonTapped() {
         let viewController = ProfileSwitchViewController(dcAccounts: dcAccounts)
         viewController.onUnreadIndicatorsChanged = { [weak self] in
@@ -863,10 +844,6 @@ class ChatListViewController: UITableViewController {
                 updateAccountButton()
 
                 var rightItems: [UIBarButtonItem] = [newButton]
-                if !dcContext.getProxies().isEmpty {
-                    updateProxyButton()
-                    rightItems.append(proxyShieldButton)
-                }
                 if PasscodeManager.shared.isEnabled {
                     rightItems.append(lockButton)
                 }
