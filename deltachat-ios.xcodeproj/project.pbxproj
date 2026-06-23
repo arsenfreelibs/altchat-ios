@@ -159,6 +159,7 @@
 		7AE0A5491FC42F65005ECB4B /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A5481FC42F65005ECB4B /* NewChatViewController.swift */; };
 		7C3A820E09439FF7FDD5210D /* PasscodeEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D945E92812B3E9A182D10 /* PasscodeEntryViewController.swift */; };
 		8A19190635E24C1DF7F0A35D /* Pods_deltachat_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEAC85C8C41D57193C24E9A /* Pods_deltachat_ios.framework */; };
+		A64FE12B2151EE06A4072287 /* PrivacyBlurWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3986311896DB513FAEE96681 /* PrivacyBlurWindow.swift */; };
 		AA112233445566770011AA01 /* VoiceBlobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011AA00 /* VoiceBlobView.swift */; };
 		AA112233445566770011BB01 /* AudioNotePreviewBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011BB00 /* AudioNotePreviewBar.swift */; };
 		AA112233445566770011CC01 /* VideoNoteCirclePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA112233445566770011CC00 /* VideoNoteCirclePlayerView.swift */; };
@@ -526,6 +527,7 @@
 		30FDB6F824D1C1000066C48D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		30FDB71E24D8170E0066C48D /* TextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		30FDB72024D838240066C48D /* BaseMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageCell.swift; sourceTree = "<group>"; };
+		3986311896DB513FAEE96681 /* PrivacyBlurWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrivacyBlurWindow.swift; sourceTree = "<group>"; };
 		429E35D48FB781C23C8EF938 /* PasscodeManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasscodeManager.swift; sourceTree = "<group>"; };
 		5299B7A064591DDEE0678CD6 /* Pods-DcShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DcShare.debug.xcconfig"; path = "Target Support Files/Pods-DcShare/Pods-DcShare.debug.xcconfig"; sourceTree = "<group>"; };
 		5F153E992CC38BAA00871ABE /* GiveBackMyFirstResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveBackMyFirstResponder.swift; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 				C4C6CF097610BCAEE7AE25AF /* PasscodeAutoLockViewController.swift */,
 				0FEE62F6EC00DBC1150D84FF /* PasscodeSettingsViewController.swift */,
 				D41AE9316D479241F5D6B373 /* PrivacySettingsViewController.swift */,
+				3986311896DB513FAEE96681 /* PrivacyBlurWindow.swift */,
 			);
 			name = Passcode;
 			path = Passcode;
@@ -2128,6 +2131,7 @@
 				50477461F4C6F600DCBA1BEC /* PasscodeAutoLockViewController.swift in Sources */,
 				F62FEEE03E98C6AF3A16B53E /* PasscodeSettingsViewController.swift in Sources */,
 				1A882A842121403815DF1675 /* PrivacySettingsViewController.swift in Sources */,
+				A64FE12B2151EE06A4072287 /* PrivacyBlurWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

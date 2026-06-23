@@ -318,6 +318,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         logger.info("➡️ applicationDidBecomeActive")
         UserDefaults.setMainIoRunning()
         applicationInForeground = true
+        PrivacyBlurWindow.shared.hide()
         NotificationManager.updateBadgeCounters()
         AppUpdateChecker.shared.checkForUpdate()
         ReviewRequester.shared.requestReviewIfEligible()
@@ -332,6 +333,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillResignActive(_: UIApplication) {
         logger.info("⬅️ applicationWillResignActive")
         registerBackgroundTask()
+        // Cover the content before the system takes the task-switcher snapshot. Skip while a call
+        // is active so we don't cover the call UI (call/lock interaction is refined in stage 3).
+        if PasscodeManager.shared.isEnabled, callManager?.isCalling() != true {
+            PrivacyBlurWindow.shared.show()
+        }
     }
 
     func applicationDidEnterBackground(_: UIApplication) {
