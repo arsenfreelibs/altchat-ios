@@ -182,6 +182,10 @@ class PasscodeEntryViewController: UIViewController {
 
     func setErrorText(_ text: String?) { errorLabel.text = text }
 
+    func setBiometricImage(systemName: String) {
+        biometricButton.setImage(UIImage(systemName: systemName), for: .normal)
+    }
+
     // MARK: - Input handling
 
     private func appendDigit(_ digit: Int) {

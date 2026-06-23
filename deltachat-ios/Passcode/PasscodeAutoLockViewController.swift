@@ -1,5 +1,6 @@
 import UIKit
 import DcCore
+import LocalAuthentication
 
 /// Checklist of auto-lock delays. Writes the chosen value back to `PasscodeManager`.
 class PasscodeAutoLockViewController: UITableViewController {
@@ -59,6 +60,14 @@ enum PasscodeFormat {
         case .fiveMinutes: return String.localized("passcode_autolock_5min")
         case .oneHour: return String.localized("passcode_autolock_1hour")
         case .fiveHours: return String.localized("passcode_autolock_5hours")
+        }
+    }
+
+    static func biometricTitle(for type: LABiometryType) -> String {
+        switch type {
+        case .faceID: return String.localized("passcode_unlock_faceid")
+        case .touchID: return String.localized("passcode_unlock_touchid")
+        default: return String.localized("passcode_fingerprint")
         }
     }
 }

@@ -9,8 +9,9 @@ class PasscodeLockViewController: PasscodeEntryViewController {
 
     private let manager: PasscodeManager
     private var lockoutTimer: Timer?
+    private var didAutoPromptBiometric = false
 
-    /// Called once the correct passcode (or, later, biometric) unlocks the app.
+    /// Called once the correct passcode or biometric unlocks the app.
     var onUnlocked: (() -> Void)?
 
     init(manager: PasscodeManager = .shared) {
@@ -30,11 +31,45 @@ class PasscodeLockViewController: PasscodeEntryViewController {
         onCodeEntered = { [weak self] code in
             self?.handle(code: code)
         }
+        manager.invalidateBiometricIfEnrolmentChanged()
+        setupBiometric()
         refreshLockoutState()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Auto-present the biometric prompt once when the lock screen first appears.
+        if !didAutoPromptBiometric {
+            didAutoPromptBiometric = true
+            promptBiometric()
+        }
     }
 
     deinit {
         lockoutTimer?.invalidate()
+    }
+
+    private func setupBiometric() {
+        guard manager.canUseBiometricUnlock else {
+            showsBiometricButton = false
+            return
+        }
+        setBiometricImage(systemName: manager.biometryType == .faceID ? "faceid" : "touchid")
+        showsBiometricButton = true
+        onBiometricTapped = { [weak self] in self?.promptBiometric() }
+    }
+
+    private func promptBiometric() {
+        guard manager.canUseBiometricUnlock, !manager.isLockedOut else { return }
+        manager.authenticateWithBiometrics(reason: biometricReason) { [weak self] success in
+            guard let self, success else { return }
+            self.manager.didUnlock()
+            self.onUnlocked?()
+        }
+    }
+
+    private var biometricReason: String {
+        return String(format: String.localized("passcode_unlock_biometric_reason"), String.localized("app_name"))
     }
 
     private func handle(code: String) {

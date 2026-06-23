@@ -2,17 +2,25 @@ import UIKit
 import DcCore
 
 /// "Passcode Lock" settings, shown only while a passcode is enabled.
-/// Lets the user change the passcode, pick the auto-lock delay, or turn the passcode off.
-///
-/// The biometric toggle row is added in stage 2.
+/// Lets the user change the passcode, toggle biometric unlock, pick the auto-lock delay, or turn
+/// the passcode off.
 class PasscodeSettingsViewController: UITableViewController {
 
     private let manager: PasscodeManager
 
-    private enum Row: Int, CaseIterable {
+    private enum Row {
         case change
+        case biometric
         case autoLock
         case turnOff
+    }
+
+    /// The biometric row is only present when the device has usable, enrolled biometrics.
+    private var rows: [Row] {
+        var result: [Row] = [.change]
+        if manager.isBiometryAvailable { result.append(.biometric) }
+        result.append(contentsOf: [.autoLock, .turnOff])
+        return result
     }
 
     init(manager: PasscodeManager = .shared) {
@@ -36,22 +44,32 @@ class PasscodeSettingsViewController: UITableViewController {
             navigationController?.popViewController(animated: animated)
             return
         }
+        // Drop biometric opt-in if the enrolled biometrics changed since.
+        manager.invalidateBiometricIfEnrolmentChanged()
         tableView.reloadData()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Row.allCases.count
+        return rows.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let row = Row(rawValue: indexPath.row) else { return UITableViewCell() }
-        switch row {
+        switch rows[indexPath.row] {
         case .change:
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
             cell.textLabel?.text = String.localized("passcode_change")
             cell.accessoryType = .disclosureIndicator
+            return cell
+        case .biometric:
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+            cell.textLabel?.text = PasscodeFormat.biometricTitle(for: manager.biometryType)
+            cell.selectionStyle = .none
+            let toggle = UISwitch()
+            toggle.isOn = manager.isBiometricEnabled
+            toggle.addTarget(self, action: #selector(biometricToggled(_:)), for: .valueChanged)
+            cell.accessoryView = toggle
             return cell
         case .autoLock:
             let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
@@ -69,12 +87,16 @@ class PasscodeSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let row = Row(rawValue: indexPath.row) else { return }
-        switch row {
+        switch rows[indexPath.row] {
         case .change: changePasscode()
+        case .biometric: break // handled by the switch
         case .autoLock: showAutoLock()
         case .turnOff: confirmTurnOff()
         }
+    }
+
+    @objc private func biometricToggled(_ sender: UISwitch) {
+        manager.setBiometricEnabled(sender.isOn)
     }
 
     private func changePasscode() {

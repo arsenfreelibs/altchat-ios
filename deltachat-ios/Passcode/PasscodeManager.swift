@@ -1,6 +1,7 @@
 import Foundation
 import Security
 import CommonCrypto
+import LocalAuthentication
 
 /// Global, account-independent passcode lock.
 ///
@@ -49,6 +50,7 @@ public final class PasscodeManager {
     private enum Key {
         static let autoLock = "passcode_autolock_seconds"
         static let biometricEnabled = "passcode_biometric_enabled"
+        static let biometricDomainState = "passcode_biometric_domain_state"
         static let failedAttempts = "passcode_failed_attempts"
         static let lockoutDeadlineUptime = "passcode_lockout_deadline_uptime"
         static let lockoutBootRef = "passcode_lockout_boot_ref"
@@ -96,11 +98,72 @@ public final class PasscodeManager {
         set { defaults.set(newValue.rawValue, forKey: Key.autoLock) }
     }
 
-    /// User preference only. Whether biometric unlock is *available* is decided at unlock time
-    /// by `LocalAuthentication` (stage 2).
+    // MARK: - Biometric unlock
+
+    /// User preference (raw). Use `canUseBiometricUnlock` to decide whether to actually offer it.
     public var isBiometricEnabled: Bool {
-        get { defaults.bool(forKey: Key.biometricEnabled) }
-        set { defaults.set(newValue, forKey: Key.biometricEnabled) }
+        defaults.bool(forKey: Key.biometricEnabled)
+    }
+
+    /// Whether the device has usable, enrolled biometrics. Controls the settings toggle visibility.
+    public var isBiometryAvailable: Bool {
+        var error: NSError?
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+    }
+
+    /// Face ID / Touch ID / none — for labelling the settings toggle and lock-screen key.
+    public var biometryType: LABiometryType {
+        let context = LAContext()
+        _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        return context.biometryType
+    }
+
+    /// Whether biometric unlock should be offered now: enabled by the user, available, and the
+    /// enrolled biometrics have not changed since the user opted in.
+    public var canUseBiometricUnlock: Bool {
+        guard isEnabled, isBiometricEnabled else { return false }
+        let context = LAContext()
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else { return false }
+        return domainStateMatches(context)
+    }
+
+    /// Enable/disable biometric unlock. Enabling pins the current biometry enrolment so a later
+    /// change (added face/finger) invalidates it and forces the passcode again.
+    public func setBiometricEnabled(_ enabled: Bool) {
+        defaults.set(enabled, forKey: Key.biometricEnabled)
+        if enabled {
+            let context = LAContext()
+            _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+            defaults.set(context.evaluatedPolicyDomainState, forKey: Key.biometricDomainState)
+        } else {
+            defaults.removeObject(forKey: Key.biometricDomainState)
+        }
+    }
+
+    /// If the enrolled biometrics changed since opt-in, turn biometric unlock off so the user must
+    /// re-enable it deliberately (and re-pin the new enrolment).
+    public func invalidateBiometricIfEnrolmentChanged() {
+        guard isBiometricEnabled else { return }
+        let context = LAContext()
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else { return }
+        if !domainStateMatches(context) {
+            setBiometricEnabled(false)
+        }
+    }
+
+    /// Prompt for biometric authentication. `completion(true)` means the user is verified.
+    public func authenticateWithBiometrics(reason: String, completion: @escaping (Bool) -> Void) {
+        guard canUseBiometricUnlock else { completion(false); return }
+        let context = LAContext()
+        context.localizedCancelTitle = String.localized("passcode_use_pin")
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
+            DispatchQueue.main.async { completion(success) }
+        }
+    }
+
+    private func domainStateMatches(_ context: LAContext) -> Bool {
+        let stored = defaults.data(forKey: Key.biometricDomainState)
+        return stored == context.evaluatedPolicyDomainState
     }
 
     // MARK: - Setup / change / disable
@@ -140,6 +203,7 @@ public final class PasscodeManager {
         resetAttempts()
         locked = false
         defaults.removeObject(forKey: Key.biometricEnabled)
+        defaults.removeObject(forKey: Key.biometricDomainState)
         defaults.removeObject(forKey: Key.autoLock)
     }
 

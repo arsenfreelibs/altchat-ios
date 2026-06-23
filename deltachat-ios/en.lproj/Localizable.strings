@@ -1179,3 +1179,7 @@
 "passcode_enter_hint" = "Enter your passcode";
 "passcode_wrong" = "Wrong passcode";
 "passcode_locked_out" = "Too many attempts. Try again in %@.";
+"passcode_unlock_faceid" = "Unlock with Face ID";
+"passcode_unlock_touchid" = "Unlock with Touch ID";
+"passcode_unlock_biometric_reason" = "Unlock %@";
+"passcode_use_pin" = "Use PIN";
