@@ -251,9 +251,16 @@ public class BaseMessageCell: UITableViewCell {
             gotoOriginalButton.constraintCenterYTo(messageBackgroundContainer),
         ])
 
+        // Decorative "go to original" button. Keep its positioning pins below
+        // `required`: a transient layout pass during cell reuse can briefly have both
+        // the left and right pin active, which over-constrains the bubble width and
+        // spams the log. Below-required lets AutoLayout drop one silently; when the
+        // button is actually shown only one pin is active, so its position is exact.
         gotoOriginalLeftConstraint = gotoOriginalButton.constraintAlignLeadingTo(messageBackgroundContainer, paddingLeading: -(gotoOriginalWidth+8))
+        gotoOriginalLeftConstraint?.priority = .required - 1
         gotoOriginalLeftConstraint?.isActive = false
         gotoOriginalRightConstraint = gotoOriginalButton.constraintToTrailingOf(contentView, paddingLeading: -(gotoOriginalWidth+8))
+        gotoOriginalRightConstraint?.priority = .required - 1
         gotoOriginalRightConstraint?.isActive = false
 
         leadingConstraint = messageBackgroundContainer.constraintAlignLeadingTo(contentView, paddingLeading: 6)

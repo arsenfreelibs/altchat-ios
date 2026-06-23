@@ -20,8 +20,16 @@ class EmptyStateLabel: PaddingTextView {
 
     func addCenteredTo(parentView: UIView, evadeKeyboard: Bool = false) {
         parentView.addSubview(self)
-        leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 40).isActive = true
-        trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -40).isActive = true
+        // The parent may be a table's `backgroundView`, whose width is transiently 0
+        // under its autoresizing mask before the table sizes it. Keep these margin
+        // pins below `required` so that transient doesn't trigger a required-constraint
+        // conflict in the log; the final layout is identical once the parent has width.
+        let leading = leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 40)
+        let trailing = trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -40)
+        leading.priority = .required - 1
+        trailing.priority = .required - 1
+        leading.isActive = true
+        trailing.isActive = true
         let safeArea = parentView.safeAreaLayoutGuide
         centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
         let centerYConstraint = centerYAnchor.constraint(equalTo: safeArea.centerYAnchor)
