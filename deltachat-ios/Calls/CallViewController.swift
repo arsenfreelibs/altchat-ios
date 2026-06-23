@@ -230,12 +230,14 @@ class CallViewController: UIViewController {
         btn.layer.shadowOpacity = 0.55
         btn.addAction(UIAction { [weak self] _ in
             guard let self else { return }
+            // PiP is disabled while a passcode is set (a floating call window would bypass the lock).
+            guard !PasscodeManager.shared.isEnabled else { return }
             let pc = remoteVideoView.pipController
             guard let pc, !pc.isPictureInPictureActive, pc.isPictureInPicturePossible else { return }
             pc.startPictureInPicture()
             CallWindow.shared?.hideCallUI()
         }, for: .touchUpInside)
-        btn.isHidden = remoteVideoView.pipController == nil
+        btn.isHidden = remoteVideoView.pipController == nil || PasscodeManager.shared.isEnabled
         return btn
     }()
 

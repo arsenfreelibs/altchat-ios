@@ -198,7 +198,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     /// Raise the lock screen if the passcode policy requires it (cold start / auto-lock timeout).
+    /// Never raised over an active call — the call bypasses the lock and it is re-evaluated when
+    /// the call ends (see CallWindow.quitCallUI).
     func lockAppIfNeeded() {
+        guard callManager?.isCalling() != true else { return }
         if PasscodeManager.shared.shouldLockOnForeground() {
             PasscodeLockWindow.shared.show()
         }

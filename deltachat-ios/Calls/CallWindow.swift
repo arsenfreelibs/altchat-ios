@@ -38,6 +38,9 @@ class CallWindow: UIWindow {
     /// Show call UI for current call
     func showCallUI() {
         guard callViewController?.call.uuid != nil else { return }
+        // The call bypasses the passcode lock: get the lock window out of the way so the call UI
+        // (this window, at .alert) is visible. The app stays locked and is re-locked on call end.
+        PasscodeLockWindow.shared.hide()
         isHidden = false
         makeKey() // This makes sure the keyboard hides
     }
@@ -50,5 +53,11 @@ class CallWindow: UIWindow {
     func quitCallUI() {
         hideCallUI()
         rootViewController = UIViewController()
+        // The call ended: re-evaluate the passcode policy. If the app was locked (e.g. the call was
+        // answered from a locked state), the lock screen is shown again. Async so any CallKit state
+        // settles (isCalling) before lockAppIfNeeded reads it.
+        DispatchQueue.main.async {
+            (UIApplication.shared.delegate as? AppDelegate)?.lockAppIfNeeded()
+        }
     }
 }

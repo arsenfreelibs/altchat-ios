@@ -95,7 +95,9 @@ class PiPVideoView: UIView {
             activeVideoCallSourceView: videoCallSourceView,
             contentViewController: AVPictureInPictureVideoCallViewController()
         ))
-        pipController.canStartPictureInPictureAutomaticallyFromInline = true
+        // Disable automatic PiP while a passcode is set: a floating call window would bypass the
+        // lock when the app is backgrounded.
+        pipController.canStartPictureInPictureAutomaticallyFromInline = !PasscodeManager.shared.isEnabled
         return pipController
     }()
 

@@ -22,7 +22,7 @@ final class PasscodeLockWindow {
 
         let lockController = PasscodeLockViewController()
         lockController.onUnlocked = { [weak self] in
-            self?.dismiss()
+            self?.hide()
         }
 
         // Prefer attaching to the active scene; fall back to a frame-based window when no scene is
@@ -39,7 +39,10 @@ final class PasscodeLockWindow {
         self.window = window
     }
 
-    private func dismiss() {
+    /// Tear down the lock window. Does not change the lock state — used both after a successful
+    /// unlock and to temporarily get out of the way of the call UI (the app stays locked, so the
+    /// lock is re-shown when the call ends).
+    func hide() {
         window?.isHidden = true
         window = nil
     }
