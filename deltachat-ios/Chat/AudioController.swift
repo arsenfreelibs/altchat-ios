@@ -62,7 +62,6 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
 
     private(set) var dcContext: DcContext
     private(set) var chatId: Int
-    private(set) var chat: DcChat
 
     /// Current playback rate. Applied to new and resumed playback.
     private(set) var playbackRate: Float = {
@@ -81,7 +80,6 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
     public init(dcContext: DcContext, chatId: Int, delegate: AudioControllerDelegate? = nil) {
         self.dcContext = dcContext
         self.chatId = chatId
-        self.chat = dcContext.getChat(chatId: chatId)
         self.delegate = delegate
         super.init()
         NotificationCenter.default.addObserver(self,
@@ -95,7 +93,6 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
     public func configure(dcContext: DcContext, chatId: Int) {
         self.dcContext = dcContext
         self.chatId = chatId
-        self.chat = dcContext.getChat(chatId: chatId)
     }
 
     deinit {
