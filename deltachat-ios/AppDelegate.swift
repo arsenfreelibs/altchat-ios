@@ -191,6 +191,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         launchOptions = nil
         appFullyInitialized = true
+
+        // Cold-start lock: the first foreground check after process start is treated as a cold
+        // start by PasscodeManager, so this locks the app before the UI becomes visible.
+        lockAppIfNeeded()
+    }
+
+    /// Raise the lock screen if the passcode policy requires it (cold start / auto-lock timeout).
+    func lockAppIfNeeded() {
+        if PasscodeManager.shared.shouldLockOnForeground() {
+            PasscodeLockWindow.shared.show()
+        }
     }
 
     /// Forward an invite link stored by DcAppClip before the app was installed to the QR handler.
@@ -261,6 +272,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillEnterForeground(_: UIApplication) {
         logger.info("➡️ applicationWillEnterForeground")
         applicationInForeground = true
+        // Lock (if needed) before the UI becomes visible again.
+        lockAppIfNeeded()
         UserDefaults.setMainIoRunning()
         dcAccounts.startIo()
 
@@ -324,6 +337,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidEnterBackground(_: UIApplication) {
         logger.info("⬅️ applicationDidEnterBackground")
         applicationInForeground = false
+        // Record the moment we went to background (monotonic clock) for the auto-lock timer.
+        PasscodeManager.shared.onAppBackgrounded()
     }
 
     func applicationWillTerminate(_: UIApplication) {

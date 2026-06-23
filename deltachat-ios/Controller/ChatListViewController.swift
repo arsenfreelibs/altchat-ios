@@ -52,6 +52,13 @@ class ChatListViewController: UITableViewController {
         return button
     }()
 
+    private lazy var lockButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "lock"), style: .plain, target: self, action: #selector(lockButtonPressed))
+        button.tintColor = DcColors.primary
+        button.accessibilityLabel = String.localized("passcode_title")
+        return button
+    }()
+
     private lazy var cancelButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
         return button
@@ -465,6 +472,11 @@ class ChatListViewController: UITableViewController {
         navigationController?.pushViewController(proxySettingsViewController, animated: true)
     }
 
+    @objc func lockButtonPressed() {
+        PasscodeManager.shared.lock()
+        PasscodeLockWindow.shared.show()
+    }
+
     // MARK: - UITableViewDelegate + UITableViewDatasource
 
     
@@ -850,12 +862,15 @@ class ChatListViewController: UITableViewController {
                 navigationItem.setLeftBarButton(accountButton, animated: false)
                 updateAccountButton()
 
-                if dcContext.getProxies().isEmpty {
-                    navigationItem.setRightBarButtonItems([newButton], animated: true)
-                } else {
+                var rightItems: [UIBarButtonItem] = [newButton]
+                if !dcContext.getProxies().isEmpty {
                     updateProxyButton()
-                    navigationItem.setRightBarButtonItems([newButton, proxyShieldButton], animated: true)
+                    rightItems.append(proxyShieldButton)
                 }
+                if PasscodeManager.shared.isEnabled {
+                    rightItems.append(lockButton)
+                }
+                navigationItem.setRightBarButtonItems(rightItems, animated: true)
 
                 if dcContext.getConnectivity() >= DC_CONNECTIVITY_CONNECTED {
                     titleView.accessibilityHint = "\(String.localized("connectivity_connected")): \(String.localized("a11y_connectivity_hint"))"

@@ -19,14 +19,20 @@ final class PasscodeLockWindow {
     /// Show the lock screen. No-op if already shown.
     func show() {
         guard window == nil else { return }
-        guard let scene = Self.activeWindowScene() else { return }
 
         let lockController = PasscodeLockViewController()
         lockController.onUnlocked = { [weak self] in
             self?.dismiss()
         }
 
-        let window = UIWindow(windowScene: scene)
+        // Prefer attaching to the active scene; fall back to a frame-based window when no scene is
+        // connected yet (can happen during a cold-start lock).
+        let window: UIWindow
+        if let scene = Self.activeWindowScene() {
+            window = UIWindow(windowScene: scene)
+        } else {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
         window.windowLevel = UIWindow.Level(rawValue: UIWindow.Level.alert.rawValue + 1)
         window.rootViewController = lockController
         window.makeKeyAndVisible()
