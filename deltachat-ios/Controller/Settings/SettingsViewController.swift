@@ -430,13 +430,11 @@ internal final class SettingsViewController: UITableViewController {
     }
 
     @objc private func titleTapped() {
-    #if DEBUG
         titleTapCount += 1
         if titleTapCount >= 20, !showDevOptions {
             showDevOptions = true
             sections = buildSections()
             tableView.reloadData()
         }
-    #endif
     }
 }
