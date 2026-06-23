@@ -11,6 +11,7 @@ public class DcContact {
     }
 
     deinit {
+        if contactPointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_contact_unref(contactPointer)
     }
 

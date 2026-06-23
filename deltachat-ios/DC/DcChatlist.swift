@@ -12,6 +12,7 @@ public class DcChatlist {
     }
 
     deinit {
+        if chatListPointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_chatlist_unref(chatListPointer)
     }
 

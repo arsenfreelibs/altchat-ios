@@ -12,6 +12,7 @@ public class DcLot {
     }
 
     deinit {
+        if dcLotPointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_lot_unref(dcLotPointer)
     }
 

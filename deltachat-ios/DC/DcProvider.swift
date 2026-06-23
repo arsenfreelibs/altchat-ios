@@ -12,6 +12,7 @@ public class DcProvider {
     }
 
     deinit {
+        if dcProviderPointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_provider_unref(dcProviderPointer)
     }
 

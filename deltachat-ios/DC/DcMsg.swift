@@ -12,6 +12,7 @@ public class DcMsg {
     }
 
     deinit {
+        if messagePointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_msg_unref(messagePointer)
     }
 

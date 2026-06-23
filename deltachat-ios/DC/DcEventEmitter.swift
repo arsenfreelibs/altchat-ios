@@ -17,6 +17,7 @@ public class DcEventEmitter {
     }
 
     deinit {
+        if eventEmitterPointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_event_emitter_unref(eventEmitterPointer)
     }
 }

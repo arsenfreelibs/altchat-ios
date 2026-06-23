@@ -12,6 +12,7 @@ public class DcEvent {
     }
 
     deinit {
+        if eventPointer == nil { return } // avoid a panicking "careless call" eprintln!
         dc_event_unref(eventPointer)
     }
 

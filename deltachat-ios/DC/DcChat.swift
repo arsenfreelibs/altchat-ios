@@ -12,6 +12,9 @@ public class DcChat {
     }
 
     deinit {
+        // Skip the null case: dc_chat_unref(nil) only logs via eprintln!, which
+        // aborts the process when stderr is redirected (see careless-call crash).
+        guard let chatPointer else { return }
         dc_chat_unref(chatPointer)
     }
 
