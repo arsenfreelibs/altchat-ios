@@ -36,6 +36,16 @@ scripts/check-upstream.sh
 
 ---
 
+## ⚠️ Deferred Upstream Integration
+
+Некоторые upstream-изменения **намеренно не влиты**, т.к. требуют реальной интеграции, а не
+разрешения конфликтов (главное — **Liquid Glass rewrite #3104**, который сносит наш кастомный
+UIKit input bar с видео/аудио-заметками). Перед мерджем upstream/main с iOS-стороны — **сначала
+прочитай** [UPSTREAM_DEFERRED.md](UPSTREAM_DEFERRED.md): там список удалённых/перенесённых файлов,
+коллизий и план интеграции.
+
+---
+
 ## CRITICAL: Branding Rules
 
 **NEVER** let any of the following appear in user-facing strings, UI, or `.strings` files:
