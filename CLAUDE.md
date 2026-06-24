@@ -14,6 +14,11 @@ This is **alt.chat** (`me.alt.chat`), a fork of [deltachat/deltachat-ios](https:
 
 ## Full Upstream Sync Checklist
 
+Сначала проверь что нового:
+```bash
+scripts/check-upstream.sh
+```
+
 Выполнять строго по порядку:
 
 ```
