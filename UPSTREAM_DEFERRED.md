@@ -43,9 +43,13 @@ Added by upstream (the SwiftUI replacement):
 
 ### What integration requires (option 3)
 Port our custom features (video notes, inline audio notes, locked recording, preview bars,
-custom attach/send/media buttons) onto upstream's new SwiftUI input architecture — OR apply
-iOS 26 glass styling to our existing UIKit buttons without adopting the rewrite (cheaper, keeps
-our features; wrap buttons/containers in `UIGlassEffect` / `.glassEffect` on iOS 26 only).
+custom attach/send/media buttons) onto upstream's new SwiftUI input architecture.
+
+> **Tried & rejected (2026-06-25):** the cheaper shortcut — wrapping our existing UIKit
+> attach/send/media buttons in `UIGlassEffect` (tinted with `DcColors.primary`, gated on
+> `if #available(iOS 26.0, *)`) — compiled fine under Xcode 26.5 but was **disliked visually**
+> and reverted. So the only remaining path to Liquid Glass is the full upstream SwiftUI rewrite
+> (this section), not a quick glass-on-our-buttons patch.
 
 ---
 
