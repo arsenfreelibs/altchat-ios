@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import MediaPlayer
 import DcCore
 
 /// The `PlayerState` indicates the current audio controller state
@@ -75,6 +76,16 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
     /// Cache of extracted waveform samples keyed by message id
     private var waveformCache: [Int: [Float]] = [:]
 
+    // MARK: - Now Playing / lock-screen integration (#3090)
+    /// Controller that currently owns the lock-screen "Now Playing" item and remote commands.
+    /// We run one shared AudioController (AppCoordinator), so a single weak ref is enough to
+    /// route remote-control events to whoever is actually playing.
+    private static weak var nowPlayingController: AudioController?
+    private static var remoteCommandsConfigured = false
+    private var playingArtwork: MPMediaItemArtwork?
+    private var shouldResumeAfterInterruption = false
+    private var lastNowPlayingInfoUpdate = Date.distantPast
+
     // MARK: - Init Methods
 
     public init(dcContext: DcContext, chatId: Int, delegate: AudioControllerDelegate? = nil) {
@@ -85,6 +96,10 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(audioRouteChanged),
                                                name: AVAudioSession.routeChangeNotification,
+                                               object: AVAudioSession.sharedInstance())
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(audioSessionInterrupted),
+                                               name: AVAudioSession.interruptionNotification,
                                                object: AVAudioSession.sharedInstance())
     }
 
@@ -218,6 +233,7 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
                 state = .playing
                 audioCell.audioPlayerView.showPlayLayout(true)  // show pause button on audio cell
                 startProgressTimer()
+                beginNowPlaying(for: message)
                 miniPlayerDelegate?.audioController(self, didStartPlaying: message)
             } else {
                 delegate?.onAudioPlayFailed()
@@ -262,6 +278,13 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
         playingMessage = nil
         playingCell = nil
         // playbackRate is intentionally NOT reset — it persists across messages.
+        playingArtwork = nil
+        shouldResumeAfterInterruption = false
+        lastNowPlayingInfoUpdate = .distantPast
+        if AudioController.nowPlayingController === self {
+            AudioController.nowPlayingController = nil
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+        }
         try? audioSession.setActive(false)
     }
 
@@ -295,12 +318,15 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             player.pause()
             state = .pause
             progressTimer?.invalidate()
+            playingCell?.audioPlayerView.showPlayLayout(false)
         } else {
             player.rate = playbackRate
             player.play()
             state = .playing
             startProgressTimer()
+            playingCell?.audioPlayerView.showPlayLayout(true)
         }
+        updateNowPlayingInfo()
     }
 
     // MARK: - Fire Methods
@@ -311,6 +337,7 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             cell.audioPlayerView.setProgress(progress)
             cell.audioPlayerView.setDuration(duration: player.currentTime)
         }
+        updateNowPlayingInfoIfNeeded()
         miniPlayerDelegate?.audioController(self, didUpdateProgress: progress)
     }
 
@@ -388,6 +415,7 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             playingCell = nil
         }
         startProgressTimer()
+        beginNowPlaying(for: message)
         miniPlayerDelegate?.audioController(self, didStartPlaying: message)
     }
 
@@ -407,5 +435,124 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
         state = .pause
         progressTimer?.invalidate()
         playingCell?.audioPlayerView.showPlayLayout(false)
+        updateNowPlayingInfo()
+    }
+
+    // MARK: - Now Playing / remote commands / interruptions (#3090)
+
+    private func beginNowPlaying(for message: DcMsg) {
+        AudioController.nowPlayingController = self
+        AudioController.configureRemoteCommands()
+        loadArtwork(for: message)
+        updateNowPlayingInfo()
+    }
+
+    private func updateNowPlayingInfoIfNeeded() {
+        guard Date().timeIntervalSince(lastNowPlayingInfoUpdate) >= 1 else { return }
+        updateNowPlayingInfo()
+    }
+
+    private func updateNowPlayingInfo() {
+        guard let player = audioPlayer, let message = playingMessage else { return }
+        var info = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? [:]
+        if let text = message.text, !text.isEmpty {
+            info[MPMediaItemPropertyTitle] = text
+        } else {
+            info[MPMediaItemPropertyTitle] = String.localized(message.type == DC_MSG_VOICE ? "voice_message" : "audio")
+        }
+        info[MPMediaItemPropertyArtist] = dcContext.getChat(chatId: message.chatId).name
+        if let playingArtwork {
+            info[MPMediaItemPropertyArtwork] = playingArtwork
+        } else {
+            info.removeValue(forKey: MPMediaItemPropertyArtwork)
+        }
+        info[MPMediaItemPropertyPlaybackDuration] = player.duration
+        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime
+        info[MPNowPlayingInfoPropertyPlaybackRate] = (state == .playing) ? Double(player.rate) : 0.0
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+        lastNowPlayingInfoUpdate = Date()
+    }
+
+    /// Loads the sender's avatar asynchronously and sets it as the lock-screen artwork.
+    private func loadArtwork(for message: DcMsg) {
+        playingArtwork = nil
+        let contact = dcContext.getContact(id: message.fromContactId)
+        guard let imageURL = contact.profileImageURL else { return }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self, messageId = message.id] in
+            guard let data = try? Data(contentsOf: imageURL), let image = UIImage(data: data) else { return }
+            let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+            DispatchQueue.main.async {
+                guard let self, self.playingMessage?.id == messageId else { return }
+                self.playingArtwork = artwork
+                self.updateNowPlayingInfo()
+            }
+        }
+    }
+
+    private static func configureRemoteCommands() {
+        guard !remoteCommandsConfigured else { return }
+        remoteCommandsConfigured = true
+        let center = MPRemoteCommandCenter.shared()
+        center.playCommand.addTarget { _ in routeRemoteCommand { $0.remotePlay() } }
+        center.pauseCommand.addTarget { _ in routeRemoteCommand { $0.remotePause() } }
+        center.togglePlayPauseCommand.addTarget { _ in routeRemoteCommand { $0.togglePlayPause() } }
+        center.stopCommand.addTarget { _ in routeRemoteCommand { $0.stopAnyOngoingPlaying() } }
+        center.changePlaybackPositionCommand.isEnabled = true
+        center.changePlaybackPositionCommand.addTarget { event in
+            guard let event = event as? MPChangePlaybackPositionCommandEvent else { return .noActionableNowPlayingItem }
+            return routeRemoteCommand { controller in
+                guard let player = controller.audioPlayer else { return }
+                player.currentTime = event.positionTime
+                controller.playingCell?.audioPlayerView.setProgress(player.duration == 0 ? 0 : Float(player.currentTime / player.duration))
+                controller.updateNowPlayingInfo()
+            }
+        }
+    }
+
+    /// Routes a remote-control event to the currently playing controller, on the main thread.
+    private static func routeRemoteCommand(_ action: @escaping (AudioController) -> Void) -> MPRemoteCommandHandlerStatus {
+        let run = { () -> MPRemoteCommandHandlerStatus in
+            guard let controller = nowPlayingController else { return .noActionableNowPlayingItem }
+            action(controller)
+            return .success
+        }
+        return Thread.isMainThread ? run() : DispatchQueue.main.sync(execute: run)
+    }
+
+    private func remotePlay() {
+        guard state == .pause else { return }
+        togglePlayPause()
+    }
+
+    private func remotePause() {
+        guard state == .playing else { return }
+        togglePlayPause()
+    }
+
+    // MARK: - AVAudioSession.interruptionNotification handler
+    @objc private func audioSessionInterrupted(note: Notification) {
+        guard AudioController.nowPlayingController === self,
+              let typeValue = note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else { return }
+        let handle = { [weak self] in
+            guard let self, AudioController.nowPlayingController === self else { return }
+            switch type {
+            case .began:
+                self.shouldResumeAfterInterruption = self.state == .playing
+                if self.state == .playing { self.togglePlayPause() }
+            case .ended:
+                let optionsValue = note.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
+                let shouldResume = self.shouldResumeAfterInterruption
+                    && AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume)
+                self.shouldResumeAfterInterruption = false
+                if shouldResume, self.state == .pause {
+                    _ = try? self.audioSession.setActive(true)
+                    self.togglePlayPause()
+                }
+            @unknown default:
+                break
+            }
+        }
+        if Thread.isMainThread { handle() } else { DispatchQueue.main.async(execute: handle) }
     }
 }
