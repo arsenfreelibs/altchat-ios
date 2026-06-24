@@ -772,9 +772,10 @@ extension CallViewController: RTCPeerConnectionDelegate {
             remoteVideoTrack?.remove(remoteVideoView)
             remoteVideoTrack = newTrack
             remoteVideoTrack?.add(remoteVideoView)
-            DispatchQueue.main.async { [weak self] in
-                self?.remoteVideoView.updateVideoEnabled(true)
-            }
+            // Do NOT force video-enabled here: a video transceiver is negotiated even for
+            // audio-only calls, so forcing `true` briefly hid the contact's avatar until the
+            // real state arrived. The actual remote video state is delivered via the mutedState
+            // data channel (both peers always exchange it on channel open), so rely on that.
         }
     }
 }
