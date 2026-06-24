@@ -397,13 +397,15 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
 
     // MARK: - AVAudioSession.routeChangeNotification handler
     @objc func audioRouteChanged(note: Notification) {
-      if let userInfo = note.userInfo {
-        if let reason = userInfo[AVAudioSessionRouteChangeReasonKey] as? Int {
-            if reason == AVAudioSession.RouteChangeReason.oldDeviceUnavailable.rawValue {
-            // headphones plugged out
-            resumeSound()
-          }
-        }
-      }
+        guard let userInfo = note.userInfo,
+              let reason = userInfo[AVAudioSessionRouteChangeReasonKey] as? Int,
+              reason == AVAudioSession.RouteChangeReason.oldDeviceUnavailable.rawValue else { return }
+        // Headphones (or other output) unplugged: pause so audio doesn't suddenly blast out of
+        // the built-in speaker. Self-contained pause — playingCell may be nil (e.g. off-screen).
+        guard state == .playing, let player = audioPlayer else { return }
+        player.pause()
+        state = .pause
+        progressTimer?.invalidate()
+        playingCell?.audioPlayerView.showPlayLayout(false)
     }
 }
