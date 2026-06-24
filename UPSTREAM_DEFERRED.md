@@ -54,12 +54,11 @@ These touch files we keep as ours, so they conflict and need manual porting (not
   - **Bug to fix regardless:** our `audioRouteChanged` calls `resumeSound()` on headphone unplug
     ([AudioController.swift](deltachat-ios/Chat/AudioController.swift)); it should **pause**
     (upstream behavior). Apple HIG: pause when the route's old device becomes unavailable.
-- **Outgoing ringback + call status (#3094)** — `CallViewController`. LOW effort: the helper
-  (`OutgoingRingbackPlayer.swift`), the `outgoing-ringback.caf` asset, and strings
-  (`call_ringing`, `call_status_*`) are simple to add. Port the `CallStatus { connecting,
-  ringing, accepted }` enum + the few `updateCallStatus()` calls and wire to our existing
-  `statusLabel` / `ringingDots`. Gains the audible dial tone + explicit connecting/ringing states
-  (our UI already has gradient/glow/avatar).
+- **Outgoing ringback + call status (#3094)** — **ALREADY COVERED in our fork, do NOT port.**
+  Our `CallViewController` has its own `RingbackPlayer` (synthetic 440+480 Hz US ringback via
+  AVAudioEngine, started on outgoing call, stopped on connect) plus a `statusLabel` with localized
+  connecting/ringing text + animated dots + a call-duration timer. This is equivalent-or-better than
+  upstream's `.caf`-based `OutgoingRingbackPlayer` + `CallStatus` label. Nothing to gain.
 - **Audio recorder session routing (#3151)** — overlaps recorder/audio session handling.
 
 ## 3. Clean / isolated upstream improvements — safe to cherry-pick
