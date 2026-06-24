@@ -497,6 +497,22 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
         center.pauseCommand.addTarget { _ in routeRemoteCommand { $0.remotePause() } }
         center.togglePlayPauseCommand.addTarget { _ in routeRemoteCommand { $0.togglePlayPause() } }
         center.stopCommand.addTarget { _ in routeRemoteCommand { $0.stopAnyOngoingPlaying() } }
+        // Lock-screen seek buttons: use ±15s skip (the default next/previous-track buttons would
+        // otherwise show greyed-out, as there is no track list to navigate).
+        center.nextTrackCommand.isEnabled = false
+        center.previousTrackCommand.isEnabled = false
+        center.skipForwardCommand.isEnabled = true
+        center.skipForwardCommand.preferredIntervals = [15]
+        center.skipForwardCommand.addTarget { event in
+            guard let event = event as? MPSkipIntervalCommandEvent else { return .noActionableNowPlayingItem }
+            return routeRemoteCommand { $0.remoteSkip(by: event.interval) }
+        }
+        center.skipBackwardCommand.isEnabled = true
+        center.skipBackwardCommand.preferredIntervals = [15]
+        center.skipBackwardCommand.addTarget { event in
+            guard let event = event as? MPSkipIntervalCommandEvent else { return .noActionableNowPlayingItem }
+            return routeRemoteCommand { $0.remoteSkip(by: -event.interval) }
+        }
         center.changePlaybackPositionCommand.isEnabled = true
         center.changePlaybackPositionCommand.addTarget { event in
             guard let event = event as? MPChangePlaybackPositionCommandEvent else { return .noActionableNowPlayingItem }
@@ -517,6 +533,18 @@ open class AudioController: NSObject, AVAudioPlayerDelegate, AudioMessageCellDel
             return .success
         }
         return Thread.isMainThread ? run() : DispatchQueue.main.sync(execute: run)
+    }
+
+    /// Seek the current player by `seconds` (negative = backward), clamped to the message bounds.
+    private func remoteSkip(by seconds: TimeInterval) {
+        guard let player = audioPlayer else { return }
+        let newTime = max(0, min(player.duration, player.currentTime + seconds))
+        player.currentTime = newTime
+        if let cell = playingCell {
+            cell.audioPlayerView.setProgress(player.duration == 0 ? 0 : Float(newTime / player.duration))
+            cell.audioPlayerView.setDuration(duration: newTime)
+        }
+        updateNowPlayingInfo()
     }
 
     private func remotePlay() {
