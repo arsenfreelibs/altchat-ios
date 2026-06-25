@@ -72,11 +72,29 @@ These touch files we keep as ours, so they conflict and need manual porting (not
   upstream's `.caf`-based `OutgoingRingbackPlayer` + `CallStatus` label. Nothing to gain.
 - **Audio recorder session routing (#3151)** — overlaps recorder/audio session handling.
 
-## 3. Clean / isolated upstream improvements — safe to cherry-pick
+## 3. Clean / isolated upstream improvements — ✅ cherry-picked (2026-06-25)
 
-- **Cache thumbnails (#3143)** — `Helper/Thumbnails.swift` + hook points.
-- **Fix incorrect "contact is me" check (#3145)** — isolated logic fix.
-- **Cancel-button `.cancel`/destructive semantics** — mechanical, broad but low-risk.
+- ✅ **Fix incorrect "contact is me" check (#3145)** — `0c8c36aa1` → local `5459482b2`.
+- ✅ **Cache thumbnails (#3143)** — `824246726` → local; `Helper/Thumbnails.swift` + pbxproj.
+- ✅ **Cancel-button `.cancel` semantics** — `d8dcd1879` + `db5bbb667` → local (QR alerts + permission alert).
+- ✅ **Remove deprecated isChatmail → forceEncryption (173cd938c)** — `ddfe283c6`; needed because the
+  merged rust core deprecated `is_chatmail`.
+- ✅ **Audio Now Playing / remote commands (#3090)** — see section 2 (done).
+
+## 4. Evaluated and intentionally SKIPPED
+
+- **`use system buttons where possible` (463e1ac98)** — its own commit message says *"for
+  non-liquid-glass, there is no visible change"*. Zero benefit until we ship Liquid Glass, and it
+  swaps our localized Cancel/Done titles for system bar items across several controllers. **Bundle
+  with the Liquid Glass work (section 1), not before.**
+- **`remove now superfluous iOS 15 conditions` (bbb927a22)** — predicated on min deployment target
+  15.6. **Ours is still `IPHONEOS_DEPLOYMENT_TARGET = 14.0`**, so removing the `#available(iOS 15)`
+  guards would call iOS 15 APIs unconditionally and **crash on iOS 14**. Only take this if/when the
+  team deliberately drops iOS 14 and bumps the min target to 15.6.
+- **Audio recorder session routing (#3151)** — overlaps our recorder/audio-session handling; not yet
+  evaluated in depth. Revisit if recording routing issues surface.
+- Version bumps (2.52.0/2.53.0), CHANGELOG, translations, local help, App Clip docs — fork policy
+  (own versioning / branding), not taken.
 
 ---
 
