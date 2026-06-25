@@ -277,6 +277,7 @@
 		F5B675E72F72FE5700C440F3 /* RemoteUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E62F72FE5700C440F3 /* RemoteUser.swift */; };
 		F5B675EA2F72FEB200C440F3 /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E92F72FEB200C440F3 /* UserSearchService.swift */; };
 		F5B675EB2F72FEB200C440F3 /* AltPlatformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675E82F72FEB200C440F3 /* AltPlatformService.swift */; };
+		640C769B2FDD378F00F6BC8A /* Thumbnails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C769A2FDD378F00F6BC8A /* Thumbnails.swift */; };
 		F5B675ED2F72FF0A00C440F3 /* VideoNoteRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */; };
 		F5B675EF2F72FF1E00C440F3 /* VideoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */; };
 		F5B675F12F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B675F02F72FF5000C440F3 /* AudioNoteRecordingOverlay.swift */; };
@@ -756,6 +757,7 @@
 		F5B675E42F72FE3D00C440F3 /* FilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBarView.swift; sourceTree = "<group>"; };
 		F5B675E62F72FE5700C440F3 /* RemoteUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUser.swift; sourceTree = "<group>"; };
 		F5B675E82F72FEB200C440F3 /* AltPlatformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltPlatformService.swift; sourceTree = "<group>"; };
+		640C769A2FDD378F00F6BC8A /* Thumbnails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnails.swift; sourceTree = "<group>"; };
 		F5B675E92F72FEB200C440F3 /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
 		F5B675EC2F72FF0A00C440F3 /* VideoNoteRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteRecorderView.swift; sourceTree = "<group>"; };
 		F5B675EE2F72FF1E00C440F3 /* VideoNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNoteCell.swift; sourceTree = "<group>"; };
@@ -1257,6 +1259,7 @@
 				AA998877665544332211CC00 /* AppUpdateChecker.swift */,
 				AA998877665544332211CC03 /* ReviewRequester.swift */,
 				F5B675DC2F72FB0100C440F3 /* TypingManager.swift */,
+				640C769A2FDD378F00F6BC8A /* Thumbnails.swift */,
 				30238CFE28A5554C00EF14AC /* FileHelper.swift */,
 				3067AAC52667F3FE00525036 /* ImageFormat.swift */,
 				305702A024C6453700D84EFC /* TypeAlias.swift */,
@@ -2085,6 +2088,7 @@
 				304F769525DD237B0094B5E2 /* WebViewViewController.swift in Sources */,
 				F5B675EA2F72FEB200C440F3 /* UserSearchService.swift in Sources */,
 				F5B675EB2F72FEB200C440F3 /* AltPlatformService.swift in Sources */,
+				640C769B2FDD378F00F6BC8A /* Thumbnails.swift in Sources */,
 				AA998877665544332211CC01 /* AppUpdateChecker.swift in Sources */,
 				AA998877665544332211CC02 /* ReviewRequester.swift in Sources */,
 				304F769925DD23D70094B5E2 /* FullMessageViewController.swift in Sources */,
