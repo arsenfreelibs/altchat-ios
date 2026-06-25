@@ -9,6 +9,11 @@ final class AltPlatformService {
     private static let registrationQueue = DispatchQueue(label: "alt.platform.register")
     private static var isRegistering = false
 
+    // Platform identity is stored per-account: a global key would leak one profile's
+    // @username/email into another when switching accounts.
+    static func usernameDefaultsKey(accountId: Int) -> String { "alt_username_\(accountId)" }
+    static func emailDefaultsKey(accountId: Int) -> String { "alt_email_\(accountId)" }
+
     private let dcContext: DcContext
 
     init(dcContext: DcContext) {
@@ -116,8 +121,8 @@ final class AltPlatformService {
            let decoded = try? JSONDecoder().decode(RegisterResponse.self, from: data),
            !decoded.token.isEmpty {
             KeychainManager.saveJwtToken(decoded.token, accountId: dcContext.id)
-            UserDefaults.shared?.set(username, forKey: "alt_username")
-            UserDefaults.shared?.set(email, forKey: "alt_email")
+            UserDefaults.shared?.set(username, forKey: AltPlatformService.usernameDefaultsKey(accountId: dcContext.id))
+            UserDefaults.shared?.set(email, forKey: AltPlatformService.emailDefaultsKey(accountId: dcContext.id))
             logger.info("AltPlatformService: quickRegister succeeded, JWT saved")
         } else if statusCode != 200 {
             if let data = responseData, let body = String(data: data, encoding: .utf8) {
@@ -171,7 +176,7 @@ final class AltPlatformService {
     /// avoid triggering re-registration when the server is temporarily unreachable.
     @discardableResult
     func probeToken() -> Bool {
-        guard let username = UserDefaults.shared?.string(forKey: "alt_username"),
+        guard let username = UserDefaults.shared?.string(forKey: AltPlatformService.usernameDefaultsKey(accountId: dcContext.id)),
               !username.isEmpty,
               let token = KeychainManager.loadJwtToken(accountId: dcContext.id) else {
             logger.info("AltPlatformService: probeToken skipped — username or token missing")

@@ -119,7 +119,7 @@ class SelfProfileViewController: UITableViewController, MediaPickerDelegate {
     }()
 
     private func currentUsername() -> String {
-        if let stored = UserDefaults.shared?.string(forKey: "alt_username"), !stored.isEmpty {
+        if let stored = UserDefaults.shared?.string(forKey: AltPlatformService.usernameDefaultsKey(accountId: dcContext.id)), !stored.isEmpty {
             return stored
         }
         return AltPlatformService.deriveUsername(from: dcContext.addr ?? "")
