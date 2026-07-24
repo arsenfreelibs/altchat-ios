@@ -33,8 +33,6 @@ public struct DcColors {
         light: UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 0.25),
         dark: UIColor(red: 30 / 255, green: 30 / 255, blue: 30 / 255, alpha: 0.25))
     public static let placeholderColor = UIColor.placeholderText
-    public static let providerPreparationBackground = UIColor.init(hexString: "fdf7b2")
-    public static let providerBrokenBackground = UIColor.systemRed
     public static let systemMessageBackgroundColor = UIColor.init(hexString: "65444444")
     public static let systemMessageFontColor = UIColor.white
     public static let gotoButtonBackgroundColor = UIColor.init(hexString: "65666666")
