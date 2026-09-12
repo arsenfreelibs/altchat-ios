@@ -180,9 +180,9 @@ class AppCoordinator: NSObject {
             return false
         }
 
-        let accountId = Int(parameters["accountId"] ?? "-1") ?? -1
-        let chatId = Int(parameters["chatId"] ?? "-1") ?? -1
-        let messageId = Int(parameters["msgId"] ?? "-1") ?? -1
+        let accountId = parameters["accountId"].map(Int32.init)?.map(Int.init) ?? -1
+        let chatId = parameters["chatId"].map(Int32.init)?.map(Int.init) ?? -1
+        let messageId = parameters["msgId"].map(Int32.init)?.map(Int.init) ?? -1
 
         if !"\(url)".starts(with: "chat.delta.deeplink://webxdc?") ||
            messageId == -1 ||
@@ -222,10 +222,8 @@ class AppCoordinator: NSObject {
     private func handleOpenChatDeeplink(url: URL) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
               let parameters = url.queryParameters,
-              let accountIdString = parameters["accountId"],
-              let accountId = Int(accountIdString),
-              let chatIdString = parameters["chatId"],
-              let chatId = Int(chatIdString) else {
+              let accountId = parameters["accountId"].map(Int32.init)?.map(Int.init),
+              let chatId = parameters["chatId"].map(Int32.init)?.map(Int.init) else {
             logger.error("Missing parameters in URL \(url)")
             return false
         }
@@ -266,7 +264,7 @@ class AppCoordinator: NSObject {
         
         // Switch account if needed
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-           let accountId = parameters["accountId"].flatMap(Int.init) {
+           let accountId = parameters["accountId"].map(Int32.init)?.map(Int.init) {
             if dcAccounts.getSelected().id != accountId {
                 if !dcAccounts.select(id: accountId) { return false }
                 appDelegate.reloadDcContext()
@@ -289,7 +287,7 @@ class AppCoordinator: NSObject {
         }
         
         // Ask for sending messages
-        if let chatId = parameters["chatId"].flatMap(Int.init) {
+        if let chatId = parameters["chatId"].map(Int32.init)?.map(Int.init) {
             showChat(chatId: chatId)
         } else {
             showChats()
