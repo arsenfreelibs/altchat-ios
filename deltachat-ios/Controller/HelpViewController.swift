@@ -101,17 +101,17 @@ class HelpViewController: WebViewViewController {
     private func moreButtonMenu() -> UIMenu {
         let actions = [
             UIAction(title: String.localized("delta_chat_homepage"), image: UIImage(systemName: "arrow.up.right")) { _ in
-                if let url = URL(string: "https://delta.chat") {
+                if let url = URL(string: "https://alt-chat.me") {
                     UIApplication.shared.open(url)
                 }
             },
             UIAction(title: String.localized("privacy_policy"), image: UIImage(systemName: "arrow.up.right")) { _ in
-                if let url = URL(string: "https://delta.chat/gdpr") {
+                if let url = URL(string: "https://alt-chat.me/gdpr") {
                     UIApplication.shared.open(url)
                 }
             },
             UIAction(title: String.localized("contribute"), image: UIImage(systemName: "arrow.up.right")) { _ in
-                if let url = URL(string: "https://delta.chat/contribute") {
+                if let url = URL(string: "https://alt-chat.me/contribute") {
                     UIApplication.shared.open(url)
                 }
             },
