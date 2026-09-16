@@ -48,3 +48,9 @@ deltachat-ios/libraries/libdeltachat.a
 
 # Auto-proxy credentials (plaintext) — never commit; only the .example template is tracked
 Config/auto_proxy.local
+
+# Editor-local settings
+.vscode/
+
+# Exported app debug logs — contain push tokens, addresses, IMAP session details
+*-log.txt
