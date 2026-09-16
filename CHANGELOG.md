@@ -4,6 +4,7 @@
 
 - Retire provider database
 - Fix notification info line
+- Remove contact verification UI (core no longer tracks verification)
 - You can now click on the Location streaming info message to bring up the map
 - Harden deeplinks parameters parsing to address crash from hand crafted urls
 - Fix: Reactions could go to the wrong message if a new message was received while long pressing
